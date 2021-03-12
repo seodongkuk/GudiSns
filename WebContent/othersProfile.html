@@ -8,27 +8,28 @@
     <link rel="icon" href="imgfile\icon.jpg">
     <title>others_Profile</title>
     <style>
-        body{
-            border: 1px solid black;
-            margin-left: 17%;
-            padding-left: 20%;
-            padding-right: 10%;
-        }
+        
         #containar{
-            /* margin-left: 37%; */
-            
+            display: table; 
+            border: 1px solid black;
+            margin-left: auto;
+             margin-right: auto;
+             padding: 100px;
         }
         
         #profileName{
            background-color: whitesmoke;
-            box-sizing: border-box;
+           display: table; 
+            margin-left: auto;
+             margin-right: auto;
+            /* box-sizing: border-box;
             margin-top: 80px;
-            margin-bottom: 60px;
+           
             margin-right: 570px;
-            text-align: left;
-            padding-left: 162px;
+            text-align: left; */
+            /* padding-left: 162px;
             width: 500px;
-            height: 50px;
+            height: 50px; */
         }
         /* 전체 마진 값 주기 */
         #topMenu{
@@ -36,10 +37,13 @@
            
 
             background-color: yellow;
-            margin-bottom: 30px;
-            margin-right: 570px;
+            display: table; 
+            margin-left: auto;
+             margin-right: auto;
+             margin-bottom: 30px;
+           /* margin-right: 570px;
             width: 500px;
-            height: 120px;
+            height: 120px; */
         }
         #topMenu::after{
             
@@ -70,6 +74,7 @@
             padding-top: 13px;
             width:65px;
             height:75px;
+            text-align: center;
         }
         #topnev2{
             position: relative;
@@ -80,6 +85,7 @@
             padding-top: 13px;
             width:65px;
             height:75px;
+            text-align: center;
         }
         #topnev3{
             position: relative;
@@ -104,12 +110,12 @@
             display: block;
         }
         #bBoxCk{
-            visibility: visible;
+            visibility: hidden;
             float: right;
             background-color: aqua;
         }
         #bBoxMenu{
-            visibility: hidden;
+            visibility: visible;
         }
         .bMenubox2{
             margin-left: 50px;
@@ -180,22 +186,25 @@
         }
         .bm6Ch2 button{
             position: relative;
-            top: 1px;
+            top: 8px;
             left: 400px;
             /* width: 100%;
             height: 10px; */
         }
         #boardMenu{
+            display: table; 
+            margin-left: auto;
+             margin-right: auto;
             width: 500px;
             height: 600px;
             margin-bottom: 60px;
             background-color: bisque;
         }
-        #bottomMenu{
+       /* #bottomMenu{
             width: 500px;
             height: 60px;
             background-color: blueviolet;
-        }
+        }  */
         /* #bottomMenu::after{
             content: "";
             clear: both;
@@ -207,6 +216,9 @@
             margin-right: 50px;
         }
         */
+        #updateA{
+            visibility:hidden;
+        }
     </style>
     
 </head>
@@ -226,10 +238,9 @@
     
         <div id="boardMenu">
             <div id="bBoxCk" class="bBox" onclick=a();>
-                <div id="bBoxMenu" class="bMenubox1"><a href="#">신고</a></div>
-                <!-- 셀렉트 -->
-                <!-- div bmenubox에 히든넣어서 bBox 클릭시 hidden해제 -->
+                <div id="bBoxMenu" class="bMenubox1" data-visibility="true"><a href="#">.&nbsp;.&nbsp;.&nbsp;</a></div>
             </div>
+            <a href="#" style="position: absolute; left: 1062px; top: 370px;" id="updateA" >신고</a>
             <div class="bMenubox2"><img src="#" alt="2"></div>
             <div class="bMenubox3">
                 <p class="#">#해시태그  #해시태그</p>
@@ -238,8 +249,7 @@
                 <p class="textbox">비·집회·결사의 자유, 정부나 법원의 권한에 관하여 특별한 조
                     치를 할 수 있다결사의 별한 조치를 할 수 있다결사의 자유,  사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부조치를 할 수 있다결사의 자유, 정부 특별한 조치를 할 수 있다결사의 자유, 정부나 법원의 권한에 관하여 특별한 조치를 할 수 있다.</p>
                      <div class="bMenubox5"><button>더보기</button></div>
-                     <button class="heart" type="submit"><img src="#" alt="하트">
-                     </button>
+                     <button class="heart" type="submit"><img src="" alt="하트"> </button>
                      <p style="display: inline; margin-left: 57px;position: absolute; top: 704px;">+111</p>  
                      <p style="display: inline; margin-left: 360px;position: absolute; top: 704px;">yyyy-mm-dd</p>
     
@@ -266,29 +276,36 @@
     
         </div>
     
-        <!--jsp:include or iframe으로 공통 ui처리 ?할지 말지 생각 -->
-        <div id="bottomMenu"> 
+        <!-- jsp:include or iframe으로 공통 ui처리 ?할지 말지 생각 --> 
+         <!-- <div id="bottomMenu">  -->
     
-            공용처리부분
+            <!-- 공용처리부분 -->
             <!-- <div class="bmenu"><a href="#">메인</a></div>
             <div class="bmenu"><a href="#">검색</a></div>
             <div class="bmenu"><a href="#">DM</a></div>
             <div class="bmenu"><a href="#">알림</a></div>
             <div class="bmenu"><a href="#">내 프로필</a></div> -->
-        </div>
+        <!-- </div> -->
     </div>
 </body>
 <script>
     function a(){
         var con=document.getElementById("bBoxMenu");
-       
-        if(con.style.visibility =="hidden"){
+        var atag = document.getElementById("updateA");
+        if(con.style.visibility =="visible"){
+            atag.style.visibility="visible";
+        }else if(con.style.visibility="hidden"){
             con.style.visibility="visible";
-            
-        }else if(con.style.visibility="visible"){
-            con.style.visibility="hidden";
         }
     }
+    // function b(){
+    //     var con=document.getElementById("bBoxMenu");
+    //     var atag = document.getElementById("updateA");
+    //     if(con.style.visibility =="visible"){
+    //         atag.style.visibility =="visible";
+    //         $("bBoxMenu").data("visibility") == false;
+    //     }
+    // }
 </script>
 
 </html>
