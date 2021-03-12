@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -29,7 +31,7 @@
             #userId{
                 width: 60%;
             }
-            input[type='button']{
+            input[type='button'], input[type='submit']{
               
                background-color: rgb(240, 207, 207);
                 border: 0px;
@@ -40,7 +42,7 @@
         <center>
         <h2>구디SNS 회원가입</h2>
         
-        <form>
+        <form action="join" method="POST">
             <table>
                 <tr>
                     <th>아이디</th>
@@ -63,7 +65,7 @@
                 <tr>
                     <th>비밀번호 확인</th>
                     <td>
-                        <input type="password"/>
+                        <input type="password" name="userPwChk"/>
                     </td>
                 </tr>
                 <tr>
@@ -97,10 +99,17 @@
                     </td>
                 </tr>
             </table>
+            <input type="submit" name="회원가입버튼" value="회원가입완료" style="padding: 10;margin: 10; font-size: 15;"/>
             
-            <input type="button" name="회원가입버튼" value="회원가입완료" style="padding: 10;margin: 10; font-size: 15;"/>
 
         </form>
     </center>
     </body>
+    <script>
+
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
+</script>
 </html>

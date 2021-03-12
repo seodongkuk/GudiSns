@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -44,15 +45,15 @@
     <body>
         
         <center>
-            <h2><img src="로고.gif" width="100" height="100">구디SNS</h2>
+            <h2><img src="??? .gif" width="100" height="100">구디SNS</h2>
         
         <table>
-            <!--get : URL 에 보내는 값이 표시-->
-            <form action="http://localhost:8085" method="POST">
+           
+            <form action="login" method="POST">
                 <tr>
                     <th>ID</th>
                     <td>
-                        <input type="text" name="userId" placeholder="아이디"/>
+                        <input type="text" name="userid" placeholder="아이디"/>
                     </td>
                     <td rowspan="2">
                         <input type="submit" value="로그인"/>
@@ -61,17 +62,26 @@
                 <tr>
                     <th>PW</th>
                     <td>
-                        <input type="password" name="userPw" placeholder="비밀번호"/>
+                        <input type="password" name="userpw" placeholder="비밀번호"/>
                     </td>
                 </tr>
             </form>
             <tr>
                 <td colspan="3">
-                    <input type="button" value="회원가입"/>
-                    <input type="button" value="아이디/비밀번호 찾기"/>
+                    <input type="button" value="회원가입" onclick="location.href='join.jsp'"/>
+                    <input type="button" value="아이디비밀번호찾기" onclick="location.href='id_pw_Find.html'"/>
                 </td>
             </tr>
         </table>
+        </center>
     </body>
-</center>
+
+<script>
+var msg = "${msg}";
+
+if(msg != ""){
+	alert(msg);
+}
+
+</script>
 </html>
