@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <style>
+            body{
+                width: 700px;
+                margin-left:20%;
+                padding: 50px;
+                border: 1px solid black;
+            }
+            h2,h3{
+                text-align: center;
+            }
+            .find{
+                display: block;
+                padding-left: 30%;
+            }
+            ol{
+                background-color: lightgrey;
+                width: 400px;
+                margin-left: 20%;   
+            }
+            ol li{
+                text-align: center;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+       <h2>검색</h2>
+    <div class="find">
+        <form>
+            <select name="find">
+                <option value="none">===선택===</option>
+                <option value="HashTag">해시태그</option>
+                <option value="User">유저</option>
+            </select>
+            <input type="text" placeholder="검색어를 입력해주세요.">
+            <button>검색</button>
+        </form>
+    </div>
+    <br/>
+        <h3>오늘의 검색 해시태그</h3>
+        <ol>
+            <li>코로나</li>
+            <li>봄</li>
+            <li>개강</li>
+        </ol>
+    <div>
+        <iframe id="footer" src="navi.html" style="border: none;bottom: 0; left: 400; position: fixed; z-index: 5; top: 850; width: 100%;"></iframe>
+    </div>
+    </body>
+</html>

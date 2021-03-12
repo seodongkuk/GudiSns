@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>유저검색</title>
+    <style>
+        body{
+                width: 700px;
+                margin-left:20%;
+                height: 800px;
+                padding: 50px;
+                border: 1px solid black;
+            }
+    </style>
+</head>
+<center>
+<body>
+    <div class="find">
+        <form>
+            <select name="find">
+                <option value="none">===선택===</option>
+                <option value="HashTag">해시태그</option>
+                <option value="User" selected>유저</option>
+            </select>
+            <input type="text" placeholder="유저를 검색하세요.">
+            <button>검색</button>
+        </form>
+    </div>
+    <br>
+    <table>
+        <tr>
+            <td rowspan="2"><img src="user.jpg" width="70" height="70"></td>
+            <td style="padding-right: 70px;">user1</td>  
+            <td style="padding-left: 40px;">
+                <button>친구요청</button>
+                <button>DM보내기</button>
+                <button>친구삭제</button>
+            </td>          
+        </tr>
+    </table>
+    <iframe style=" margin-top: 35% ; position: fixed;left: 20%;" src="navi.html" width="1000px" height="500px" frameborder="0" ></iframe> 
+</body>
+</center>
+</html>
