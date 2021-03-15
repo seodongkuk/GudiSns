@@ -1,9 +1,14 @@
 package com.sns.service;
 
+
 public class ProfileService {
 
 	public ProfileService() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
+	public void upload() {
+		// TODO Auto-generated method stub
+		
+	}
 }
