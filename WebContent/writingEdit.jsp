@@ -1,5 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -91,23 +93,23 @@
 <body>
     <div id="newWritebox">
         <h2>글 수정</h2>
-        <form action="" id="newWrite" class="filebox">
+        <form action="edit" id="newWrite" class="filebox">
         <input type="hidden" name="idx" value="${dto.board_idx}"/>
         
-            <textarea name="#" id="#" cols="40" rows="10" maxlength="1000" placeholder="작성할 내용">${dto.content}</textarea><br>
-            <input type="text" name="hashOne" class="hash" placeholder="#해시태그1" value="${}">
-            <input type="text" name="hashTwo" class="hash" placeholder="#해시태그2" value="${}">
+            <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000">${dto.content}</textarea><br>
+            <input type="text" name="hashOne" class="hash" value="${dto.hashOne}">
+            <input type="text" name="hashTwo" class="hash" value="${dto.hashTwo}">
             <!-- 추가 삭제는 자바사크립트로  -->
             <br>
             <label for="file">업로드</label>
             <input type="file" id="file" name="photo">
-            <input class="upload_name" value="${}">
+            <input class="upload_name" value="${dto.newFileName}">
             <!-- {기존 파일 명을 보여줘야함 .수정해야하니까 .. value로 처리하는게 편할듯 }-->
             <br>
             <select name="release_state" id="selectBox">
-                <option value="001">전체공개</option>
-                <option value="002">친구공개</option>
-                <option value="003">나만보기</option>
+                <option value="001" <c:if test="${param.release_state}"> selected="selected"</c:if>>전체공개</option>
+                <option value="002" <c:if test="${param.release_state}"> selected="selected"</c:if>>친구공개</option>
+                <option value="003" <c:if test="${param.release_state}"> selected="selected"</c:if>>나만보기</option>
             </select>
         </form>
         <button type="submit" form="newWrite">수정완료</button>
@@ -144,5 +146,4 @@ else
 		alert(msg);
 	}	
 </script>
-
 </html>

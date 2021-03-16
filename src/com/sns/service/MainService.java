@@ -49,4 +49,14 @@ public class MainService {
 		
 	}
 
+	public void writeEdit() {
+		
+		
+	}
+	
+	public void edit() {
+		
+		
+	}
+
 }

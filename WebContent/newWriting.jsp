@@ -1,7 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="ko">
-
-<head>
+<html>
+	<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,16 +94,16 @@
         <h2>새 글쓰기</h2>
         <form action="newWrite" id="newWrite" class="filebox" method="post" enctype="multipart/form-data">
         <!-- 이미지가 서버에들어갈것 enc mult -->
-            <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000" placeholder="작성할 내용"></textarea><br>
-            <input type="text" name="hashOne" class="hash" placeholder="#해시태그1">
-            <input type="text" name="hashTwo" class="hash" placeholder="#해시태그2">
+            <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000" placeholder="글을작성해주세요"></textarea><br>
+            <input type="text" name="hashOne" class="hash" value="첫번째해시태그">
+            <input type="text" name="hashTwo" class="hash" value="두번째해시태그">
             <!-- 추가 삭제는 자바사크립트로  -->
             <br>
             <label for="file">업로드</label>
             <input type="file" id="file" name="photo">
-            <input class="upload_name" value="파일업로드 해주세요">
+            <input class="upload_name" value="파일을 넣어주세요">
             <br>
-            <select name="release_state" id="selectBox">
+            <select name="release_state" id="selectBox" >
                 <option value="001">전체공개</option>
                 <option value="002">친구공개</option>
                 <option value="003">나만보기</option>
@@ -145,5 +146,4 @@
 		alert(msg);
 	}	 */
 </script>
-
 </html>

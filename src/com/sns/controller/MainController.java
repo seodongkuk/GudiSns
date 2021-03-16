@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sns.service.MainService;
 
 //새글쓰기 게시글수정
-@WebServlet({"/newWrite"})     
+@WebServlet({"/newWrite","/writeEdit"})     
 public class MainController extends HttpServlet {
 
 	@Override
@@ -41,8 +41,13 @@ public class MainController extends HttpServlet {
 			break;
 
 		case "/writeEdit":
-//			글수정 시~
+			System.out.println("글 수정 요청들어옴");
+			service.writeEdit();
 			break;
+		
+		case"/edit" :
+			System.out.println("수정해줘");
+			service.edit();
 		}
 		
 		
