@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -5,6 +6,9 @@
 
 
         <style>
+        body{
+        margin-left:10%;
+        }
             table,tr,th,td{
                 border:1px solid white;
                 border-collapse: collapse;
@@ -55,9 +59,8 @@
         </style>
     </head>
     <body>
-        <center>
             <img src="타인프로필.gif" width="75" height="75" style="float: left;">
-            <input type="button"value="USERID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+            <input type="button"value="USER_ID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
        <table>
            <tr>
            <td>
@@ -65,20 +68,7 @@
         </td>
             </tr>
         <tr>
-            <tr>
-                <td>
-                    <center>    
-                    <p>게시글</p>
-                        <br>
-                        <p>1줄</p>
-                        <br>
-                        <p>2줄</p>
-                        <br>
-                        <p>3줄</p>
-                        <br>
-                    </center>
-                </td>
-            </tr>
+        
        <td>
             <button class="btn-like" style="font-size: 50px;background-color: white;border: none;float: left;">♥</button>
             <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
@@ -100,7 +90,7 @@
         </tr>
         <tr>
             <td>
-                <input type="text" style="width: 90%;">
+                ${dto.user_id} : <input type="text" style="width: 80%;">
                 <input type="button" value="댓글등록" style="float: right ;height: 30;">
             </td>
         </tr>
@@ -110,7 +100,6 @@
        
             
     </body>
-</center>
 <script src="//code.jquery.com/jquery.min.js"></script>
 
 <script>
