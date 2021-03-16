@@ -92,25 +92,27 @@
     <div id="newWritebox">
         <h2>글 수정</h2>
         <form action="" id="newWrite" class="filebox">
-            <textarea name="#" id="#" cols="40" rows="10" maxlength="1000" placeholder="작성할 내용"></textarea><br>
-            <input type="text" name="hashOne" class="hash" placeholder="#해시태그1">
-            <input type="text" name="hashTwo" class="hash" placeholder="#해시태그2">
+        <input type="hidden" name="idx" value="${dto.board_idx}"/>
+        
+            <textarea name="#" id="#" cols="40" rows="10" maxlength="1000" placeholder="작성할 내용">${dto.content}</textarea><br>
+            <input type="text" name="hashOne" class="hash" placeholder="#해시태그1" value="${}">
+            <input type="text" name="hashTwo" class="hash" placeholder="#해시태그2" value="${}">
             <!-- 추가 삭제는 자바사크립트로  -->
             <br>
             <label for="file">업로드</label>
-            <input type="file" id="file">
-            <input class="upload_name" value="파일업로드 해주세요">
+            <input type="file" id="file" name="photo">
+            <input class="upload_name" value="${}">
+            <!-- {기존 파일 명을 보여줘야함 .수정해야하니까 .. value로 처리하는게 편할듯 }-->
             <br>
-            <select name="" id="selectBox">
+            <select name="release_state" id="selectBox">
                 <option value="001">전체공개</option>
                 <option value="002">친구공개</option>
                 <option value="003">나만보기</option>
             </select>
         </form>
-        <button type="submit" form="newWrite" onclick="self.close()";>작성완료</button>
-        <button type="button" onclick="next()";>취소</button>
+        <button type="submit" form="newWrite">수정완료</button>
+        <button type="button" onclick="next()">취소</button>
         <!-- 자바스크립트로 메인으로 보내기 !-->
-        
     </div>
 </body>
 <script>
@@ -135,6 +137,12 @@ else
             $(".upload_name").val(cur);
         });
     });
+    
+    
+    var msg = "${msg}";
+	if(msg!=""){
+		alert(msg);
+	}	
 </script>
 
 </html>
