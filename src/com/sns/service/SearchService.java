@@ -33,7 +33,6 @@ public class SearchService {
 		
 		// 성공 할 경우
 		if(tag != null && tag.size()>0) {
-			System.out.println(tag);
 			req.setAttribute("tag", tag);
 		}
 		dis = req.getRequestDispatcher("find.jsp");

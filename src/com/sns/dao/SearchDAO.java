@@ -46,10 +46,11 @@ public class SearchDAO {
 		ArrayList<SearchDTO> tag = new ArrayList<SearchDTO>();
 		//해시태그 TOP3
 		String sql = "SELECT * FROM (" + 
-				" SELECT h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
-				" WHERE b.board_idx = h.board_idx AND TO_CHAR(b.reg_date,'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') GROUP BY h.hashtag" + 
-				" ORDER BY COUNT(h.hashtag) DESC)" + 
-				" WHERE rownum <= 3";
+				"SELECT ROW_NUMBER() OVER(ORDER BY COUNT(h.hashtag) DESC) AS rnum," + 
+				" h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
+				" WHERE b.board_idx = h.board_idx AND TO_CHAR(b.reg_date,'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')" + 
+				" GROUP BY h.hashtag" + 
+				" ) WHERE rnum <= 3";
 		try {
 			ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
 			rs = ps.executeQuery();//3. 쿼리실행
@@ -57,6 +58,7 @@ public class SearchDAO {
 				SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
 				//dto에 담기
 				dto.setHashTag(rs.getString("hashTag"));
+				dto.setRnum(rs.getInt("rnum"));
 				tag.add(dto);//담긴 dto를 list에 넣기	
 			}
 		} catch (SQLException e) {

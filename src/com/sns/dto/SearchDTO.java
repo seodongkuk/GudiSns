@@ -7,6 +7,7 @@ public class SearchDTO {
 	private String content;
 	
 	private String hashTag;
+	private int rnum;
 
 	public String getUser_id() {
 		return user_id;
@@ -46,5 +47,13 @@ public class SearchDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
 	}
 }
