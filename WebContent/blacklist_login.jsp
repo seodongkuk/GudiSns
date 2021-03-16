@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
     <meta charset="utf-8">  
@@ -48,7 +49,7 @@
     </div>
     <br/>
     <div class="button">
-        <button>돌아가기</button>
+        <button onclick="location.href='index.jsp'">돌아가기</button>
     </div>
 </body>
 </html>

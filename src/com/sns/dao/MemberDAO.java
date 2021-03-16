@@ -35,8 +35,8 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
-	//--------------------------------------------------------------------
-	public boolean login(String id, String pw) {
+	//--------------------------------------------------------------------로그인
+	public boolean login(String id, String pw) {			
 		boolean success = false;
 		String sql="SELECT user_id FROM member2 WHERE USER_ID=? AND PW=?";
 		try {
@@ -49,33 +49,38 @@ public class MemberDAO {
 			e.printStackTrace();
 		}finally {
 			resClose();
-			
 		}		
 		return success;
 	}
-	public int join(MemberDTO dto) {
-		
+	//--------------------------------------------------------------------------회원가입
+	public boolean join(String id,String pw,String name,String phone,String email) {
+		boolean success = false;
 		String sql="INSERT INTO member2 (user_id,pw,name,phone,email)VALUES(?,?,?,?,?)";
-		int success = -1;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, dto.getId());
-			ps.setString(2, dto.getPw());
-			ps.setString(3, dto.getName());
-			ps.setInt(4, dto.getPhone());
-			ps.setString(5, dto.getEmail());
-			
+			ps.setString(1,id);
+			ps.setString(2,pw);
+			ps.setString(3,name);
+			ps.setInt(4,Integer.parseInt(phone));
+			ps.setString(5,email);
+			rs = ps.getGeneratedKeys();
+			if(ps.executeUpdate()>0) {
+				success = true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			resClose();
 		}
+		System.out.println("회원가입 성공 여부 : "+success);
 		return success;
 	}
+//--------------------------------------------------------------------------임의로만든리스트
 public ArrayList<MemberDTO> list() {
 
 	return null;
 }
+//--------------------------------------------------------------------------아이디체크
 public boolean idChk(String id) throws SQLException {
 	boolean success = false;
 	String sql="SELECT user_id FROM member2 WHERE USER_ID=?";
@@ -88,7 +93,5 @@ public boolean idChk(String id) throws SQLException {
 	}
 
 }
-
-
 
 

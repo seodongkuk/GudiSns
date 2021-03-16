@@ -119,7 +119,7 @@
 					if(obj.use){
 						alert('사용할 수 있는 아이디 입니다.');
 						//비동기 방식을 사용하면 javascript 를 이용하여 좀더 다양한 효과를 줄 수 있다.
-						$("#userId").css({backgroundColor:'red'});
+						$("#userId").css({backgroundColor:'green'});
 						overChk= true;
 					}else{
 						alert('사용불가 아이디 입니다.');
@@ -166,14 +166,15 @@
 						type:'POST'
 						,url:'join'
 						,data:params
-						,dataType:'JSON'
+						,dataType:'text'
 						,success:function(data){
 							console.log(data);
 							if(data.success == true){
+								alert('가입실패입니다.');
+							
+							}else{
 								alert('회원가입을 축하 드립니다.');
 								location.href="index.jsp";
-							}else{
-								alert('잠시 후 다시 시도해 주세요.');
 							}
 						},error:function(e){
 							console.log(e);
@@ -185,5 +186,6 @@
 				$id.focus();
 			}
 		});
+	
 	</script>
 </html>

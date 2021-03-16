@@ -40,40 +40,27 @@ public class MemberService {
 	}
 	
 	
-public boolean join() {
-		
-		
-		String id=req.getParameter("userId");
-		String pw=req.getParameter("userPw");
-		String name=req.getParameter("userName");
-		String phone=req.getParameter("userPhone");
-		String email=req.getParameter("userEmail");
-		System.out.println(id+"/"+pw+"/"+name+"/"+phone+"/"+email);
-		
+	public boolean join() {
+		boolean success = false;
 		MemberDAO dao = new MemberDAO();
-		
-		MemberDTO dto = new MemberDTO();
-		dto.setId(id);
-		dto.setPw(pw);
-		dto.setName(name);
-		dto.setPhone(Integer.parseInt(phone));
-		dto.setEmail(email);		
-		
-		if(dao.join(dto)>0) {
-			return true;
-		}else {
-			return false;
-		}
-		
+		String id=req.getParameter("id");
+		String pw=req.getParameter("pw");
+		String name=req.getParameter("name");
+		String phone=req.getParameter("phone");
+		String email=req.getParameter("email");
+		System.out.println(id+"/"+pw+"/"+name+"/"+phone+"/"+email);
+
+
+	      return dao.join(id,pw,name,phone,email);
 	}
 
-
-public void idChk() throws IOException {
+public boolean idChk() throws IOException {
 	
-	String id = req.getParameter("userId");
+	String id = req.getParameter("id");
 	boolean success = false;
 	System.out.println("id : "+id);
 	MemberDAO dao = new MemberDAO();
+	
 	
 	HashMap<String, Object> map = new HashMap<String, Object>();
 			
@@ -92,5 +79,6 @@ public void idChk() throws IOException {
 	
 		resp.getWriter().print(json);
 	}
+	return success;
 }
 }
