@@ -45,7 +45,7 @@
     <body>
         
         <center>
-            <h2><img src="??? .gif" width="100" height="100">구디SNS</h2>
+            <h2><img src="???" width="100" height="100">구디SNS</h2>
         
         <table>
            
@@ -53,7 +53,7 @@
                 <tr>
                     <th>ID</th>
                     <td>
-                        <input type="text" name="userid" placeholder="아이디"/>
+                        <input type="text" name="userId" placeholder="아이디"/>
                     </td>
                     <td rowspan="2">
                         <input type="submit" value="로그인"/>
@@ -62,7 +62,7 @@
                 <tr>
                     <th>PW</th>
                     <td>
-                        <input type="password" name="userpw" placeholder="비밀번호"/>
+                        <input type="password" name="userPw" placeholder="비밀번호"/>
                     </td>
                 </tr>
             </form>

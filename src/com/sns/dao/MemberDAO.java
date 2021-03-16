@@ -35,13 +35,14 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
+	//--------------------------------------------------------------------
 	public boolean login(String id, String pw) {
 		boolean success = false;
-		String sql="SELECT id FROM Member2 WHERE id=? AND pw=?";
+		String sql="SELECT user_id FROM member2 WHERE USER_ID=? AND PW=?";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, id);
-			ps.setString(2, pw);
+			ps.setString(1,id);
+			ps.setString(2,pw);
 			rs = ps.executeQuery();
 			success = rs.next();
 		} catch (SQLException e) {
@@ -54,7 +55,7 @@ public class MemberDAO {
 	}
 	public int join(MemberDTO dto) {
 		
-		String sql="INSERT INTO member2 (id,pw,name,phone,email)VALUES(?,?,?,?,?)";
+		String sql="INSERT INTO member2 (user_id,pw,name,phone,email)VALUES(?,?,?,?,?)";
 		int success = -1;
 		try {
 			ps = conn.prepareStatement(sql);
@@ -75,4 +76,19 @@ public ArrayList<MemberDTO> list() {
 
 	return null;
 }
+public boolean idChk(String id) throws SQLException {
+	boolean success = false;
+	String sql="SELECT user_id FROM member2 WHERE USER_ID=?";
+
+		ps = conn.prepareStatement(sql);
+		ps.setString(1,id);
+		rs = ps.executeQuery();
+		success = rs.next();
+		return !success;
+	}
+
 }
+
+
+
+

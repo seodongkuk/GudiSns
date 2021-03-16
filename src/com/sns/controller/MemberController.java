@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.sns.dto.MemberDTO;
 import com.sns.service.MemberService;
 
-@WebServlet({"/login","/join","/logout","/main"})
+@WebServlet({"/login","/join","/logout","/main","/idChk"})
 public class MemberController extends HttpServlet {
 
 	@Override
@@ -29,16 +29,17 @@ public class MemberController extends HttpServlet {
 	}
 
 	private void dual(HttpServletRequest req, HttpServletResponse resp)  throws ServletException, IOException{
+		req.setCharacterEncoding("UTF-8");
+		
 		String uri = req.getRequestURI();
 		String context = req.getContextPath();
 		String sub = uri.substring(context.length());
+		System.out.println("sub : "+sub);
+		MemberService service = new MemberService(req,resp);
 		
-		req.setCharacterEncoding("UTF-8");
 		RequestDispatcher dis = null;
 		String page="";
 		String msg="";
-		MemberService service = new MemberService(req,resp);
-		System.out.println("sub address: "+sub);
 		
 		HttpSession session = req.getSession();
 		if(session.getAttribute("msg")!=null) {
@@ -59,7 +60,7 @@ public class MemberController extends HttpServlet {
 			
 			if(success) {
 				String loginId = req.getParameter("userId");
-				page = "main";		
+				page = "main.html";		
 				msg=loginId+"님, 반갑습니다.";				
 				req.getSession().setAttribute("loginId", loginId);
 			}
@@ -84,19 +85,13 @@ public class MemberController extends HttpServlet {
 			
 		case "/join":
 			System.out.println("회원가입 요청");
-			
-			msg="회원가입에 실패 했습니다.";
-			page="join.jsp";
-			
-			if(service.join()) {//성공
-				msg="회원가입을 축하 드립니다.";
-				page="index.jsp";
-			}
-			req.setAttribute("msg", msg);
-			dis = req.getRequestDispatcher(page);
-			dis.forward(req, resp);
-			break;		
-			
+			service.join();
+			break;
+		case"/idChk":
+			System.out.println("중복체크 요청");
+			service.idChk();
+			break;
+		
 		}
 	}
 }	
