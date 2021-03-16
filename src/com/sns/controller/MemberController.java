@@ -60,7 +60,7 @@ public class MemberController extends HttpServlet {
 
 			if (success) {
 				String loginId = req.getParameter("userId");
-				page = "main.html";
+				page = "main.jsp";
 				msg = loginId + "님, 반갑습니다.";
 				req.getSession().setAttribute("loginId", loginId);
 			}
