@@ -26,6 +26,20 @@ public class SearchService {
 		this.resp = resp;
 	}
 	
+	public void todayTag() throws ServletException, IOException {
+		ArrayList<SearchDTO> tag = new ArrayList<SearchDTO>();
+		dao = new SearchDAO();
+		tag = dao.todayTag();
+		
+		// 성공 할 경우
+		if(tag != null && tag.size()>0) {
+			System.out.println(tag);
+			req.setAttribute("tag", tag);
+		}
+		dis = req.getRequestDispatcher("find.jsp");
+		dis.forward(req, resp);
+	}	
+	
 	public void find() throws ServletException, IOException {
 		ArrayList<SearchDTO> list = new ArrayList<SearchDTO>();
 		dao = new SearchDAO();
@@ -33,7 +47,8 @@ public class SearchService {
 		String search = req.getParameter("search");
 		System.out.println("검색 항목: "+find);
 		System.out.println("검색 내용: "+search);
-
+		
+		//해시태그 검색
 		if(find.equals("HashTag")) {
 			list = dao.findTag(find,search);
 			System.out.println("리스트 널값? " + list);// 반환받은 리스트 널값 확인
@@ -51,6 +66,8 @@ public class SearchService {
 			req.setAttribute("msg", msg);// 성공여부에 따른 msg 실어서
 			dis = req.getRequestDispatcher("find_tag.jsp");
 			dis.forward(req, resp);
+		
+		//유저 검색
 		}else if(find.equals("User")) {
 			list = dao.findTag(find,search);
 			System.out.println("리스트 널값? " + list);// 반환받은 리스트 널값 확인

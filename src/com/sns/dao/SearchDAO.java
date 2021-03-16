@@ -42,9 +42,34 @@ public class SearchDAO {
 		}
 	}
 	
+	public ArrayList<SearchDTO> todayTag() {
+		ArrayList<SearchDTO> tag = new ArrayList<SearchDTO>();
+		//해시태그 TOP3
+		String sql = "SELECT * FROM (" + 
+				" SELECT h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
+				" WHERE b.board_idx = h.board_idx AND TO_CHAR(b.reg_date,'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') GROUP BY h.hashtag" + 
+				" ORDER BY COUNT(h.hashtag) DESC)" + 
+				" WHERE rownum <= 3";
+		try {
+			ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
+			rs = ps.executeQuery();//3. 쿼리실행
+			while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
+				SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
+				//dto에 담기
+				dto.setHashTag(rs.getString("hashTag"));
+				tag.add(dto);//담긴 dto를 list에 넣기	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();//5. 자원정리
+		}
+		return tag;		
+	}	
+	
 	public ArrayList<SearchDTO> findTag(String find, String search) {
 		ArrayList<SearchDTO> list = new ArrayList<SearchDTO>();
-		
+		//해시태그 검색
 		if(find.equals("HashTag")) {
 			String sql = "SELECT b.user_id,b.board_idx,b.content,h.hashTag FROM Board2 b, HashTag2 h "
 					+"WHERE b.board_idx = h.board_idx AND b.board_idx IN (SELECT board_idx FROM HashTag2 WHERE hashTag = ?)";
@@ -65,7 +90,8 @@ public class SearchDAO {
 				e.printStackTrace();
 			} finally {
 				resClose();//5. 자원정리
-			}		
+			}	
+		//유저 검색
 		}else if(find.equals("User")) {
 			String sql = "SELECT user_id,name FROM member2 WHERE user_id = ?";
 			try {
