@@ -69,7 +69,7 @@ public class MemberController extends HttpServlet {
 					page = "main.jsp";
 					msg = loginId + "님, 반갑습니다.";
 					req.getSession().setAttribute("loginId", loginId);	
-				}
+				}//
 			}
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
