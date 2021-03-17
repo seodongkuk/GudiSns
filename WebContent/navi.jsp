@@ -41,7 +41,7 @@
         <a href="find.jsp" target="_blank">
             <li>검색</li>
         </a>
-        <a href="#">
+        <a href="chatRoom?id=${id}">
             <li>DM</li>
         </a>
         <a href="#">

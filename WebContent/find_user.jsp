@@ -52,7 +52,7 @@
 		            <td style="padding-right: 70px;">${member2.user_id}</td>  
 		            <td style="padding-left: 40px;">
 		                <button>친구요청</button>
-		                <button>DM보내기</button>
+		                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">DM보내기</button>
 		                <button>친구삭제</button>
 		            </td>          
 		        </tr>

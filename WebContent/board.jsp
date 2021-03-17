@@ -58,9 +58,11 @@
 }
         </style>
     </head>
+    <script>
+    </script>
     <body>
             <img src="타인프로필.gif" width="75" height="75" style="float: left;">
-            <input type="button"value="USER_ID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+            <input type="button" value="123" onclick="location.href='otherProfile?id=123'" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
        <table>
            <tr>
            <td>
@@ -76,7 +78,7 @@
         </td>
         </tr>
        <tr>
-           <td style="margin:0; padding: 0;";>
+           <td style="margin:0; padding: 0;">
                 <hr>
            </td>
         </tr>
@@ -97,12 +99,9 @@
 
            
      </table>
-       
-            
     </body>
-<script src="//code.jquery.com/jquery.min.js"></script>
 
-<script>
+	<script>
     $(".btn-like").click(function() {
         $(this).toggleClass("done");
     })

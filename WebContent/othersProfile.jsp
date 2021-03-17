@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,11 +32,9 @@
             width: 500px;
             height: 50px; */
         }
-        /* 전체 마진 값 주기 */
+        /* ì ì²´ ë§ì§ ê° ì£¼ê¸° */
         #topMenu{
             box-sizing: border-box;
-           
-
             background-color: yellow;
             display: table; 
             margin-left: auto;
@@ -104,7 +103,7 @@
             background-color: cyan;
             margin-right: 50px;
         }
-        /* 탑 마진 프로필 사진 자리 차지하게 색상은 뺄것임  boxsizing써서 상자 고정시켜서 사진*/
+        /* í ë§ì§ íë¡í ì¬ì§ ìë¦¬ ì°¨ì§íê² ììì ëºê²ì  boxsizingì¨ì ìì ê³ ì ìì¼ì ì¬ì§*/
         #boardMenu::after{
             clear: both;
             display: block;
@@ -128,7 +127,7 @@
         .bMenubox2 img{
             box-sizing: border-box;
         }
-        /* 혹시몰라서 보더박스로 넘쳐도 안넘어가게 안되면이부분 수정하기 */
+        /* í¹ìëª°ë¼ì ë³´ëë°ì¤ë¡ ëì³ë ìëì´ê°ê² ìëë©´ì´ë¶ë¶ ìì íê¸° */
         .bMenubox3{
             text-align: center;
             box-sizing: border-box;
@@ -141,13 +140,9 @@
             width: 500px;
             height: 150px;
             background-color: brown;
-           
-            
         }
         .textbox{
             background-color: white;
-            
-           
             padding: 10px;
             width: 400px;
             height: 50px;
@@ -226,13 +221,13 @@
 <body>
     <div id="containar">
         <div id="profileName">
-            <h1> user1 프로필</h1>
+            <h1> ${id} 프로필</h1>
         </div>
     
         <div id="topMenu">
             <div id="userPhoto" class="topM"><img src="#" alt="프로필사진"></div>
             <div id="topnev1" class="topM"><a href="#">친구<br>요청</a></div>
-            <div id="topnev2" class="topM"><a href="#">DM <br>보내기</a></div>
+            <div id="topnev2" class="topM"><a href="DM_Room?id=${id}&&create=${sessionScope.loginId}">DM <br>보내기</a></div>
             <div id="topnev3" class="topM"><a href="#">친구<br>삭제</a></div>
         </div>
     
@@ -258,7 +253,7 @@
                 <hr>
                 <div class="bm6Ch1">
                     <p>전체댓글</p>
-                    <p class="comment">user2 : 댓글</p>
+                    <p class="comment">user2 : 댓글</p>
                     <p class="comment">user3 : 댓글</p>
                 </div>
                 <hr>
@@ -276,15 +271,15 @@
     
         </div>
     
-        <!-- jsp:include or iframe으로 공통 ui처리 ?할지 말지 생각 --> 
+        <!-- jsp:include or iframeì¼ë¡ ê³µíµ uiì²ë¦¬ ?í ì§ ë§ì§ ìê° --> 
          <!-- <div id="bottomMenu">  -->
     
-            <!-- 공용처리부분 -->
-            <!-- <div class="bmenu"><a href="#">메인</a></div>
-            <div class="bmenu"><a href="#">검색</a></div>
+            <!-- ê³µì©ì²ë¦¬ë¶ë¶ -->
+            <!-- <div class="bmenu"><a href="#">ë©ì¸</a></div>
+            <div class="bmenu"><a href="#">ê²ì</a></div>
             <div class="bmenu"><a href="#">DM</a></div>
-            <div class="bmenu"><a href="#">알림</a></div>
-            <div class="bmenu"><a href="#">내 프로필</a></div> -->
+            <div class="bmenu"><a href="#">ìë¦¼</a></div>
+            <div class="bmenu"><a href="#">ë´ íë¡í</a></div> -->
         <!-- </div> -->
     </div>
 </body>
