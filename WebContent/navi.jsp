@@ -2,15 +2,15 @@
 <style>
     a>li{
         float: left;
-        padding: 0px 20px;
+        padding: 0px 17px;
         color: black;
         font-size: 120%;
         font-weight: 600;
-        width: 110px;
+        width: 125px;
         height: 30px;
         text-align: center;
         border: 1px solid black;
-                border-collapse: collapse;
+        border-collapse: collapse;
     }
     ul{
         list-style-type: none;
@@ -26,11 +26,12 @@
         background-color: yellow;
     }
     div.bar{
-        width: 100%;
-        height: 30px;
-       
-
-        min-width: 700px;
+        text-align: center;
+        width: 580px;
+        height: 500px;
+        min-width: 935px;                
+        position: fixed;
+        top: 690px;
     }
 </style>
 <div class="bar">
@@ -41,7 +42,7 @@
         <a href="find.jsp" target="_blank">
             <li>검색</li>
         </a>
-        <a href="chatRoom?id=${id}">
+        <a href="#">
             <li>DM</li>
         </a>
         <a href="#">
