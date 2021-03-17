@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class MainDTO {
 	private int board_idx;  //글번호
-	private String id; //id
+	private String userid; //id
 	private String subject; //제목
 	private String content; //글내용
 	private Date date; //작성날짜
@@ -23,12 +23,13 @@ public class MainDTO {
 	public void setBoard_idx(int board_idx) {
 		this.board_idx = board_idx;
 	}
-	public String getId() {
-		return id;
+	public String getUserid() {
+		return userid;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
+	
 	public String getSubject() {
 		return subject;
 	}

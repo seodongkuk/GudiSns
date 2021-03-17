@@ -59,13 +59,19 @@
         </style>
     </head>
     <body>
-            <img src="타인프로필.gif" width="75" height="75" style="float: left;">
+    <button style="float: right" onclick="location.href='writeEdit?board_idx=${dto.board_idx}'">더보기</button>
+            <img src="${dto.newFileName}" width="75" height="75" style="float: left;">
             <input type="button"value="USER_ID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
        <table>
            <tr>
-           <td>
-            <img src="게시물이미지.gif" width="800" height="500"style="margin-top:100px" />
-        </td>
+          	 	<td>
+           			 <img src="게시물이미지.gif" width="800" height="500"style="margin-top:100px" />
+        		</td>
+            </tr>
+            <tr>
+            	<td>
+            	<textarea style="width: 300px; resize: none; border: none; overflow: hidden;" readonly>${dto.content}</textarea>
+            	</td>
             </tr>
         <tr>
         
@@ -90,7 +96,7 @@
         </tr>
         <tr>
             <td>
-                ${dto.user_id} : <input type="text" style="width: 80%;">
+                <input type="text" style="width: 80%;">
                 <input type="button" value="댓글등록" style="float: right ;height: 30;">
             </td>
         </tr>

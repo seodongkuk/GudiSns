@@ -94,6 +94,7 @@
         <h2>새 글쓰기</h2>
         <form action="newWrite" id="newWrite" class="filebox" method="post" enctype="multipart/form-data">
         <!-- 이미지가 서버에들어갈것 enc mult -->
+         <input type="hidden" name="userid" value="${sessionScope.loginId}"/>
             <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000" placeholder="글을작성해주세요"></textarea><br>
             <input type="text" name="hashOne" class="hash" value="첫번째해시태그">
             <input type="text" name="hashTwo" class="hash" value="두번째해시태그">

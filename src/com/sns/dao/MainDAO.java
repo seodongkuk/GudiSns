@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -41,14 +42,13 @@ public class MainDAO {
 	}
 
 	public long write(MainDTO dto) {
-		String sql ="INSERT INTO board2_test(board_idx,content,release_state)VALUES(board3_seq.NEXTVAL,?,?)";
+		String sql ="INSERT INTO board2(board_idx,content,release_state)VALUES(board2_seq.NEXTVAL,?,?)";
 		long bIdx=0;
 		
 		try {
 			ps= conn.prepareStatement(sql,new String[] {"board_idx"});
 			ps.setString(1, dto.getContent());
 			ps.setInt(2, dto.getRelase_state());  // 001002 를 인트로 넣어주고.
-			
 			ps.executeUpdate();
 			rs= ps.getGeneratedKeys();
 			if(rs.next()) {
@@ -56,7 +56,7 @@ public class MainDAO {
 				System.out.println("bidx : " +bIdx);
 				
 				if(dto.getOriFileName() != null) {
-					sql = "INSERT INTO Photo2_test(file_idx,oriFileName,newFileName,board_idx)VALUES(Photo2_test_seq.NEXTVAL,?,?,?)";
+					sql = "INSERT INTO photo2(file_idx,oriFileName,newFileName,board_idx)VALUES(photo2_seq.NEXTVAL,?,?,?)";
 					
 					ps = conn.prepareStatement(sql);
 					ps.setString(1, dto.getOriFileName());
@@ -78,6 +78,161 @@ public class MainDAO {
 		
 		
 		return bIdx;
+	}
+
+	public MainDTO detail(String idx) {
+		MainDTO dto = null;
+		
+		String sql ="SELECT b.board_idx, b.content, b.release_state, p.oriFileName, p.newFileName "+ 
+				"FROM board2 b, photo2 p WHERE b.board_idx = p.file_idx(+) AND b.board_idx = ?";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, idx);
+			rs = ps.executeQuery();
+			System.out.println("상세보기중 해당하는애 스타트");
+			if(rs.next()) {
+				dto= new MainDTO();
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setRelase_state(rs.getInt("release_state"));
+				dto.setOriFileName(rs.getString("oriFileName"));
+				dto.setNewFileName(rs.getString("newFileName"));
+			}
+			System.out.println(dto.getRelase_state());
+			//숫자가넣어져있엇고 댈고와짐 .. 1 2 3
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		
+		return dto;
+	}
+
+	public ArrayList<MainDTO> mylist() {
+		MainDTO dto = null;
+		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
+		String sql = "SELECT b.board_idx, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON b.board_idx = p.file_idx";
+		
+		try {
+			ps =conn.prepareStatement(sql);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				dto = new MainDTO();
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setUserid(rs.getString("user_id"));
+				dto.setOriFileName(rs.getString("oriFileName"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	public int edit(MainDTO dto) {
+		String sql = "UPDATE board2 SET content=? ,release_state=? WHERE board_idx=?";
+		int success = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getContent());
+			ps.setInt(2, dto.getRelase_state());
+			ps.setInt(3, dto.getBoard_idx());
+			success = ps.executeUpdate();
+			System.out.println(success+"갯수");
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return success;
+		
+	}
+
+	public int updateFileName(String delFileName, MainDTO dto) {
+		String sql="";
+		int success = 0;
+		
+		try {
+			if(delFileName !=null) {
+				sql="UPDATE photo2 SET newFileName=?,oriFileName=? WHERE board_idx=?";
+				ps= conn.prepareStatement(sql);
+				ps.setString(1, dto.getNewFileName());
+				ps.setString(2, dto.getOriFileName());
+				ps.setInt(3, dto.getBoard_idx());
+				
+			}else {
+				sql="INSERT INTO photo2(file_idx,oriFileName,newFileName,board_idx)VALUES(photo2_seq.NEXTVAL,?,?,?)";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, dto.getOriFileName());
+				ps.setString(2, dto.getNewFileName());
+				ps.setInt(3, dto.getBoard_idx());
+					
+			}
+			success =ps.executeUpdate();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+		return success;
+	}
+
+	public String getFileName(String idx) {
+		String newFileName =null;
+		String sql ="SELECT newFileName FROM photo2 WHERE board_idx =?";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, idx);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				newFileName = rs.getString("newFileName");
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		
+		
+		return newFileName;
+	}
+
+	public int del(String idx, String newFileName) {
+		int success =0;
+		
+		try {
+			if(newFileName != null) {
+				String photoSql = "DELETE FROM photo2 WHERE file_idx=?";
+				ps = conn.prepareStatement(photoSql);
+				ps.setString(1, idx);
+				ps.executeUpdate();
+			}
+			String boardSql ="DELETE FROM board2 WHERE board_idx=?";
+			ps =conn.prepareStatement(boardSql);
+			ps.setString(1, idx);
+			success= ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return success;
 	}
 
 }

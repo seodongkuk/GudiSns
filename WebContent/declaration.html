@@ -1,6 +1,11 @@
 <html>
 <head>
-    <meta charset="utf-8">  
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imgfile\icon.jpg">
+    <title>new_Writing</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>  
     <style>
         body{
                 width: 700px;
@@ -33,15 +38,29 @@
 </head>
 <body> 
     <h2 class='title'>신고페이지</h2>
-    <div>
+   	<form action="declaration">
         <input class='textBox' type="text" placeholder="신고사유를 작성해주세요."/>
-    </div>
-    <br/>
-    <div class="button">
-        <a>
-            <button>신고하기</button>
-            <button>취소</button>
-        </a>
-    </div>
+   	
+   	</form>
+  		<button type="submit" form="declaration">신고하기</button>
+        <button type="button" onclick="next()">취소</button>
+  
+  
 </body>
+<script>
+    function next(){
+
+	if(confirm("글 수정을 취소하시겠습니까 ?"))
+	{
+   //예 
+   this.self.close();
+             
+	}
+	else
+	{
+	// 아니오
+
+	}
+    }
+	</script>
 </html>
