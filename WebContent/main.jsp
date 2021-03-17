@@ -44,7 +44,7 @@
 		height: 30px;
 	}
 	
-	input[type='submit'], input[type='button'] {
+	input[type='submit'] {
 		background-color: rgb(240, 207, 207);
 		border: 0px;
 	}
@@ -56,6 +56,13 @@
 	th {
 		font-size: 20;
 	}
+	button{
+		background-color: rgb(240, 207, 207);
+		border: 0px;
+		position: absolute; 
+		left: 1090px; 
+		top: 130px;
+		}
 </style>
 </head>
 <div class="main">
@@ -70,7 +77,9 @@
 				<td><input type="button" value="로그아웃"
 					onclick="location.href='logout'"></td>
 			</tr>
-			<input type="button" value="새글쓰기" style="position: absolute; left: 1090px; top: 130px;">
+			<button onclick="location.href='newWriting.jsp'">
+				새글쓰기
+			</button>
 		</table>
 		<h2>구디SNS</h2>
 		<hr>
