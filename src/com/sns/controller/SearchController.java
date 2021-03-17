@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sns.service.SearchService;
 
-@WebServlet({"/todayTag","/find"})
+@WebServlet({"/todayTag","/find","/budReq","/budDel"})
 public class SearchController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,6 +46,16 @@ public class SearchController extends HttpServlet {
 			System.out.println("검색 요청");		
 			service.find();
 			break;		
+			
+		case "/budReq":
+			System.out.println("친구 요청");
+			service.budReq();
+			break;
+			
+		case "/budDel":
+			System.out.println("친구 삭제 요청");
+			service.budDel();
+			break;
 		}
 	}
 }

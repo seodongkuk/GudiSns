@@ -59,13 +59,10 @@
 	                <tr>
 	                    <td><button style="color: red; margin-left: 90%;">신고</button></td>
 	                </tr>	
-	                <!-- <tr>
-	                    <td><img src="" width="700" height="300"/></td>
-	                </tr> -->
 			        <tr>
 			            <td>
 			                <p>${member2.hashTag}</p>
-			                    <p>${member2.content}</p>
+			                <p>${member2.content}</p>
 			            </td>
 			        </tr>
 			        <tr>
@@ -89,7 +86,6 @@
 					</tr>
 				</table>
 			</c:forEach>
-				<!-- <iframe style=" margin-top: 5px; position: fixed; left: 30px;" src="navi.jsp" width="1000px" height="500px" frameborder="0" ></iframe> -->
 				<iframe id="footer" src="navi.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
 		</body>
 		<script>

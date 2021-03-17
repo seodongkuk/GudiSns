@@ -31,7 +31,8 @@
         height: 500px;
         min-width: 845px;                
         position: fixed;
-        top: 650px;
+        top: 630px;
+        left: 15px;
     }
 </style>
 <div class="bar">

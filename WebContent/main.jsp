@@ -5,10 +5,6 @@
 <meta charset="utf-8">
 <title>구디SNS</title>
 <style>
-	/* div.main{
-		margin-left: 300px;	
-	} */
-	
 	body {
 		width: 830px;
 		height: 850px;

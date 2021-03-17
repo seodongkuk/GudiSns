@@ -27,6 +27,7 @@ public class SearchDAO {
 			e.printStackTrace();
 		}
 	}
+
 	//자원정리 메서드(중복코드방지)
 	private void resClose() {
 		try {//널값 유무 확인해서 닫아주기 -> 널포인트익셉션 방지
@@ -45,6 +46,11 @@ public class SearchDAO {
 	public ArrayList<SearchDTO> todayTag() {
 		ArrayList<SearchDTO> tag = new ArrayList<SearchDTO>();
 		//해시태그 TOP3
+		/*String sql = "SELECT * FROM (" + 
+				" SELECT h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
+				" WHERE b.board_idx = h.board_idx AND TO_CHAR(b.reg_date,'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') GROUP BY h.hashtag" + 
+				" ORDER BY COUNT(h.hashtag) DESC)" + 
+				" WHERE rownum <= 3";*/
 		String sql = "SELECT * FROM (" + 
 				"SELECT ROW_NUMBER() OVER(ORDER BY COUNT(h.hashtag) DESC) AS rnum," + 
 				" h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
@@ -65,12 +71,12 @@ public class SearchDAO {
 			e.printStackTrace();
 		} finally {
 			resClose();//5. 자원정리
-		}
+				}
 		return tag;		
-	}	
-	
+	}
+		
 	public ArrayList<SearchDTO> findTag(String find, String search) {
-		ArrayList<SearchDTO> list = new ArrayList<SearchDTO>();
+		ArrayList<SearchDTO> list = new ArrayList<SearchDTO>();		
 		//해시태그 검색
 		if(find.equals("HashTag")) {
 			String sql = "SELECT b.user_id,b.board_idx,b.content,h.hashTag FROM Board2 b, HashTag2 h "
@@ -92,7 +98,7 @@ public class SearchDAO {
 				e.printStackTrace();
 			} finally {
 				resClose();//5. 자원정리
-			}	
+			}		
 		//유저 검색
 		}else if(find.equals("User")) {
 			String sql = "SELECT user_id,name FROM member2 WHERE user_id = ?";
@@ -115,7 +121,47 @@ public class SearchDAO {
 		}
 		return list;			
 	}
-	
-	
+
+	public int budReq(String loginId, String budId) {
+		int success = 0;
+		//친구요청은 한 번만 가능하게(기존 데이터 있는지 확인)
+		String sql = "SELECT user_id,bud_id FROM BuddyList2 WHERE user_id=? AND bud_id=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			ps.setString(2, budId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				success = 0;
+			}else if(!loginId.equals(budId)) {
+				sql = "INSERT INTO BuddyList2(user_id,bud_id,state) VALUES(?,?,'001')";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, loginId);
+				ps.setString(2, budId);
+				success = ps.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();//5. 자원정리
+		}
+		return success;	
+	}
+	//친구 삭제
+	public int budDel(String loginId, String budId) {
+		int success = 0;
+		String sql = "DELETE FROM BuddyList2 WHERE user_id=? AND bud_id=? AND state='002'";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			ps.setString(2, budId);
+			success = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return success;
+	}
 
 }
