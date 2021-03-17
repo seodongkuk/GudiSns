@@ -77,10 +77,10 @@
         
       
        
-        <iframe style="position: absolute;float: left; scroll-behavior: auto;left: 0;" src="board.html" width="90%" height="80%" frameborder="0">
+        <iframe style="position: absolute;float: left; scroll-behavior: auto;left: 0;" src="board.jsp" width="90%" height="80%" frameborder="0">
         <hr></iframe>
         
-        <iframe style=" margin-top: 40% ; position: fixed;left: 30%;" src="navi.html" width="1000px" height="500px" frameborder="0" ></iframe>
+        <iframe style=" margin-top: 40% ; position: fixed;left: 30%;" src="navi.jsp" width="1000px" height="500px" frameborder="0" ></iframe>
         
     </body>
 </center>
