@@ -94,27 +94,25 @@
     <div id="newWritebox">
         <h2>글 수정</h2>
         <form action="edit" id="newWrite" class="filebox">
-        <input type="hidden" name="board_idx" value="${dto.board_idx}"/>
+        <input type="hidden" name="idx" value="${dto.board_idx}"/>
         
             <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000">${dto.content}</textarea><br>
-            <input type="text" name="hashOne" class="hash" value="">
-            <input type="text" name="hashTwo" class="hash" value="">
+            <input type="text" name="hashOne" class="hash" value="${dto.hashOne}">
+            <input type="text" name="hashTwo" class="hash" value="${dto.hashTwo}">
             <!-- 추가 삭제는 자바사크립트로  -->
             <br>
-            <%-- <c:if test="${dto.newFileName ne null}"> --%>
             <label for="file">업로드</label>
             <input type="file" id="file" name="photo">
-            <input class="upload_name" value="">
+            <input class="upload_name" value="${dto.newFileName}">
             <!-- {기존 파일 명을 보여줘야함 .수정해야하니까 .. value로 처리하는게 편할듯 }-->
-        <%--     </c:if> --%>
             <br>
             <select name="release_state" id="selectBox">
-                <option value="1" <c:if test="${dto.relase_state==1}"> selected="selected"</c:if> >전체공개</option>
-                <option value="2" <c:if test="${dto.relase_state==2}"> selected="selected"</c:if> >친구공개</option>
-                <option value="3" <c:if test="${dto.relase_state==3}"> selected="selected"</c:if> >나만보기</option>
+                <option value="001" <c:if test="${param.release_state}"> selected="selected"</c:if>>전체공개</option>
+                <option value="002" <c:if test="${param.release_state}"> selected="selected"</c:if>>친구공개</option>
+                <option value="003" <c:if test="${param.release_state}"> selected="selected"</c:if>>나만보기</option>
             </select>
         </form>
-        <button type="submit" form="edit">수정완료</button>
+        <button type="submit" form="newWrite">수정완료</button>
         <button type="button" onclick="next()">취소</button>
         <!-- 자바스크립트로 메인으로 보내기 !-->
     </div>

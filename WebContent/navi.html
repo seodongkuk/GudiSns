@@ -1,5 +1,5 @@
 <style>
-    .bar ul li{
+    a>li{
         float: left;
         padding: 0px 20px;
         color: black;
@@ -34,14 +34,20 @@
 </style>
 <div class="bar">
     <ul>
-        <li><a href="#">메인</a></li>
-   
-        <li><a href="find.jsp" target="_blank">검색</a></li>
-
-     	<li><a href="#">DM</a></li>
-
-        <li><a href="#">알림</a></li>
-
-        <li><button onclick="location.href='./MyProfile'">리스트</button></li>
-	</ul>
+       <a href="#">
+            <li>메인</li>
+        </a>
+        <a href="find.jsp" target="_blank">
+            <li>검색</li>
+        </a>
+        <a href="#">
+            <li>DM</li>
+        </a>
+        <a href="#">
+            <li>알림</li>
+        </a>
+        <a href="#">
+            <li>내프로필</li>
+        </a>
+    </ul>
 </div>
