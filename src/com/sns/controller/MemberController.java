@@ -54,15 +54,22 @@ public class MemberController extends HttpServlet {
 			System.out.println("로그인 요청");
 			boolean success = service.login();
 			System.out.println("로그인 결과 : " + success);
+			String loginId = req.getParameter("userId");
 
 			page = "index.jsp";
 			msg = "아이디와 비밀번호를 확인해 주세요.";
 
 			if (success) {
-				String loginId = req.getParameter("userId");
-				page = "main.jsp";
-				msg = loginId + "님, 반갑습니다.";
-				req.getSession().setAttribute("loginId", loginId);
+				if(loginId.equals("admin")){
+					page = "manager_report.jsp";
+					msg = loginId + "님, 반갑습니다.";
+					req.getSession().setAttribute("loginId", loginId);	
+					
+				}else {
+					page = "main.jsp";
+					msg = loginId + "님, 반갑습니다.";
+					req.getSession().setAttribute("loginId", loginId);	
+				}
 			}
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
@@ -72,6 +79,7 @@ public class MemberController extends HttpServlet {
 		case "/logout":
 			req.getSession().removeAttribute("loginId");
 			resp.sendRedirect("index.jsp");
+			System.out.println(session.getAttribute("userId"));				//세션 널값 처리
 			break;
 //---------------------------------------------------------------------------			
 		case "/main":

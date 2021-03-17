@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -41,7 +43,7 @@
     <body>
         <h1>관리자 모드</h1>
         <h3>신고접수 리스트</h3>
-        <input type="button" onclick="" value="로그아웃"/>
+        <input type="button" onclick="location.href='logout'" value="로그아웃"/>
         <table>
             <tr>
                 <th>신고접수 번호</th>
