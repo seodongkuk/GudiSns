@@ -42,6 +42,9 @@ public class DmService {
 			System.out.println("현재 존재하는 방입니다.");
 			dao = new DmDAO();
 			dao.updateChat(fromId,toId,content);
+		}else {
+			dao = new DmDAO();
+			dao.updateChat(fromId,toId,content);
 		}
 		
 	}

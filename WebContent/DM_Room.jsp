@@ -153,6 +153,16 @@
     	function onMessage(e){
     		//가져온 채팅을 담는다
     		var chatMsg = event.data;
+    		
+    		var today = new Date();
+    		
+    		var year = today.getFullYear();
+    		var month = today.getMonth();
+    		var day = today.getDay();
+    		
+    		var hours = today.getHours();
+    		var minutes = today.getMinutes();
+    		var time = year+"/"+month+"/"+day+" "+hours+":"+minutes;
 
     		var sessionId = "${sessionScope.loginId}";
     		
@@ -179,7 +189,7 @@
     		var $chat = $("<div id='otherMsgBox'><span><img src='C:\Users\HSK\Pictures\오라클홈폴더.png'/></span>"
                 +"<div id='userId'>"+chatId[0] +"</div>"
                 +"<p style='position: absolute; margin-left: 70%; top: auto; bottom: 5%;'>"
-                   +"21-03-10 PM 03:50"
+                   +time
                 +"</p>"
                 +"<div class='otherChat'>"
                     +"<p style='padding-bottom: 10px;'>"
@@ -209,6 +219,15 @@
     		var sessionId =  "${sessionScope.loginId}";
     		var chatMsg = inputMsg.value;
     		var patId = getParameterByName('id');
+    		var today = new Date();
+    		
+    		var year = today.getFullYear();
+    		var month = today.getMonth();
+    		var day = today.getDay();
+    		
+    		var hours = today.getHours();
+    		var minutes = today.getMinutes();
+    		var time = year+"/"+month+"/"+day+" "+hours+":"+minutes;
     		
     		//아이디 구분..?
     		//채팅 내용이 없으면 보내지 않음
@@ -219,7 +238,7 @@
     		//내 채팅이 보여질 부분
     		var $chat = $("<div id='myMsgBox'>"+
                     "<p style='position: absolute; margin-left: 1%; top: auto; bottom: 5%;  padding-left: 3px;'>"
-                    +"21-03-10 PM 03:50"
+                    +time
                 +"</p>"
                 +"<span id='beforeRead' style='margin-left: 70%; margin-top: auto; margin-bottom: 10%;'>"
                 +"<span style='color: blue;'>new </span>읽지 않음"
