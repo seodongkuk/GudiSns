@@ -2,7 +2,7 @@
 <style>
     a>li{
         float: left;
-        padding: 0px 17px;
+        padding: 0px 15px;
         color: black;
         font-size: 120%;
         font-weight: 600;
@@ -14,7 +14,7 @@
     }
     ul{
         list-style-type: none;
-        min-width: 650px;
+        min-width: 800px;
         display: inline;
     }
     a:link{
@@ -29,9 +29,9 @@
         text-align: center;
         width: 580px;
         height: 500px;
-        min-width: 935px;                
+        min-width: 845px;                
         position: fixed;
-        top: 690px;
+        top: 650px;
     }
 </style>
 <div class="bar">
