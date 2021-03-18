@@ -146,17 +146,15 @@ public class MainService {
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		
-		MainDAO dao = new MainDAO();
 		String board_idx = req.getParameter("board_idx");
-		String writedate = req.getParameter("writedate");
 		
-		System.out.println("loginId:"+loginId);
-		System.out.println("board_idx : "+board_idx+",writedate : "+writedate);
+		System.out.println("loginId:"+loginId+"board_idx : "+board_idx);
 		
 	
 		ReplyDAO rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
-		System.out.println("board_idx :"+board_idx+"댓글개수:"+rcnt);
+		
+		MainDAO dao = new MainDAO();
 		ArrayList<MainDTO> flist = dao.flist(loginId);
 		System.out.println(flist.size());
 		String msg = "친구없음";

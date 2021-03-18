@@ -55,7 +55,7 @@
 		    </table>
 		</c:forEach>
 	    <iframe style="position: absolute; margin-top: -20px" 
-	    	src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
+	    	src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<script>
 		//Service에서 지정한 msg 값을 alert로 View

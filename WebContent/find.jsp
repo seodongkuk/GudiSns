@@ -55,7 +55,7 @@
 	            <li>${HashTag2.rnum}.  ${HashTag2.hashTag}</li>
 	        </ul>
     	</c:forEach>
-	        <iframe src="navi.jsp" width="800px" height="1000px" scrolling="no" frameborder="0"></iframe>
+	        <iframe src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<script>
 		//Service에서 지정한 msg 값을 alert로 View
