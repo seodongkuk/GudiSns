@@ -41,6 +41,12 @@
                 margin: 0; 
                 height:5px;
             }
+            button{
+	            font-size: 50px;
+	            background-color: white;
+	            border: none;
+	            float: left;
+            }
 .btn-like {
   color: transparent;
   text-shadow: 0 0 2px rgba(255,255,255,.7), 0 0 0 #000;
@@ -61,7 +67,7 @@
     <body>
             <img src="타인프로필.gif" width="75" height="75" style="float: left;">
             <input type="button"value="USER_ID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
-       <table>
+       <table id="board_idx">
            <tr>
            <td>
             <img src="게시물이미지.gif" width="600" height="450"style="margin-top:100px" />
@@ -70,7 +76,7 @@
         <tr>
         
        <td>
-            <button class="btn-like" style="font-size: 50px;background-color: white;border: none;float: left;">♥</button>
+            <button id="like">♥</button>
             <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
             <input type="text"value="작성날짜:2021-03-10"style="float: right;border: none;margin-top: 15px;">
         </td>
@@ -100,8 +106,17 @@
 <script src="//code.jquery.com/jquery.min.js"></script>
 
 <script>
-    $(".btn-like").click(function() {
-        $(this).toggleClass("done");
-    })
+	/*
+    $("#like").click(function() {
+    	var board_idx = $('#board_idx');
+        $.ajax({
+        	type:'get'
+       		,url:'board'
+       		,data:
+       		,cache: false
+       		,dataType:'JSON'
+       		,success:function()
+        });
+    });*/
     </script>
 </html>

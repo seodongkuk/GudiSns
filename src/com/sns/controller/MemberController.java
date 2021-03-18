@@ -50,27 +50,38 @@ public class MemberController extends HttpServlet {
 
 // ---------------------------------------------------------------------------
 		switch (sub) {
+
 		case "/login":
 			System.out.println("로그인 요청");
 			boolean success = service.login();
 			System.out.println("로그인 결과 : " + success);
+			
 			String loginId = req.getParameter("userId");
 
 			page = "index.jsp";
 			msg = "아이디와 비밀번호를 확인해 주세요.";
 
-			if (success) {
-				if(loginId.equals("admin")){
-					page = "manager_report.jsp";
-					msg = loginId + "님, 반갑습니다.";
-					req.getSession().setAttribute("loginId", loginId);	
-					
-				}else {
+				
+			
+			if(loginId.indexOf("admin") > -1){
+			System.out.println("어드민 로그인");
+			page = "admin_login";
+			req.getSession().setAttribute("loginId", loginId);
+			}else {
+			if (success) {			
+				if (service.checkBlackList()) {
+					page = "index.jsp";
+					msg = loginId + "블랙리스트 입니다.";
+					req.getSession().setAttribute("loginId", loginId);
+				} else {
 					page = "main.jsp";
 					msg = loginId + "님, 반갑습니다.";
-					req.getSession().setAttribute("loginId", loginId);	
-				}//
+					req.getSession().setAttribute("loginId", loginId);
+					System.out.println(loginId.indexOf("admin"));				
+				}
 			}
+			}
+			
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
@@ -83,12 +94,19 @@ public class MemberController extends HttpServlet {
 			break;
 //---------------------------------------------------------------------------			
 		case "/main":
+			
+			
 			System.out.println("main Page!!!");
-
+			if(req.getSession().getAttribute("loginId") != null){
+				
+			
 			ArrayList<MemberDTO> list = service.main();
 			req.setAttribute("list", list);
 			dis = req.getRequestDispatcher("main.jsp");
 			dis.forward(req, resp);
+			}else {
+				resp.sendRedirect("./index.jsp");
+			}
 			break;
 //---------------------------------------------------------------------------			
 		case "/join":
