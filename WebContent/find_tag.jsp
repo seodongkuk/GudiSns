@@ -54,7 +54,7 @@
 	        <c:forEach items="${list}" var="member2">
 	            <table style="float: left;margin-top:40px; width: 250px">
 	                <tr>
-	                    <td rowspan="2"><img src="user.jpg" width="70" height="70"></td>
+	                    <td rowspan="2"><img src="기본프사.png" width="70" height="70"></td>
 	                    <td>${member2.user_id}</td>            
 	                </tr> 
 	            </table>	
