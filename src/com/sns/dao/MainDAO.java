@@ -108,7 +108,7 @@ public class MainDAO {
 	public ArrayList<MainDTO> mylist() {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
-		String sql = "SELECT b.board_idx, b.content,b.user_id, p.oriFileName, p.newFileName, b.writedate FROM board2 b LEFT OUTER JOIN photo2 p ON b.board_idx = p.file_idx";
+		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName, b.writedate FROM board2 b LEFT OUTER JOIN photo2 p ON b.board_idx = p.file_idx";
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -117,8 +117,9 @@ public class MainDAO {
 			while (rs.next()) {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setRelase_state(rs.getInt("release_state"));
 				dto.setContent(rs.getString("content"));
-				dto.setUserid(rs.getString("user_id"));
+				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				dto.setWritedate(rs.getDate("writedate"));
@@ -229,7 +230,8 @@ public class MainDAO {
 		MainDTO dto = null;
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
-		String sql = "SELECT b.board_idx, b.content,b.user_id, p.oriFileName, p.newFileName, b.writedate FROM board2 b LEFT OUTER JOIN photo2 p ON b.board_idx = p.file_idx WHERE b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))";
+		
+		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON b.board_idx = p.file_idx WHERE b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))"; 
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -240,10 +242,16 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
-				dto.setUserid(rs.getString("user_id"));
+				dto.setRelase_state(rs.getInt("release_state"));
+				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				dto.setWritedate(rs.getDate("writedate"));
+				
+				if(dto.getRelase_state()== 1) {
+					System.out.println("1로들어와서 친구가없음");
+					
+				}
 				flist.add(dto);
 					}
 				

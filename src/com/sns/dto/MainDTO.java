@@ -4,7 +4,8 @@ import java.sql.Date;
 
 public class MainDTO {
 	private int board_idx;
-	private String userid;
+	private String user_id;
+
 	private String subject;
 	private String content;
 	private Date writedate;
@@ -35,6 +36,13 @@ public class MainDTO {
 	public void setBbud_id(String bbud_id) {
 		this.bbud_id = bbud_id;
 	}
+	public String getUser_id() {
+		return user_id;
+	}
+	
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 
 	public int getBstate() {
 		return bstate;
@@ -52,14 +60,7 @@ public class MainDTO {
 		this.board_idx = board_idx;
 	}
 
-	public String getUserid() {
-		return this.userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
+	
 	public String getSubject() {
 		return this.subject;
 	}

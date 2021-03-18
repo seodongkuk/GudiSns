@@ -31,7 +31,7 @@ public class FileService {
 				dto.setBoard_idx(Integer.parseInt(idx));
 			}
 
-			dto.setUserid(userid);
+			dto.setUser_id(userid);
 			dto.setContent(content);
 			dto.setRelase_state(Integer.parseInt(release));
 			String oriFileName = multi.getFilesystemName("photo");

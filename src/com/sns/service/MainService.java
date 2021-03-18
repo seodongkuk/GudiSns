@@ -32,7 +32,7 @@ public class MainService {
 			String msg = "글 등록에 실패 하였습니다.";
 			long idx = dao.write(dto ,loginId);
 			if (idx > 0) {
-				page = "main.jsp";
+				page = "/flist";
 				msg = "글 등록에 성공 하였습니다.";
 			}
 
