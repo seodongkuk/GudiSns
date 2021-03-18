@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.board.dto.BoardDTO;
 import com.sns.dto.AdminDTO;
 
 public class AdminDAO {
@@ -51,26 +51,60 @@ public class AdminDAO {
 		}		
 		return success;
 	}
-	public ArrayList<AdminDTO> reportList() {
-		String sql="SELECT idx,subject,user_name,bHit FROM bbs ORDER BY idx DESC";
+	public HashMap<String, Object> reportList(int page) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int pagePerCnt = 10;
+	
+		int end = page * pagePerCnt;	
+		int start = end-(pagePerCnt-1);
+		
+		
+		String sql="SELECT * FROM "
+				+"(SELECT ROW_NUMBER() OVER(ORDER BY report_idx DESC) AS rnum,report_idx,user_id,board_idx,content,report_date,report_state,admin_id	 FROM Report2)"
+				+ "WHERE rnum BETWEEN ? AND ?";;
 		ArrayList<AdminDTO> reportList = new ArrayList<AdminDTO>();		
 		try {
 			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();			
+			ps.setInt(1, start);
+			ps.setInt(2, end);
+			rs = ps.executeQuery();
 			while(rs.next()) {
 				AdminDTO dto = new AdminDTO();
-				dto.setIdx(rs.getInt("idx"));
-				dto.setSubject(rs.getString("subject"));
-				dto.setUser_name(rs.getString("user_name"));
-				dto.setbHit(rs.getInt("bHit"));
-				list.add(dto);
-			}			
+				dto.setReport_idx(rs.getInt("report_idx"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setReport_date(rs.getDate("report_date"));
+				dto.setReport_state(rs.getString("report_state"));
+				dto.setAdmin_id(rs.getString("admin_id"));
+				reportList.add(dto);
+			}
+			System.out.println("reportList size : "+reportList.size());			
+			int maxPage = getMaxPage(pagePerCnt);
+			map.put("reportList", reportList);
+			map.put("maxPage", maxPage);
+			System.out.println("max page : "+maxPage);			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			resClose();//자원닫기
+			resClose();
 		}		
-		return list;
+		return map;
+		
 	}
-
+	private int getMaxPage(int pagePerCnt) {		
+		String sql="SELECT COUNT(Report_idx) FROM Report2";		
+		int max = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				int cnt = rs.getInt(1);
+				max = (int) Math.ceil(cnt/(double)pagePerCnt);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return max;
+	}
 }

@@ -1,6 +1,7 @@
 package com.sns.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sns.dao.AdminDAO;
 import com.sns.service.AdminService;
 
 @WebServlet({ "/admin_login" })
@@ -52,6 +54,10 @@ public class AdminController extends HttpServlet {
 		switch (sub) {
 
 		case "/admin_login":
+			
+			String loginId = (String) req.getSession().getAttribute("loginId");
+			
+			if(loginId != null) {
 			System.out.println("admin 로그인 요청");
 			boolean success = service.admin_login();
 			System.out.println("admin 로그인 결과 : " + success);
@@ -65,10 +71,31 @@ public class AdminController extends HttpServlet {
 					String admin_loginId = req.getParameter("userId");
 					msg = admin_loginId + "관리자님 반갑습니다.";
 					req.getSession().setAttribute("admin_loginId", admin_loginId);
+					
+					
+					
+					int group = 1;
+					String pageParam = req.getParameter("page");
+					if(pageParam != null) {
+						group = Integer.parseInt(pageParam);
+					}
+							
+					AdminDAO reportListDAO = new AdminDAO();
+					HashMap<String, Object> map = reportListDAO.reportList(group);
+					
+					req.setAttribute("maxPage", map.get("maxPage"));
+					req.setAttribute("reportList", map.get("reportList"));
+					req.setAttribute("currPage", group);
+					
+					
 				}
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
+			}else {
+				resp.sendRedirect("./index.jsp");
+			}
+			
 			break;
 			
 	

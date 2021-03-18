@@ -56,19 +56,25 @@
                 </th>
                 <th>처리</th>
             </tr>
+            <c:forEach items="${reportList}" var="reportList">
             <tr>
-                <td></td>
-                <td></td>
+                <td>${reportList.report_idx}</td>
+                <td>${reportList.report_date}</td>
                 <td><a href="#">보기</a></td>
-                <td></td>
+                <td>${reportList.user_id}</td>
                 <td><input type="checkbox" id="ck_blind"></td>
                 <td><input type="checkbox" id="ck_black"></td>
                 <td><a href="#">처리하기</a></td>
             </tr>
+            </c:forEach>
         </table>        
-        <button>이전</button>
-        <button>1</button>
-        <button>다음</button>
+        <span id="page">${currPage}</span>
+			<span>
+				<c:if test="${currPage == maxPage}">다음</c:if>
+				<c:if test="${currPage < maxPage}">
+					<a href="./?page=${currPage+1}">다음</a>	
+				</c:if>
+				</span>
         <iframe src="manager_bottom.html" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
     </body>
 </html>
