@@ -52,6 +52,28 @@ public class MemberDAO {
 		}		
 		return success;
 	}
+	
+	//--------------------------------------------------------------------------
+	public String findBlackListbyuserId(String id) {
+		
+		String success ="";
+		String sql="SELECT blk_state FROM member2 WHERE USER_ID=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,id);
+			rs = ps.executeQuery();
+			rs.next();
+			success=rs.getString("blk_state");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+	
+	
 	//--------------------------------------------------------------------------회원가입
 	public boolean join(String id,String pw,String name,String phone,String email) {
 		boolean success = false;

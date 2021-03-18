@@ -1,9 +1,26 @@
 package com.sns.service;
 
-public class AdminService {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-	public AdminService() {
-		// TODO Auto-generated constructor stub
+import com.sns.dao.AdminDAO;
+
+public class AdminService {
+	
+	HttpServletRequest req = null; 
+	HttpServletResponse resp = null;
+	
+	public AdminService(HttpServletRequest req, HttpServletResponse resp) {
+		this.req = req;
+		this.resp = resp;
+	}
+
+	public boolean admin_login() {
+		AdminDAO dao = new AdminDAO();
+		String id = req.getParameter("userId");
+		String pw = req.getParameter("userPw");
+		System.out.println(id+"/"+pw);
+		return dao.admin_login(id, pw);
 	}
 
 }

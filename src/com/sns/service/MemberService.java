@@ -31,7 +31,17 @@ public class MemberService {
 		System.out.println(id+"/"+pw);
 		return dao.login(id, pw);				
 	}
-	
+	public boolean checkBlackList() {
+		MemberDAO dao = new MemberDAO();
+		String id = req.getParameter("userId");
+		String blackListState= dao.findBlackListbyuserId(id);
+		System.out.println("블랙리스트여부"+blackListState);
+		if(blackListState.equals("FALSE")){
+			return false;
+		}
+		return true;
+		
+	}
 	
 	public ArrayList<MemberDTO> main() {
 		MemberDAO dao = new MemberDAO();

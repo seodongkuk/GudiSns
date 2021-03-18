@@ -53,8 +53,8 @@
             <h2><img src="???" width="100" height="100">구디SNS</h2>
         
         <table>
-           
             <form action="login" method="POST">
+  
                 <tr>
                     <th>ID</th>
                     <td>
@@ -62,6 +62,7 @@
                     </td>
                     <td rowspan="2">
                         <input type="submit" value="로그인"/>
+    
                     </td>
                 </tr>
                 <tr>
