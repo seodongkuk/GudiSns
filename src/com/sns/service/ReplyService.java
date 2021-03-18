@@ -61,7 +61,7 @@ public class ReplyService {
 		String user_id = req.getParameter("user_id");
 		String board_idx = req.getParameter("board_idx");
 		ArrayList<ReplyDTO> list= dao.list(user_id, board_idx);
-		System.out.println(list.size());
+		System.out.println("댓글리스트사이즈:"+list.size());
 		req.setAttribute("list", list);
 		RequestDispatcher dis = req.getRequestDispatcher("rlist.jsp");
 		dis.forward(req, resp);
