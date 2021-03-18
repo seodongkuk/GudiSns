@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
     <head>
         <meta charset="utf-8">
@@ -11,7 +14,7 @@
             } */
             #dmRoom{
                 margin-left: 35%;
-                border:1px solid black;
+                border:1px solid lightgray;
                 width: 500px;
                 height: 200px;
                 padding: 10px;
@@ -29,51 +32,47 @@
                 vertical-align: top;
             }
         </style>
+        
+    	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     </head>
     <body>
-        <!--Alt+Shift+B 를 누르면 실행-->
-        <h2 style="text-align: center;">DM 리스트 </h2>
+        <!--Alt+Shift+B ë¥¼ ëë¥´ë©´ ì¤í-->
+        <h2 style="text-align: center;">DM 리스트  </h2>
         
-            <p style="text-align: center;">채팅방목록</p>
-
+            <p style="text-align: center;">채팅방</p>
+            
+            <p id="noDm" style="text-align: center;">현재 DM이 없습니다...</p>
+			<c:forEach items="${list}" var="dm">
             <div id='dmRoom'>
                 <span>
-                    <img src="C:\Users\HSK\Pictures\오라클홈폴더.png"/>
+                    <img src="C:\Users\HSK\Pictures\ì¤ë¼í´íí´ë.png"/>
                 </span>
                 <div id="userId">
-                    USER
+                    <c:if test="${dm.send_id != id}">${dm.send_id}</c:if>
+                    <c:if test="${dm.recieve_id == id}">${dm.recieve_id}</c:if>
                 </div>
                 <div style="margin-left: 10px;">
-                    - 마지막 채팅 내용
+                   	${dm.content}
                 </div>
                 <div style="margin-left: 70%; margin-top: -15%;">
-                    마지막 채팅 시간
+                   ${dm.sendtime}
                 </div>
                 <div style="margin-left: 85%; margin-top: 25%;">
-                    <button>
-                        입장
+                    <button onclick="location.href='DM_list?idx=${dm.dm_idx}'">
+                        	입장
                     </button>
                 </div>
             </div>
-
-            <div id='dmRoom'>
-                <span>
-                    <img src="C:\Users\HSK\Pictures\오라클홈폴더.png"/>
-                </span>
-                <div id="userId">
-                    USER2
-                </div>
-                <div>
-                    - 마지막 채팅 내용 어쩌구 저쩌구 샬라샬라
-                </div>
-                <div style="margin-left: 70%; margin-top: -15%;">
-                    마지막 채팅 시간
-                </div>
-                <div style="margin-left: 85%; margin-top: 25%;">
-                    <button>
-                        입장
-                    </button>
-                </div>
-            </div>
+            </c:forEach>
+            
     </body>
+    <script>
+    	var success = "${success}";
+    	console.log(success);
+		if(success){
+			$('#noDm').css('display','none');
+		}else{
+			$('#noDm').css('display','block');
+		}
+    </script>
 </html>

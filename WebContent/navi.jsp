@@ -2,19 +2,19 @@
 <style>
     a>li{
         float: left;
-        padding: 0px 20px;
+        padding: 0px 15px;
         color: black;
         font-size: 120%;
         font-weight: 600;
-        width: 110px;
+        width: 125px;
         height: 30px;
         text-align: center;
         border: 1px solid black;
-                border-collapse: collapse;
+        border-collapse: collapse;
     }
     ul{
         list-style-type: none;
-        min-width: 650px;
+        min-width: 800px;
         display: inline;
     }
     a:link{
@@ -26,11 +26,13 @@
         background-color: yellow;
     }
     div.bar{
-        width: 100%;
-        height: 30px;
-       
-
-        min-width: 700px;
+        text-align: center;
+        width: 580px;
+        height: 500px;
+        min-width: 845px;                
+        position: fixed;
+        top: 630px;
+        left: 15px;
     }
 </style>
 <div class="bar">

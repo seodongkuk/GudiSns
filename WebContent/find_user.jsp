@@ -8,13 +8,6 @@
 		<!-- 제이쿼리 사용을 위해 선언 -->
 		<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 		<style>
-            /* body{
-                width: 700px;
-                margin: 20px 550px;
-                padding: 50px;
-                text-align: center;
-                border: 1px solid black;
-            } */
             body{
                 width: 830px;
                 margin-left:20%;
@@ -51,14 +44,13 @@
 		            <td rowspan="2"><img src="user.jpg" width="70" height="70"></td>
 		            <td style="padding-right: 70px;">${member2.user_id}</td>  
 		            <td style="padding-left: 40px;">
-		                <button>친구요청</button>
-		                <button>DM보내기</button>
-		                <button>친구삭제</button>
+		                <button onclick="location.href = 'budReq'">친구요청</button>
+		                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">DM보내기</button>
+		                <button onclick="location.href = 'budDel'">친구삭제</button>
 		            </td>          
 		        </tr>
 		    </table>
 		</c:forEach>
-	    <!-- <iframe style=" margin-top: 35% ; position: fixed;left: 20%;" src="navi.html" width="1000px" height="500px" frameborder="0" ></iframe>  -->
 	    <iframe id="footer" src="navi.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<script>
@@ -67,5 +59,10 @@
 		if(msg != ""){
 			alert(msg);
 		}
+		
+		var msg2 = "${confirm}"
+			if(msg2 != ""){
+				confirm(msg2);
+			}
 	</script>
 </html>

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sns.service.ReplyService;
 
 @WebServlet({"/rlist","/rwrite","/rdel","/replyForm"})
-public class ReplyControll extends HttpServlet{
+public class ReplyController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

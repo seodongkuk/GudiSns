@@ -43,6 +43,10 @@
            
         </style>
     </head>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script>
+
+    </script>
     <body>
         
         <center>
@@ -78,11 +82,18 @@
     </body>
 
 <script>
-var msg = "${msg}";
 
-if(msg != ""){
-	alert(msg);
-}
-
+	var msg = "${msg}";
+	
+	window.onkeydown = function(){
+		var kcode = event.keyCode;
+		if(kcode == 116){
+			msg = "";
+		}
+	}
+	
+	if(msg != ""){
+		alert(msg);
+	}
 </script>
 </html>

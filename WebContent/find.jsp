@@ -10,9 +10,11 @@
 		<style>
             body{
                 width: 830px;
+                height: 850px;
                 margin-left:20%;
-                padding: 50px;
+                padding: 5px;
                 border: 1px solid black;
+                overflow: hidden;
             }
             h2,h3{
                 text-align: center;
@@ -53,10 +55,7 @@
 	            <li>${HashTag2.rnum}.  ${HashTag2.hashTag}</li>
 	        </ul>
     	</c:forEach>
-	    <div>
-	        <!-- <iframe id="footer" src="navi.jsp" style="border: none;bottom: 0; left: 350; position: fixed; z-index: 5; top: 850; width: 100%;"></iframe> -->
-	        <iframe id="footer" src="navi.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
-	    </div>
+	        <iframe src="navi.jsp" width="800px" height="1000px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<script>
 		//Service에서 지정한 msg 값을 alert로 View

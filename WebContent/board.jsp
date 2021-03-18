@@ -7,7 +7,7 @@
 
         <style>
         body{
-        margin-left:10%;
+        margin-left:10px;
         }
             table,tr,th,td{
                 border:1px solid white;
@@ -64,7 +64,7 @@
        <table>
            <tr>
            <td>
-            <img src="게시물이미지.gif" width="800" height="500"style="margin-top:100px" />
+            <img src="게시물이미지.gif" width="600" height="450"style="margin-top:100px" />
         </td>
             </tr>
         <tr>
@@ -74,11 +74,6 @@
             <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
             <input type="text"value="작성날짜:2021-03-10"style="float: right;border: none;margin-top: 15px;">
         </td>
-        </tr>
-       <tr>
-           <td style="margin:0; padding: 0;";>
-                <hr>
-           </td>
         </tr>
         <tr>
             <td>

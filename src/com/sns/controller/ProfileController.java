@@ -11,13 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sns.service.ProfileService;
 
-@WebServlet({"/upload"})
+@WebServlet({"/upload","/otherProfile"})
 public class ProfileController extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		ProfileService service = new ProfileService();//업로드 서비스 객체화함
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		dual(req,resp);
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		dual(req,resp);
+	}
+
+	private void dual(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
+		ProfileService service = new ProfileService(req,resp);//업로드 서비스 객체화함
 		
 		String uri = req.getRequestURI();
 		String context = req.getContextPath();
@@ -29,7 +39,15 @@ public class ProfileController extends HttpServlet {
 			System.out.println("프로필사진등록");
 			service.upload();
 			break;
-			}
+			
+		case "/otherProfile":
+			System.out.println("타인 프로필 요청");
+			service.otherProfile();
+			break;
 		}
+		
 	}
+	
+	
+}
 

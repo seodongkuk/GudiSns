@@ -19,6 +19,7 @@ public class SearchService {
 	SearchDAO dao = null;//DB필요 -> DAO 객체화	
 	String page = "";
 	String msg = "";	
+	String confirm = ""; //예|아니오
 	RequestDispatcher dis = null;
 	
 	public SearchService(HttpServletRequest req, HttpServletResponse resp) {
@@ -54,16 +55,19 @@ public class SearchService {
 			System.out.println("리스트 사이즈? " + list.size());// 반환받은 리스트 사이즈 확인
 			// 실패 할 경우
 			msg = "검색한 해시태그의 게시글이 없습니다.";
+			page = "/todayTag";
 			if(search == null || search == "" || search.equals(" ")) {
 				msg = "검색 할 해시태그를 입력해주세요!";
+				page = "/todayTag";
 			}
 			// 성공 할 경우
 			if (list != null && list.size() > 0) {// 리스트가 널값도 아니고, 크기도 1개 이상일 경우
 				msg = "";//msg 초기화
 				req.setAttribute("list", list);// list 실어서
+				page = "find_tag.jsp";
 			}
 			req.setAttribute("msg", msg);// 성공여부에 따른 msg 실어서
-			dis = req.getRequestDispatcher("find_tag.jsp");
+			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
 		
 		//유저 검색
@@ -73,25 +77,70 @@ public class SearchService {
 			System.out.println("리스트 사이즈? " + list.size());// 반환받은 리스트 사이즈 확인
 			// 실패 할 경우
 			msg = "검색하신 유저가 존재하지 않습니다.";
+			page = "/todayTag";
 			if(search == null || search == "" || search.equals(" ")) {
 				msg = "검색 할 유저를 입력해주세요!";
+				page = "/todayTag";
 			}
 			// 성공 할 경우
 			if (list != null && list.size() > 0) {// 리스트가 널값도 아니고, 크기도 1개 이상일 경우
 				msg = "";//msg 초기화
+				page = "find_user.jsp";
 				req.setAttribute("list", list);// list 실어서
+				req.getSession().setAttribute("budId", search);
 			}
 			req.setAttribute("msg", msg);// 성공여부에 따른 msg 실어서
-			dis = req.getRequestDispatcher("find_user.jsp");
+			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
 		}else if(find.equals("none")) {
 			msg = "검색 항목을 선택해주세요!";
-			req.setAttribute("msg", msg);// 성공여부에 따른 msg 실어서
-			dis = req.getRequestDispatcher("find.jsp");
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher("/todayTag");
 			dis.forward(req, resp);
 		}
 	}
 
-	
+	public void budReq() throws ServletException, IOException {
+		
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		String budId = (String) req.getSession().getAttribute("budId");
+		System.out.println("로그인 한 아이디: "+loginId+" / "+"친구요청 한 아이디: "+budId);
+		if(loginId != null) {			
+			dao = new SearchDAO();
+			// 실패 할 경우
+			msg = "이미 친구요청을 한 유저 입니다.";
+			if(loginId.equals(budId)) {
+				msg = "자기 자신에게 친구요청을 할 수 없습니다.";
+			}
+			// 성공 할 경우
+			if(dao.budReq(loginId,budId)>0) {
+				msg = "친구 요청을 보냈습니다.";
+			}
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher("find_user.jsp");
+			dis.forward(req, resp);
+		}
+	}
+
+	public void budDel() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		String budId = (String) req.getSession().getAttribute("budId");
+		System.out.println("로그인 한 아이디: "+loginId+" / "+"친구요청 한 아이디: "+budId);
+		
+		if(loginId != null) {
+			dao = new SearchDAO();
+			// 실패
+			msg = "친구 삭제에 실패했습니다.";
+			// 성공 할 경우
+			if(dao.budDel(loginId,budId)>0) {
+				msg = "";
+				confirm = "정말 삭제 하시겠습니까?";
+			}
+			req.setAttribute("msg", msg);
+			req.setAttribute("confirm", confirm);
+			dis = req.getRequestDispatcher("find_user.jsp");
+			dis.forward(req, resp);
+		}
+	}
 
 }
