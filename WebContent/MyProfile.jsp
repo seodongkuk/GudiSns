@@ -1,7 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>내 프로필</title>
+        <title>ë´ íë¡í</title>
         <style>
             #header{
                 position: relative;
@@ -19,7 +21,7 @@
                 border:1px solid black;
                 width: 800px;
                 height: 500px;
-                /*중앙 정렬*/
+                /*ì¤ì ì ë ¬*/
                 top: 0;
                 right: 0;
                 bottom: 0;
@@ -85,24 +87,24 @@
         <link rel="stylesheet" sype="text/css" href="./css/Likebtn.css">
     </head>
     <body>
-        <!--Alt+Shift+B 를 누르면 실행-->
-        <h2 style="text-align: center;">내 프로필 </h2>
+        <!--Alt+Shift+B ë¥¼ ëë¥´ë©´ ì¤í-->
+        <h2 style="text-align: center;">ë´ íë¡í </h2>
         
         <div id="dmBox">
             <div class="userId">
                 USER
             </div>
             <div>
-                <img style="width: 150px; height: 170px;" src="C:\Users\HSK\Pictures\오라클홈폴더.png"/>
+                <img style="width: 150px; height: 170px;" src="C:\Users\HSK\Pictures\ì¤ë¼í´íí´ë.png"/>
             </div>
-                <input type="button" class="member" value="회원정보 수정">
-                <input type="button" class="member" value="회원 탈퇴">
+                <input type="button" class="member" value="íìì ë³´ ìì ">
+                <input type="button" class="member" value="íì íí´">
 
                 <div class="friendList">
-                    <p>친구목록</p>
+                    <p>ì¹êµ¬ëª©ë¡</p>
                     <hr style="border:solid 1px black;"/>
                     <span>
-                        <img src="C:\Users\HSK\Pictures\오라클홈폴더.png"/>
+                        <img src="C:\Users\HSK\Pictures\ì¤ë¼í´íí´ë.png"/>
                     </span>
                     <div class="friendId">
                         USER1
@@ -110,7 +112,7 @@
                     <hr/>
 
                     <span>
-                        <img src="C:\Users\HSK\Pictures\오라클홈폴더.png"/>
+                        <img src="C:\Users\HSK\Pictures\ì¤ë¼í´íí´ë.png"/>
                     </span>
                     <div class="friendId">
                         USER2
@@ -118,16 +120,16 @@
                     <hr/>
 
                     <span>
-                        <img src="C:\Users\HSK\Pictures\오라클홈폴더.png"/>
+                        <img src="C:\Users\HSK\Pictures\ì¤ë¼í´íí´ë.png"/>
                     </span>
                     <div class="friendId">
                         USER3
                     </div>
                     <hr/>
                     <center>
-                        <button>이전</button>
+                        <button>ì´ì </button>
                         <span>  1 </span>
-                        <button>다음</button>
+                        <button>ë¤ì</button>
                     </center>
                 </div>
         </div>
@@ -137,25 +139,25 @@
             <table>
                 <tr>
                     <td>
-                        <img src="게시물이미지.gif" style="margin-top:10px; width:400px; height:300px;"/>
+                        <img src="ê²ìë¬¼ì´ë¯¸ì§.gif" style="margin-top:10px; width:400px; height:300px;"/>
                     </td>
                  </tr>
                 <tr>
                 <tr>
                     <td class="profileBoard">
-                        <p id="hashTag">#코로나 #코로나종식</p>
+                        <p id="hashTag">#ì½ë¡ë #ì½ë¡ëì¢ì</p>
                             <textarea style="width: 300px; resize: none; border: none; overflow: hidden;" readonly>
-모두 코로나 조심하고,
-종식 되면 만나서 다같이 놀자
-마스크도 안끼고…!
-어쩌구 저쩌구 샬라샬라
+ëª¨ë ì½ë¡ë ì¡°ì¬íê³ ,
+ì¢ì ëë©´ ë§ëì ë¤ê°ì´ ëì
+ë§ì¤í¬ë ìë¼ê³ â¦!
+ì´ì©êµ¬ ì ì©êµ¬ ì¬ë¼ì¬ë¼
                             </textarea>
-                            <button id="moreShow">더보기</button>
+                            <button id="moreShow">ëë³´ê¸°</button>
                      </td>
                      
                  </tr>
             <td>
-                 <button class="btn-like" style="font-size: 50px;background-color: white;border: none;float: left;">♥</button>
+                 <button class="btn-like" style="font-size: 50px;background-color: white;border: none;float: left;">â¥</button>
                  <input style="float: left;margin-top: 30px;border: none;" type="text" value="+20">
              </td>
              </tr>
@@ -166,15 +168,15 @@
              </tr>
              <tr>
                  <td>
-                     <p style="color: grey;">전체 댓글 : 5개</p>
-                     - USER2: 그래그래~!</br>
-                     - USER3: 마스크 꼭 하자!</br>
+                     <p style="color: grey;">ì ì²´ ëê¸ : 5ê°</p>
+                     - USER2: ê·¸ëê·¸ë~!</br>
+                     - USER3: ë§ì¤í¬ ê¼­ íì!</br>
                  </td>
              </tr>
              <tr>
                  <td>
-                     <textarea style="width: 345px; resize: none;"  placeholder="댓글을 입력해주세요."></textarea>
-                     <input type="button" value="댓글등록" style="float: right;height: 30;">
+                     <textarea style="width: 345px; resize: none;"  placeholder="ëê¸ì ìë ¥í´ì£¼ì¸ì."></textarea>
+                     <input type="button" value="ëê¸ë±ë¡" style="float: right;height: 30;">
                  </td>
              </tr>
      
@@ -184,7 +186,7 @@
         </div>
         
         
-        <iframe id="footer" src="navi.html" style="border: none;bottom: 0; left: 550; position: fixed; z-index: 5; top: 850; width: 100%;"></iframe>
+        <iframe id="footer" src="navi.jsp" style="border: none;bottom: 0; left: 550; position: fixed; z-index: 5; top: 850; width: 100%;"></iframe>
 
     </body>
      <script>
@@ -196,9 +198,9 @@
 
 
 	function stickyFooter(){
-		document_height = $(document).height(); // 문서 전체 높이
-		document_scrollTop = $(document).scrollTop(); // 문서 전체 높이 중 스크롤 위치
-		window_height = $(window).height(); // 창 높이
+		document_height = $(document).height(); // ë¬¸ì ì ì²´ ëì´
+		document_scrollTop = $(document).scrollTop(); // ë¬¸ì ì ì²´ ëì´ ì¤ ì¤í¬ë¡¤ ìì¹
+		window_height = $(window).height(); // ì°½ ëì´
 		footer_height = $("footer").height();
 
 		gap = document_height - footer_height - window_height; 

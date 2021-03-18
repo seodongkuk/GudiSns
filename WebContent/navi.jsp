@@ -49,7 +49,7 @@
         <a href="#">
             <li>알림</li>
         </a>
-        <a href="#">
+        <a href="MyProfile" target="_parent">
             <li>내프로필</li>
         </a>
     </ul>

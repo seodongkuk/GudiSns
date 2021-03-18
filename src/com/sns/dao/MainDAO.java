@@ -45,15 +45,14 @@ public class MainDAO {
 
 	}
 
-	public long write(MainDTO dto,String loginId) {
-		String sql = "INSERT INTO board2(board_idx,content,release_state,user_id)VALUES(board2_seq.NEXTVAL,?,?,?)";
+	public long write(MainDTO dto) {
+		String sql = "INSERT INTO board2(board_idx,content,release_state)VALUES(board2_seq.NEXTVAL,?,?)";
 		long bIdx = 0L;
 
 		try {
 			ps = conn.prepareStatement(sql, new String[]{"board_idx"});
 			ps.setString(1, dto.getContent());
 			ps.setInt(2, dto.getRelase_state());
-			ps.setString(3, loginId);
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			if (rs.next()) {
@@ -118,7 +117,7 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
-				dto.setUserid(rs.getString("user_id"));
+				//dto.setUserid(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				list.add(dto);
