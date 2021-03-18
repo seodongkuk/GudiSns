@@ -43,7 +43,7 @@
         <a href="find.jsp" target="_parent">
             <li>검색</li>
         </a>
-        <a href="#">
+        <a href="chatRoom?id=${sessionScope.loginId}" target="_parent">
             <li>DM</li>
         </a>
         <a href="#">
