@@ -264,34 +264,50 @@ public class MainDAO {
 		
 	}
 
-	public int lcheck(String board_idx, String user_id) {
-		int success = 0;
-		String sql = "select count(*) AS like_check from like2 where board_idx = ? and user_id = ?";
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, board_idx);
-			ps.setString(2, user_id);
-			rs = ps.executeQuery();
-			if(rs.next()) {
-				success = rs.getInt("like_check");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
-		}
-		return success;
-	}
+//	public int lcheck(String board_idx, String user_id) {
+//		int success = 0;
+//		String sql = "select count(*) AS like_check from like2 where board_idx = ? and user_id = ?";
+//		try {
+//			ps = conn.prepareStatement(sql);
+//			ps.setString(1, board_idx);
+//			ps.setString(2, user_id);
+//			rs = ps.executeQuery();
+//			if(rs.next()) {
+//				success = rs.getInt("like_check");
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			resClose();
+//		}
+//		return success;
+//	}
 	
 
-	public void lupdate(String board_idx, String user_id) {
-		// TODO Auto-generated method stub
-		
-	}
+	//친구공개 게시글 정렬해서 보기.
+	public ArrayList<MainDTO> array(String loginId) {
+		MainDTO dto = null;
+		ArrayList<MainDTO> array = new ArrayList<MainDTO>();
 
-	public void ldelete(String board_idx, String user_id) {
-		// TODO Auto-generated method stub
-		
+		String sql="select * from board2 WHERE user_id IN(SELECT bud_id FROM buddylist2 WHERE user_id=? AND state = '002') ORDER BY board_idx desc";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				dto = new MainDTO();
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setOriFileName(rs.getString("oriFileName"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				array.add(dto);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return array;
 	}
 
 	

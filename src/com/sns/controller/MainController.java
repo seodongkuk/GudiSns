@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist","/like"})
+@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist","/like","/array"})
 public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.dual(req, resp);
@@ -84,6 +84,12 @@ public class MainController extends HttpServlet {
 		
 			break;
 
+			case "/array" :
+				
+				System.out.println("정렬 들어간다.");
+				service.array();
+		
+			break;
 		}
 
 	}

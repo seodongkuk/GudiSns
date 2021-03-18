@@ -201,4 +201,20 @@ public class MainService {
 		// 동일 게시글에 대한 이전 추천 여부 검색
 		//추가해야함!!!
 	}
+
+	public void array() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		MainDAO dao = new MainDAO();
+		ArrayList<MainDTO> array = dao.array(loginId);
+		
+		String msg = "전체공개 게시글이 없고 친구도 없고 정렬할 게시글도 없네";
+		if (array != null && array.size() > 0) {
+			req.setAttribute("array", array);
+			msg = "";
+		}
+
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher("main.jsp");
+		dis.forward(req, resp);
+	}
 }
