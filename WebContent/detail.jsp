@@ -63,7 +63,7 @@
 		<div>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
             <input type="button"value="${loginId}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
-       <table id="board_idx">
+       <table>
            <tr>
            		<td>
             		<img src="게시물이미지.gif" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
@@ -106,7 +106,7 @@
 	    <form action="rwrite" method="POST">
 	        <td>
 	        	<input type="hidden" name="user_id" value="${loginId}"/>
-	        	<input type="hidden" name="board_idx" value="${dto.board_idx}"/>
+	        	<input type="hidden" id="board_idx" name="board_idx" value="${dto.board_idx}"/>
 	            <b>${loginId}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
 	            <button>댓글 작성</button>
 	        </td>
@@ -122,5 +122,34 @@
 	if(msg != ""){
 		alert(msg);
 	}
+	/* 
+    $("#like").click(function() {
+    	var board_idx = $('#board_idx');
+        $.ajax({
+        	type:'get'
+       		,url:'detail?board_idx='+board_idx
+       		,data:'board_idx:'+board_idx
+       		,cache: false
+       		,dataType:'JSON'
+       		,success: function(data) {
+       		      var msg = '';
+       		      var like_img = '';
+       		      msg += data.msg;
+       		      alert(msg);
+       		      
+       		      if(data.like_check == 0){
+       		        like_img = "./img/dislike.png";
+       		      } else {
+       		        like_img = "./img/like.png";
+       		      }      
+       		      $('#like_img', frm_read).attr('src', like_img);
+       		      $('#like_cnt').html(data.like_cnt);
+       		      $('#like_check').html(data.like_check);
+       		    },
+       		    error: function(request, status, error){
+       		      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       		    }
+        });
+    }); */
 </script>
 </html>
