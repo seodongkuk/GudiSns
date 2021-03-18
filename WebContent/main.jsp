@@ -70,7 +70,7 @@
 		<table style="float: left; margin-top: 55px;">
 			<tr>
 				<td rowspan="2"><img src="유저프로필.gif" width="80" height="80"></td>
-				<td><input type="button" value="${loginId}"
+				<td><input type="button" value="${flist.userid}"
 					style="background-color: white; font-weight: bold;"></td>
 			</tr>
 			<tr>

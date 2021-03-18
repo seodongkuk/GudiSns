@@ -163,7 +163,7 @@ public class MainService {
 			req.setAttribute("rcnt", rcnt);
 			msg = "";
 		}
-
+		
 		req.setAttribute("msg", msg);
 		dis = req.getRequestDispatcher("main.jsp");
 		dis.forward(req, resp);
