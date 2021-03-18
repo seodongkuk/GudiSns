@@ -124,7 +124,7 @@
                 </c:if>
             	</c:forEach>
             </div>
-            <div style="margin-top: 10px; ">
+            <div style="margin-top: 10px; z-index: 1">
                 <textarea name="msg" id="inputMsg" style="margin-left: 30%; width: 30%; resize: none;"></textarea>
                 <input type="submit" value="전송" id="msg-send" style="float: right; width: 70px; height: 35px; margin-right: 250px;"/>
             </div>
