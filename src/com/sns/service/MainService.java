@@ -3,6 +3,7 @@ package com.sns.service;
 import com.sns.dao.MainDAO;
 import com.sns.dao.ReplyDAO;
 import com.sns.dto.MainDTO;
+import com.sns.dto.ReplyDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,12 +89,14 @@ public class MainService {
 
 	public void mylist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		
-		System.out.println(loginId);
+	
+		String idx = req.getParameter("board_idx");
+
+		System.out.println(loginId+"/"+idx);
 		
 		
 		MainDAO dao = new MainDAO();
-		ArrayList<MainDTO> list = dao.mylist();
+		ArrayList<MainDTO> list = dao.mylist(loginId);
 		System.out.println(list.size());
 		String msg = "게시글없음";
 		if (list != null && list.size() > 0) {
@@ -123,20 +126,28 @@ public class MainService {
 	}
 
 	public void detail() throws ServletException, IOException {
-		String idx = req.getParameter("board_idx");
+		String board_idx = req.getParameter("board_idx");
 		
 		String loginId = (String) req.getSession().getAttribute("");
 		System.out.println(loginId);
-		System.out.println(idx + "글번호");
+		System.out.println("글번호 : "+board_idx);
 		
 		
 		String page = "/main.jsp";
 		MainDAO dao = new MainDAO();
-		MainDTO dto = dao.detail(idx);
+		MainDTO dto = dao.detail(board_idx);
+		ReplyDAO rao = new ReplyDAO();
+		ArrayList<ReplyDTO> list= rao.list(board_idx);
+		rao = new ReplyDAO();
+		int rcnt = rao.rcnt(board_idx);
+		
 		if (dto != null) {
-			new MainDAO();
+			dao = new MainDAO();
 			page = "/detail.jsp";
 			req.setAttribute("dto", dto);
+			req.setAttribute("list", list);	
+			req.setAttribute("rcnt", rcnt);
+		
 		}
 
 		dis = req.getRequestDispatcher(page);
@@ -145,23 +156,28 @@ public class MainService {
 
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		
 		MainDAO dao = new MainDAO();
+		String user_id = req.getParameter("user_id");
 		String board_idx = req.getParameter("board_idx");
-		String writedate = req.getParameter("writedate");
-		
-		System.out.println("loginId:"+loginId);
-		System.out.println("board_idx : "+board_idx+",writedate : "+writedate);
-		
-	
+
+//		System.out.println("loginId:"+loginId);
+		System.out.println("user_id:"+user_id);
+
 		ReplyDAO rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
+
 		System.out.println("board_idx :"+board_idx+"댓글개수:"+rcnt);
+		
 		ArrayList<MainDTO> flist = dao.flist(loginId);
+		dao = new MainDAO();
+		ArrayList<MainDTO> mylist = dao.mylist(user_id);
 		System.out.println(flist.size());
+//		System.out.println(blist.size());
+		
 		String msg = "친구없음";
 		if (flist != null && flist.size() > 0) {
 			req.setAttribute("flist", flist);
+			req.setAttribute("mylist", mylist);
 			req.setAttribute("rcnt", rcnt);
 			msg = "";
 		}

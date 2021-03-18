@@ -16,10 +16,12 @@
                 border: 1px solid black;
             } */
             body{
-                width: 830px;
-                margin-left:20%;
-                padding: 50px;
+                width: 850px;
+                height: 100%;
+                margin-left:25%;
+                padding: 5px;
                 border: 1px solid black;
+                /* overflow: hidden; */
             }
             table{
                 width: 650px;
@@ -29,6 +31,7 @@
             }
             div.find{
             	text-align: center;
+            	margin-top: 5%;
             }
            table,td,th{
                 border: 1px solid white;
@@ -51,7 +54,7 @@
 	        <c:forEach items="${list}" var="member2">
 	            <table style="float: left;margin-top:40px; width: 250px">
 	                <tr>
-	                    <td rowspan="2"><img src="user.jpg" width="70" height="70"></td>
+	                    <td rowspan="2"><img src="기본프사.png" width="70" height="70"></td>
 	                    <td>${member2.user_id}</td>            
 	                </tr> 
 	            </table>	
@@ -86,7 +89,8 @@
 					</tr>
 				</table>
 			</c:forEach>
-				<iframe id="footer" src="navi.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+				<iframe 
+					src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 		</body>
 		<script>
 		//Service에서 지정한 msg 값을 alert로 View

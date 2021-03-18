@@ -7,13 +7,12 @@
 <style>
 	body {
 		width: 850px;
-		height: 850px;
+		height: 90%;
 		margin-left: 25%;
 		padding: 5px;
 		border: 1px solid black;
 		overflow: hidden;
 	}
-	
 	table, td, th, tr {
 		border: 1px solid white;
 		border-collapse: collapse;
@@ -23,49 +22,25 @@
 		font-size: 70;
 		padding-left: 265px;
 	}
-	
-	th, td {
-		padding: 5px;
+
+	#like{
+		margin-left: -610px; 
+		float: left;
 	}
-	
-	th {
-		width: 50px;
+	div.board{
+		height: 75%;
+		width: 100%;
+		overflow: scroll;
 	}
-	
-	input[type='submit'] {
-		height: 70px;
-	}
-	
-	input[type='text'] {
-		height: 30px;
-	}
-	
-	input[type='password'] {
-		height: 30px;
-	}
-	
-	input[type='submit'] {
-		background-color: rgb(240, 207, 207);
-		border: 0px;
-	}
-	
-	td {
+	/* #replylist{
+	 	border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
 		text-align: center;
-	}
-	
-	th {
-		font-size: 20;
-	}
-	button{
-		background-color: rgb(240, 207, 207);
-		border: 0px;
-		position: absolute; 
-		left: 1200px; 
-		top: 130px;
-		}
+	} */
 </style>
 </head>
-<div class="main">
+<div class="board">
 	<body>
 		<table style="float: left; margin-top: 55px;">
 			<tr>
@@ -81,53 +56,64 @@
 				새 글쓰기
 			</button>
 		</table>
+		
 		<h2>구디SNS</h2>
-		<hr>
-		<select name="array" style="position: absolute; left: 1200px; z-index: 1">
-			<option value="추천순">추천순</option>
-			<option value="최신순">최신순</option>
-		</select>
+		<hr/>
 	
 		<div>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
-            <input type="button"value="USER_ID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+            <input type="button"value="${loginId}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
        <table id="board_idx">
            <tr>
-           <td>
-            <img src="게시물이미지.gif" width="600" height="450"style="margin-top:100px" />
-        </td>
-            </tr>
-        <tr>
-        
-       <td>
-            <button id="like">♥</button>
-            <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
-            <input type="text"value="작성날짜:2021-03-10"style="float: right;border: none;margin-top: 15px;">
-        </td>
+           		<td>
+            		<img src="게시물이미지.gif" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
+        		</td>
+           </tr>
+       	<tr>
+       		<td>
+	            <button id="like">♥</button>
+	            <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
+	            <input type="text"value="${dto.writedate}"style="float: right;border: none;margin-top: 15px;">
+	        </td>
         </tr>
-        <tr>
-        <td>
-            <p style="font-size: 15px; color: grey;" >
-            	댓글 모두 ${rcnt}개입니다.</p>
-        </td>
-    </tr>
-    <form action="rwrite" method="POST">
-    	<tr>
-        <td>
-        	<input type="hidden" name="user_id" value="${dto.user_id}"/>
-        	<input type="hidden" name="board_idx" value="${dto.board_idx}"/>
-            <b>${dto.user_id}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
-            <button>댓글 작성</button>
-        </td>
-    </tr>
-    </form>
-
-           
-     </table>
+        </table>
+        
+        <table>
+        	<tr>
+		        <td>
+		            <p style="font-size: 15px; color: grey;" >
+		            	댓글 모두 ${rcnt}개입니다.</p>
+		        </td>
+		    </tr>
+	    </table>    
+        
+        
+        <table>
+		    <tr>
+				<th>작성자</th>
+				<th>내용</th>
+				<th>삭제</th>
+			</tr>	
+			
+			<c:forEach items="${list}" var="Reply2">
+			<tr>
+				<td>${Reply2.user_id}</td>
+				<td>${Reply2.content}</td>
+				<td><a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a></td>
+			</tr>
+			</c:forEach>
+		</table>
+	    <form action="rwrite" method="POST">
+	        <td>
+	        	<input type="hidden" name="user_id" value="${loginId}"/>
+	        	<input type="hidden" name="board_idx" value="${dto.board_idx}"/>
+	            <b>${loginId}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
+	            <button>댓글 작성</button>
+	        </td>
+	    </form>
 		</div>
-		<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
+	<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 	</body>
-	<!-- style="position: absolute; float: left; scroll-behavior: auto;" -->
 </div>
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script>

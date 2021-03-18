@@ -6,6 +6,15 @@
         <meta charset="utf-8">
         <title>DM 리스트 페이지</title>
         <style>
+	        body {
+					width: 850px;
+					height: 625px;
+					margin-left: 25%;
+					padding: 5px;
+					border: 1px solid black;
+					overflow: hidden;
+				}
+				
             /* #dmBox{
                 margin-left: 10%;
                 border:1px solid black;
@@ -13,7 +22,7 @@
                 height: 1000px;
             } */
             #dmRoom{
-                margin-left: 35%;
+                margin-left: 20%;
                 border:1px solid lightgray;
                 width: 500px;
                 height: 200px;
@@ -64,7 +73,8 @@
                 </div>
             </div>
             </c:forEach>
-            
+            <iframe style="margin-top: 10px;"
+	 				src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0" ></iframe>
     </body>
     <script>
     	var success = "${success}";

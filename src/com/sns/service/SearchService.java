@@ -108,7 +108,7 @@ public class SearchService {
 		if(loginId != null) {			
 			dao = new SearchDAO();
 			// 실패 할 경우
-			msg = "이미 친구요청을 한 유저 입니다.";
+			msg = "이미 친구요청을 한 유저 또는 상대방이 이미 친구요청을 했습니다.";
 			if(loginId.equals(budId)) {
 				msg = "자기 자신에게 친구요청을 할 수 없습니다.";
 			}

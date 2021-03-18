@@ -129,6 +129,74 @@ public class MemberController extends HttpServlet {
 			service.idChk();
 			System.out.println(req.getParameter("id"));
 			break;
+			
+			
+			
+		case "/idfind":
+			System.out.println("아이디 찾기요청");	
+			service.idfind();
+			break;
+		
+		case "/pwfind":
+			System.out.println("비번 찾기요청");	
+			service.pwfind();
+			break;
+			
+		case "/pwupdate":
+			System.out.println("패스워드 변경 요청");
+			msg="변경에 실패 했습니다.";
+			page="pw_Find";
+		
+			if(service.pwupdate() > 0) {//성공
+				msg="변경 완료 되었습니다.";
+				page="index.jsp";
+			}
+			System.out.println("page : "+page);
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher(page);
+			dis.forward(req, resp);				
+			break;
+			
+			
+		case "/infopw":
+			System.out.println("인포 패스워드 요청");	
+			service.infopw();
+			break;
+		
+		
+		case "/detail":
+			System.out.println("상세보기 요청");
+			MemberDTO dto = service.detail();//dto null?
+			System.out.println(dto);
+			
+			msg="상세정보 불러오기에 실패 했습니다.";
+			page="main";				
+			if(dto != null) {
+				msg="";
+				page="detail.jsp";
+				req.setAttribute("info", dto);
+			}
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher(page);
+			dis.forward(req, resp);						
+			break;
+			
+			
+		case "/update":
+			System.out.println("업데이트 요청");
+			msg="수정에 실패 했습니다.";
+			page="detail";
+			if(service.update()==0) {//성공
+				msg="수정에 성공 하였습니다.";
+				page="main";
+			}
+			System.out.println("page : "+page);
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher(page);
+			dis.forward(req, resp);				
+			break;
+			
+				
 
 		}
 	}
