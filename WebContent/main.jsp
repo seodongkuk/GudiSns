@@ -88,8 +88,8 @@
 			<h2>구디SNS</h2>
 			<hr>
 			<select name="array" style="position: absolute; left: 1300px; z-index: 1">
-				<option value="추천순">추천순</option>
-				<option value="최신순">최신순</option>
+				<option class="like">추천순</option>
+				<option class="latest">최신순</option>
 			</select>
 			<div class="board">
 				<c:forEach items="${flist}" var="flist">
@@ -141,5 +141,10 @@
 	if(msg != ""){
 		alert(msg);
 	}
+	var like = document.getElementsByClassName('like');
+    console.log(like);
+    var latest = document.getElementsByClassName('latest');
+    console.log(latest);
+    
 </script>
 </html>

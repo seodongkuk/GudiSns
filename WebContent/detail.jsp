@@ -39,6 +39,7 @@
 		text-align: center;
 	} */
 </style>
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 <div class="board">
 	<body>
@@ -63,20 +64,27 @@
 		<div>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
             <input type="button"value="${loginId}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+       <div>
        <table>
            <tr>
            		<td>
             		<img src="게시물이미지.gif" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
         		</td>
            </tr>
-       	<tr>
-       		<td>
-	            <button id="like">♥</button>
-	            <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
-	            <input type="text"value="${dto.writedate}"style="float: right;border: none;margin-top: 15px;">
-	        </td>
-        </tr>
+			<div class="like">
+				<c:if test="${ loginId == null }">
+					추천 기능은 <button type="button" id="newLogin"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
+					<span class="rec_count"></span>					
+				</c:if>
+				<c:if test="${ loginId != null }">
+					<button class="like" id="likebtn">
+						<i class="fa fa-heart" style="font-size:16px;color:red"></i>
+						&nbsp;<span class="like_count"></span>
+					</button> 
+				</c:if>
+			</div>
         </table>
+		</div>
         
         <table>
         	<tr>
@@ -85,9 +93,7 @@
 		            	댓글 모두 ${rcnt}개입니다.</p>
 		        </td>
 		    </tr>
-	    </table>    
-        
-        
+	    </table>     
         <table>
 		    <tr>
 				<th>작성자</th>
@@ -115,41 +121,29 @@
 	<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 	</body>
 </div>
-<script src="//code.jquery.com/jquery.min.js"></script>
 <script>
 	var msg = "${msg}";
 	
 	if(msg != ""){
 		alert(msg);
 	}
-	/* 
-    $("#like").click(function() {
-    	var board_idx = $('#board_idx');
-        $.ajax({
-        	type:'get'
-       		,url:'detail?board_idx='+board_idx
-       		,data:'board_idx:'+board_idx
-       		,cache: false
-       		,dataType:'JSON'
-       		,success: function(data) {
-       		      var msg = '';
-       		      var like_img = '';
-       		      msg += data.msg;
-       		      alert(msg);
-       		      
-       		      if(data.like_check == 0){
-       		        like_img = "./img/dislike.png";
-       		      } else {
-       		        like_img = "./img/like.png";
-       		      }      
-       		      $('#like_img', frm_read).attr('src', like_img);
-       		      $('#like_cnt').html(data.like_cnt);
-       		      $('#like_check').html(data.like_check);
-       		    },
-       		    error: function(request, status, error){
-       		      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-       		    }
-        });
-    }); */
+	// 추천버튼 클릭시(추천 추가 또는 추천 제거)
+	$("#likebtn").click(function(){
+		$.ajax({
+			url: "like",
+               type: "get",
+               
+          
+               data: {
+               	"board_idx":$("#board_idx").val(),
+               	"user_id":$("#user_id").val()
+               },
+               success: function (obj) {
+            	   console.log(obj);	
+               },error:function(e){
+   				console.log(e);	
+   			}
+		});
+	});
 </script>
 </html>

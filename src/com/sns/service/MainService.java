@@ -7,6 +7,9 @@ import com.sns.dto.ReplyDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -186,5 +189,16 @@ public class MainService {
 		dis = req.getRequestDispatcher("main.jsp");
 		dis.forward(req, resp);
 		
+	}
+
+	public void like() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		String board_idx = req.getParameter("board_idx");
+		
+		boolean success = false;
+		System.out.println("idx: "+board_idx+",id: "+loginId);
+		MainDAO dao =  new MainDAO();
+		// 동일 게시글에 대한 이전 추천 여부 검색
+		//추가해야함!!!
 	}
 }

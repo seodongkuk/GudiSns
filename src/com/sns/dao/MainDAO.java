@@ -263,4 +263,36 @@ public class MainDAO {
 		return flist;
 		
 	}
+
+	public int lcheck(String board_idx, String user_id) {
+		int success = 0;
+		String sql = "select count(*) AS like_check from like2 where board_idx = ? and user_id = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, board_idx);
+			ps.setString(2, user_id);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				success = rs.getInt("like_check");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+	
+
+	public void lupdate(String board_idx, String user_id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void ldelete(String board_idx, String user_id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }
