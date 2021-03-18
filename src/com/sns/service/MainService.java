@@ -1,6 +1,7 @@
 package com.sns.service;
 
 import com.sns.dao.MainDAO;
+import com.sns.dao.ReplyDAO;
 import com.sns.dto.MainDTO;
 
 import java.io.IOException;
@@ -144,15 +145,19 @@ public class MainService {
 
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		
-		System.out.println(loginId);
+		String board_idx = req.getParameter("board_idx");
+		System.out.println("loginId:"+loginId+"board_idx : "+board_idx);
 	
+		ReplyDAO rao = new ReplyDAO();
+		int rcnt = rao.rcnt(board_idx);
+		
 		MainDAO dao = new MainDAO();
 		ArrayList<MainDTO> flist = dao.flist(loginId);
 		System.out.println(flist.size());
 		String msg = "친구없음";
 		if (flist != null && flist.size() > 0) {
 			req.setAttribute("flist", flist);
+			req.setAttribute("rcnt", rcnt);
 			msg = "";
 		}
 
