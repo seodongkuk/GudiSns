@@ -9,13 +9,16 @@
 		<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 		<style>
             body{
-                width: 830px;
-                margin-left:20%;
-                padding: 50px;
-                border: 1px solid black;
+                width: 850px;
+				height: 850px;
+				margin-left: 25%;
+				padding: 5px;
+				border: 1px solid black;
+				overflow: hidden;
             }
             div.find{
             	text-align: center;
+            	margin-top: 5%;
             }
             table{
             	width: 650px;
@@ -51,7 +54,8 @@
 		        </tr>
 		    </table>
 		</c:forEach>
-	    <iframe id="footer" src="navi.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+	    <iframe style="position: absolute; margin-top: -20px" 
+	    	src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<script>
 		//Service에서 지정한 msg 값을 alert로 View

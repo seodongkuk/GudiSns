@@ -37,10 +37,10 @@
 </style>
 <div class="bar">
     <ul>
-       <a href="#">
+       <a href="main" target="_parent">
             <li>메인</li>
         </a>
-        <a href="find.jsp" target="_blank">
+        <a href="find.jsp" target="_parent">
             <li>검색</li>
         </a>
         <a href="#">

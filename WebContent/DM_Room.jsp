@@ -6,6 +6,14 @@
         <meta charset="utf-8">
         <title>DM 채팅창 페이지</title>
         <style>
+        	body {
+				width: 850px;
+				height: 850px;
+				margin-left: 25%;
+				padding: 5px;
+				border: 1px solid black;
+				overflow: hidden;
+			}
             /* #dmBox{
                 margin-left: 10%;
                 border:1px solid black;
@@ -14,11 +22,11 @@
             } */
             #dmRoom{
                 background-color: lightgray;
-                margin-left: 35%;
+                margin-left: 135px;
                 border:1px solid black;
                 border-radius: 5px;
                 width: 550px;
-                height: 70%;
+                height: 600px;
                 padding: 10px;
                 margin-top: 70px;
                 overflow: scroll;
@@ -116,12 +124,13 @@
                 </c:if>
             	</c:forEach>
             </div>
-            <div style="margin-top: 10px;">
-                <textarea name="msg" id="inputMsg" style="margin-left: 35%; width: 30%; resize: none;"></textarea>
-                <input type="submit" value="전송" id="msg-send" style="float: right; width: 70px; height: 35px; margin-right: 31%;"/>
+            <div style="margin-top: 10px; ">
+                <textarea name="msg" id="inputMsg" style="margin-left: 30%; width: 30%; resize: none;"></textarea>
+                <input type="submit" value="전송" id="msg-send" style="float: right; width: 70px; height: 35px; margin-right: 250px;"/>
             </div>
-<!--             <html:include id="footer" src="navi.html" style="border: none;bottom: 0; left: 550; position: fixed; z-index: 5; top: 850; width: 100%;"/>
- -->		<jsp:include page="navi.jsp"/>
+     		<!-- <html:include id="footer" src="navi.html" style="border: none;bottom: 0; left: 550; position: fixed; z-index: 5; top: 850; width: 100%;"/> -->		
+	 			<iframe style="position: absolute; margin-top: -600px; " 
+	 				src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
     </body>
     <script>
     	//채팅방 들어올때 무조건 스크롤 맨밑으로...
