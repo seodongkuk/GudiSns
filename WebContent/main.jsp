@@ -87,8 +87,9 @@
 			<option value="추천순">추천순</option>
 			<option value="최신순">최신순</option>
 		</select>
-	
+		<c:forEach items="${flist}" var="flist">
 		<div>
+			<input type="hidden" name="board_idx" value="${flist.board_idx}"/>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
             <input type="button"value="USER_ID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
        <table id="board_idx">
@@ -96,9 +97,11 @@
            <td>
             <img src="게시물이미지.gif" width="600" height="450"style="margin-top:100px" />
         </td>
-            </tr>
+        </tr>
         <tr>
-        
+        	<td>
+        		<p>${flist.content}</p>
+        	</td>
        <td>
             <button id="like">♥</button>
             <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
@@ -118,6 +121,7 @@
            
      </table>
 		</div>
+	</c:forEach>
 		<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 	</div>
 	</body>
