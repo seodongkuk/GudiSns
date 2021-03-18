@@ -147,14 +147,12 @@ public class MainService {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		
 		String board_idx = req.getParameter("board_idx");
-		
+
 		System.out.println("loginId:"+loginId);
-		
-//		System.out.println("board_idx : "+board_idx+",writedate : "+writedate);
-		
-	
+
 		ReplyDAO rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
+
 		System.out.println("board_idx :"+board_idx+"댓글개수:"+rcnt);
 		
 		MainDAO dao = new MainDAO();

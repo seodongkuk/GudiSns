@@ -108,7 +108,9 @@ public class MainDAO {
 	public ArrayList<MainDTO> mylist(String user_id) {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
+
 		String sql = "SELECT * FROM post WHERE user_id=?";
+
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -122,7 +124,6 @@ public class MainDAO {
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setWritedate(rs.getDate("writedate"));
 				list.add(dto);
 			}
 		} catch (SQLException var5) {
@@ -230,9 +231,11 @@ public class MainDAO {
 		MainDTO dto = null;
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
+
 		String sql = "SELECT * FROM post WHERE user_id IN "
 				+ "(SELECT b.bud_id FROM member2 m ,buddylist2 b "
 				+ "WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')";
+
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
@@ -245,7 +248,6 @@ public class MainDAO {
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setWritedate(rs.getDate("writedate"));
 				flist.add(dto);
 					}
 			

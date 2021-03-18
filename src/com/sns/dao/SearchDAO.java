@@ -54,7 +54,7 @@ public class SearchDAO {
 		String sql = "SELECT * FROM (" + 
 				"SELECT ROW_NUMBER() OVER(ORDER BY COUNT(h.hashtag) DESC) AS rnum," + 
 				" h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
-				" WHERE b.board_idx = h.board_idx AND TO_CHAR(b.reg_date,'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')" + 
+				" WHERE b.board_idx = h.board_idx AND TO_CHAR(b.writeDate,'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')" + 
 				" GROUP BY h.hashtag" + 
 				" ) WHERE rnum <= 3";
 		try {
