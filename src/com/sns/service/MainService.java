@@ -145,8 +145,11 @@ public class MainService {
 
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
+		
 		String board_idx = req.getParameter("board_idx");
+		
 		System.out.println("loginId:"+loginId+"board_idx : "+board_idx);
+		
 	
 		ReplyDAO rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
