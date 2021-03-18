@@ -46,11 +46,6 @@ public class SearchDAO {
 	public ArrayList<SearchDTO> todayTag() {
 		ArrayList<SearchDTO> tag = new ArrayList<SearchDTO>();
 		//해시태그 TOP3
-		/*String sql = "SELECT * FROM (" + 
-				" SELECT h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
-				" WHERE b.board_idx = h.board_idx AND TO_CHAR(b.reg_date,'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') GROUP BY h.hashtag" + 
-				" ORDER BY COUNT(h.hashtag) DESC)" + 
-				" WHERE rownum <= 3";*/
 		String sql = "SELECT * FROM (" + 
 				"SELECT ROW_NUMBER() OVER(ORDER BY COUNT(h.hashtag) DESC) AS rnum," + 
 				" h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
@@ -125,11 +120,14 @@ public class SearchDAO {
 	public int budReq(String loginId, String budId) {
 		int success = 0;
 		//친구요청은 한 번만 가능하게(기존 데이터 있는지 확인)
-		String sql = "SELECT user_id,bud_id FROM BuddyList2 WHERE user_id=? AND bud_id=?";
+		String sql = "SELECT user_id,bud_id FROM BuddyList2 "
+							+ "WHERE user_id=? AND bud_id=? OR bud_id=? AND user_id=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
 			ps.setString(2, budId);
+			ps.setString(3, loginId);
+			ps.setString(4, budId);
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				success = 0;

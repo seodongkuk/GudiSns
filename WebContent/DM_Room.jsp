@@ -30,7 +30,6 @@
                 padding: 10px;
                 margin-top: 70px;
                 overflow: scroll;
-                z-index: 200;
             }
             img{
                 margin: 10px;
@@ -123,13 +122,14 @@
                 </c:if>
             	</c:forEach>
             </div>
-            <div style="margin-top: 10px; position: fixed">
-                <textarea name="msg" id="inputMsg" style="margin-left: 120%; width: 100%; resize: none;"></textarea>
-                <input type="submit" value="전송" id="msg-send" style="width: 70px; height: 35px; margin-left: 230%; margin-top: -35px"/>
+            <div style="margin-top: 10px;">
+                <textarea name="msg" id="inputMsg" style="width: 30%; margin-left: 30%; resize: none;"></textarea>
             </div>
+                <input type="submit" value="전송" id="msg-send" 
+                	style="width: 50px; height: 30px; margin-left: 520px; margin-top: -33px;"/>
      		<!-- <html:include id="footer" src="navi.html" style="border: none;bottom: 0; left: 550; position: fixed; z-index: 5; top: 850; width: 100%;"/> -->		
-	 			<iframe style=" margin-top: -550px; z-index: 100;" 
-	 				src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0" ></iframe>
+	 			<iframe 
+	 				src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0" ></iframe>
     </body>
     <script>
     	//채팅방 들어올때 무조건 스크롤 맨밑으로...

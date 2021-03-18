@@ -50,7 +50,7 @@
 		       <a href="main" target="_parent">
 		            <li>메인</li>
 		        </a>
-		        <a href="find.jsp" target="_parent">
+		        <a href="todayTag" target="_parent">
 		            <li>검색</li>
 		        </a>
 		        <a href="chatRoom?id=${sessionScope.loginId}" target="_parent">
