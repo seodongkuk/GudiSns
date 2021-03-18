@@ -7,7 +7,7 @@ public class MainDTO {
 	private String userid;
 	private String subject;
 	private String content;
-	private Date date;
+	private Date writedate;
 	private boolean declaration_state;
 	private int relase_state;
 	private int file_idx;
@@ -76,12 +76,13 @@ public class MainDTO {
 		this.content = content;
 	}
 
-	public Date getDate() {
-		return this.date;
+
+	public Date getWritedate() {
+		return writedate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setWritedate(Date writedate) {
+		this.writedate = writedate;
 	}
 
 	public boolean getDeclaration_state() {
