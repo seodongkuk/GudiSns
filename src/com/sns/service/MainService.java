@@ -93,7 +93,7 @@ public class MainService {
 		
 		
 		MainDAO dao = new MainDAO();
-		ArrayList<MainDTO> list = dao.mylist();
+		ArrayList<MainDTO> list = dao.mylist(loginId);
 		System.out.println(list.size());
 		String msg = "게시글없음";
 		if (list != null && list.size() > 0) {
@@ -146,22 +146,28 @@ public class MainService {
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		
-		MainDAO dao = new MainDAO();
 		String board_idx = req.getParameter("board_idx");
-		String writedate = req.getParameter("writedate");
 		
 		System.out.println("loginId:"+loginId);
-		System.out.println("board_idx : "+board_idx+",writedate : "+writedate);
+		
+//		System.out.println("board_idx : "+board_idx+",writedate : "+writedate);
 		
 	
 		ReplyDAO rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
 		System.out.println("board_idx :"+board_idx+"댓글개수:"+rcnt);
+		
+		MainDAO dao = new MainDAO();
 		ArrayList<MainDTO> flist = dao.flist(loginId);
+		dao = new MainDAO();
+		ArrayList<MainDTO> mylist = dao.mylist(loginId);
 		System.out.println(flist.size());
+//		System.out.println(blist.size());
+		
 		String msg = "친구없음";
 		if (flist != null && flist.size() > 0) {
 			req.setAttribute("flist", flist);
+			req.setAttribute("mylist", mylist);
 			req.setAttribute("rcnt", rcnt);
 			msg = "";
 		}
