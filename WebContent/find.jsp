@@ -27,6 +27,7 @@
                 background-color: lightgray;
                 width: 400px;
                 margin-left: 23%;   
+                list-style: none;
             }
             ul li{
                 text-align: center;
@@ -50,12 +51,14 @@
 	    </div>
 	    <br/>
        <h3>오늘의 해시태그 Top3</h3>
-        <c:forEach items="${tag}" var="HashTag2">
-	        <ul>
-	            <li>${HashTag2.rnum}.  ${HashTag2.hashTag}</li>
-	        </ul>
-    	</c:forEach>
-	        <iframe src="navi.jsp" width="800px" height="1000px" scrolling="no" frameborder="0"></iframe>
+       <div style="height: 70%">
+	        <c:forEach items="${tag}" var="HashTag2">
+		        <ul>
+		            <li>${HashTag2.rnum}.  ${HashTag2.hashTag}</li>
+		        </ul>
+	    	</c:forEach>
+       </div>
+	        <iframe src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<script>
 		//Service에서 지정한 msg 값을 alert로 View

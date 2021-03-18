@@ -34,28 +34,36 @@ public class SearchController extends HttpServlet {
 		//서비스에게 일 요청을 위해 서비스 객체화(request와 response의 객체들을 담아서)
 		SearchService service = new SearchService(req,resp);
 		
-		//요청 url에 따라 switch문으로 일 분배
-		switch (sub) {
+		String sessionId = (String) req.getSession().getAttribute("loginId");
+		System.out.println("로그인한아이디: "+sessionId);
 		
-		case"/todayTag":
-			System.out.println("오늘의 해시태그 요청");		
-			service.todayTag();
-			break;
-		
-		case "/find":
-			System.out.println("검색 요청");		
-			service.find();
-			break;		
+		if(sessionId != null) {
 			
-		case "/budReq":
-			System.out.println("친구 요청");
-			service.budReq();
-			break;
+			//요청 url에 따라 switch문으로 일 분배
+			switch (sub) {
 			
-		case "/budDel":
-			System.out.println("친구 삭제 요청");
-			service.budDel();
-			break;
+			case"/todayTag":
+				System.out.println("오늘의 해시태그 요청");		
+				service.todayTag();
+				break;
+				
+			case "/find":
+				System.out.println("검색 요청");		
+				service.find();
+				break;		
+				
+			case "/budReq":
+				System.out.println("친구 요청");
+				service.budReq();
+				break;
+				
+			case "/budDel":
+				System.out.println("친구 삭제 요청");
+				service.budDel();
+				break;
+			}
+		}else {
+			resp.sendRedirect("./index.jsp");
 		}
 	}
 }

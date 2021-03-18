@@ -122,7 +122,6 @@ public class MainDAO {
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setWritedate(rs.getDate("writedate"));
 				list.add(dto);
 			}
 		} catch (SQLException var5) {
@@ -246,11 +245,10 @@ public class MainDAO {
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setWritedate(rs.getDate("writedate"));
+				
 				
 				if(dto.getRelase_state()== 1) {
 					System.out.println("1로들어와서 친구가없음");
-					
 				}
 				flist.add(dto);
 					}
