@@ -32,6 +32,12 @@
 		width: 100%;
 		overflow: scroll;
 	}
+	/* #replylist{
+	 	border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+		text-align: center;
+	} */
 </style>
 </head>
 <div class="board">
@@ -59,60 +65,55 @@
             <input type="button"value="${loginId}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
        <table id="board_idx">
            <tr>
-           <td>
-            <img src="게시물이미지.gif" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
-        </td>
-            </tr>
-        <tr>
-        
-       <td>
-            <button id="like">♥</button>
-            <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
-            <input type="text"value="${dto.writedate}"style="float: right;border: none;margin-top: 15px;">
-        </td>
+           		<td>
+            		<img src="게시물이미지.gif" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
+        		</td>
+           </tr>
+       	<tr>
+       		<td>
+	            <button id="like">♥</button>
+	            <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
+	            <input type="text"value="${dto.writedate}"style="float: right;border: none;margin-top: 15px;">
+	        </td>
         </tr>
         </table>
-        <table>
-        <tr>
-	        <td>
-	            <p style="font-size: 15px; color: grey;" >
-	            	댓글 모두 ${rcnt}개입니다.</p>
-	        </td>
-	        <table>
-			    <tr>
-					<th>작성자</th>
-					<th>내용</th>
-					<th>삭제</th>
-				</tr>	
-				
-				<c:forEach items="${list}" var="Reply2">
-				<tr>
-					<td>${Reply2.user_id}</td>
-					<td>${Reply2.content}</td>
-					<td><a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a></td>
-				</tr>
-				</c:forEach>
-			</table>
-        <hr/>
-    </tr>
-    <form action="rwrite" method="POST">
-    	<tr>
-        <td>
         
-        	<input type="hidden" name="user_id" value="${loginId}"/>
-        	<input type="hidden" name="board_idx" value="${dto.board_idx}"/>
-            ${loginId}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
-            <button>댓글 작성</button>
-        </td>
-    </tr>
-    </form>
-
-           
-     </table>
+        <table>
+        	<tr>
+		        <td>
+		            <p style="font-size: 15px; color: grey;" >
+		            	댓글 모두 ${rcnt}개입니다.</p>
+		        </td>
+		    </tr>
+	    </table>    
+        
+        
+        <table>
+		    <tr>
+				<th>작성자</th>
+				<th>내용</th>
+				<th>삭제</th>
+			</tr>	
+			
+			<c:forEach items="${list}" var="Reply2">
+			<tr>
+				<td>${Reply2.user_id}</td>
+				<td>${Reply2.content}</td>
+				<td><a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a></td>
+			</tr>
+			</c:forEach>
+		</table>
+	    <form action="rwrite" method="POST">
+	        <td>
+	        	<input type="hidden" name="user_id" value="${loginId}"/>
+	        	<input type="hidden" name="board_idx" value="${dto.board_idx}"/>
+	            <b>${loginId}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
+	            <button>댓글 작성</button>
+	        </td>
+	    </form>
 		</div>
-		<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
+	<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 	</body>
-	<!-- style="position: absolute; float: left; scroll-behavior: auto;" -->
 </div>
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script>

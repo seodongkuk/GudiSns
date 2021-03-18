@@ -137,12 +137,12 @@ public class MainService {
 		MainDAO dao = new MainDAO();
 		MainDTO dto = dao.detail(board_idx);
 		ReplyDAO rao = new ReplyDAO();
-		ArrayList<ReplyDTO> list= rao.list(loginId,board_idx);
+		ArrayList<ReplyDTO> list= rao.list(board_idx);
 		rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
 		
 		if (dto != null) {
-			new MainDAO();
+			dao = new MainDAO();
 			page = "/detail.jsp";
 			req.setAttribute("dto", dto);
 			req.setAttribute("list", list);	
