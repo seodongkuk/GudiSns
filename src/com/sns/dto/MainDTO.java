@@ -14,6 +14,36 @@ public class MainDTO {
 	private String oriFileName;
 	private String newFileName;
 
+	
+	private String muser_id;
+	private String bbud_id;
+	private int bstate ;
+	
+	
+	public String getMuser_id() {
+		return muser_id;
+	}
+
+	public void setMuser_id(String muser_id) {
+		this.muser_id = muser_id;
+	}
+
+	public String getBbud_id() {
+		return bbud_id;
+	}
+
+	public void setBbud_id(String bbud_id) {
+		this.bbud_id = bbud_id;
+	}
+
+	public int getBstate() {
+		return bstate;
+	}
+
+	public void setBstate(int bstate) {
+		this.bstate = bstate;
+	}
+
 	public int getBoard_idx() {
 		return this.board_idx;
 	}

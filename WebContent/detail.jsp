@@ -59,13 +59,21 @@
         </style>
     </head>
     <body>
+   		<button onclick="location.href='writeEdit'"></button>
+    	<input type="hidden" name="board_idx" value="${dto.board_idx}"/>
             <img src="타인프로필.gif" width="75" height="75" style="float: left;">
             <input type="button"value="USER_ID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
        <table>
            <tr>
            <td>
-            <img src="게시물이미지.gif" width="800" height="500"style="margin-top:100px" />
+            <img src="" width="800" height="500"style="margin-top:100px" />
         </td>
+            </tr>
+            <tr>
+            	<td>
+            		<p>해시태그 들어올자리</p>
+            		<p>${dto.content}</p>
+            	</td>
             </tr>
         <tr>
         
@@ -76,7 +84,7 @@
         </td>
         </tr>
        <tr>
-           <td style="margin:0; padding: 0;";>
+           <td style="margin:0; padding: 0;">
                 <hr>
            </td>
         </tr>
@@ -90,7 +98,7 @@
         </tr>
         <tr>
             <td>
-                ${dto.user_id} : <input type="text" style="width: 80%;">
+                <input type="text" style="width: 80%;">
                 <input type="button" value="댓글등록" style="float: right ;height: 30;">
             </td>
         </tr>
