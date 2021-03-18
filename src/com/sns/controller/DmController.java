@@ -42,21 +42,28 @@ public class DmController extends HttpServlet {
 		
 		DmService dm = new DmService(req,resp);
 		
-		switch(subAddr) {
+		String sessionId = (String) req.getSession().getAttribute("loginId");
 		
-			case "/DM_Room":
-				System.out.println("채팅방 요청");
-				dm.dmRoom();
-				break;
-				
-			case "/chatRoom":
-				System.out.println("DM 리스트 요청");
-				dm.chatRoom();
-				break;
-			case "/DM_list":
-				System.out.println("dm to, from id 요청");
-				dm.dmList();
-				break;
+		//아래 요청들은 모두 로그인 상태여야만 접근 가능함(로그인 안되어있으면 로그인 화면으로 보냄)
+		if(sessionId != null) {
+			switch(subAddr) {
+			
+				case "/DM_Room":
+					System.out.println("채팅방 요청");
+					dm.dmRoom();
+					break;
+					
+				case "/chatRoom":
+					System.out.println("DM 리스트 요청");
+					dm.chatRoom();
+					break;
+				case "/DM_list":
+					System.out.println("dm to, from id 요청");
+					dm.dmList();
+					break;
+			}
+		}else {
+			resp.sendRedirect("./index.jsp");
 		}
 	}
 	

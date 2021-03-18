@@ -24,6 +24,7 @@ import vo.ChatClient;
 
 //이 어노테이션을 명시함으로서 WEB 소켓으로 접속 가능한 URL 정보를 명시하여 소켓 서버를 생성해주며 프로퍼티를 통해 decoder나 encoder를 명시할 수 있다. 
 @ServerEndpoint("/webChatServer")
+//DM_Room.jsp에서 요청이 들어올떄..
 @WebServlet({"/webChatServer"})
 public class WebChatServer extends HttpServlet {
 	private static Map<Session, ChatClient> users = Collections.synchronizedMap(new HashMap<Session, ChatClient>());
@@ -34,7 +35,7 @@ public class WebChatServer extends HttpServlet {
 		//String userName = users.get(session).getName();
 		System.out.println(message);
 	
-		
+		//상대방한테 메시지를 보내는 역할을 수행한다.(내 세션과 상대방 세션이 다르면..)
 		synchronized (users) {
 			Iterator<Session> it = users.keySet().iterator();
 			while (it.hasNext()) {
@@ -47,6 +48,7 @@ public class WebChatServer extends HttpServlet {
 
 	}
 
+	//DM내용 INSERT 요청
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
@@ -63,6 +65,7 @@ public class WebChatServer extends HttpServlet {
 		service.newMsg(fromId,toId,content);
 	}
 
+	//DM내용 INSERT 요청
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
@@ -79,6 +82,7 @@ public class WebChatServer extends HttpServlet {
 	}
 
 	//자바 웹소켓 모듈 어노테이션
+	//DM_Room.jsp에 입장하자마자 실행됨(세션 부여 역할을 한다..)
 	@OnOpen
 	public void onOpen(Session session) {
 		String userName = "user";
@@ -115,6 +119,7 @@ public class WebChatServer extends HttpServlet {
 //	}
 
 	//자바 웹소켓 모듈 어노테이션
+	//세션 연결되어 있는 사람이 접속을 끊으면 실행됨(세션 삭제)
 	@OnClose
 	public void onClose(Session session) {
 		String userName = users.get(session).getName();
