@@ -76,7 +76,7 @@
         </td>
         </tr>
        <tr>
-           <td style="margin:0; padding: 0;";>
+           <td style="margin:0; padding: 0;">
                 <hr>
            </td>
         </tr>
