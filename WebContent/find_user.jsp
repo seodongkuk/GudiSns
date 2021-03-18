@@ -22,7 +22,7 @@
             }
             table{
             	width: 650px;
-                height: 100px;
+                /* height: 100px; */
                 margin: auto;
             	text-align: center;
             }
@@ -41,19 +41,21 @@
 	        </form>
     	</div>
     	<br>
-    	<c:forEach items="${list}" var="member2">
-		    <table>
-		        <tr>
-		            <td rowspan="2"><img src="user.jpg" width="70" height="70"></td>
-		            <td style="padding-right: 70px;">${member2.user_id}</td>  
-		            <td style="padding-left: 40px;">
-		                <button onclick="location.href = 'budReq'">친구요청</button>
-		                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">DM보내기</button>
-		                <button onclick="location.href = 'budDel'">친구삭제</button>
-		            </td>          
-		        </tr>
-		    </table>
-		</c:forEach>
+    	<div style="height: 83%">
+	    	<c:forEach items="${list}" var="member2">
+			    <table>
+			        <tr>
+			            <td rowspan="2"><img src="user.jpg" width="70" height="70"></td>
+			            <td style="padding-right: 70px;">${member2.user_id}</td>  
+			            <td style="padding-left: 40px;">
+			                <button onclick="location.href = 'budReq'">친구요청</button>
+			                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">DM보내기</button>
+			                <button onclick="location.href = 'budDel'">친구삭제</button>
+			            </td>          
+			        </tr>
+			    </table>
+			</c:forEach>
+		</div>
 	    <iframe style="position: absolute; margin-top: -20px" 
 	    	src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 	</body>
