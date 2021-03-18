@@ -1,10 +1,12 @@
 package com.sns.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -113,6 +115,169 @@ public boolean idChk(String id) throws SQLException {
 		success = rs.next();
 		return !success;
 	}
+
+
+//--------------------------------------------------------------------아이디 찾기
+
+
+public HashMap<String, Object> idfind(String name, String phone) {
+	
+	String sql ="SELECT user_id,reg_date FROM member2 WHERE name=? AND phone=?";
+	String id = "";
+	Date reg_date = null;
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
+
+	
+	try {
+	ps = conn.prepareStatement(sql);
+	ps.setString(1, name);
+	ps.setInt(2, Integer.parseInt(phone));
+	rs=ps.executeQuery();
+	
+	if(rs.next()) {
+		id = rs.getString("user_id");
+		reg_date = rs.getDate("reg_date");
+		map.put("id",id);
+		map.put("reg_date", reg_date);
+	}
+} catch (SQLException e) {
+	e.printStackTrace();
+}finally {
+	resClose();
+}
+	System.out.println(id);
+	return map;
+}
+
+//-------------------------------------------------------------------비번 찾기
+public String pwfind(String id, String email) {
+
+	String sql="SELECT pw FROM member2 WHERE USER_ID=? AND email=?";
+	String pw = "";
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, id);
+		ps.setString(2, email);
+		rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			pw=rs.getString("pw");
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		resClose();
+		
+	}
+		System.out.println(pw);
+		return pw;
+	}
+
+
+//-------------------------------------------------------------------비번 변경
+		public int pwupdate(MemberDTO dto) {
+		String sql="UPDATE member2 SET pw=? WHERE user_id=? AND email=?";
+		int success = -1;
+		try {
+			ps = conn.prepareStatement(sql);			
+			ps.setString(1, dto.getPw());
+			ps.setString(2, dto.getId());
+			ps.setString(3, dto.getEmail());
+			
+			System.out.println("업데이트 쿼리 시작"+dto.getId()+dto.getEmail());
+			success = ps.executeUpdate();
+			if(success > 0) {
+				System.out.println("유저 비밀번호 업데이트 성공");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+		return success;
+	}
+		
+//--------------------------------------------------------------정보수정 접근시 패스워드 확인.
+		
+		public boolean infopw(String id, String pw) {	
+			System.out.println(id+pw);
+			boolean success = false;
+			String sql="SELECT pw FROM member2 WHERE user_id=? AND pw=?";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1,id);
+				ps.setString(2,pw);
+				rs = ps.executeQuery();
+				success = rs.next();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				resClose();
+			}		
+			return success;
+		}
+			
+//-----------------------------------------------------------------------------//회원정보 창
+	
+			
+				public MemberDTO detail (String id) {
+				String sql="SELECT * FROM member WHERE id=?";		
+				MemberDTO dto = null;
+				try {
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, id);
+					rs = ps.executeQuery();
+					if(rs.next()) {
+						dto = new MemberDTO();
+						dto.setId(rs.getString("id"));
+						dto.setPw(rs.getString("pw"));
+						dto.setName(rs.getString("name"));
+						dto.setEmail(rs.getString("email"));
+						dto.setPhone(rs.getInt("phone"));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						ps.close();
+						rs.close();
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}				
+				return dto;
+			}
+//-----------------------------------------------------------------------------//회원정보 업데이트				
+				
+				public int update(MemberDTO dto) {
+					
+					String sql="UPDATE member SET pw=?, name=?, email=?, phone=?  WHERE id=?";
+					int success = -1;
+					try {
+						ps = conn.prepareStatement(sql);			
+						ps.setString(1, dto.getPw());
+						ps.setString(2, dto.getName());
+						ps.setString(3, dto.getEmail());
+						ps.setInt(4, dto.getPhone());
+						ps.setString(5, dto.getId());
+						success = ps.executeUpdate();
+						
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							ps.close();
+							conn.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+					
+					return success;
+}	
 
 }
 
