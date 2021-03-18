@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail"})
+@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist"})
 public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.dual(req, resp);
@@ -69,6 +69,13 @@ public class MainController extends HttpServlet {
 					System.out.println("더보기 (상세보기)");
 					service.detail();
 				break;
+				
+			case "/flist" :
+				
+				System.out.println("마이프로필에들어옴list보여줄준비");
+				service.flist();
+			
+			break;
 		}
 
 	}

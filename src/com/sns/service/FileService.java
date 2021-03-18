@@ -53,12 +53,13 @@ public class FileService {
 		return dto;
 	}
 
+
 	public void delete(String newFileName) {
 		File file = new File("C:/upload/" + newFileName);
 		if (file.exists()) {
 			boolean success = file.delete();
 			System.out.println("success 여부" + success);
 		}
-
+		
 	}
 }

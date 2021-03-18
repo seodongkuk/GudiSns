@@ -107,9 +107,9 @@
             <!-- {기존 파일 명을 보여줘야함 .수정해야하니까 .. value로 처리하는게 편할듯 }-->
             <br>
             <select name="release_state" id="selectBox">
-                <option value="001" <c:if test="${param.release_state}"> selected="selected"</c:if>>전체공개</option>
-                <option value="002" <c:if test="${param.release_state}"> selected="selected"</c:if>>친구공개</option>
-                <option value="003" <c:if test="${param.release_state}"> selected="selected"</c:if>>나만보기</option>
+                <option value="001" <c:if test="${dto.release_state}"> selected="selected"</c:if>>전체공개</option>
+                <option value="002" <c:if test="${dto.release_state}"> selected="selected"</c:if>>친구공개</option>
+                <option value="003" <c:if test="${dto.release_state}"> selected="selected"</c:if>>나만보기</option>
             </select>
         </form>
         <button type="submit" form="newWrite">수정완료</button>

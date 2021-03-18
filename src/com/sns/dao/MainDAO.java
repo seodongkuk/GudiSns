@@ -45,14 +45,15 @@ public class MainDAO {
 
 	}
 
-	public long write(MainDTO dto) {
-		String sql = "INSERT INTO board2(board_idx,content,release_state)VALUES(board2_seq.NEXTVAL,?,?)";
+	public long write(MainDTO dto , String loginId) {
+		String sql = "INSERT INTO board2(board_idx,content,release_state,user_id)VALUES(board2_seq.NEXTVAL,?,?,?)";
 		long bIdx = 0L;
 
 		try {
 			ps = conn.prepareStatement(sql, new String[]{"board_idx"});
 			ps.setString(1, dto.getContent());
 			ps.setInt(2, dto.getRelase_state());
+			ps.setString(3, loginId);
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			if (rs.next()) {
@@ -60,11 +61,11 @@ public class MainDAO {
 				System.out.println("bidx : " + bIdx);
 				if (dto.getOriFileName() != null) {
 					sql = "INSERT INTO photo2(file_idx,oriFileName,newFileName,board_idx)VALUES(photo2_seq.NEXTVAL,?,?,?)";
-					this.ps = conn.prepareStatement(sql);
-					this.ps.setString(1, dto.getOriFileName());
-					this.ps.setString(2, dto.getNewFileName());
-					this.ps.setLong(3, bIdx);
-					this.ps.executeUpdate();
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, dto.getOriFileName());
+					ps.setString(2, dto.getNewFileName());
+					ps.setLong(3, bIdx);
+					ps.executeUpdate();
 				}
 			}
 		} catch (SQLException var9) {
@@ -117,7 +118,7 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
-				//dto.setUserid(rs.getString("user_id"));
+				dto.setUserid(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				list.add(dto);
@@ -221,5 +222,39 @@ public class MainDAO {
 		}
 
 		return success;
+	}
+
+	public ArrayList<MainDTO> flist(String loginId) {
+		MainDTO dto = null;
+		
+		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
+		String sql = "SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')";
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				sql = "SELECT b.board_idx, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON b.board_idx = p.file_idx";
+				ps =conn.prepareStatement(sql);
+				rs = ps.executeQuery();
+					while(rs.next()) {
+						dto = new MainDTO();
+						dto.setBoard_idx(rs.getInt("board_idx"));
+						dto.setContent(rs.getString("content"));
+						dto.setUserid(rs.getString("user_id"));
+						dto.setOriFileName(rs.getString("oriFileName"));
+						dto.setNewFileName(rs.getString("newFileName"));
+						flist.add(dto);
+					}
+			}
+			
+		} catch (SQLException var5) {
+			var5.printStackTrace();
+		}
+
+		return flist;
+		
 	}
 }

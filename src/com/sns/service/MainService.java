@@ -2,6 +2,7 @@ package com.sns.service;
 
 import com.sns.dao.MainDAO;
 import com.sns.dto.MainDTO;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -28,7 +29,7 @@ public class MainService {
 			MainDAO dao = new MainDAO();
 			String page = "newWriting.html";
 			String msg = "글 등록에 실패 하였습니다.";
-			long idx = dao.write(dto);
+			long idx = dao.write(dto ,loginId);
 			if (idx > 0) {
 				page = "main.jsp";
 				msg = "글 등록에 성공 하였습니다.";
@@ -85,6 +86,11 @@ public class MainService {
 	}
 
 	public void mylist() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		
+		System.out.println(loginId);
+		
+		
 		MainDAO dao = new MainDAO();
 		ArrayList<MainDTO> list = dao.mylist();
 		System.out.println(list.size());
@@ -117,10 +123,12 @@ public class MainService {
 
 	public void detail() throws ServletException, IOException {
 		String idx = req.getParameter("board_idx");
-		String loginId = (String) req.getSession().getAttribute("");
-//		System.out.println(loginId);
 		
+		String loginId = (String) req.getSession().getAttribute("");
+		System.out.println(loginId);
 		System.out.println(idx + "글번호");
+		
+		
 		String page = "/main.jsp";
 		MainDAO dao = new MainDAO();
 		MainDTO dto = dao.detail(idx);
@@ -132,5 +140,25 @@ public class MainService {
 
 		dis = req.getRequestDispatcher(page);
 		dis.forward(req, resp);
+	}
+
+	public void flist() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		
+		System.out.println(loginId);
+	
+		MainDAO dao = new MainDAO();
+		ArrayList<MainDTO> flist = dao.flist(loginId);
+		System.out.println(flist.size());
+		String msg = "친구없음";
+		if (flist != null && flist.size() > 0) {
+			req.setAttribute("flist", flist);
+			msg = "";
+		}
+
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher("main.jsp");
+		dis.forward(req, resp);
+		
 	}
 }
