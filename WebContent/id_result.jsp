@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -38,12 +40,12 @@
         <form>
         <tr>
             <td>
-                당신의 아이디는 tester 입니다.
+             <jsp:include page="idbox.jsp"/>
             </td>
         </tr>
             <br/>
             <td>
-                가입날짜 : 2021/03/06
+              
             </td>  
     </form>
 </table>
@@ -55,7 +57,7 @@
 <hr/>
 
         <td>    
-            <input style="margin: 10;" type="button" value="비밀번호 찾기"/></br>
+            <input style="margin: 10;" type="button" value="비밀번호 찾기" onclick="location.href='pw_Find.jsp'"/></br>
         </td>
         <td>
             <input type="button" value="로그인 하기" />
@@ -65,6 +67,11 @@
         </CENTER>
     </body>
     <script>
+    var msg = "${msg}";
+
+    if(msg != ""){
+    	alert(msg);
+    }
       
     </script>
 </html>
