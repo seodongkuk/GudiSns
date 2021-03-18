@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class MainDTO {
 	private int board_idx;
-	private String userid;
+	private String user_id;
 	private String subject;
 	private String content;
 	private Date date;
@@ -50,14 +50,6 @@ public class MainDTO {
 
 	public void setBoard_idx(int board_idx) {
 		this.board_idx = board_idx;
-	}
-
-	public String getUserid() {
-		return this.userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
 	}
 
 	public String getSubject() {
@@ -122,5 +114,13 @@ public class MainDTO {
 
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
+	}
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 }

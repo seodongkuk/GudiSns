@@ -23,15 +23,15 @@ public class FileService {
 			MultipartRequest multi = new MultipartRequest(req, savePath, maxSize, "UTF-8");
 			dto = new MainDTO();
 			String idx = multi.getParameter("board_idx");  //null
-			String userid = multi.getParameter("userid");
+			String user_id = multi.getParameter("user_id");
 			String content = multi.getParameter("textArea");
 			String release = multi.getParameter("release_state");
-			System.out.println(userid + "/" + idx + "/" + content + "/" + release);
+			System.out.println(user_id + "/" + idx + "/" + content + "/" + release);
 			if (idx != null) {
 				dto.setBoard_idx(Integer.parseInt(idx));
 			}
 
-			dto.setUserid(userid);
+			dto.setUser_id(user_id);
 			dto.setContent(content);
 			dto.setRelase_state(Integer.parseInt(release));
 			String oriFileName = multi.getFilesystemName("photo");

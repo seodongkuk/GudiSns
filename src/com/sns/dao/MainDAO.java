@@ -105,20 +105,23 @@ public class MainDAO {
 		return dto;
 	}
 
-	public ArrayList<MainDTO> mylist() {
+	public ArrayList<MainDTO> mylist(String user_id) {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
-		String sql = "SELECT b.board_idx, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON b.board_idx = p.file_idx";
+
+		String sql = "SELECT * FROM post WHERE user_id=?";
+
 
 		try {
 			ps = conn.prepareStatement(sql);
+			ps.setString(1, user_id);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
-				dto.setUserid(rs.getString("user_id"));
+				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				list.add(dto);
@@ -228,7 +231,10 @@ public class MainDAO {
 		MainDTO dto = null;
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
-		String sql = "SELECT b.board_idx, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON b.board_idx = p.file_idx WHERE b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))";
+
+		String sql = "SELECT * FROM post WHERE user_id IN "
+				+ "(SELECT b.bud_id FROM member2 m ,buddylist2 b "
+				+ "WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')";
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -239,7 +245,7 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
-				dto.setUserid(rs.getString("user_id"));
+				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				flist.add(dto);
