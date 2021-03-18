@@ -54,13 +54,13 @@ public class ReplyDAO {
 		return success;
 	}
 
-	public ArrayList<ReplyDTO> list(String user_id, String board_idx) {
-		String sql = "SELECT cmt_idx,user_id,board_idx,content FROM Reply2 WHERE user_id=? AND board_idx=? ORDER BY cmt_idx DESC";
+	public ArrayList<ReplyDTO> list(String loginId, String board_idx) {
+		String sql = "SELECT user_id,content FROM Reply2 WHERE user_id=? AND board_idx=? ORDER BY cmt_idx DESC";
 		
 		ArrayList<ReplyDTO> list = new ArrayList<ReplyDTO>();
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, user_id);
+			ps.setString(1, loginId);
 			ps.setString(2, board_idx);
 			rs = ps.executeQuery();
 			while(rs.next()) {

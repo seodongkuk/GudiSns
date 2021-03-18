@@ -3,6 +3,7 @@ package com.sns.service;
 import com.sns.dao.MainDAO;
 import com.sns.dao.ReplyDAO;
 import com.sns.dto.MainDTO;
+import com.sns.dto.ReplyDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,8 +89,10 @@ public class MainService {
 
 	public void mylist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		
-		System.out.println(loginId);
+	
+		String idx = req.getParameter("board_idx");
+
+		System.out.println(loginId+"/"+idx);
 		
 		
 		MainDAO dao = new MainDAO();
@@ -123,20 +126,28 @@ public class MainService {
 	}
 
 	public void detail() throws ServletException, IOException {
-		String idx = req.getParameter("board_idx");
+		String board_idx = req.getParameter("board_idx");
 		
 		String loginId = (String) req.getSession().getAttribute("");
 		System.out.println(loginId);
-		System.out.println(idx + "글번호");
+		System.out.println("글번호 : "+board_idx);
 		
 		
 		String page = "/main.jsp";
 		MainDAO dao = new MainDAO();
-		MainDTO dto = dao.detail(idx);
+		MainDTO dto = dao.detail(board_idx);
+		ReplyDAO rao = new ReplyDAO();
+		ArrayList<ReplyDTO> list= rao.list(loginId,board_idx);
+		rao = new ReplyDAO();
+		int rcnt = rao.rcnt(board_idx);
+		
 		if (dto != null) {
 			new MainDAO();
 			page = "/detail.jsp";
 			req.setAttribute("dto", dto);
+			req.setAttribute("list", list);	
+			req.setAttribute("rcnt", rcnt);
+		
 		}
 
 		dis = req.getRequestDispatcher(page);
@@ -145,10 +156,11 @@ public class MainService {
 
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		
+		String user_id = req.getParameter("user_id");
 		String board_idx = req.getParameter("board_idx");
 
-		System.out.println("loginId:"+loginId);
+//		System.out.println("loginId:"+loginId);
+		System.out.println("user_id:"+user_id);
 
 		ReplyDAO rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
@@ -158,7 +170,7 @@ public class MainService {
 		MainDAO dao = new MainDAO();
 		ArrayList<MainDTO> flist = dao.flist(loginId);
 		dao = new MainDAO();
-		ArrayList<MainDTO> mylist = dao.mylist(loginId);
+		ArrayList<MainDTO> mylist = dao.mylist(user_id);
 		System.out.println(flist.size());
 //		System.out.println(blist.size());
 		

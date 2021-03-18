@@ -63,7 +63,7 @@ public class ReplyService {
 		ArrayList<ReplyDTO> list= dao.list(user_id, board_idx);
 		System.out.println("댓글리스트사이즈:"+list.size());
 		req.setAttribute("list", list);
-		RequestDispatcher dis = req.getRequestDispatcher("rlist.jsp");
+		RequestDispatcher dis = req.getRequestDispatcher("detail.jsp");
 		dis.forward(req, resp);
 	}
 
