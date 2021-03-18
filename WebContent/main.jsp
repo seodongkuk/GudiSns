@@ -104,8 +104,13 @@
 			       		</tr>
 		        		<tr>
 		        			<td>
+		        			<c:forEach items="${list}" var="myL">
 		        				<p>${flist.content}</p>
+		        				<button id="moreShow" onclick="location.href='detail?board_idx=${myL.board_idx}'">더보기</button>
+		        			</c:forEach>
 		        			</td>
+		        			
+                     
 		       				<td>
 					            <button id="like">♥</button>
 					            <input style="float: left; border: none; margin-left: -580px;" 

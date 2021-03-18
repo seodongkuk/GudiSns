@@ -156,6 +156,7 @@ public class MainService {
 
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
+		MainDAO dao = new MainDAO();
 		String user_id = req.getParameter("user_id");
 		String board_idx = req.getParameter("board_idx");
 
@@ -167,7 +168,6 @@ public class MainService {
 
 		System.out.println("board_idx :"+board_idx+"댓글개수:"+rcnt);
 		
-		MainDAO dao = new MainDAO();
 		ArrayList<MainDTO> flist = dao.flist(loginId);
 		dao = new MainDAO();
 		ArrayList<MainDTO> mylist = dao.mylist(user_id);

@@ -128,6 +128,8 @@ public class MainDAO {
 			}
 		} catch (SQLException var5) {
 			var5.printStackTrace();
+		}finally {
+			resClose();
 		}
 
 		return list;
@@ -254,6 +256,8 @@ public class MainDAO {
 			
 		} catch (SQLException var5) {
 			var5.printStackTrace();
+		}finally {
+			resClose();
 		}
 
 		return flist;
