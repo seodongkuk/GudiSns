@@ -74,7 +74,7 @@ public class MemberController extends HttpServlet {
 					msg = loginId + "블랙리스트 입니다.";
 					req.getSession().setAttribute("loginId", loginId);
 				} else {
-					page = "main.jsp";
+					page = "/flist";
 					msg = loginId + "님, 반갑습니다.";
 					req.getSession().setAttribute("loginId", loginId);
 					System.out.println(loginId.indexOf("admin"));				

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sns.service.ReplyService;
 
-@WebServlet({"/rlist","/rwrite","/rdel","/replyForm"})
+@WebServlet({"/rlist","/rwrite","/rdel"})
 public class ReplyController extends HttpServlet{
 	
 	@Override
