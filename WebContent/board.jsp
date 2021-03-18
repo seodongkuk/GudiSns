@@ -76,19 +76,21 @@
         </td>
         </tr>
         <tr>
-            <td>
-                <input  style="font: size 5px;border: none; color: darkgray;" value="전체댓글 3개"/>
-                <p>1번댓글</p><br>
-                <p>2번댓글</p><br>
-                <p>3번댓글</p><br>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                ${dto.user_id} : <input type="text" style="width: 80%;">
-                <input type="button" value="댓글등록" style="float: right ;height: 30;">
-            </td>
-        </tr>
+        <td>
+            <p style="font-size: 15px; color: grey;" >
+            	댓글 모두 ${rcnt}개입니다.</p>
+        </td>
+    </tr>
+    <form action="rwrite" method="POST">
+    	<tr>
+        <td>
+        	<input type="hidden" name="user_id" value="${dto.user_id}"/>
+        	<input type="hidden" name="board_idx" value="${dto.board_idx}"/>
+            <b>${dto.user_id}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
+            <button>댓글 작성</button>
+        </td>
+    </tr>
+    </form>
 
            
      </table>

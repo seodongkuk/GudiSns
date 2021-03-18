@@ -37,10 +37,10 @@
 </style>
 <div class="bar">
     <ul>
-       <a href="#">
+       <a href="main" target="_parent">
             <li>메인</li>
         </a>
-        <a href="find.jsp" target="_blank">
+        <a href="find.jsp" target="_parent">
             <li>검색</li>
         </a>
         <a href="#">
@@ -49,7 +49,7 @@
         <a href="#">
             <li>알림</li>
         </a>
-        <a href="#">
+        <a href="MyProfile" target="_parent">
             <li>내프로필</li>
         </a>
     </ul>

@@ -21,9 +21,6 @@ public class MainService {
 
 	public void newWrite() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		System.out.println("id값"+loginId);
-		
-		
 		if (loginId != null) {
 			FileService fileupload = new FileService(req);
 			MainDTO dto = fileupload.regist();
@@ -31,7 +28,7 @@ public class MainService {
 			MainDAO dao = new MainDAO();
 			String page = "newWriting.html";
 			String msg = "글 등록에 실패 하였습니다.";
-			long idx = dao.write(dto ,loginId);
+			long idx = dao.write(dto);
 			if (idx > 0) {
 				page = "main.jsp";
 				msg = "글 등록에 성공 하였습니다.";
@@ -47,9 +44,6 @@ public class MainService {
 	}
 
 	public void writeEdit() throws ServletException, IOException {
-		String loginId = (String) req.getSession().getAttribute("loginId");
-		System.out.println("id값"+loginId);
-		
 		String idx = req.getParameter("board_idx");
 		System.out.println(idx + "글번호 ");
 		MainDAO dao = new MainDAO();
@@ -65,9 +59,6 @@ public class MainService {
 	}
 
 	public void edit() throws IOException {
-		String loginId = (String) req.getSession().getAttribute("loginId");
-		System.out.println("id값"+loginId);
-		
 		FileService upload = new FileService(req);
 		MainDTO dto = upload.regist();
 		MainDAO dao = new MainDAO();
@@ -94,9 +85,6 @@ public class MainService {
 	}
 
 	public void mylist() throws ServletException, IOException {
-		String loginId = (String) req.getSession().getAttribute("loginId");
-		System.out.println("id값"+loginId);
-		
 		MainDAO dao = new MainDAO();
 		ArrayList<MainDTO> list = dao.mylist();
 		System.out.println(list.size());
@@ -112,9 +100,6 @@ public class MainService {
 	}
 
 	public void del() throws IOException {
-		String loginId = (String) req.getSession().getAttribute("loginId");
-		System.out.println("id값"+loginId);
-		
 		String idx = this.req.getParameter("board_idx");
 		System.out.println("delete idx => " + idx);
 		FileService upload = new FileService(this.req);
@@ -131,12 +116,9 @@ public class MainService {
 	}
 
 	public void detail() throws ServletException, IOException {
-		
-		
 		String idx = req.getParameter("board_idx");
 		String loginId = (String) req.getSession().getAttribute("");
 //		System.out.println(loginId);
-		System.out.println("id값"+loginId);
 		
 		System.out.println(idx + "글번호");
 		String page = "/main.jsp";

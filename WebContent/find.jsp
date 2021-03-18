@@ -9,9 +9,9 @@
 		<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 		<style>
             body{
-                width: 830px;
+                width: 850px;
                 height: 850px;
-                margin-left:20%;
+                margin-left:25%;
                 padding: 5px;
                 border: 1px solid black;
                 overflow: hidden;

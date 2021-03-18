@@ -6,9 +6,9 @@
 <title>구디SNS</title>
 <style>
 	body {
-		width: 830px;
+		width: 850px;
 		height: 850px;
-		margin-left: 20%;
+		margin-left: 25%;
 		padding: 5px;
 		border: 1px solid black;
 		overflow: hidden;
@@ -60,7 +60,7 @@
 		background-color: rgb(240, 207, 207);
 		border: 0px;
 		position: absolute; 
-		left: 1090px; 
+		left: 1200px; 
 		top: 130px;
 		}
 </style>
@@ -78,12 +78,12 @@
 					onclick="location.href='logout'"></td>
 			</tr>
 			<button onclick="location.href='newWriting.jsp'">
-				새글쓰기
+				새 글쓰기
 			</button>
 		</table>
 		<h2>구디SNS</h2>
 		<hr>
-		<select name="array" style="position: absolute; left: 1090px; z-index: 1">
+		<select name="array" style="position: absolute; left: 1200px; z-index: 1">
 			<option value="추천순">추천순</option>
 			<option value="최신순">최신순</option>
 		</select>
@@ -91,7 +91,7 @@
 		<iframe style="position: absolute; float: left; scroll-behavior: auto;"
 				src="board.jsp" width="800px" height="600px" frameborder="0">
 		</iframe>
-		<iframe src="navi.jsp" width="800px" height="1000px" scrolling="no" frameborder="0"></iframe>
+		<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 	</body>
 </div>
 <script src="//code.jquery.com/jquery.min.js"></script>
