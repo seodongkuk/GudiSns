@@ -30,7 +30,7 @@
                 padding: 10px;
                 margin-top: 70px;
                 overflow: scroll;
-                
+                z-index: 200;
             }
             img{
                 margin: 10px;
@@ -82,7 +82,6 @@
     <body>
         <!--Alt+Shift+B 를 누르면 실행-->
         <h2 style="text-align: center;">USER1 DM방 </h2>
-        
             <div id='dmRoom'>
             	<p id="noChat">채팅을 시작해주세요.</p>
             	<c:forEach items="${list}" var="msg">
@@ -124,13 +123,13 @@
                 </c:if>
             	</c:forEach>
             </div>
-            <div style="margin-top: 10px; z-index: 1">
-                <textarea name="msg" id="inputMsg" style="margin-left: 30%; width: 30%; resize: none;"></textarea>
-                <input type="submit" value="전송" id="msg-send" style="float: right; width: 70px; height: 35px; margin-right: 250px;"/>
+            <div style="margin-top: 10px; position: fixed">
+                <textarea name="msg" id="inputMsg" style="margin-left: 120%; width: 100%; resize: none;"></textarea>
+                <input type="submit" value="전송" id="msg-send" style="width: 70px; height: 35px; margin-left: 230%; margin-top: -35px"/>
             </div>
      		<!-- <html:include id="footer" src="navi.html" style="border: none;bottom: 0; left: 550; position: fixed; z-index: 5; top: 850; width: 100%;"/> -->		
-	 			<iframe style="position: absolute; margin-top: -600px; " 
-	 				src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
+	 			<iframe style=" margin-top: -550px; z-index: 100;" 
+	 				src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0" ></iframe>
     </body>
     <script>
     	//채팅방 들어올때 무조건 스크롤 맨밑으로...
