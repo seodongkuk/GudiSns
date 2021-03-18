@@ -65,8 +65,8 @@
 		}
 </style>
 </head>
+<body>
 <div class="main">
-	<body>
 		<table style="float: left; margin-top: 55px;">
 			<tr>
 				<td rowspan="2"><img src="유저프로필.gif" width="80" height="80"></td>
@@ -88,12 +88,40 @@
 			<option value="최신순">최신순</option>
 		</select>
 	
-		<iframe style="position: absolute; float: left; scroll-behavior: auto;"
-				src="board.jsp" width="800px" height="600px" frameborder="0">
-		</iframe>
+		<div>
+			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
+            <input type="button"value="USER_ID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+       <table id="board_idx">
+           <tr>
+           <td>
+            <img src="게시물이미지.gif" width="600" height="450"style="margin-top:100px" />
+        </td>
+            </tr>
+        <tr>
+        
+       <td>
+            <button id="like">♥</button>
+            <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
+            <input type="text"value="작성날짜:2021-03-10"style="float: right;border: none;margin-top: 15px;">
+        </td>
+        </tr>
+    	<form action="rlist" method="POST">
+        <tr>
+        	<td>
+            <p style="font-size: 15px; color: grey;" >
+            	댓글 모두 ${rcnt}개입니다.</p>
+        </td>
+    	</tr>
+    
+   	 	</form>
+
+           
+     </table>
+		</div>
 		<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
+	</div>
 	</body>
-</div>
+	<!-- style="position: absolute; float: left; scroll-behavior: auto;" -->
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script>
 	var msg = "${msg}";
