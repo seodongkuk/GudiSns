@@ -69,7 +69,14 @@
 		width: 100%;
 		overflow: scroll;
 	}
+	#array{
+		position: absolute; 
+		left: 1300px; 
+		z-index: 1;
+	}
 </style>
+
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 <body>
 
@@ -145,7 +152,7 @@
 			<table style="float: left; margin-top: 55px;">
 				<tr>
 					<td rowspan="2"><img src="유저프로필.gif" width="80" height="80"></td>
-					<td><input type="button" value="${loginId}"
+					<td><input type="button" id="loginId" value="${loginId}"
 						style="background-color: white; font-weight: bold;"></td>
 				</tr>
 				<tr>
@@ -156,9 +163,9 @@
 			</table>
 			<h2>구디SNS</h2>
 			<hr>
-			<select name="array" style="position: absolute; left: 1300px; z-index: 1">
-				<option value="추천순">추천순</option>
-				<option value="최신순">최신순</option>
+			<select id="array" onchange="arrayEvt()">
+				<option class="recommend" value="recommend">추천순</option>
+				<option class="latest" value="latest">최신순</option>
 			</select>
 			<div class="board">
 				<c:forEach items="${flist}" var="flist">
@@ -173,12 +180,17 @@
 			       		</tr>
 		        		<tr>
 		        			<td>
+		        			<c:forEach items="${list}" var="myL">
 		        				<p>${flist.content}</p>
+		        				<button id="moreShow" name="board_idx" value="${myL.board_idx}" onclick="location.href='detail?board_idx=${myL.board_idx}'">더보기</button>
+		        			</c:forEach>
 		        			</td>
+		        			
+                     
 		       				<td>
 					            <button id="like">♥</button>
 					            <input style="float: left; border: none; margin-left: -580px;" 
-					            	type="text" value="좋아요숫자">
+					            	type="text" value="좋아요숫자"><span id="likecnt"></span>
 					            <input style="float: right;border: none; margin-left: -500px;"
 					            	type="text"value="작성날짜:2021-03-10">
 		        			</td>
@@ -198,13 +210,38 @@
 				src="navi.jsp" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 	</div>
 </body>
+<<<<<<< HEAD
 >>>>>>> 7c41314ce5fea254d214a1ddeba2bbae918f3f19 --%>
 <script src="//code.jquery.com/jquery.min.js"></script>
+=======
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 <script>
 	var msg = "${msg}";
 	
 	if(msg != ""){
 		alert(msg);
 	}
+	//ReferenceError 일어남.
+ 	/* function arrayEvt(){
+	   	var selectVal = document.getElementById('array').value;
+        $.ajax({
+			type:'get'//전송속도가 post보다 빠름
+			,url:'array'
+			,data:{'loginId':$('#loginId').val()}
+			,dataType:'JSON'
+			,success:function(obj){
+				console.log(obj);
+				 if(selectVal=="latest"){
+					alert("최신순으로 정렬해드릴게요.");
+					
+				} if(selectVal=="recommend"){
+					alert("추천순으로 정렬해드릴게요."); 
+					
+				},error:function(e){
+					console.log(e);	
+				}
+			}
+		});
+	} */
 </script>
 </html>

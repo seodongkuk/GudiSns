@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><!-- JSTL 태그 사용 -->
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -45,11 +48,11 @@ table,td,th{
         <p>당신이 찾고자 하는 것을</p>
         <p>눌러주세요.</p>
         </div>
-            <td>
-                <input type="button" value="아이디찾기">
+       <td>
+                <input type="button" value="아이디찾기" onclick="location.href='id_Find.jsp'">
             </td>
             <td>
-                <input type="button" value="비밀번호찾기">
+                <input type="button" value="비밀번호찾기" onclick="location.href='pw_Find.jsp'">
             </td>
         <hr/>
         <input type="button" value="회원가입하기">

@@ -58,12 +58,11 @@ public class ReplyService {
 	}
 
 	public void rlist() throws ServletException, IOException {
-		String user_id = req.getParameter("user_id");
 		String board_idx = req.getParameter("board_idx");
-		ArrayList<ReplyDTO> list= dao.list(user_id, board_idx);
+		ArrayList<ReplyDTO> list= dao.list(board_idx);
 		System.out.println("댓글리스트사이즈:"+list.size());
 		req.setAttribute("list", list);
-		RequestDispatcher dis = req.getRequestDispatcher("rlist.jsp");
+		RequestDispatcher dis = req.getRequestDispatcher("detail.jsp");
 		dis.forward(req, resp);
 	}
 

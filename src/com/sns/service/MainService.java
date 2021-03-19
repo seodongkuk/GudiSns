@@ -3,9 +3,13 @@ package com.sns.service;
 import com.sns.dao.MainDAO;
 import com.sns.dao.ReplyDAO;
 import com.sns.dto.MainDTO;
+import com.sns.dto.ReplyDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -90,12 +94,14 @@ public class MainService {
 
 	public void mylist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		
-		System.out.println(loginId);
+	
+		String idx = req.getParameter("board_idx");
+
+		System.out.println(loginId+"/"+idx);
 		
 		
 		MainDAO dao = new MainDAO();
-		ArrayList<MainDTO> list = dao.mylist();
+		ArrayList<MainDTO> list = dao.mylist(loginId);
 		System.out.println(list.size());
 		String msg = "게시글없음";
 		if (list != null && list.size() > 0) {
@@ -125,20 +131,34 @@ public class MainService {
 	}
 
 	public void detail() throws ServletException, IOException {
-		String idx = req.getParameter("board_idx");
+		String board_idx = req.getParameter("board_idx");
 		
+<<<<<<< HEAD
 //		String loginId = (String) req.getSession().getAttribute("");
 //		System.out.println(loginId);
 		System.out.println(idx + "글번호");
+=======
+		String loginId = (String) req.getSession().getAttribute("");
+		System.out.println(loginId);
+		System.out.println("글번호 : "+board_idx);
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 		
 		
 		String page = "/main.jsp";
 		MainDAO dao = new MainDAO();
-		MainDTO dto = dao.detail(idx);
+		MainDTO dto = dao.detail(board_idx);
+		ReplyDAO rao = new ReplyDAO();
+		ArrayList<ReplyDTO> list= rao.list(board_idx);
+		rao = new ReplyDAO();
+		int rcnt = rao.rcnt(board_idx);
+		
 		if (dto != null) {
-			new MainDAO();
+			dao = new MainDAO();
 			page = "/detail.jsp";
 			req.setAttribute("dto", dto);
+			req.setAttribute("list", list);	
+			req.setAttribute("rcnt", rcnt);
+		
 		}
 
 		dis = req.getRequestDispatcher(page);
@@ -147,21 +167,28 @@ public class MainService {
 
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		
+		MainDAO dao = new MainDAO();
+		String user_id = req.getParameter("user_id");
 		String board_idx = req.getParameter("board_idx");
-		
-		System.out.println("loginId:"+loginId+"board_idx : "+board_idx);
-		
-	
+
+//		System.out.println("loginId:"+loginId);
+		System.out.println("user_id:"+user_id);
+
 		ReplyDAO rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
+
+		System.out.println("board_idx :"+board_idx+"댓글개수:"+rcnt);
 		
-		MainDAO dao = new MainDAO();
 		ArrayList<MainDTO> flist = dao.flist(loginId);
+		dao = new MainDAO();
+		ArrayList<MainDTO> mylist = dao.mylist(user_id);
 		System.out.println(flist.size());
+//		System.out.println(blist.size());
+		
 		String msg = "친구없음";
 		if (flist != null && flist.size() > 0) {
 			req.setAttribute("flist", flist);
+			req.setAttribute("mylist", mylist);
 			req.setAttribute("rcnt", rcnt);
 			msg = "";
 		}
@@ -170,5 +197,32 @@ public class MainService {
 		dis = req.getRequestDispatcher("main.jsp");
 		dis.forward(req, resp);
 		
+	}
+
+	public void like() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		String board_idx = req.getParameter("board_idx");
+		
+		boolean success = false;
+		System.out.println("idx: "+board_idx+",id: "+loginId);
+		MainDAO dao =  new MainDAO();
+		// 동일 게시글에 대한 이전 추천 여부 검색
+		//추가해야함!!!
+	}
+
+	public void array() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		MainDAO dao = new MainDAO();
+		ArrayList<MainDTO> array = dao.array(loginId);
+		
+		String msg = "전체공개 게시글이 없고 친구도 없고 정렬할 게시글도 없네";
+		if (array != null && array.size() > 0) {
+			req.setAttribute("array", array);
+			msg = "";
+		}
+
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher("main.jsp");
+		dis.forward(req, resp);
 	}
 }

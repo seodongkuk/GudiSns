@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><!-- JSTL 태그 사용 -->
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -34,10 +37,12 @@
             <h1>비밀번호 재설정</h1>
             
     <table>
-        <form>
+        <form action="pwupdate" method="post">
+		<input type="hidden" name="id" value="${sessionScope.id}"/>
+		<input type="hidden" name="email" value="${sessionScope.email}"/>
         <tr>
                 <td>
-                   taseter님의 새로운 비밀번호를 입력해 주세요.
+                  
                 </td>
         </tr>
         <tr>
@@ -47,17 +52,17 @@
     </tr>
         <tr>
             <td>
-                PW 재확인 <input type="password" name="userPw" placeholder="비밀번호를 다시 입력해주세요."/>
+                PW 재확인 <input type="password" name="userPw" placeholder="비밀번호를 재입력 해주세요."/>
             </td>
         </tr>
         <tr>
-            <td style="color: red;">비밀번호가 일치 하지 않습니다.</td>
+            <td style="color: red;"></td>
         </tr>
 
          <br/>
          
          <td> 
-        <input type="button" value="비밀번호 재설정"/>
+        <input type="submit" value="비밀번호 재설정"/>
         </td>       
      
     </form>

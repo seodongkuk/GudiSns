@@ -36,7 +36,7 @@
 	                <option value="HashTag">해시태그</option>
 	                <option value="User" selected>유저</option>
 	            </select>
-	            <input type="text" name="search" placeholder="유저를 검색하세요.">
+	            <input type="text" name="search" placeholder="검색어를 입력해주세요.">
 	            <button>검색</button>
 	        </form>
     	</div>
@@ -45,7 +45,7 @@
 	    	<c:forEach items="${list}" var="member2">
 			    <table>
 			        <tr>
-			            <td rowspan="2"><img src="user.jpg" width="70" height="70"></td>
+			            <td rowspan="2"><img src="기본프사.png" width="70" height="70"></td>
 			            <td style="padding-right: 70px;">${member2.user_id}</td>  
 			            <td style="padding-left: 40px;">
 			                <button onclick="location.href = 'budReq'">친구요청</button>

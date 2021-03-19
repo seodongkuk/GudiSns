@@ -106,14 +106,21 @@ public class MainDAO {
 		return dto;
 	}
 
-	public ArrayList<MainDTO> mylist() {
+	public ArrayList<MainDTO> mylist(String user_id) {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
+<<<<<<< HEAD
 		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName"
 				+ "				FROM board2 b, photo2 p WHERE  b.board_idx = p.board_idx(+)";
+=======
+
+		String sql = "SELECT * FROM post WHERE user_id=?";
+
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 
 		try {
 			ps = conn.prepareStatement(sql);
+			ps.setString(1, user_id);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -130,6 +137,8 @@ public class MainDAO {
 			}
 		} catch (SQLException var5) {
 			var5.printStackTrace();
+		}finally {
+			resClose();
 		}
 
 		return list;
@@ -234,8 +243,15 @@ public class MainDAO {
 		MainDTO dto = null;
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
+<<<<<<< HEAD
 		
 		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx WHERE b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))" ;
+=======
+
+		String sql = "SELECT * FROM post WHERE user_id IN "
+				+ "(SELECT b.bud_id FROM member2 m ,buddylist2 b "
+				+ "WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')";
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -246,7 +262,10 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
+<<<<<<< HEAD
 				dto.setRelease_state(rs.getInt("release_state"));
+=======
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
@@ -257,11 +276,63 @@ public class MainDAO {
 			
 		} catch (SQLException var5) {
 			var5.printStackTrace();
+<<<<<<< HEAD
 		} finally {
+=======
+		}finally {
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 			resClose();
 		}
 
 		return flist;
 		
 	}
+
+//	public int lcheck(String board_idx, String user_id) {
+//		int success = 0;
+//		String sql = "select count(*) AS like_check from like2 where board_idx = ? and user_id = ?";
+//		try {
+//			ps = conn.prepareStatement(sql);
+//			ps.setString(1, board_idx);
+//			ps.setString(2, user_id);
+//			rs = ps.executeQuery();
+//			if(rs.next()) {
+//				success = rs.getInt("like_check");
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			resClose();
+//		}
+//		return success;
+//	}
+	
+
+	//친구공개 게시글 정렬해서 보기.
+	public ArrayList<MainDTO> array(String loginId) {
+		MainDTO dto = null;
+		ArrayList<MainDTO> array = new ArrayList<MainDTO>();
+
+		String sql="select * from board2 WHERE user_id IN(SELECT bud_id FROM buddylist2 WHERE user_id=? AND state = '002') ORDER BY board_idx desc";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				dto = new MainDTO();
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setOriFileName(rs.getString("oriFileName"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				array.add(dto);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return array;
+	}
+
+	
 }

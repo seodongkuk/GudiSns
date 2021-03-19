@@ -6,6 +6,15 @@
         <meta charset="utf-8">
         <title>DM 리스트 페이지</title>
         <style>
+	        body {
+					width: 850px;
+					height: auto;
+					margin-left: 25%;
+					padding: 5px;
+					border: 1px solid black;
+					overflow: scroll;
+				}
+				
             /* #dmBox{
                 margin-left: 10%;
                 border:1px solid black;
@@ -13,7 +22,7 @@
                 height: 1000px;
             } */
             #dmRoom{
-                margin-left: 35%;
+                margin-left: 20%;
                 border:1px solid lightgray;
                 width: 500px;
                 height: 200px;
@@ -48,8 +57,8 @@
                     <img src="C:\Users\HSK\Pictures\ì¤ë¼í´íí´ë.png"/>
                 </span>
                 <div id="userId">
-                    <c:if test="${dm.send_id != id}">${dm.send_id}</c:if>
-                    <c:if test="${dm.recieve_id == id}">${dm.recieve_id}</c:if>
+                    <c:if test="${dm.send_id != sessionScope.loginId}">${dm.send_id}</c:if>
+                    <c:if test="${dm.recieve_id != sessionScope.loginId}">${dm.recieve_id}</c:if>
                 </div>
                 <div style="margin-left: 10px;">
                    	${dm.content}
@@ -64,7 +73,8 @@
                 </div>
             </div>
             </c:forEach>
-            
+            <iframe style="margin-top: 10px;"
+	 				src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0" ></iframe>
     </body>
     <script>
     	var success = "${success}";
