@@ -105,6 +105,7 @@
             <input type="file" id="file" name="photo">
             <input class="upload_name" value="${dto.newFileName}">
             <!-- {기존 파일 명을 보여줘야함 .수정해야하니까 .. value로 처리하는게 편할듯 }-->
+            
             <br>
             <select name="release_state" id="selectBox">
                 <option value="001" <c:if test="${dto.release_state == 1}"> selected="selected"</c:if>>전체공개</option>

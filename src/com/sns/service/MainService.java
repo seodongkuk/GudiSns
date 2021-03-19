@@ -54,10 +54,15 @@ public class MainService {
 		System.out.println(idx + "글번호 ");
 		MainDAO dao = new MainDAO();
 		MainDTO dto = dao.detail(idx);
+	
+		
 		String page = "/MyProfile";
 		if (dto != null) {
 			page = "writingEdit.jsp";
 			req.setAttribute("dto", dto);
+		
+			
+ 			
 		}
 
 		dis = req.getRequestDispatcher(page);
@@ -78,9 +83,8 @@ public class MainService {
 			
 			String delFileName = dao.getFileName(String.valueOf(idx));
 			System.out.println("삭제할파일"+delFileName);
-			
-			dao = new MainDAO();
-			
+ 			dao = new MainDAO();
+ 			
 			dao.updateFileName(delFileName, dto);
 			
 			if (delFileName != null) {
@@ -133,15 +137,11 @@ public class MainService {
 	public void detail() throws ServletException, IOException {
 		String board_idx = req.getParameter("board_idx");
 		
-<<<<<<< HEAD
-//		String loginId = (String) req.getSession().getAttribute("");
-//		System.out.println(loginId);
-		System.out.println(idx + "글번호");
-=======
+
 		String loginId = (String) req.getSession().getAttribute("");
 		System.out.println(loginId);
 		System.out.println("글번호 : "+board_idx);
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
+
 		
 		
 		String page = "/main.jsp";

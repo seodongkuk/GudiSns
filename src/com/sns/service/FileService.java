@@ -31,11 +31,9 @@ public class FileService {
 				dto.setBoard_idx(Integer.parseInt(idx));
 			}
 
-<<<<<<< HEAD
-			dto.setUser_id(userid);
-=======
+
 			dto.setUser_id(user_id);
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
+
 			dto.setContent(content);
 			dto.setRelease_state(Integer.valueOf(release));
 			String oriFileName = multi.getFilesystemName("photo");

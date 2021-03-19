@@ -5,10 +5,6 @@ import java.sql.Date;
 public class MainDTO {
 	private int board_idx;
 	private String user_id;
-<<<<<<< HEAD
-
-=======
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 	private String subject;
 	private String content;
 	private Date writedate;
@@ -28,27 +24,8 @@ public class MainDTO {
 	private String oriFileName;
 	private String newFileName;
 
-	
-	private String muser_id;
-	private String bbud_id;
-	private int bstate ;
-	
-	
-	public String getMuser_id() {
-		return muser_id;
-	}
 
-	public void setMuser_id(String muser_id) {
-		this.muser_id = muser_id;
-	}
 
-	public String getBbud_id() {
-		return bbud_id;
-	}
-
-	public void setBbud_id(String bbud_id) {
-		this.bbud_id = bbud_id;
-	}
 	public String getUser_id() {
 		return user_id;
 	}
@@ -57,13 +34,7 @@ public class MainDTO {
 		this.user_id = user_id;
 	}
 
-	public int getBstate() {
-		return bstate;
-	}
-
-	public void setBstate(int bstate) {
-		this.bstate = bstate;
-	}
+	
 
 	public int getBoard_idx() {
 		return this.board_idx;
@@ -73,10 +44,6 @@ public class MainDTO {
 		this.board_idx = board_idx;
 	}
 
-<<<<<<< HEAD
-	
-=======
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 	public String getSubject() {
 		return this.subject;
 	}
@@ -126,13 +93,7 @@ public class MainDTO {
 		this.newFileName = newFileName;
 	}
 
-	public String getUser_id() {
-		return user_id;
-	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
 
 	public Date getWritedate() {
 		return writedate;

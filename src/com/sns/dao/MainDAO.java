@@ -79,7 +79,7 @@ public class MainDAO {
 
 	public MainDTO detail(String idx) {
 		MainDTO dto = null;
-		String sql = "SELECT b.board_idx, b.content,b.user_id, b.release_state, p.oriFileName, p.newFileName FROM board2 b, photo2 p WHERE b.board_idx = p.file_idx(+) AND b.board_idx = ?";
+		String sql = "SELECT b.board_idx, b.content,b.user_id, b.release_state, p.oriFileName, p.newFileName FROM board2 b, photo2 p WHERE b.board_idx = p.board_idx(+) AND b.board_idx = ?";
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -109,14 +109,10 @@ public class MainDAO {
 	public ArrayList<MainDTO> mylist(String user_id) {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
-<<<<<<< HEAD
-		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName"
-				+ "				FROM board2 b, photo2 p WHERE  b.board_idx = p.board_idx(+)";
-=======
+		
 
-		String sql = "SELECT * FROM post WHERE user_id=?";
+		String sql = "SELECT * FROM photoboard2 WHERE user_id=?";
 
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -243,15 +239,10 @@ public class MainDAO {
 		MainDTO dto = null;
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
-<<<<<<< HEAD
+		
+
 		
 		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx WHERE b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))" ;
-=======
-
-		String sql = "SELECT * FROM post WHERE user_id IN "
-				+ "(SELECT b.bud_id FROM member2 m ,buddylist2 b "
-				+ "WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')";
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -262,10 +253,8 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
-<<<<<<< HEAD
 				dto.setRelease_state(rs.getInt("release_state"));
-=======
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
+				//문제시
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
@@ -276,11 +265,9 @@ public class MainDAO {
 			
 		} catch (SQLException var5) {
 			var5.printStackTrace();
-<<<<<<< HEAD
-		} finally {
-=======
+
 		}finally {
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
+
 			resClose();
 		}
 
