@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist","/like","/array"})
+@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist","/like","/likecnt","/array"})
 public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.dual(req, resp);
@@ -81,9 +81,14 @@ public class MainController extends HttpServlet {
 				
 				System.out.println("추천 준비됬나?");
 				service.like();
-		
-			break;
+				break;
 
+//			case "/likecnt" :
+//				
+//				System.out.println("추천수 보여줄게");
+//				//service.likecnt();
+//				break;
+			
 			case "/array" :
 				
 				System.out.println("정렬 들어간다.");
