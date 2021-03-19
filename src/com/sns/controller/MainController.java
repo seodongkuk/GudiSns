@@ -72,7 +72,7 @@ public class MainController extends HttpServlet {
 				
 			case "/flist" :
 				
-				System.out.println("마이프로필에들어옴list보여줄준비");
+				System.out.println("list보여줄준비");
 				service.flist();
 		
 			break;

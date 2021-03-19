@@ -240,7 +240,7 @@ public class MainDAO {
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
 
-		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx WHERE b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))" ;
+		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx WHERE release_state != 3 AND b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))";
 
 		try {
 			ps = conn.prepareStatement(sql);
