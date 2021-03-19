@@ -1,5 +1,7 @@
 package com.sns.service;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.sns.dao.MainDAO;
 import com.sns.dao.ReplyDAO;
 import com.sns.dto.MainDTO;
@@ -50,8 +52,10 @@ public class MainService {
 	}
 
 	public void writeEdit() throws ServletException, IOException {
+		
 		String idx = req.getParameter("board_idx");
-		System.out.println(idx + "글번호 ");
+		String filename = req.getParameter("NewFileName");
+		System.out.println("글번호: " +idx + "파일명 :"+filename);
 		MainDAO dao = new MainDAO();
 		MainDTO dto = dao.detail(idx);
 	
@@ -71,14 +75,14 @@ public class MainService {
 
 	public void edit() throws IOException, ServletException {
 		FileService upload = new FileService(req);
+
 		MainDTO dto = upload.regist();
 		MainDAO dao = new MainDAO();
 		dao.edit(dto);
 		
 		if (dto.getOriFileName() != null) {
 			int idx = dto.getBoard_idx();
-			System.out.println(idx+"업로드할이전");
-			
+			System.out.println("업로드 할 게시판 번호: "+idx);
 			dao = new MainDAO();
 			
 			String delFileName = dao.getFileName(String.valueOf(idx));
@@ -136,13 +140,19 @@ public class MainService {
 
 	public void detail() throws ServletException, IOException {
 		String board_idx = req.getParameter("board_idx");
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 
 		String loginId = (String) req.getSession().getAttribute("");
 		System.out.println(loginId);
 		System.out.println("글번호 : "+board_idx);
+<<<<<<< HEAD
 
 		
+=======
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 		
 		String page = "/main.jsp";
 		MainDAO dao = new MainDAO();

@@ -10,6 +10,9 @@ public class MainDTO {
 	private Date writedate;
 	private boolean declaration_state;
 	private int release_state;
+	private int file_idx;
+	private String oriFileName;
+	private String newFileName;
 	
 
 	public int getRelease_state() {
@@ -19,6 +22,7 @@ public class MainDTO {
 	public void setRelease_state(int release_state) {
 		this.release_state = release_state;
 	}
+<<<<<<< HEAD
 
 	private int file_idx;
 	private String oriFileName;
@@ -26,6 +30,9 @@ public class MainDTO {
 
 
 
+=======
+	
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 	public String getUser_id() {
 		return user_id;
 	}
@@ -34,8 +41,11 @@ public class MainDTO {
 		this.user_id = user_id;
 	}
 
+<<<<<<< HEAD
 	
 
+=======
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 	public int getBoard_idx() {
 		return this.board_idx;
 	}
@@ -68,7 +78,6 @@ public class MainDTO {
 		this.declaration_state = declaration_state;
 	}
 
-	
 	public int getFile_idx() {
 		return this.file_idx;
 	}
@@ -93,8 +102,11 @@ public class MainDTO {
 		this.newFileName = newFileName;
 	}
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 	public Date getWritedate() {
 		return writedate;
 	}

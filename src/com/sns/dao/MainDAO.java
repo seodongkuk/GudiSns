@@ -109,10 +109,14 @@ public class MainDAO {
 	public ArrayList<MainDTO> mylist(String user_id) {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
+<<<<<<< HEAD
 		
 
 		String sql = "SELECT * FROM photoboard2 WHERE user_id=?";
 
+=======
+		String sql = "SELECT * FROM photoboard2 WHERE user_id=?";
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -239,9 +243,12 @@ public class MainDAO {
 		MainDTO dto = null;
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
+<<<<<<< HEAD
 		
 
 		
+=======
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx WHERE b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))" ;
 
 		try {
@@ -253,21 +260,28 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
+<<<<<<< HEAD
 				dto.setRelease_state(rs.getInt("release_state"));
 				//문제시
+=======
+				//문제 시 한번 다시 보기!
+				dto.setRelease_state(rs.getInt("release_state"));
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				flist.add(dto);
 				}
-					
-				
-			
+
 		} catch (SQLException var5) {
 			var5.printStackTrace();
+<<<<<<< HEAD
 
 		}finally {
 
+=======
+		}finally {
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 			resClose();
 		}
 

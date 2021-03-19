@@ -66,6 +66,7 @@
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
 
             <input type="button"value="${dto.user_id}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+<<<<<<< HEAD
        		
 
             
@@ -73,6 +74,13 @@
        <table>
            <tr>
            <button onclick="location.href='writeEdit?board_idx=${dto.board_idx}'">일단만든수정</button>
+=======
+  
+       <table>
+           <tr>
+           	<button onclick="location.href='writeEdit?board_idx=${dto.board_idx}'">글 수정하기</button>
+		           
+>>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
            		<td>
             		<img src="게시물이미지.gif" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
         		</td>
