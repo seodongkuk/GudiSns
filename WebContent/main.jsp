@@ -140,7 +140,7 @@
 		<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<!-- style="position: absolute; float: left; scroll-behavior: auto;" -->
-=======
+<%-- =======
 	<div class="main">
 			<table style="float: left; margin-top: 55px;">
 				<tr>
@@ -198,7 +198,7 @@
 				src="navi.jsp" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 	</div>
 </body>
->>>>>>> 7c41314ce5fea254d214a1ddeba2bbae918f3f19
+>>>>>>> 7c41314ce5fea254d214a1ddeba2bbae918f3f19 --%>
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script>
 	var msg = "${msg}";

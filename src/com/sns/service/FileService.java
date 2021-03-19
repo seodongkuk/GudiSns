@@ -33,7 +33,7 @@ public class FileService {
 
 			dto.setUser_id(userid);
 			dto.setContent(content);
-			dto.setRelase_state(Integer.parseInt(release));
+			dto.setRelease_state(Integer.valueOf(release));
 			String oriFileName = multi.getFilesystemName("photo");
 			if (oriFileName != null) {
 				String ext = oriFileName.substring(oriFileName.lastIndexOf("."));

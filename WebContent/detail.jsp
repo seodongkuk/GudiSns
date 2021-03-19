@@ -77,7 +77,7 @@
 				<td><input type="button" value="로그아웃"
 					onclick="location.href='logout'"></td>
 			</tr>
-			<button onclick="location.href='newWriting.jsp'">
+			<button>
 				새 글쓰기
 			</button>
 		</table>
@@ -88,12 +88,15 @@
 			<option value="최신순">최신순</option>
 		</select>
 	
+		
 		<div>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
-            <input type="button"value="USER_ID" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+            <input type="button"value="${dto.user_id}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
        <table id="board_idx">
            <tr>
+           <button onclick="location.href='writeEdit?board_idx=${dto.board_idx}'">일단만든삭제</button>
            <td>
+            
             <img src="게시물이미지.gif" width="600" height="450"style="margin-top:100px" />
         </td>
             </tr>

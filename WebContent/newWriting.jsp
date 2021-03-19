@@ -110,7 +110,7 @@
             </select>
         </form>
         <button type="submit" form="newWrite">작성완료</button>
-        <button type="button" onclick="next()">취소</button>
+        <button type="button" onclick="location.href='flist'">취소</button>
         <!-- 자바스크립트로 메인으로 보내기 !-->
     </div>
 </body>

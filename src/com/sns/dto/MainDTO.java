@@ -10,7 +10,17 @@ public class MainDTO {
 	private String content;
 	private Date date;
 	private boolean declaration_state;
-	private int relase_state;
+	private int release_state;
+	
+
+	public int getRelease_state() {
+		return release_state;
+	}
+
+	public void setRelease_state(int release_state) {
+		this.release_state = release_state;
+	}
+
 	private int file_idx;
 	private String oriFileName;
 	private String newFileName;
@@ -93,14 +103,7 @@ public class MainDTO {
 		this.declaration_state = declaration_state;
 	}
 
-	public int getRelase_state() {
-		return this.relase_state;
-	}
-
-	public void setRelase_state(int relase_state) {
-		this.relase_state = relase_state;
-	}
-
+	
 	public int getFile_idx() {
 		return this.file_idx;
 	}
