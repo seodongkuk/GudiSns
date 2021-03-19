@@ -1,5 +1,5 @@
 package com.sns.dto;
-/
+
 import java.sql.Date;
 
 public class MainDTO {
