@@ -142,10 +142,10 @@
      		</div>
 		<iframe src="navi.jsp" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 	</body>
-<<<<<<< HEAD
+
 	
 <script src="//code.jquery.com/jquery.min.js"></script>
-=======
+
 	<!-- style="position: absolute; float: left; scroll-behavior: auto;" -->
 <%-- =======
 	<div class="main">
