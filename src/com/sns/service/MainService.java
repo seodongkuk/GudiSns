@@ -29,6 +29,9 @@ public class MainService {
 
 	public void newWrite() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
+		
+		System.out.println(loginId);
+		
 		if (loginId != null) {
 			FileService fileupload = new FileService(req);
 			MainDTO dto = fileupload.regist();
@@ -74,8 +77,9 @@ public class MainService {
 	}
 
 	public void edit() throws IOException, ServletException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
 		FileService upload = new FileService(req);
-
+		
 		MainDTO dto = upload.regist();
 		MainDAO dao = new MainDAO();
 		dao.edit(dto);
@@ -140,19 +144,11 @@ public class MainService {
 
 	public void detail() throws ServletException, IOException {
 		String board_idx = req.getParameter("board_idx");
-<<<<<<< HEAD
-		
-=======
->>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 
 		String loginId = (String) req.getSession().getAttribute("");
 		System.out.println(loginId);
 		System.out.println("글번호 : "+board_idx);
-<<<<<<< HEAD
 
-		
-=======
->>>>>>> 8b35272797493c2d4e4b74a494481a0dcedcfcc4
 		
 		String page = "/main.jsp";
 		MainDAO dao = new MainDAO();
@@ -177,12 +173,14 @@ public class MainService {
 
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
+		System.out.println(loginId+" : loginid");
 		MainDAO dao = new MainDAO();
-		String user_id = req.getParameter("user_id");
+//		String user_id = req.getParameter("user_id");
+//		
 		String board_idx = req.getParameter("board_idx");
-
+//
 //		System.out.println("loginId:"+loginId);
-		System.out.println("user_id:"+user_id);
+//		System.out.println("user_id:"+user_id);
 
 		ReplyDAO rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
@@ -191,7 +189,7 @@ public class MainService {
 		
 		ArrayList<MainDTO> flist = dao.flist(loginId);
 		dao = new MainDAO();
-		ArrayList<MainDTO> mylist = dao.mylist(user_id);
+		ArrayList<MainDTO> mylist = dao.mylist(loginId);
 		System.out.println(flist.size());
 //		System.out.println(blist.size());
 		
