@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><!-- JSTL 태그 사용 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -106,35 +106,36 @@
             <h1>회원정보 수정</h1>
         </div>
         <div class="container">
-            <form action="#">
+            <form action="userinfoupdate" method="post">
+      
                 <table class="filebox">
                     <tr>
                         <td>ID</td>
-                        <td><input type="text" disabled value="ddd"></td>
+                   <td><input type="text" name="userId" value="${info.id}"readonly></td>
                     </tr>
                     <tr>
                         <td>PW</td>
-                        <td><input type="text" id="password1"></td>
+                    <td><input type="text" name="userPw" id="password1"></td>
                     </tr>
                     <tr>
                         <td>PW재확인</td>
-                        <td><input type="text" id="password2" onkeyup=test();></td>
+                    <td><input type="text" id="password2" name="userPw" onkeyup=test();></td>
                     </tr>
                     <tr>
-                        <td id="password2ck">비밀번호가 일치하지않습니다</p></td>
+                    <td id="password2ck">비밀번호가 일치하지않습니다</p></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>NAME</td>
-                        <td><input type="text"></td>
+                    <td><input type="text" name="userName" value="${info.name}"></td>
                     </tr>
                     <tr>
                         <td>PHONE</td>
-                        <td><input type="text"></td>
+                    <td><input type="text" name="phone" value="${info.phone}"></td>
                     </tr>
                     <tr>
                         <td>EMAIL</td>
-                        <td><input type="text"></td>
+                    <td><input type="text" name="email" value="${info.email}"></td>
                     </tr>
                     <tr>
                         <td>프로필사진</td>
@@ -145,13 +146,22 @@
                         </td>
                     </tr>
                 </table>
+                <button type="submit"  >회원정보 수정</button>
             </form>
         </div>
-        <button type="submit" value="#">회원정보 수정</button>
+        
 
     </div>
 </body>
 <script>
+
+var msg = "${msg}";
+
+if(msg != ""){
+	alert(msg);
+}
+
+
 function next(){
 
 if(confirm("글 수정을 취소하시겠습니까 ?"))
@@ -165,7 +175,7 @@ else
 // 아니오
 
 }
-}
+
 
 
 
@@ -185,13 +195,13 @@ else
 
 
 
-    $(document).ready(function () {
-        var fileTarget = $('#file');
-        fileTarget.on('change', function () { // 값이 변경되면
-            var cur = $(".filebox input[type='file']").val();
-            $(".upload_name").val(cur);
-        });
-    });
+   $(document).ready(function () {
+       var fileTarget = $('#file');
+       fileTarget.on('change', function () { // 값이 변경되면
+           var cur = $(".filebox input[type='file']").val();
+           $(".upload_name").val(cur);
+       });
+
 </script>
 
 </html>

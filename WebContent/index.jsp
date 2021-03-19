@@ -75,7 +75,7 @@
             <tr>
                 <td colspan="3">
                     <input type="button" value="회원가입" onclick="location.href='join.jsp'"/>
-                    <input type="button" value="아이디비밀번호찾기" onclick="location.href='id_pw_Find.html'"/>
+                    <input type="button" value="아이디비밀번호찾기" onclick="location.href='id_pw_Find.jsp'"/>
                 </td>
             </tr>
         </table>

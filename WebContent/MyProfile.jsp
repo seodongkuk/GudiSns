@@ -97,8 +97,10 @@
             <div>
                 <img style="width: 150px; height: 170px;" src="C:\Users\HSK\Pictures\오라클홈폴더.png"/>
             </div>
-                <input type="button" class="member" value="회원정보 수정">
-                <input type="button" class="member" value="회원 탈퇴">
+                <input type="button" class="member" value="회원정보 수정" onclick="location.href='info_pass.jsp'">
+                <input type="button" class="member" value="회원 탈퇴" onclick="location.href='user_out.jsp'">
+                 <form action="memberDel" method="post"></form>
+		          <input type="hidden" name="id" value="${sessionScope.id}"/>
 
                 <div class="friendList">
                     <p>친구목록</p>

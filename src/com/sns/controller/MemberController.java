@@ -15,7 +15,8 @@ import javax.servlet.http.HttpSession;
 import com.sns.dto.MemberDTO;
 import com.sns.service.MemberService;
 
-@WebServlet({ "/login", "/join", "/logout", "/main", "/idChk" })
+@WebServlet({ "/login", "/join", "/logout", "/main", "/idChk", "/idfind", "/pwfind"
+	,"/pwupdate","/infopw","/userinfoupdate","/userinfo","/memberDel/"})
 public class MemberController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -163,30 +164,33 @@ public class MemberController extends HttpServlet {
 			service.infopw();
 			break;
 		
+	
 		
-		case "/detail":
+		
+		case "/userinfo":
 			System.out.println("상세보기 요청");
-			MemberDTO dto = service.detail();//dto null?
+			MemberDTO dto = service.userinfo();
 			System.out.println(dto);
 			
 			msg="상세정보 불러오기에 실패 했습니다.";
 			page="main";				
 			if(dto != null) {
-				msg="";
-				page="detail.jsp";
+				msg="개인정보";
+				page="updateProfile.jsp";
 				req.setAttribute("info", dto);
 			}
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);						
 			break;
+		
 			
 			
-		case "/update":
+		case "/userinfoupdate":
 			System.out.println("업데이트 요청");
 			msg="수정에 실패 했습니다.";
-			page="detail";
-			if(service.update()==0) {//성공
+			page="MyProfile.jsp";
+			if(service.userinfoupdate()==0) {//성공
 				msg="수정에 성공 하였습니다.";
 				page="main";
 			}
@@ -196,8 +200,15 @@ public class MemberController extends HttpServlet {
 			dis.forward(req, resp);				
 			break;
 			
-				
-
+			
+			
+		case "/memberDel": 
+	
+		System.out.println("회원 삭제 요청");
+		service.memberDel();
+		break;
+		
 		}
 	}
 }
+
