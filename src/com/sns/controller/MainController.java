@@ -1,5 +1,5 @@
 package com.sns.controller;
-
+/
 import com.sns.service.MainService;
 import java.io.IOException;
 

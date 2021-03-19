@@ -210,7 +210,6 @@
 				src="navi.jsp" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 	</div>
 </body>--%>
->>>>>>> c0c2e8651d419d29b87b00bc79fe2ae016655bef
 
 <script>
 	var msg = "${msg}";
