@@ -2,13 +2,14 @@ package com.sns.controller;
 
 import com.sns.service.MainService;
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist"})
+@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist","/like","/array"})
 public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.dual(req, resp);
@@ -27,7 +28,6 @@ public class MainController extends HttpServlet {
 		System.out.println(sub);
 		
 		
-		
 		MainService service = new MainService(req, resp);
 		
 		
@@ -35,7 +35,7 @@ public class MainController extends HttpServlet {
 		
 		switch (sub) {
 			case "/writeEdit" :
-				
+			
 					System.out.println("글 수정 요청들어옴");
 					service.writeEdit();
 				
@@ -74,7 +74,21 @@ public class MainController extends HttpServlet {
 				
 				System.out.println("마이프로필에들어옴list보여줄준비");
 				service.flist();
-			
+		
+			break;
+
+			case "/like" :
+				
+				System.out.println("추천 준비됬나?");
+				service.like();
+		
+			break;
+
+			case "/array" :
+				
+				System.out.println("정렬 들어간다.");
+				service.array();
+		
 			break;
 		}
 

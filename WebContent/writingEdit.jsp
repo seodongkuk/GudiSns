@@ -93,27 +93,28 @@
 <body>
     <div id="newWritebox">
         <h2>글 수정</h2>
-        <form action="edit" id="newWrite" class="filebox">
-        <input type="hidden" name="idx" value="${dto.board_idx}"/>
+        <form action="edit" id="newWrite" class="filebox" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="board_idx" value="${dto.board_idx}"/>
         
             <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000">${dto.content}</textarea><br>
-            <input type="text" name="hashOne" class="hash" value="${dto.hashOne}">
-            <input type="text" name="hashTwo" class="hash" value="${dto.hashTwo}">
+            <input type="text" name="hashOne" class="hash" value="">
+            <input type="text" name="hashTwo" class="hash" value="">
             <!-- 추가 삭제는 자바사크립트로  -->
             <br>
             <label for="file">업로드</label>
             <input type="file" id="file" name="photo">
-            <input class="upload_name" value="${dto.newFileName}">
+            <input type="hidden" name="upload_name" value="${dto.newFileName}"/>
+   			${dto.newFileName}
             <!-- {기존 파일 명을 보여줘야함 .수정해야하니까 .. value로 처리하는게 편할듯 }-->
             <br>
             <select name="release_state" id="selectBox">
-                <option value="001" <c:if test="${dto.release_state}"> selected="selected"</c:if>>전체공개</option>
-                <option value="002" <c:if test="${dto.release_state}"> selected="selected"</c:if>>친구공개</option>
-                <option value="003" <c:if test="${dto.release_state}"> selected="selected"</c:if>>나만보기</option>
+                <option value="001" <c:if test="${dto.release_state == 1}"> selected="selected"</c:if>>전체공개</option>
+                <option value="002" <c:if test="${dto.release_state == 2}"> selected="selected"</c:if>>친구공개</option>
+                <option value="003" <c:if test="${dto.release_state == 3}"> selected="selected"</c:if>>나만보기</option>
             </select>
+        <button >수정완료</button>
         </form>
-        <button type="submit" form="newWrite">수정완료</button>
-        <button type="button" onclick="next()">취소</button>
+        <button type="button" onclick="location.href='detail?board_idx=${dto.board_idx}'">취소</button>
         <!-- 자바스크립트로 메인으로 보내기 !-->
     </div>
 </body>

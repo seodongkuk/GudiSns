@@ -9,39 +9,26 @@ public class MainDTO {
 	private String content;
 	private Date writedate;
 	private boolean declaration_state;
-	private int relase_state;
+	private int release_state;
 	private int file_idx;
 	private String oriFileName;
 	private String newFileName;
-
 	
-	private String muser_id;
-	private String bbud_id;
-	private int bstate ;
+
+	public int getRelease_state() {
+		return release_state;
+	}
+
+	public void setRelease_state(int release_state) {
+		this.release_state = release_state;
+	}
 	
+	public String getUser_id() {
+		return user_id;
+	}
 	
-	public String getMuser_id() {
-		return muser_id;
-	}
-
-	public void setMuser_id(String muser_id) {
-		this.muser_id = muser_id;
-	}
-
-	public String getBbud_id() {
-		return bbud_id;
-	}
-
-	public void setBbud_id(String bbud_id) {
-		this.bbud_id = bbud_id;
-	}
-
-	public int getBstate() {
-		return bstate;
-	}
-
-	public void setBstate(int bstate) {
-		this.bstate = bstate;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
 	public int getBoard_idx() {
@@ -76,14 +63,6 @@ public class MainDTO {
 		this.declaration_state = declaration_state;
 	}
 
-	public int getRelase_state() {
-		return this.relase_state;
-	}
-
-	public void setRelase_state(int relase_state) {
-		this.relase_state = relase_state;
-	}
-
 	public int getFile_idx() {
 		return this.file_idx;
 	}
@@ -106,14 +85,6 @@ public class MainDTO {
 
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
-	}
-
-	public String getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
 	}
 
 	public Date getWritedate() {

@@ -8,11 +8,11 @@
         <style>
 	        body {
 					width: 850px;
-					height: 625px;
+					height: auto;
 					margin-left: 25%;
 					padding: 5px;
 					border: 1px solid black;
-					overflow: hidden;
+					overflow: scroll;
 				}
 				
             /* #dmBox{
@@ -57,8 +57,8 @@
                     <img src="C:\Users\HSK\Pictures\ì¤ë¼í´íí´ë.png"/>
                 </span>
                 <div id="userId">
-                    <c:if test="${dm.send_id != id}">${dm.send_id}</c:if>
-                    <c:if test="${dm.recieve_id == id}">${dm.recieve_id}</c:if>
+                    <c:if test="${dm.send_id != sessionScope.loginId}">${dm.send_id}</c:if>
+                    <c:if test="${dm.recieve_id != sessionScope.loginId}">${dm.recieve_id}</c:if>
                 </div>
                 <div style="margin-left: 10px;">
                    	${dm.content}

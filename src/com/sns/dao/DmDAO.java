@@ -131,6 +131,7 @@ public HashMap<String, Object> chatRoom(String id) {
 				success = true;
 				map.put("chatIdx", rs.getInt("chat_idx"));
 				map.put("success", success);
+				System.out.println(map.get("chatIdx"));
 				return map;
 			}else {
 				//현재 대화 요청한 사람과 요청받은 사람의 방번호를 새로 만듦
@@ -189,12 +190,28 @@ public HashMap<String, Object> chatRoom(String id) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<DmDTO> list = new ArrayList<DmDTO>();
 		boolean success = false;
+		boolean success_two = false;
+		int chatIdx = 0;
 		String sql = "SELECT d.content,TO_CHAR(d.sendtime,'YY/MM/DD HH24:MI') as time,d.user_id,d.recieve_id,d.read_state FROM dm2 d WHERE d.dm_idx = ? ORDER BY d.sendtime ASC";
 		
 		try {
-			if(idx == null) {
+			if(idx == null || Integer.parseInt(idx) == 0) {
 				System.out.println("방번호 없음");
+				sql = "SELECT chat_idx FROM chatroom2 WHERE (user_id=? AND recieve_id=?) OR (user_id=? AND recieve_id=?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, id);
+				ps.setString(2, create);
+				ps.setString(3, create);
+				ps.setString(4, id);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					chatIdx = rs.getInt("chat_idx");
+					success = true;
+				}
+				
 				map.put("success", success);
+				map.put("chatIdx",chatIdx);
+				System.out.println(chatIdx+" 번호의 방은 기존에 만들어졌습니다.");
 				return map;
 			}
 			ps = conn.prepareStatement(sql);
@@ -205,21 +222,33 @@ public HashMap<String, Object> chatRoom(String id) {
 			
 			while(rs.next()) {
 				DmDTO dmAll = new DmDTO();
+
+//				if(rs.getString("recieve_id").equals(id) || rs.getString("user_id").equals(create)) {
+//					success_two = true;
+//				}else if(rs.getString("recieve_id").equals(create) || rs.getString("user_id").equals(id)) {
+//					success_two = true;
+//				}else {
+//					success_two = false;
+//					map.put("success_chk", success_two);
+//					return map;
+//				}
+				
 				dmAll.setSendtime(rs.getString("time"));
 				dmAll.setContent(rs.getString("content"));
 				dmAll.setRead_state(rs.getString("read_state"));
 				dmAll.setSend_id(rs.getString("user_id"));
 				dmAll.setRecieve_id(rs.getString("recieve_id"));
 				list.add(dmAll);
-				success = true;
 			}
-			map.put("list", list);
 			
+			map.put("list", list);
+//			map.put("success_chk", success_two);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			resClose();
 			System.out.println("대화 개수 : "+list.size());
+			System.out.println("파라메터 아이디 일치 여부 : "+success_two);
 		}
 		return map;
 	}
