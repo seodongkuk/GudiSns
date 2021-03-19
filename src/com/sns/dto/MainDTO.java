@@ -5,15 +5,14 @@ import java.sql.Date;
 public class MainDTO {
 	private int board_idx;
 	private String user_id;
-<<<<<<< HEAD
-
-=======
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 	private String subject;
 	private String content;
 	private Date writedate;
 	private boolean declaration_state;
 	private int release_state;
+	private int file_idx;
+	private String oriFileName;
+	private String newFileName;
 	
 
 	public int getRelease_state() {
@@ -23,46 +22,13 @@ public class MainDTO {
 	public void setRelease_state(int release_state) {
 		this.release_state = release_state;
 	}
-
-	private int file_idx;
-	private String oriFileName;
-	private String newFileName;
-
 	
-	private String muser_id;
-	private String bbud_id;
-	private int bstate ;
-	
-	
-	public String getMuser_id() {
-		return muser_id;
-	}
-
-	public void setMuser_id(String muser_id) {
-		this.muser_id = muser_id;
-	}
-
-	public String getBbud_id() {
-		return bbud_id;
-	}
-
-	public void setBbud_id(String bbud_id) {
-		this.bbud_id = bbud_id;
-	}
 	public String getUser_id() {
 		return user_id;
 	}
 	
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
-	}
-
-	public int getBstate() {
-		return bstate;
-	}
-
-	public void setBstate(int bstate) {
-		this.bstate = bstate;
 	}
 
 	public int getBoard_idx() {
@@ -73,10 +39,6 @@ public class MainDTO {
 		this.board_idx = board_idx;
 	}
 
-<<<<<<< HEAD
-	
-=======
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 	public String getSubject() {
 		return this.subject;
 	}
@@ -101,7 +63,6 @@ public class MainDTO {
 		this.declaration_state = declaration_state;
 	}
 
-	
 	public int getFile_idx() {
 		return this.file_idx;
 	}
@@ -124,14 +85,6 @@ public class MainDTO {
 
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
-	}
-
-	public String getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
 	}
 
 	public Date getWritedate() {
