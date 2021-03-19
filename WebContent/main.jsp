@@ -210,12 +210,8 @@
 			<iframe 
 				src="navi.jsp" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 	</div>
-</body>
-<<<<<<< HEAD
->>>>>>> 7c41314ce5fea254d214a1ddeba2bbae918f3f19 --%>
-<script src="//code.jquery.com/jquery.min.js"></script>
-=======
->>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
+</body>--%>
+
 <script>
 	var msg = "${msg}";
 	
