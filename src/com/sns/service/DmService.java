@@ -96,11 +96,11 @@ public class DmService {
 		HashMap<String,Object> map = dao.dmRoom(id,create,idx);
 		
 		//혹시라도 URL 파라메터에 직접 입력해서 접근하려고 하면.. 일치 여부 확인후 내보낸다.
-		if(!(boolean) map.get("success_chk")) {
-			System.out.println("잘못된 접근입니다.");
-			resp.sendRedirect("./index.jsp");
-		//정상적인 경로로 들어왔다면 메인 구문 실행!!!
-		}else {
+//		if(!(boolean) map.get("success_chk")) {
+//			System.out.println("잘못된 접근입니다.");
+//			resp.sendRedirect("./index.jsp");
+//		//정상적인 경로로 들어왔다면 메인 구문 실행!!!
+//		}else {
 		
 		//dao 자원 정리되었으니 다시 객체화 해줌
 		dao = new DmDAO();
@@ -137,7 +137,7 @@ public class DmService {
 		RequestDispatcher dis = req.getRequestDispatcher(page);
 		dis.forward(req, resp);
 		}
-	}
+//	}
 	
 	//
 	public void dmList() throws ServletException, IOException{
