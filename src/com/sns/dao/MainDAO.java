@@ -9,11 +9,7 @@ import java.util.ArrayList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-<<<<<<< HEAD
- 
-=======
 
->>>>>>> c11b20ce83ef3b62c73eac836e673b14e6bf070c
 public class MainDAO {
 	Connection conn = null;
 	PreparedStatement ps = null;
