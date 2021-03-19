@@ -77,16 +77,17 @@ public class MemberDAO {
 	
 	
 	//--------------------------------------------------------------------------회원가입
-	public boolean join(String id,String pw,String name,String phone,String email) {
+	public boolean join(MemberDTO dto) {
 		boolean success = false;
 		String sql="INSERT INTO member2 (user_id,pw,name,phone,email)VALUES(?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1,id);
-			ps.setString(2,pw);
-			ps.setString(3,name);
-			ps.setInt(4,Integer.parseInt(phone));
-			ps.setString(5,email);
+			ps.setString(1,dto.getId());
+			ps.setString(2,dto.getPw());
+			ps.setString(3,dto.getName());
+			ps.setString(4,dto.getPhone());
+			ps.setString(5,dto.getEmail());
+			
 			rs = ps.getGeneratedKeys();
 			if(ps.executeUpdate()>0) {
 				success = true;
@@ -236,7 +237,7 @@ public String pwfind(String id, String email) {
 						dto.setPw(rs.getString("pw"));
 						dto.setName(rs.getString("name"));
 						dto.setEmail(rs.getString("email"));
-						dto.setPhone(rs.getInt("phone"));
+						dto.setPhone(rs.getString("phone"));
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -256,7 +257,7 @@ public String pwfind(String id, String email) {
 			ps.setString(1, dto.getPw());
 			ps.setString(2, dto.getName());
 			ps.setString(3, dto.getEmail());
-			ps.setInt(4, dto.getPhone());
+			ps.setString(4, dto.getPhone());
 			ps.setString(5, dto.getId());
 			success = ps.executeUpdate();
 			

@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -270,26 +272,6 @@ public class MainDAO {
 		
 	}
 
-//	public int lcheck(String board_idx, String user_id) {
-//		int success = 0;
-//		String sql = "select count(*) AS like_check from like2 where board_idx = ? and user_id = ?";
-//		try {
-//			ps = conn.prepareStatement(sql);
-//			ps.setString(1, board_idx);
-//			ps.setString(2, user_id);
-//			rs = ps.executeQuery();
-//			if(rs.next()) {
-//				success = rs.getInt("like_check");
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}finally {
-//			resClose();
-//		}
-//		return success;
-//	}
-	
-
 	//친구공개 게시글 정렬해서 보기.
 	public ArrayList<MainDTO> array(String loginId) {
 		MainDTO dto = null;
@@ -312,9 +294,82 @@ public class MainDAO {
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 		return array;
 	}
 
+	public int likeChk(String loginId, String board_idx) {
+		int success=0;
+		String sql = "select count(*) as like_chk from like2 where board_idx=? and user_id=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, board_idx);
+			ps.setString(2, loginId);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				success = rs.getInt("like_chk");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+
+	public boolean likeupdate(String loginId, String board_idx) {
+		boolean success=false;
+		String sql = "Insert INTO like2(board_idx,user_id) VALUES(?,?)";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, board_idx);
+			ps.setString(2, loginId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return !success;
+		
+	}
+
+	public boolean likedelete(String loginId, String board_idx) {
+		boolean success=false;
+		String sql = "delete from like2(board_idx,user_id) VALUES(?,?)";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, board_idx);
+			ps.setString(2, loginId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return !success;
+	}
+
+	public int likeCnt(String idx) {
+		int success=0;
+		String sql = "select count(*) as like_cnt from like2 where board_idx=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, idx);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				success = rs.getInt("like_cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
 	
 }
