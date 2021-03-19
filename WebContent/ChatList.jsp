@@ -8,11 +8,11 @@
         <style>
 	        body {
 					width: 850px;
-					height: 625px;
+					height: auto;
 					margin-left: 25%;
 					padding: 5px;
 					border: 1px solid black;
-					overflow: hidden;
+					overflow: scroll;
 				}
 				
             /* #dmBox{
