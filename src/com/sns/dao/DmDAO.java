@@ -223,15 +223,15 @@ public HashMap<String, Object> chatRoom(String id) {
 			while(rs.next()) {
 				DmDTO dmAll = new DmDTO();
 
-				if(rs.getString("recieve_id").equals(id) && rs.getString("user_id").equals(create)) {
-					success_two = true;
-				}else if(rs.getString("recieve_id").equals(create) && rs.getString("user_id").equals(id)) {
-					success_two = true;
-				}else {
-					success_two = false;
-					map.put("success_chk", success_two);
-					return map;
-				}
+//				if(rs.getString("recieve_id").equals(id) || rs.getString("user_id").equals(create)) {
+//					success_two = true;
+//				}else if(rs.getString("recieve_id").equals(create) || rs.getString("user_id").equals(id)) {
+//					success_two = true;
+//				}else {
+//					success_two = false;
+//					map.put("success_chk", success_two);
+//					return map;
+//				}
 				
 				dmAll.setSendtime(rs.getString("time"));
 				dmAll.setContent(rs.getString("content"));
@@ -240,8 +240,9 @@ public HashMap<String, Object> chatRoom(String id) {
 				dmAll.setRecieve_id(rs.getString("recieve_id"));
 				list.add(dmAll);
 			}
+			
 			map.put("list", list);
-			map.put("success_chk", success_two);
+//			map.put("success_chk", success_two);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

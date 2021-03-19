@@ -40,7 +40,7 @@
         <form>
         <tr>
             <td>
-             <jsp:include page="idbox.jsp"/>
+           <jsp:include page="idbox.jsp"/>
             </td>
         </tr>
             <br/>

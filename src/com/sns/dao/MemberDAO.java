@@ -176,6 +176,7 @@ public String pwfind(String id, String email) {
 
 
 //-------------------------------------------------------------------비번 변경
+		
 		public int pwupdate(MemberDTO dto) {
 		String sql="UPDATE member2 SET pw=? WHERE user_id=? AND email=?";
 		int success = -1;
@@ -222,8 +223,8 @@ public String pwfind(String id, String email) {
 //-----------------------------------------------------------------------------//회원정보 창
 	
 			
-				public MemberDTO detail (String id) {
-				String sql="SELECT * FROM member WHERE id=?";		
+				public MemberDTO userinfo (String id) {
+				String sql="SELECT * FROM member2 WHERE user_id=?";		
 				MemberDTO dto = null;
 				try {
 					ps = conn.prepareStatement(sql);
@@ -231,7 +232,7 @@ public String pwfind(String id, String email) {
 					rs = ps.executeQuery();
 					if(rs.next()) {
 						dto = new MemberDTO();
-						dto.setId(rs.getString("id"));
+						dto.setId(rs.getString("user_id"));
 						dto.setPw(rs.getString("pw"));
 						dto.setName(rs.getString("name"));
 						dto.setEmail(rs.getString("email"));
@@ -240,44 +241,68 @@ public String pwfind(String id, String email) {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}finally {
-					try {
-						ps.close();
-						rs.close();
-						conn.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
+					resClose();
 				}				
 				return dto;
 			}
 //-----------------------------------------------------------------------------//회원정보 업데이트				
 				
-				public int update(MemberDTO dto) {
-					
-					String sql="UPDATE member SET pw=?, name=?, email=?, phone=?  WHERE id=?";
-					int success = -1;
+	public int userinfoupdate(MemberDTO dto) {
+		
+		String sql="UPDATE member2 SET pw=?, name=?, email=?, phone=?  WHERE user_id=?";
+		int success = -1;
+		try {
+			ps = conn.prepareStatement(sql);			
+			ps.setString(1, dto.getPw());
+			ps.setString(2, dto.getName());
+			ps.setString(3, dto.getEmail());
+			ps.setInt(4, dto.getPhone());
+			ps.setString(5, dto.getId());
+			success = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return success;
+}	
+//-----------------------------------------------------------------------------//회원정보 삭제					
+				
+				
+				
+			public int memberDel(String id, String pw) {
+				
+				String sql="DELETE pw FROM member2 WHERE user_id=? AND pw=?";
+				int success = -1;
+				try {
+					ps = conn.prepareStatement(sql);
+					ps.setString(1,id);
+					ps.setString(2,pw);
+					success = ps.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally {
 					try {
-						ps = conn.prepareStatement(sql);			
-						ps.setString(1, dto.getPw());
-						ps.setString(2, dto.getName());
-						ps.setString(3, dto.getEmail());
-						ps.setInt(4, dto.getPhone());
-						ps.setString(5, dto.getId());
-						success = ps.executeUpdate();
-						
+						ps.close();
+						conn.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
-					}finally {
-						try {
-							ps.close();
-							conn.close();
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
 					}
-					
-					return success;
-}	
+				}	
+				
+				return success;
+
+	}
+
+
 
 }
 

@@ -35,6 +35,8 @@
             }
         </style>
     </head>
+    <form action="memberDel" method="post">
+	<input type="hidden" name="id" value="${sessionScope.id}"/>
     <body>
         <h1>회원 탈퇴</h1>
         <h3>
@@ -43,6 +45,7 @@
         </h3>
         <h4>탈퇴를 위해 고객님의 비밀번호를 입력해주세요.</h4>
         <p>PW <input type="password" id="userPW" placeholder="비밀번호를 입력하세요."/><br/></p>
-        <button>회 원 탈 퇴</button>
+          <button type="submit">회원탈퇴</button>
+        </form>
     </body>
 </html>

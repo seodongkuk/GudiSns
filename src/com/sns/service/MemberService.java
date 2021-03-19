@@ -37,6 +37,8 @@ public class MemberService {
 		System.out.println(id+"/"+pw);
 		return dao.login(id, pw);				
 	}
+	
+	
 	public boolean checkBlackList() {
 		MemberDAO dao = new MemberDAO();
 		String id = req.getParameter("userId");
@@ -103,7 +105,7 @@ public void idfind()throws ServletException, IOException{
 	MemberDAO dao = new MemberDAO();
 	
 	String name=req.getParameter("userName");
-	String phone = req.getParameter("phone");
+	String phone = req.getParameter("userPhone");
 	System.out.println(name + "/"+ phone);
 	
 	HashMap<String, Object> map = dao.idfind(name,phone);
@@ -168,8 +170,8 @@ public void pwfind()throws ServletException, IOException{
       public int pwupdate() throws ServletException, IOException{
 		//파라메터 값이 잘 들어 오는가?
 		String pw=req.getParameter("userPw");
-		String id = req.getParameter("id");
-		String email = req.getParameter("email");
+		String id = req.getParameter("userId");
+		String email = req.getParameter("userEmail");
 		System.out.println(pw);
 		MemberDAO dao = new MemberDAO();
 		
@@ -192,11 +194,11 @@ public void pwfind()throws ServletException, IOException{
 	
 	System.out.println(inpw);
 	
-	page = "info_pass.jsp";
+	page = "MyProfile.jsp";
 	msg = "패스워드를 다시 입력해 주세요.";
 	
 	if(inpw) {
-		page = "index.jsp";
+		page = "userinfo";
 		msg = "회원정보 수정!!";
 		
 		req.getSession().setAttribute("pw", pw);
@@ -212,24 +214,24 @@ public void pwfind()throws ServletException, IOException{
 
 //------------------------------------------------------------//회원정보 창
       
-    public MemberDTO detail() {
+    public MemberDTO userinfo() {
 		String id = (String)req.getSession().getAttribute("loginId");
 		
 		System.out.println("상세보기 할 아이디 : "+id);
-		if(id ==null) {
-			id = (String) req.getAttribute("id");
-		}
+//		if(id ==null) {
+//			id = (String) req.getAttribute("id");
+//		}
 		
 		
 		MemberDAO dao = new MemberDAO();		
-		return dao.detail(id);
+		return dao.userinfo(id);
 	}
   
 		
 //------------------------------------------------------------//회원정보 업데이트
 
 
-public int update() {
+public int userinfoupdate()throws ServletException, IOException {
 	
 	String id=req.getParameter("userId");
 	String pw=req.getParameter("userPw");
@@ -247,6 +249,36 @@ public int update() {
 	dto.setEmail(email);	
 	dto.setPhone(Integer.parseInt(phone));
 
-	return dao.update(dto);
+	return dao.userinfoupdate(dto);
 }
+//----------------------------------------------------------//회원탈퇴
+
+
+public void memberDel() throws ServletException, IOException {
+	MemberDAO dao = new MemberDAO();
+	
+	String id = (String)req.getSession().getAttribute("loginId");
+	String pw = req.getParameter("userPw");
+	
+	
+	boolean inpw = dao.infopw(id,pw);
+	
+	System.out.println(inpw);
+	
+	page = "MyProfile.jsp";
+	msg = "패스워드를 다시 입력해 주세요.";
+	
+	if(inpw) {
+		page = "index.jsp";
+		msg = "회원탈퇴 진행!!";
+		
+		req.getSession().setAttribute("pw", pw);
+		req.getSession().setAttribute("id", id);
+	}
+	req.setAttribute("msg", msg);
+	dis = req.getRequestDispatcher(page);
+	dis.forward(req,resp);
 }
+
+}
+

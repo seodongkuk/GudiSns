@@ -34,35 +34,34 @@
       
 
       
-            <h1>비밀번호 재설정</h1>
+            <h1>비밀번호 확인</h1>
             
     <table>
-        <form action="pwupdate" method="post">
-		<input type="hidden" name="id" value="${sessionScope.id}"/>
-		<input type="hidden" name="email" value="${sessionScope.email}"/>
+  
+<form action="infopw" method="post">
+<input type="hidden" name="id" value="${sessionScope.id}"/>
+		
         <tr>
-                <td>
-                  
-                </td>
+         
         </tr>
         <tr>
         <td>
-            PW <input type="password" name="userPw" placeholder="비밀번호를 입력해주세요."/>
-        </td>  
+      				     회원정보를 수정하기 위해  현재 비밀번호를 입력해주세요
+		 </td>  
     </tr>
         <tr>
             <td>
-                PW 재확인 <input type="password" name="userPw" placeholder="비밀번호를 재입력 해주세요."/>
+            PW <input type="password" name="userPw" placeholder="비밀번호를 입력 해주세요."'/>
             </td>
         </tr>
         <tr>
-            <td style="color: red;"></td>
+            <td style="color: red;">비밀번호가 일치 하지 않습니다.</td>
         </tr>
 
          <br/>
          
          <td> 
-        <input type="submit" value="비밀번호 재설정"/>
+        <input type="submit" value="확인"/> 
         </td>       
      
     </form>
@@ -71,11 +70,12 @@
 
 </CENTER>
     </body>
-    <script>
-    var msg = "${msg}";
+<script>
+var msg = "${msg}";
 
-    if(msg != ""){
-    	alert(msg);
-    }
-    </script>
+if(msg != ""){
+	alert(msg);
+}
+
+</script>
 </html>
