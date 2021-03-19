@@ -7,7 +7,7 @@
         <title>회원가입</title>
          <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
         <style>
-             h2{
+           h2{
                padding: 30;
                font-size: 70;
            }
@@ -16,8 +16,8 @@
                width: 50%
            }
             table,td,th{
-               /* 
-               border: 1px solid black;
+                /* 
+                border: 1px solid black;
                 border-collapse: collapse;
                 */
             } 
@@ -36,7 +36,7 @@
             button,input[type='button'], input[type='submit']{
               
                background-color: rgb(240, 207, 207);
-                border: 0px;
+               border: 0px;
             }
         </style>
        
@@ -69,7 +69,7 @@
                 </tr>
                 <tr>
                     <th>
-                        <td id="passFail" style="color: green;">비밀번호 일치 하지 않습니다.</td>
+                        <td id="passFail" style="color: red; display: none;">비밀번호 일치 하지 않습니다.</td>
                     </th>
                 </tr>
                 <tr>
@@ -90,19 +90,8 @@
                         <input type="email" id="userEmail"/>
                     </td>
                 </tr>
-                <tr>
-                    <th>프로필사진</th>
-                    <td>
-                       
-                        <input type="file" id="userPhoto" value="사진업로드"/>
-				</td>
-                    </td>
-                </tr>
             </table>
             <button style="padding: 10;margin: 10; font-size: 15;">회원가입</button>
-            
-
-     
       </center>
     </body>
   <script>
