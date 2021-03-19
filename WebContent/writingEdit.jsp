@@ -103,7 +103,8 @@
             <br>
             <label for="file">업로드</label>
             <input type="file" id="file" name="photo">
-            <input class="upload_name" value="${dto.newFileName}">
+            <input type="hidden" name="upload_name" value="${dto.newFileName}"/>
+   			${dto.newFileName}
             <!-- {기존 파일 명을 보여줘야함 .수정해야하니까 .. value로 처리하는게 편할듯 }-->
             <br>
             <select name="release_state" id="selectBox">
