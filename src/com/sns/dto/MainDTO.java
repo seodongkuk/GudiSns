@@ -5,11 +5,25 @@ import java.sql.Date;
 public class MainDTO {
 	private int board_idx;
 	private String user_id;
+<<<<<<< HEAD
+
+=======
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 	private String subject;
 	private String content;
 	private Date writedate;
 	private boolean declaration_state;
-	private int relase_state;
+	private int release_state;
+	
+
+	public int getRelease_state() {
+		return release_state;
+	}
+
+	public void setRelease_state(int release_state) {
+		this.release_state = release_state;
+	}
+
 	private int file_idx;
 	private String oriFileName;
 	private String newFileName;
@@ -35,6 +49,13 @@ public class MainDTO {
 	public void setBbud_id(String bbud_id) {
 		this.bbud_id = bbud_id;
 	}
+	public String getUser_id() {
+		return user_id;
+	}
+	
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 
 	public int getBstate() {
 		return bstate;
@@ -52,6 +73,10 @@ public class MainDTO {
 		this.board_idx = board_idx;
 	}
 
+<<<<<<< HEAD
+	
+=======
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 	public String getSubject() {
 		return this.subject;
 	}
@@ -76,14 +101,7 @@ public class MainDTO {
 		this.declaration_state = declaration_state;
 	}
 
-	public int getRelase_state() {
-		return this.relase_state;
-	}
-
-	public void setRelase_state(int relase_state) {
-		this.relase_state = relase_state;
-	}
-
+	
 	public int getFile_idx() {
 		return this.file_idx;
 	}

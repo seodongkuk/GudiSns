@@ -32,11 +32,11 @@ public class MainService {
 			MainDTO dto = fileupload.regist();
 			System.out.println(dto.getOriFileName() + "<<원래명" + dto.getNewFileName() + "<<CTM한명");
 			MainDAO dao = new MainDAO();
-			String page = "newWriting.html";
+			String page = "/flist";
 			String msg = "글 등록에 실패 하였습니다.";
-			long idx = dao.write(dto ,loginId);
+			long idx = dao.write(dto);
 			if (idx > 0) {
-				page = "main.jsp";
+				page = "/flist";
 				msg = "글 등록에 성공 하였습니다.";
 			}
 
@@ -54,9 +54,9 @@ public class MainService {
 		System.out.println(idx + "글번호 ");
 		MainDAO dao = new MainDAO();
 		MainDTO dto = dao.detail(idx);
-		String page = "/MyProfile.jsp";
+		String page = "/MyProfile";
 		if (dto != null) {
-			page = "/writingEdit.jsp";
+			page = "writingEdit.jsp";
 			req.setAttribute("dto", dto);
 		}
 
@@ -64,7 +64,7 @@ public class MainService {
 		dis.forward(req, resp);
 	}
 
-	public void edit() throws IOException {
+	public void edit() throws IOException, ServletException {
 		FileService upload = new FileService(req);
 		MainDTO dto = upload.regist();
 		MainDAO dao = new MainDAO();
@@ -87,7 +87,9 @@ public class MainService {
 				upload.delete(delFileName);
 			}
 		}
-		resp.sendRedirect("detail?idx="+dto.getBoard_idx());
+		System.out.println(dto.getBoard_idx());
+		dis =req.getRequestDispatcher("detail?board_idx="+dto.getBoard_idx());
+		dis.forward(req, resp);
 	}
 
 	public void mylist() throws ServletException, IOException {
@@ -104,7 +106,7 @@ public class MainService {
 		String msg = "게시글없음";
 		if (list != null && list.size() > 0) {
 			req.setAttribute("list", list);
-			msg = "";
+			msg = loginId;
 		}
 
 		req.setAttribute("msg", msg);
@@ -115,7 +117,7 @@ public class MainService {
 	public void del() throws IOException {
 		String idx = this.req.getParameter("board_idx");
 		System.out.println("delete idx => " + idx);
-		FileService upload = new FileService(this.req);
+		FileService upload = new FileService(req);
 		MainDAO dao = new MainDAO();
 		String newFileName = dao.getFileName(idx);
 		dao = new MainDAO();
@@ -125,15 +127,21 @@ public class MainService {
 			upload.delete(newFileName);
 		}
 
-		this.resp.sendRedirect("main.jsp");
+		this.resp.sendRedirect("./MyProfile");
 	}
 
 	public void detail() throws ServletException, IOException {
 		String board_idx = req.getParameter("board_idx");
 		
+<<<<<<< HEAD
+//		String loginId = (String) req.getSession().getAttribute("");
+//		System.out.println(loginId);
+		System.out.println(idx + "글번호");
+=======
 		String loginId = (String) req.getSession().getAttribute("");
 		System.out.println(loginId);
 		System.out.println("글번호 : "+board_idx);
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 		
 		
 		String page = "/main.jsp";
@@ -184,7 +192,7 @@ public class MainService {
 			req.setAttribute("rcnt", rcnt);
 			msg = "";
 		}
-
+		
 		req.setAttribute("msg", msg);
 		dis = req.getRequestDispatcher("main.jsp");
 		dis.forward(req, resp);

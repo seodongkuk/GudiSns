@@ -53,7 +53,7 @@
 				<td><input type="button" value="로그아웃"
 					onclick="location.href='logout'"></td>
 			</tr>
-			<button onclick="location.href='newWriting.jsp'">
+			<button>
 				새 글쓰기
 			</button>
 		</table>
@@ -61,8 +61,21 @@
 		<h2>구디SNS</h2>
 		<hr/>
 	
+		
 		<div>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
+<<<<<<< HEAD
+            <input type="button"value="${dto.user_id}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+       <table id="board_idx">
+           <tr>
+           <button onclick="location.href='writeEdit?board_idx=${dto.board_idx}'">일단만든삭제</button>
+           <td>
+            
+            <img src="게시물이미지.gif" width="600" height="450"style="margin-top:100px" />
+        </td>
+            </tr>
+        <tr>
+=======
             <input type="button"value="${loginId}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
        <div>
        <table>
@@ -85,6 +98,7 @@
 			</div>
         </table>
 		</div>
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
         
         <table>
         	<tr>

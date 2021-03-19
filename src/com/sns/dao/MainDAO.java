@@ -45,15 +45,15 @@ public class MainDAO {
 
 	}
 
-	public long write(MainDTO dto , String loginId) {
+	public long write(MainDTO dto ) {
 		String sql = "INSERT INTO board2(board_idx,content,release_state,user_id)VALUES(board2_seq.NEXTVAL,?,?,?)";
 		long bIdx = 0L;
 
 		try {
 			ps = conn.prepareStatement(sql, new String[]{"board_idx"});
 			ps.setString(1, dto.getContent());
-			ps.setInt(2, dto.getRelase_state());
-			ps.setString(3, loginId);
+			ps.setInt(2, dto.getRelease_state());
+			ps.setString(3, dto.getUser_id());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			if (rs.next()) {
@@ -79,7 +79,7 @@ public class MainDAO {
 
 	public MainDTO detail(String idx) {
 		MainDTO dto = null;
-		String sql = "SELECT b.board_idx, b.content, b.release_state, p.oriFileName, p.newFileName FROM board2 b, photo2 p WHERE b.board_idx = p.file_idx(+) AND b.board_idx = ?";
+		String sql = "SELECT b.board_idx, b.content,b.user_id, b.release_state, p.oriFileName, p.newFileName FROM board2 b, photo2 p WHERE b.board_idx = p.file_idx(+) AND b.board_idx = ?";
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -90,7 +90,8 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
-				dto.setRelase_state(rs.getInt("release_state"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setRelease_state(rs.getInt("release_state"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 			}
@@ -108,9 +109,14 @@ public class MainDAO {
 	public ArrayList<MainDTO> mylist(String user_id) {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
+<<<<<<< HEAD
+		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName"
+				+ "				FROM board2 b, photo2 p WHERE  b.board_idx = p.board_idx(+)";
+=======
 
 		String sql = "SELECT * FROM post WHERE user_id=?";
 
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -119,6 +125,9 @@ public class MainDAO {
 
 			while (rs.next()) {
 				dto = new MainDTO();
+				dto.setRelease_state(rs.getInt("release_state"));
+				
+				//누군가 한글로 값을 넣어서 그런듯?
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
 				dto.setUser_id(rs.getString("user_id"));
@@ -142,7 +151,7 @@ public class MainDAO {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getContent());
-			ps.setInt(2, dto.getRelase_state());
+			ps.setInt(2, dto.getRelease_state());
 			ps.setInt(3, dto.getBoard_idx());
 			success = ps.executeUpdate();
 			System.out.println(success + "갯수");
@@ -206,20 +215,21 @@ public class MainDAO {
 
 	public int del(String idx, String newFileName) {
 		int success = 0;
-
+		System.out.println("다오"+idx);
+		String Sql;
 		try {
-			String boardSql;
 			if (newFileName != null) {
-				boardSql = "DELETE FROM photo2 WHERE file_idx=?";
-				ps = conn.prepareStatement(boardSql);
+				Sql = "DELETE FROM photo2 WHERE board_idx= ?";
+				ps = conn.prepareStatement(Sql);
 				ps.setString(1, idx);
 				ps.executeUpdate();
 			}
-
-			boardSql = "DELETE FROM board2 WHERE board_idx=?";
-			ps = conn.prepareStatement(boardSql);
+			
+			Sql = "DELETE FROM board2 WHERE board_idx= ?";
+			ps = conn.prepareStatement(Sql);
 			ps.setString(1, idx);
 			success = ps.executeUpdate();
+			
 		} catch (SQLException var8) {
 			var8.printStackTrace();
 		} finally {
@@ -233,10 +243,15 @@ public class MainDAO {
 		MainDTO dto = null;
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
+<<<<<<< HEAD
+		
+		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx WHERE b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))" ;
+=======
 
 		String sql = "SELECT * FROM post WHERE user_id IN "
 				+ "(SELECT b.bud_id FROM member2 m ,buddylist2 b "
 				+ "WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')";
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -247,16 +262,25 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
+<<<<<<< HEAD
+				dto.setRelease_state(rs.getInt("release_state"));
+=======
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				flist.add(dto);
-					}
-			
+				}
+					
+				
 			
 		} catch (SQLException var5) {
 			var5.printStackTrace();
+<<<<<<< HEAD
+		} finally {
+=======
 		}finally {
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 			resClose();
 		}
 

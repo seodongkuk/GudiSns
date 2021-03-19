@@ -79,6 +79,75 @@
 <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 <body>
+
+<div class="main">
+		<table style="float: left; margin-top: 55px;">
+			<tr>
+				<td rowspan="2"><img src="유저프로필.gif" width="80" height="80"></td>
+				<td><input type="button" value="${loginId}"
+					style="background-color: white; font-weight: bold;"></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="로그아웃"
+					onclick="location.href='logout'"></td>
+			</tr>
+			<button onclick="location.href='newWriting.jsp'">
+				새 글쓰기
+			</button>
+		</table>
+		<h2>구디SNS</h2>
+		<hr>
+		<select name="array" style="position: absolute; left: 1200px; z-index: 1">
+			<option value="추천순">추천순</option>
+			<option value="최신순">최신순</option>
+		</select>
+		
+		
+		<div>
+		<c:forEach items="${flist}" var="flist">
+		
+		
+			<input type="hidden" name="board_idx" value="${flist.board_idx}"/>
+			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
+            <input type="button"value="${flist.user_id}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+       <table id="board_idx">
+           <tr>
+           <td>
+            <img src="게시물이미지.gif" width="600" height="450"style="margin-top:100px" />
+        </td>
+        </tr>
+        <tr>
+        	<td>
+        		<p>${flist.content}</p>
+        	</td>
+       <td>
+            <button id="like">♥</button>
+            <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
+            <input type="text"value="작성날짜:2021-03-10"style="float: right;border: none;margin-top: 15px;">
+        </td>
+        </tr>
+    	<form action="rlist" method="POST">
+        <tr>
+        	<td>
+            <p style="font-size: 15px; color: grey;" >
+            	댓글 모두 ${rcnt}개입니다.</p>
+        </td>
+    	</tr>
+    
+		
+   	 	</form>
+     	
+			</c:forEach>
+    </div>
+           
+     		</table>
+     		</div>
+		
+	
+		<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
+	</body>
+	<!-- style="position: absolute; float: left; scroll-behavior: auto;" -->
+<%-- =======
 	<div class="main">
 			<table style="float: left; margin-top: 55px;">
 				<tr>
@@ -141,6 +210,11 @@
 				src="navi.jsp" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 	</div>
 </body>
+<<<<<<< HEAD
+>>>>>>> 7c41314ce5fea254d214a1ddeba2bbae918f3f19 --%>
+<script src="//code.jquery.com/jquery.min.js"></script>
+=======
+>>>>>>> b352e282a79d5aa917c3d50c77b4be4245a91322
 <script>
 	var msg = "${msg}";
 	
