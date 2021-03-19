@@ -91,22 +91,18 @@
 				<td><input type="button" value="로그아웃"
 					onclick="location.href='logout'"></td>
 			</tr>
-			<button onclick="location.href='newWriting.jsp'">
+			<button id="WriteBtn" onclick="location.href='newWriting.jsp'">
 				새 글쓰기
 			</button>
 		</table>
 		<h2>구디SNS</h2>
 		<hr>
-		<select name="array" style="position: absolute; left: 1200px; z-index: 1">
-			<option value="추천순">추천순</option>
-			<option value="최신순">최신순</option>
+		<select id="array" onchange="arrayEvt()">
+			<option class="recommend" value="추천순">추천순</option>
+			<option class="latest" value="최신순">최신순</option>
 		</select>
-		
-		
-		<div>
-		<c:forEach items="${flist}" var="flist">
-		
-		
+		<div class="board">
+			<c:forEach items="${flist}" var="flist">
 			<input type="hidden" name="board_idx" value="${flist.board_idx}"/>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
             <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" onclick="location.href='otherProfile?id=${flist.user_id}'">
@@ -119,33 +115,32 @@
         </tr>
         <tr>
         	<td>
-        		<p>${flist.content}</p>
+        		<c:forEach items="${list}" var="myL">
+	        		<p>${flist.content}</p>
+	        		<button id="moreShow" name="board_idx" value="${myL.board_idx}" onclick="location.href='detail?board_idx=${myL.board_idx}'">더보기</button>
+        		</c:forEach>
         	</td>
-       <td>
-            <button id="like">♥</button>
-            <input style="float: left;margin-top: 15px;border: none;" type="text" value="좋아요숫자">
-            <input type="text"value="작성날짜:2021-03-10"style="float: right;border: none;margin-top: 15px;">
-        </td>
+       		<td>
+	            <button id="like">♥</button>
+	            <input style="float: left; border: none; margin-left: -580px;" 
+	            	type="text" value="좋아요숫자"><span id = "likecnt"></span>
+	            <input style="float: right; border: none; margin-left: -500px;
+	            	type="text" value="작성날짜:2021-03-10">
+       		</td>
         </tr>
     	<form action="rlist" method="POST">
-        <tr>
-        	<td>
-            <p style="font-size: 15px; color: grey;" >
-            	댓글 모두 ${rcnt}개입니다.</p>
-        </td>
-    	</tr>
-    
-		
+	        <tr>
+	        	<td>
+	            	<p style="font-size: 15px; color: grey;" >
+	            		댓글 모두 ${rcnt}개입니다.</p>
+	        	</td>
+	    	</tr>
    	 	</form>
-     	
+	</table>
 			</c:forEach>
     </div>
-           
-     		</table>
      		</div>
-		
-	
-		<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
+		<iframe src="navi.jsp" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<!-- style="position: absolute; float: left; scroll-behavior: auto;" -->
 <%-- =======
