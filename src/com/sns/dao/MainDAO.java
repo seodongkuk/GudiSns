@@ -47,10 +47,10 @@ public class MainDAO {
 
 	}
 
-	public long write(MainDTO dto ) {
+	public long write(MainDTO dto) {
 		String sql = "INSERT INTO board2(board_idx,content,release_state,user_id)VALUES(board2_seq.NEXTVAL,?,?,?)";
 		long bIdx = 0L;
-
+		
 		try {
 			ps = conn.prepareStatement(sql, new String[]{"board_idx"});
 			ps.setString(1, dto.getContent());
@@ -371,5 +371,43 @@ public class MainDAO {
 		}
 		return success;
 	}
+
+	public int reportWriting(MainDTO dto) {
+		int success=0;
+		String sql ="SELECT * FROM REPORT2 WHERE USER_ID =? AND BOARD_IDX = ?";
+		
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, dto.getUser_id());
+			ps.setInt(2, dto.getBoard_idx());
+			rs = ps.executeQuery();
+			
+			if (rs.next()== true) {
+				success =0;
+			}else if(rs.next() == false){
+				sql="INSERT INTO report2(report_idx,user_id,board_idx,content,report_id)VALUES(report2_seq.NEXTVAL,?,?,?,?)";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, dto.getUser_id());
+				ps.setInt(2, dto.getBoard_idx());
+				ps.setString(3, dto.getContent());
+				ps.setString(4, dto.getReport_id());
+				success=ps.executeUpdate();
+			}
+			
+			System.out.println(success+"리폿 성공여부");
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		
+		return success;
+	}
+
+	
+
+	
 	
 }

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist","/like","/likecnt","/array"})
+@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist","/like","/likecnt","/array","/singo","/reportAction"})
 public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.dual(req, resp);
@@ -93,8 +93,19 @@ public class MainController extends HttpServlet {
 				
 				System.out.println("정렬 들어간다.");
 				service.array();
-		
+			
 			break;
+			
+			case "/singo" :
+				System.out.println("신고 요청이들어왓다.");
+				service.singo();
+				break;
+				
+			case "/reportAction":
+				System.out.println("신고사유가들어왓다 신고테이블에넣어주자");
+				service.reportAction();
+				break;
+			
 		}
 
 	}

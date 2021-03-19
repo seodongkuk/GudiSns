@@ -70,7 +70,8 @@
   
        <table>
            <tr>
-           	<button onclick="location.href='writeEdit?board_idx=${dto.board_idx}'">글 수정하기</button>
+          
+           	<button onclick=edit()>글 수정하기</button>
 		           
 
            		<td>
@@ -122,7 +123,7 @@
 		</table>
 	    <form action="rwrite" method="POST">
 	        <td>
-	        	<input type="hidden" id="user_id", name="user_id" value="${loginId}"/>
+	        	<input type="hidden" id="user_id" name="user_id" value="${loginId}"/>
 	        	<input type="hidden" id="board_idx" name="board_idx" value="${dto.board_idx}"/>
 	            <b>${loginId}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
 	            <button>댓글 작성</button>
@@ -133,6 +134,18 @@
 	</body>
 </div>
 <script>
+var a = "${loginId}";
+var b = "${dto.user_id}";
+
+function edit() {
+        console.log(a+"/"+b)
+    if(a == b){
+        location.href='writeEdit?board_idx=${dto.board_idx}';
+    }else{
+        alert("당신은 수정할 수있는 권한이 없습니다.");
+    }
+}
+
 	var msg = "${msg}";
 	
 	if(msg != ""){
@@ -172,5 +185,9 @@
 		});
 	};
 	likeCnt();
+	
+	
+	
+	
 </script>
 </html>
