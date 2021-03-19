@@ -58,18 +58,18 @@
                 <tr>
                     <th>비밀번호</th>
                     <td>
-                        <input type="password" id="userPw"/>
+                        <input type="password" id="userPw" class="pass"/>
                     </td>
                 </tr>
                 <tr>
                     <th>비밀번호 확인</th>
                     <td>
-                        <input type="password" id="userPwChk"/>
+                        <input type="password" id="userPwChk" class="pass"/>
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <td style="color: green;">비밀번호 일치 정보칸</td>
+                        <td id="passFail" style="color: green;">비밀번호 일치 하지 않습니다.</td>
                     </th>
                 </tr>
                 <tr>
@@ -186,6 +186,26 @@
 				$id.focus();
 			}
 		});
+		
+	    //2. 비밀번호 일치 여부...
+	    $('.pass').keyup(function(){
+	        
+	        var first_pwd = $('#userPw').val();
+	        var second_pwd = $('#userPwChk').val();
+	        var chkpw = "";
+
+	        if(first_pwd != '' && second_pwd == '') {
+	            null
+	        }else if(first_pwd != '' || second_pwd != ''){
+	            if(first_pwd == second_pwd) {
+	            	chkpw = true;
+	                $('#passFail').css('display','none');
+	            }else{
+	            	chkpw = false;
+	                $('#passFail').css('display','inline-block');
+	            }
+	        }
+	    });
 	
 	</script>
 </html>
