@@ -247,7 +247,7 @@ public int userinfoupdate()throws ServletException, IOException {
 	dto.setPw(pw);
 	dto.setName(name);
 	dto.setEmail(email);	
-	dto.setPhone(Integer.parseInt(phone));
+	dto.setPhone(phone);
 
 	return dao.userinfoupdate(dto);
 }
