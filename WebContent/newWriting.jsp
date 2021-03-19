@@ -94,6 +94,7 @@
         <h2>새 글쓰기</h2>
         <form action="newWrite" id="newWrite" class="filebox" method="post" enctype="multipart/form-data">
         <!-- 이미지가 서버에들어갈것 enc mult -->
+        	<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
             <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000" placeholder="글을작성해주세요"></textarea><br>
             <input type="text" name="hashOne" class="hash" value="첫번째해시태그">
             <input type="text" name="hashTwo" class="hash" value="두번째해시태그">
@@ -103,7 +104,7 @@
             <input type="file" id="file" name="photo">
             <input class="upload_name" value="파일을 넣어주세요">
             <br>
-            <select name="release_state" id="selectBox" >
+            <select name="release_state" id="selectBox">
                 <option value="001">전체공개</option>
                 <option value="002">친구공개</option>
                 <option value="003">나만보기</option>

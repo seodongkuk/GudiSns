@@ -330,7 +330,7 @@
         
         <div id="dmBox">
             <div class="userId">
-                USER
+                USER ${msg}
             </div>
             <div>
                 <img style="width: 150px; height: 170px;" src="C:\Users\HSK\Pictures\오라클홈폴더.png"/>
@@ -375,9 +375,10 @@
         <div id="header">
            	<c:forEach items="${list}" var="myL">
            	<button onclick="location.href='del?board_idx=${myL.board_idx}'">게시글삭제</button>
-            <table>
+            <table >
                 <tr>
                     <td>
+                    ${myL.release_state}
       					<input type="hidden" name="board_idx" value="${myL.board_idx}"/>
                         <img src="게시물이미지.gif" style="margin-top:10px; width:400px; height:300px;"/>
                         <!-- src 파일경로 지정해주기.. -->
@@ -417,6 +418,7 @@
                  </td>
              </tr>     
           </table>
+          
         	</c:forEach>
         </div>
         
