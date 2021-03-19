@@ -94,7 +94,7 @@
                         ${msg.sendtime}
                     </p>
                     	<!-- 만약 상대방이 읽지 않았다면 읽지않은거니 표시 -->
-	                    <c:if test="${msg.read_state == 'false' || msg.read_state == null}">
+	                    <c:if test="${msg.read_state == 'false'}">
 	                    <span id="beforeRead" style="margin-left: 70%; margin-top: 5%; bottom: auto;">
 	                        <span style="color: blue;">new </span>읽지 않음
 	                    </span>

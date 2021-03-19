@@ -109,7 +109,8 @@
 		
 			<input type="hidden" name="board_idx" value="${flist.board_idx}"/>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
-            <input type="button"value="${flist.user_id}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
+            <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" onclick="location.href='otherProfile?id=${flist.user_id}'">
+            ${flist.user_id}</button>
        <table id="board_idx">
            <tr>
            <td>
