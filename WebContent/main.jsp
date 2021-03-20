@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <title>구디SNS</title>
 <style>
 	body {
@@ -69,21 +70,19 @@
 		width: 100%;
 		overflow: scroll;
 	}
-	#array{
-		position: absolute; 
+	#arr{
 		left: 1300px; 
 		z-index: 1;
 	}
 </style>
 
-<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 <body>
 
     <div class="main">
         <table style="float: left; margin-top: 55px;">
             <tr>
-                <td rowspan="2"><img src="유저프로필.gif" width="80" height="80"></td>
+                <td rowspan="2"><img src="유저프로필.gif" width="80px" height="80px"></td>
                 <td><input type="button" value="${loginId}" style="background-color: white; font-weight: bold;"></td>
             </tr>
             <tr>
@@ -95,7 +94,7 @@
         </table>
         <h2>구디SNS</h2>
         <hr>
-        <select id="array" onchange="arrayEvt()">
+        <select id="arr" onchange="arrayEvt()">
         	<option value="" selected disabled>게시글 정렬</option>      
             <option class="recommend" value="추천순">추천순</option>
             <option class="latest" value="최신순">최신순</option>
@@ -226,27 +225,19 @@
 	}
 	
  	function arrayEvt(){
-	   	var $selectVal = $('#array');
-    	/* var $recommend = $(".rec"); 
-    	var $latest = $(".lat");  */
+	   	var $selectVal = $('#arr');
     	 var params = {};
 		 params.sel = $selectVal.val();
  		console.log(params);
-        /*  $.ajax({
-			type:'get'//전송속도가 post보다 빠름
-			,url:'array'
+           $.ajax({
+			url:"flist"
+			,type:"get"//전송속도가 post보다 빠름
 			,data:params
-			,success:function(params){
+			,success:function(){
 				console.log(params);
-				 if(params=="최신순"){
-					alert("최신순으로 정렬해드릴게요.");
-				}else if(params=="추천순"){
-					alert("추천순으로 정렬해드릴게요."); 	
-				},error:function(e){
-					console.log(e);	
-				}
 			}
-		}); */
-	} 
+           });
+ 	}
+         
 </script>
 </html>

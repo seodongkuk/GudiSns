@@ -89,6 +89,7 @@
 					<span class="like_count">${cnt}</span>
 					</button> 
 				</c:if>
+			
 			</div>
         </table>
 		</div>
@@ -172,34 +173,30 @@ function edit() {
 			url: "like",
               type: "get",
               data: params,
-              success: function (params) {
+              success: function () {
            	   	likeCnt();	
-              },error:function(e){
-  				console.log(e);	
-  			}
+              }
 		});
 	});
-	function likeCnt(){
+	 function likeCnt(){
 		var $idx = $("#board_idx");
 		var params = {};
 		 params.idx = $idx.val();
 		$.ajax({
 			url: "likecnt",
-               type: "get",
+            type: "get",
                data: params,
-               success: function (e) {
-            	   $(".like_count").html(e);	
-            	   console.log(e);
-               },error:function(e){
-   				console.log(e);	
-   			}
+               success: function (params) {
+            	   $(".like_count").html(params);	
+            	   console.log(params);
+               }
 		});
 	};
-	likeCnt();
+	likeCnt(); 
 var msg = "${msg}";
 	
 	if(msg != ""){
 		alert(msg);
-	}}
+	}
 </script>
 </html>

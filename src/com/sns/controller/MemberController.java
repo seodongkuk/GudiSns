@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sns.dao.MainDAO;
+import com.sns.dto.MainDTO;
 import com.sns.dto.MemberDTO;
 import com.sns.service.MemberService;
 
@@ -94,21 +96,21 @@ public class MemberController extends HttpServlet {
 			System.out.println(session.getAttribute("userId"));				//세션 널값 처리
 			break;
 //---------------------------------------------------------------------------			
-		case "/main":
-			
-			
-			System.out.println("main Page!!!");
-			if(req.getSession().getAttribute("loginId") != null){
-				
-			
-			ArrayList<MemberDTO> list = service.main();
-			req.setAttribute("list", list);
-			dis = req.getRequestDispatcher("main.jsp");
-			dis.forward(req, resp);
-			}else {
-				resp.sendRedirect("./index.jsp");
-			}
-			break;
+//		case "/main":
+//			
+//			String loginId = req.getParameter("userId");
+//			System.out.println("main Page!!!");
+//			if(req.getSession().getAttribute("loginId") != null){
+//				
+//			MainDAO dao = new MainDAO();
+//			ArrayList<MainDTO> list = dao.flist(loginId);
+//			req.setAttribute("list", list);
+//			dis = req.getRequestDispatcher("main.jsp");
+//			dis.forward(req, resp);
+//			}else {
+//				resp.sendRedirect("./index.jsp");
+//			}
+//			break;
 //---------------------------------------------------------------------------			
 		case "/join":
 			System.out.println("회원가입 요청");
