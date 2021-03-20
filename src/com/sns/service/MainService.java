@@ -177,28 +177,20 @@ public class MainService {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		System.out.println(loginId+" : loginid");
 		MainDAO dao = new MainDAO();
-//		String user_id = req.getParameter("user_id");
-//		
 		String board_idx = req.getParameter("board_idx");
-//
-//		System.out.println("loginId:"+loginId);
-//		System.out.println("user_id:"+user_id);
 
+		//댓글 개수 가져오기
 		ReplyDAO rao = new ReplyDAO();
 		int rcnt = rao.rcnt(board_idx);
 
-		System.out.println("board_idx :"+board_idx+"댓글개수:"+rcnt);
-		
 		ArrayList<MainDTO> flist = dao.flist(loginId);
 		dao = new MainDAO();
-		ArrayList<MainDTO> mylist = dao.mylist(loginId);
 		System.out.println(flist.size());
-//		System.out.println(blist.size());
 		
 		String msg = "친구없음";
 		if (flist != null && flist.size() > 0) {
+			
 			req.setAttribute("flist", flist);
-			req.setAttribute("mylist", mylist);
 			req.setAttribute("rcnt", rcnt);
 			msg = "";
 		}
@@ -208,22 +200,33 @@ public class MainService {
 		dis.forward(req, resp);
 		
 	}
+	
+	public void likecnt() throws ServletException, IOException {
+
+		String board_idx = req.getParameter("idx");
+		MainDAO dao = new MainDAO();
+		
+		int cnt = dao.like_cnt(board_idx);
+		System.out.println(cnt);
+		
+		if (cnt > 0) {
+			req.setAttribute("cnt", cnt);
+		}
+		
+		
+	}
 
 	public void like() throws ServletException, IOException {
 		
 		String user_id = req.getParameter("id");
 		String board_idx = req.getParameter("idx");
-//		HashMap<String, String> map = new HashMap<String, String>();
-//		map.put("user_id",loginId);
-//		map.put("board_idx",board_idx);
-		
+
 		System.out.println("아이디: "+user_id+"/"+"게시글 번호: "+board_idx);
-//		System.out.println("맵을 보여줘!"+map);
 		MainDAO dao =  new MainDAO();
 		
 		// 동일 게시글에 대한 이전 추천 여부 검색
 		int result = dao.likeChk(user_id,board_idx);
-		
+		System.out.println(result);
 		if(result == 0) {//추천하지 않았으면 추천 추가
 			dao =  new MainDAO();
 			dao.likeupdate(user_id,board_idx);
@@ -233,36 +236,28 @@ public class MainService {
 		}
 	}
 
-
-	public void likecnt() throws ServletException, IOException {
-		String board_idx = req.getParameter("idx");
-		MainDAO dao = new MainDAO();
+//	public void array() throws ServletException, IOException {
+//		String loginId = (String) req.getSession().getAttribute("loginId");
+//		MainDAO dao = new MainDAO();
+//		//ArrayList<MainDTO> array = dao.latest_array(loginId);
+//		String sel = req.getParameter("sel");
+//		//1. 최신순 선택했을 때
+//		//2. 추천순 선택했을 때 
+//		String msg = "전체공개 게시글이 없고 친구도 없고 정렬할 게시글도 없네";
+//		
+//		if(sel.equals("최신순")) {//추천하지 않았으면 추천 추가
+//			dao =  new MainDAO();
+//			System.out.println("최신순으로 정렬해줄게!");
+//			dao.latest_array(loginId);
+//		}else if (sel.equals("추천순")){//추천했으면 추천 삭제
+//			dao =  new MainDAO();
+//			dao.recommend_array();
+//		}
 		
-		int cnt = dao.like_cnt(board_idx);
-		System.out.println(cnt);
-	}
-	
-	
-	
-	public void array() throws ServletException, IOException {
-		String loginId = (String) req.getSession().getAttribute("loginId");
-		MainDAO dao = new MainDAO();
-		ArrayList<MainDTO> array = dao.latest_array(loginId);
-		String latest = req.getParameter("최신순");
-		String recommend = req.getParameter("추천순");
-		System.out.println(latest+"/"+recommend);
-		//1. 최신순 선택했을 때
-		//2. 추천순 선택했을 때 
-		String msg = "전체공개 게시글이 없고 친구도 없고 정렬할 게시글도 없네";
-		if (array != null && array.size() > 0) {
-			req.setAttribute("array", array);
-			msg = "";
-		}
-		
-		req.setAttribute("msg", msg);
-		dis = req.getRequestDispatcher("main.jsp");
-		dis.forward(req, resp);
-	}
+//		req.setAttribute("msg", msg);
+//		dis = req.getRequestDispatcher("main.jsp");
+//		dis.forward(req, resp);
+//	}
 
 	public void singo() throws ServletException, IOException {
 		//신고에 넘겨줄 idx content 신고한 아이디 get >>req

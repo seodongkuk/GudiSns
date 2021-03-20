@@ -47,7 +47,7 @@
 	<body>
 		<div class="bar">
 		    <ul>
-		       <a href="main" target="_parent">
+		       <a href="flist" target="_parent">
 		            <li>메인</li>
 		        </a>
 		        <a href="todayTag" target="_parent">
