@@ -50,13 +50,9 @@
         </div>
     </body>
     <script>
-            var msg = "${msg}";
-            if(msg!=""){
-                alert(msg);			
-            }		
-            
-            function a(){
-            	alert(msg);
-            }
+            var msg = "${msg}";  
+			if (msg != null) {
+				alert(msg);
+			}		      
         </script>
 </html>

@@ -224,6 +224,7 @@
 		alert(msg);
 	}
 	
+	
  	function arrayEvt(){
 	   	var $selectVal = $('#arr');
     	 var params = {};

@@ -266,14 +266,12 @@ public class MainService {
 		String user_id =req.getParameter("user_id");
 		System.out.println(loginId+"/"+idx +"/"+user_id);
 		
-		String msg ="로그인을 하여야합니다.";
 		if(loginId !=null) {
 			req.setAttribute("loginId", loginId);
 			req.setAttribute("idx", idx);
 			req.setAttribute("user_id", user_id);
-			msg="신고 사유를작성해주세요";
 		}
-		req.setAttribute("msg", msg);
+		
 		dis = req.getRequestDispatcher("declaration.jsp");
 		dis.forward(req, resp);
 	}
