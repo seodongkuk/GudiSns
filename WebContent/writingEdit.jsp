@@ -90,15 +90,15 @@
     </style>
 </head>
 
-<body>
+<body onload="hashyo()">
     <div id="newWritebox">
         <h2>글 수정</h2>
         <form action="edit" id="newWrite" class="filebox" method="post" enctype="multipart/form-data">
         <input type="hidden" name="board_idx" value="${dto.board_idx}"/>
-        {dto.hashTag}
+        
             <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000">${dto.content}</textarea><br>
-            <input type="text" name="hashOne" class="hash" value="">
-            <input type="text" name="hashTwo" class="hash" value="">
+            <input type="text" name="hashOne" id="hash1" class="hash" value="">
+            <input type="text" name="hashTwo" id="hash2" class="hash" value="">
             <!-- 추가 삭제는 자바사크립트로  -->
             <br>
             <label for="file">업로드</label>
@@ -121,20 +121,26 @@
     </div>
 </body>
 <script>
-    function next(){
 
-if(confirm("글 수정을 취소하시겠습니까 ?"))
-{
-   //예 
-   this.self.close();
-             
-}
-else
-{
-// 아니오
+function hashyo(){
+	var a = "${dto.hashTag}";
 
+	var hash =a.split('#');
+
+	var sh = "#";
+	
+	if(hash[1] != undefined){
+		document.getElementById("hash1").value = sh+hash[1];
+		}
+	
+	if(hash[2] != undefined){
+   		 document.getElementById("hash2").value = sh+hash[2];
+		}
+	
 }
-}
+
+
+
     $(document).ready(function () {
         var fileTarget = $('#file');
         fileTarget.on('change', function () { // 값이 변경되면

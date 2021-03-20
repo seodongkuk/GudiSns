@@ -41,8 +41,8 @@ public class MainDAO {
 			if (this.conn != null) {
 				this.conn.close();
 			}
-		} catch (Exception var2) {
-			var2.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -76,8 +76,8 @@ public class MainDAO {
 				flist.add(dto);
 			}
 			
-		} catch (SQLException var5) {
-			var5.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 			
 		}finally {
 			
@@ -113,8 +113,8 @@ public class MainDAO {
 				dto.setWritedate(rs.getDate("writedate"));
 				list.add(dto);
 			}
-		} catch (SQLException var5) {
-			var5.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}finally {
 			resClose();
 		}
@@ -125,8 +125,9 @@ public class MainDAO {
 	public long write(MainDTO dto) {
 		String sql = "INSERT INTO board2(board_idx,content,release_state,user_id)VALUES(board2_seq.NEXTVAL,?,?,?)";
 		long bIdx = 0L;
-		
+			
 		try {
+			
 			ps = conn.prepareStatement(sql, new String[]{"board_idx"});
 			ps.setString(1, dto.getContent());
 			ps.setString(2, dto.getRelease_state());
@@ -153,8 +154,9 @@ public class MainDAO {
 					ps.executeUpdate();
 				}
 			}
-		} catch (SQLException var9) {
-			var9.printStackTrace();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -184,8 +186,8 @@ public class MainDAO {
 			}
 
 			
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();;
 		} finally {
 			resClose();
 		}
@@ -204,8 +206,16 @@ public class MainDAO {
 			ps.setInt(3, dto.getBoard_idx());
 			success = ps.executeUpdate();
 			System.out.println(success + "갯수");
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+			
+			if(dto.getHashTag() != null) {
+				sql = "UPDATE hashTag2 SET hashTag=? WHERE board_idx=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, dto.getHashTag());
+				ps.setInt(2, dto.getBoard_idx());;
+				ps.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -233,8 +243,8 @@ public class MainDAO {
 			}
 
 			success = ps.executeUpdate();
-		} catch (SQLException var9) {
-			var9.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -253,8 +263,8 @@ public class MainDAO {
 			if (rs.next()) {
 				newFileName = rs.getString("newFileName");
 			}
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -266,6 +276,7 @@ public class MainDAO {
 		int success = 0;
 		System.out.println("다오"+idx);
 		String Sql;
+		
 		try {
 			if (newFileName != null) {
 				Sql = "DELETE FROM photo2 WHERE board_idx= ?";
@@ -279,8 +290,8 @@ public class MainDAO {
 			ps.setString(1, idx);
 			success = ps.executeUpdate();
 			
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -437,6 +448,8 @@ public class MainDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			resClose();
 		}
 		
 		

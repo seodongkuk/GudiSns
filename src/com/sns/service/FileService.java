@@ -43,20 +43,22 @@ public class FileService {
 			}else if (tag1.equals("#") && !tag2.equals("#")) {
 				dto.setHashTag(tag2);
 			}
-
-			dto.setUser_id(userid);
-			dto.setContent(content);
-			dto.setRelease_state(release);
-			String oriFileName = multi.getFilesystemName("photo");
-			if (oriFileName != null) {
-				String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
-				String newFileName = System.currentTimeMillis() + ext;
-				File oriFile = new File(savePath + oriFileName);
-				File newFile = new File(savePath + newFileName);
-				oriFile.renameTo(newFile);
-				dto.setOriFileName(oriFileName);
-				dto.setNewFileName(newFileName);
-			} else {
+		
+				dto.setUser_id(userid);
+				dto.setContent(content);
+				dto.setRelease_state(release);
+				String oriFileName = multi.getFilesystemName("photo");
+				if (oriFileName != null) {
+					String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+					String newFileName = System.currentTimeMillis() + ext;
+					File oriFile = new File(savePath + oriFileName);
+					File newFile = new File(savePath + newFileName);
+					oriFile.renameTo(newFile);
+					dto.setOriFileName(oriFileName);
+					dto.setNewFileName(newFileName);
+				
+			
+			}else {
 				System.out.println("파일을 않너음");
 			}
 		} catch (IOException var14) {

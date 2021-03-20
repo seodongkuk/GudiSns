@@ -72,7 +72,7 @@
        <table>
            <tr>
         
-           	<!-- <button onclick=edit()>글 수정하기</button>-->
+           	 <button onclick=edit()>글 수정하기</button>
           
 		           
 
