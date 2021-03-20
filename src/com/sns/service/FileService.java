@@ -28,23 +28,22 @@ public class FileService {
 			String release = multi.getParameter("release_state");
 			
 			String tag1 = multi.getParameter("hashOne");
-			//String tag2 = multi.getParameter("hashTwo");
-			//String hashtag = tag1+tag2;
+			String tag2 = multi.getParameter("hashTwo");
+			
 			if (idx != null) {
 				dto.setBoard_idx(Integer.parseInt(idx));
 			}
 			System.out.println(userid+"/"+idx + "/" + content + "/" + release);
-			System.out.println("해시태그: "+tag1);
+			System.out.println("해시태그: "+tag1+tag2);
 			
-			/*if(tag1 != null && tag2 != null) {
-				dto.setHashTag(hashtag);
-			}else if(tag1 == null && tag2 != null) {
-				dto.setHashTag(tag2);
-			}else if(tag2 == null && tag1 != null) {
+			if(!tag1.equals("#") && !tag2.equals("#")) {
+				dto.setHashTag(tag1+tag2);
+			}else if(tag2.equals("#") && !tag1.equals("#")) {
 				dto.setHashTag(tag1);
-			}*/
+			}else if (tag1.equals("#") && !tag2.equals("#")) {
+				dto.setHashTag(tag2);
+			}
 
-			dto.setHashTag(tag1);
 			dto.setUser_id(userid);
 			dto.setContent(content);
 			dto.setRelease_state(Integer.valueOf(release));
