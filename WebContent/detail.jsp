@@ -71,8 +71,9 @@
   
        <table>
            <tr>
+        
+           	<!-- <button onclick=edit()>글 수정하기</button>-->
           
-           	<button onclick=edit()>글 수정하기</button>
 		           
 
            		<td>
@@ -150,17 +151,19 @@ if(hash[2] != undefined){
 
 
 
-var a = "${loginId}";
-var b = "${dto.user_id}";
 
 function edit() {
-        console.log(a+"/"+b)
-    if(a == b){
+	
+var loginid = "${loginId}";
+var dloginid = "${dto.user_id}";
+        console.log(loginid+"/"+dloginid)
+    if(loginid == dloginid){
         location.href='writeEdit?board_idx=${dto.board_idx}';
     }else{
         alert("당신은 수정할 수있는 권한이 없습니다.");
     }
 };	
+
 	// 추천버튼 클릭시(추천 추가 또는 추천 제거)
 	$("#likebtn").click(function(){
 		var $idx = $("#board_idx");

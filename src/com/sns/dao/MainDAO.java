@@ -90,7 +90,7 @@ public class MainDAO {
 		MainDTO dto = null;
 		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag FROM board2 b, photo2 p, hashtag2 h" + 
 							" WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.board_idx = ?";
-
+		
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, idx);
