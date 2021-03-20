@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -9,7 +11,7 @@
                 width: 800px;
                 height: 1000px;
             } */
-            #dmRoom{
+            #alarmBox{
                 position: relative;
                 margin-left: 35%;
                 border:1px solid black;
@@ -47,21 +49,22 @@
         </style>
     </head>
     <body>
+    	<!-- 기본값은 모두 체크 -->
         <div id="alarmSet">
-            댓글알림<input type="checkbox" value="댓글알림"/>
+            댓글알림<input type="checkbox" value="댓글알림" checked/>
             <hr/>
-            게시글알림<input type="checkbox" value="게시글알림"/>
+            게시글알림<input type="checkbox" value="게시글알림" checked/>
             <hr/>
-            DM알림<input type="checkbox" value="DM알림"/>
+            DM알림<input type="checkbox" value="DM알림" checked/>
             <hr/>
-            친구요청알림<input type="checkbox" value="친구요청알림"/>
+            친구요청알림<input type="checkbox" value="친구요청알림" checked/>
             <hr/>
         </div>
         <!--Alt+Shift+B 를 누르면 실행-->
         <h2 style="text-align: center;">알람 리스트 </h2>
             <button style="margin-left: 35%;">수신설정</button>
             <button style="margin-left: 17.2%;">모든 알람 지우기</button>
-            <div id='dmRoom'>
+            <div id='alarmBox'>
                 <div class="content">
                     - user1님으로부터 친구 요청이 들어왔습니다.
                 </div>
@@ -75,7 +78,7 @@
                 </div>
             </div>
 
-            <div id='dmRoom'>
+            <div id='alarmBox'>
                 <div class="content">
                     - other님이 당신의 게시물에 댓글을 달았습니다.
                 </div>
@@ -85,7 +88,7 @@
                 <button style="margin-top: 150px; margin-left: -10px;">삭제</button>
             </div>
 
-            <div id='dmRoom'>
+            <div id='alarmBox'>
                 <div class="content">
                     - other님이 당신의 게시물을 추천 하였습니다.
                 </div>
@@ -95,7 +98,7 @@
                 <button style="margin-top: 150px; margin-left: -10px;">삭제</button>
             </div>
 
-            <div id='dmRoom'>
+            <div id='alarmBox'>
                 <div class="content">
                     - user1님으로부터 친구 요청이 들어왔습니다.
                 </div>
