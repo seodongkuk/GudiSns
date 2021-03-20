@@ -13,7 +13,7 @@
 		margin-left: 25%;
 		padding: 5px;
 		border: 1px solid black;
-		overflow: hidden;
+		overflow: scroll;
 	}
 	table, td, th, tr {
 		border: 1px solid white;
@@ -96,12 +96,13 @@
         <h2>구디SNS</h2>
         <hr>
         <!-- 정렬 기능 없앴음.....ㅠ -->
-        <select id="arr" onchange="arrayEvt()">
+        <select id="arr" onchange="arrayEvt()" name="select">
         	<option value="" selected disabled>게시글 정렬</option>      
             <option class="recommend" value="추천순">추천순</option>
             <option class="latest" value="최신순">최신순</option>
         </select>
-        <div class="board">
+       
+        	<div class="board">
             <c:forEach items="${flist}" var="flist">
             		${flist.hashTag}
             		<form action="singo" method="post">
@@ -122,11 +123,10 @@
                     </tr>
                     <tr>
                         <td>
-                           
                                 <p>${flist.content}</p>
                                 <button id="moreShow" name="board_idx" value="${flist.board_idx}"
                                     onclick="location.href='detail?board_idx=${flist.board_idx}'">더보기</button>
-                           
+
                         </td>
                         <td>
                             <button id="like">♥</button>
@@ -141,7 +141,7 @@
                         <tr>
                             <td>
                                 <p style="font-size: 15px; color: grey;">
-                                    댓글 모두 ${rcnt}개입니다.</p>
+                                    	댓글 모두 ${rcnt}개입니다.</p>
                             </td>
                         </tr>
                     </form>
@@ -226,14 +226,17 @@
 	if(msg != ""){
 		alert(msg);
 	}
-
-
- /* 	function arrayEvt(){
->>>>>>> 625348d4470cee06902d4bf347c7b67fd27ad4b5
-=======
 	
+	function arrayEvt(){
+		var selectVal = $('#arr').val();
+    	console.log(selectVal);
+    	
+    	if(selectVal=="최신순"){
+    		location.href='./array?select='+selectVal;
+    	}
+	}
+
   	/* function arrayEvt(){
->>>>>>> 4603181f2245ece0278355d5eca6159d447fb3c2
 	   	var $selectVal = $('#arr');
     	var params = {};
     	params.sel = $selectVal.val();
@@ -245,13 +248,18 @@
 			,data:params
 			,dataType:'JSON'
 			,success:function(data){
-				alert("뜨니?");
-			},error:function(request,status,error){
-		        console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-		       }
+				console.log(data.flist);
+				flist = data.flist;
+				$('#board_idx').empty();
+				$.each(flist, function(index, value){
+					console.log(index+":"+value.board_idx);
+				});
 
+			},error:function(request,status,error){
+		        //console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+			}
          });
- 	};  */
+ 	};   */
          
 </script>
 </html>
