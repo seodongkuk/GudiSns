@@ -41,16 +41,13 @@ public class MainService {
 			MainDTO dto = fileupload.regist();
 			System.out.println(dto.getOriFileName() + "<<원래명" + dto.getNewFileName() + "<<CTM한명");
 			MainDAO dao = new MainDAO();
-			String page = "";
 			String msg = "글 등록에 실패 하였습니다.";
 			long idx = dao.write(dto);
 			if (idx > 0) {
-				page = "/flist";
 				msg = "글 등록에 성공 하였습니다.";
 			}
-
 			req.setAttribute("msg", msg);
-			dis = req.getRequestDispatcher(page);
+			dis = req.getRequestDispatcher("newWriting.jsp");
 			dis.forward(req, resp);
 		} else {
 			resp.sendRedirect("");
@@ -71,9 +68,6 @@ public class MainService {
 		if (dto != null) {
 			page = "writingEdit.jsp";
 			req.setAttribute("dto", dto);
-		
-			
- 			
 		}
 
 		dis = req.getRequestDispatcher(page);
@@ -103,6 +97,7 @@ public class MainService {
 				upload.delete(delFileName);
 			}
 		}
+	
 		System.out.println(dto.getBoard_idx());
 		dis =req.getRequestDispatcher("detail?board_idx="+dto.getBoard_idx());
 		dis.forward(req, resp);

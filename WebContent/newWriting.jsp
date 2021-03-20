@@ -95,9 +95,9 @@
         <form action="newWrite" id="newWrite" class="filebox" method="post" enctype="multipart/form-data">
         <!-- 이미지가 서버에들어갈것 enc mult -->
         	<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
-            <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000" placeholder="글을작성해주세요"></textarea><br>
-            <input type="text" name="hashOne" class="hash" placeholder="첫번째해시태그" value="#">
-            <input type="text" name="hashTwo" class="hash" placeholder="두번째해시태그" value="#">
+            <textarea name="textArea" id="text" cols="40" rows="10" maxlength="1000" placeholder="글을작성해주세요"></textarea><br>
+            <input type="text" name="hashOne" class="hash" placeholder="#을꼭입력후 글작성해주세요" value="#">
+            <input type="text" name="hashTwo" class="hash" placeholder="#을꼭입력후 글작성해주세요" value="#">
             <!-- 추가 삭제는 자바사크립트로  -->
             <br>
             <label for="file">업로드</label>
@@ -110,29 +110,12 @@
                 <option value="003">나만보기</option>
             </select>
         </form>
-        <button type="submit" form="newWrite">작성완료</button>
+        <button type="button" form="newWrite" onclick="chkValue()">작성완료</button>
         <button type="button" onclick="location.href='flist'">취소</button>
         <!-- 자바스크립트로 메인으로 보내기 !-->
     </div>
 </body>
 <script>
-    
-     function next(){
-
-  if(confirm("글 수정을 취소하시겠습니까 ?"))
-  {
-     //예 
-     this.self.close();
-               
-  }
-  else
-  {
-  // 아니오
-
-  }
- }
-
-
     $(document).ready(function () {
         var fileTarget = $('#file');
         fileTarget.on('change', function () { // 값이 변경되면
@@ -141,10 +124,25 @@
         });
     });
     
-    
-    /* var msg = "${msg}";
+    var msg = "${msg}";
 	if(msg!=""){
 		alert(msg);
-	} */
+		location.href='flist';
+	} 
+	
+	
+	function chkValue(){
+        var tmp = document.form1.txt1.value.replace(/\s|　/gi, '');
+        // 정규식으로 공백, 엔터, 탭, 특수문자 공백 문자를 빈문자로 바꿈
+        // 입력된 값에 대하여 위 정규식 처리를 하고 뭔가 남아있지 않다면
+        // 값이 무의미 하다고 판단함.
+ 
+        if(tmp == ''){
+            alert('내용을 입력해 주세요');
+        }
+        else{
+            alert('OK');
+        }
+    }
 </script>
 </html>

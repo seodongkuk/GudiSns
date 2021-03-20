@@ -125,8 +125,9 @@ public class MainDAO {
 	public long write(MainDTO dto) {
 		String sql = "INSERT INTO board2(board_idx,content,release_state,user_id)VALUES(board2_seq.NEXTVAL,?,?,?)";
 		long bIdx = 0L;
-		
+			
 		try {
+			
 			ps = conn.prepareStatement(sql, new String[]{"board_idx"});
 			ps.setString(1, dto.getContent());
 			ps.setString(2, dto.getRelease_state());
@@ -153,6 +154,7 @@ public class MainDAO {
 					ps.executeUpdate();
 				}
 			}
+		
 		} catch (SQLException var9) {
 			var9.printStackTrace();
 		} finally {
@@ -204,6 +206,14 @@ public class MainDAO {
 			ps.setInt(3, dto.getBoard_idx());
 			success = ps.executeUpdate();
 			System.out.println(success + "갯수");
+			
+			if(dto.getHashTag() != null) {
+				sql = "UPDATE hashTag2 SET hashTag=? WHERE board_idx=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, dto.getHashTag());
+				ps.setInt(2, dto.getBoard_idx());;
+				ps.executeUpdate();
+			}
 		} catch (SQLException var8) {
 			var8.printStackTrace();
 		} finally {
