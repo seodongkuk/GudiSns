@@ -80,14 +80,13 @@
         		</td>
            </tr>
 			<div class="like">
-				<c:if test="${ loginId == null }">
+				<c:if test="${ loginId eq null }">
 					추천 기능은 <button type="button" id="login"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
 					<span class="like_count"></span>					
 				</c:if>
-				<c:if test="${ loginId != null }">
-					<button class="like" id="likebtn">
-						<i class="fa fa-heart" style="font-size:16px;color:red"></i>
-						&nbsp;<span class="like_count">추천수는?</span>
+				<c:if test="${ loginId ne null }">
+					<button id="likebtn"> 추천하기!
+					<span class="like_count">${cnt}</span>
 					</button> 
 				</c:if>
 			</div>
@@ -161,17 +160,9 @@ function edit() {
     }else{
         alert("당신은 수정할 수있는 권한이 없습니다.");
     }
-};
-
-	var msg = "${msg}";
-	
-	if(msg != ""){
-		alert(msg);
-	}
-	
+};	
 	// 추천버튼 클릭시(추천 추가 또는 추천 제거)
 	$("#likebtn").click(function(){
-		//board_idx 값을 어떻게 해야 가져올수 있을까?
 		var $idx = $("#board_idx");
 		 var $id = $("#user_id");
 		 var params = {};
@@ -182,8 +173,7 @@ function edit() {
               type: "get",
               data: params,
               success: function (params) {
-           	   	console.log(params);
-            	  likeCnt();	
+           	   	likeCnt();	
               },error:function(e){
   				console.log(e);	
   			}
@@ -197,13 +187,19 @@ function edit() {
 			url: "likecnt",
                type: "get",
                data: params,
-               success: function (cnt) {
-            	   $(".like_count").html(cnt);	
+               success: function (e) {
+            	   $(".like_count").html(e);	
+            	   console.log(e);
                },error:function(e){
    				console.log(e);	
    			}
 		});
 	};
 	likeCnt();
+var msg = "${msg}";
+	
+	if(msg != ""){
+		alert(msg);
+	}}
 </script>
 </html>

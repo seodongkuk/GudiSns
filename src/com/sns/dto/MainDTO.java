@@ -9,7 +9,7 @@ public class MainDTO {
 	private String content;
 	private Date writedate;
 	private boolean declaration_state;
-	private int release_state;
+	private String release_state;
 	private int file_idx;
 	private String oriFileName;
 	private String newFileName;
@@ -19,11 +19,11 @@ public class MainDTO {
 	private String report_id;
 	
 
-	public int getRelease_state() {
+	public String getRelease_state() {
 		return release_state;
 	}
 
-	public void setRelease_state(int release_state) {
+	public void setRelease_state(String release_state) {
 		this.release_state = release_state;
 	}
 
