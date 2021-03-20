@@ -14,7 +14,12 @@ public class MainDTO {
 	private String oriFileName;
 	private String newFileName;
 	
+<<<<<<< HEAD
 	private String hashTag;
+=======
+	//리폿
+	private String report_id;
+>>>>>>> e11096da7757495038ff96bd809aff710842b336
 	
 
 	public int getRelease_state() {
@@ -97,6 +102,7 @@ public class MainDTO {
 	public void setWritedate(Date writedate) {
 		this.writedate = writedate;
 	}
+<<<<<<< HEAD
 
 	public String getHashTag() {
 		return hashTag;
@@ -104,5 +110,13 @@ public class MainDTO {
 
 	public void setHashTag(String hashTag) {
 		this.hashTag = hashTag;
+=======
+	public String getReport_id() {
+		return report_id;
+	}
+	
+	public void setReport_id(String report_id) {
+		this.report_id = report_id;
+>>>>>>> e11096da7757495038ff96bd809aff710842b336
 	}
 }

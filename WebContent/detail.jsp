@@ -70,7 +70,8 @@
   
        <table>
            <tr>
-           	<button onclick="location.href='writeEdit?board_idx=${dto.board_idx}'">글 수정하기</button>
+          
+           	<button onclick=edit()>글 수정하기</button>
 		           
 
            		<td>
@@ -79,13 +80,13 @@
            </tr>
 			<div class="like">
 				<c:if test="${ loginId == null }">
-					추천 기능은 <button type="button" id="newLogin"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
-					<span class="rec_count"></span>					
+					추천 기능은 <button type="button" id="login"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
+					<span class="like_count"></span>					
 				</c:if>
 				<c:if test="${ loginId != null }">
 					<button class="like" id="likebtn">
 						<i class="fa fa-heart" style="font-size:16px;color:red"></i>
-						&nbsp;<span class="like_count"></span>
+						&nbsp;<span class="like_count">추천수는?</span>
 					</button> 
 				</c:if>
 			</div>
@@ -112,13 +113,17 @@
 			<tr>
 				<td>${Reply2.user_id}</td>
 				<td>${Reply2.content}</td>
-				<td><a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a></td>
+				<td>
+					<c:if test="${Reply2.user_id eq  loginId }">
+						<td><a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a></td>										 
+					</c:if>
+				</td>
 			</tr>
 			</c:forEach>
 		</table>
 	    <form action="rwrite" method="POST">
 	        <td>
-	        	<input type="hidden" name="user_id" value="${loginId}"/>
+	        	<input type="hidden" id="user_id" name="user_id" value="${loginId}"/>
 	        	<input type="hidden" id="board_idx" name="board_idx" value="${dto.board_idx}"/>
 	            <b>${loginId}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
 	            <button>댓글 작성</button>
@@ -129,28 +134,60 @@
 	</body>
 </div>
 <script>
+var a = "${loginId}";
+var b = "${dto.user_id}";
+
+function edit() {
+        console.log(a+"/"+b)
+    if(a == b){
+        location.href='writeEdit?board_idx=${dto.board_idx}';
+    }else{
+        alert("당신은 수정할 수있는 권한이 없습니다.");
+    }
+}
+
 	var msg = "${msg}";
 	
 	if(msg != ""){
 		alert(msg);
 	}
+	
 	// 추천버튼 클릭시(추천 추가 또는 추천 제거)
 	$("#likebtn").click(function(){
+		//board_idx 값을 어떻게 해야 가져올수 있을까?
+		var $idx = $("#board_idx");
+		 var $id = $("#user_id");
+		 var params = {};
+		 params.idx = $idx.val();
+		 params.id = $id.val();
 		$.ajax({
 			url: "like",
+              type: "get",
+              data: params,
+              success: function (data) {
+           	   	console.log(data);
+            	  likeCnt();	
+              },error:function(e){
+  				console.log(e);	
+  			}
+		});
+	});
+	function likeCnt(){
+		$.ajax({
+			url: "likecnt",
                type: "get",
-               
-          
-               data: {
-               	"board_idx":$("#board_idx").val(),
-               	"user_id":$("#user_id").val()
-               },
-               success: function (obj) {
-            	   console.log(obj);	
+               data: {"board_idx":$("#board_idx").val()},
+               success: function (cnt) {
+            	   $(".like_count").html(cnt);	
                },error:function(e){
    				console.log(e);	
    			}
 		});
-	});
+	};
+	likeCnt();
+	
+	
+	
+	
 </script>
 </html>

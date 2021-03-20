@@ -77,17 +77,17 @@ public class MemberDAO {
 	
 	
 	//--------------------------------------------------------------------------회원가입
-	public boolean join(String id,String pw,String name,String phone,String email) {
+	public boolean join(MemberDTO dto) {
 		boolean success = false;
 		String sql="INSERT INTO member2 (user_id,pw,name,phone,email)VALUES(?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
-			MemberDTO dto=new MemberDTO();
-			dto.setId(rs.getString("user_id"));
-			dto.setPw(rs.getString("pw"));
-			dto.setName(rs.getString("name"));
-			dto.setEmail(rs.getString("email"));
-			dto.setPhone(rs.getString("phone"));
+			ps.setString(1,dto.getId());
+			ps.setString(2,dto.getPw());
+			ps.setString(3,dto.getName());
+			ps.setString(4,dto.getPhone());
+			ps.setString(5,dto.getEmail());
+			
 			rs = ps.getGeneratedKeys();
 			if(ps.executeUpdate()>0) {
 				success = true;

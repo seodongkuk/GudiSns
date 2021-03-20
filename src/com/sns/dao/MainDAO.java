@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -246,7 +248,7 @@ public class MainDAO {
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
 
-		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx WHERE b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))" ;
+		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx WHERE release_state != 3 AND b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))";
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -276,26 +278,6 @@ public class MainDAO {
 		
 	}
 
-//	public int lcheck(String board_idx, String user_id) {
-//		int success = 0;
-//		String sql = "select count(*) AS like_check from like2 where board_idx = ? and user_id = ?";
-//		try {
-//			ps = conn.prepareStatement(sql);
-//			ps.setString(1, board_idx);
-//			ps.setString(2, user_id);
-//			rs = ps.executeQuery();
-//			if(rs.next()) {
-//				success = rs.getInt("like_check");
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}finally {
-//			resClose();
-//		}
-//		return success;
-//	}
-	
-
 	//친구공개 게시글 정렬해서 보기.
 	public ArrayList<MainDTO> array(String loginId) {
 		MainDTO dto = null;
@@ -318,9 +300,120 @@ public class MainDAO {
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 		return array;
 	}
 
+	public int likeChk(String loginId, String board_idx) {
+		int success=0;
+		String sql = "select count(*) as like_chk from like2 where board_idx=? and user_id=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, board_idx);
+			ps.setString(2, loginId);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				success = rs.getInt("like_chk");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+
+	public boolean likeupdate(String loginId, String board_idx) {
+		boolean success=false;
+		String sql = "Insert INTO like2(board_idx,user_id) VALUES(?,?)";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, board_idx);
+			ps.setString(2, loginId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return !success;
+		
+	}
+
+	public boolean likedelete(String loginId, String board_idx) {
+		boolean success=false;
+		String sql = "delete from like2(board_idx,user_id) VALUES(?,?)";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, board_idx);
+			ps.setString(2, loginId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return !success;
+	}
+
+	public int likeCnt(String idx) {
+		int success=0;
+		String sql = "select count(*) as like_cnt from like2 where board_idx=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, idx);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				success = rs.getInt("like_cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+
+	public int reportWriting(MainDTO dto) {
+		int success=0;
+		String sql ="SELECT * FROM REPORT2 WHERE USER_ID =? AND BOARD_IDX = ?";
+		
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, dto.getUser_id());
+			ps.setInt(2, dto.getBoard_idx());
+			rs = ps.executeQuery();
+			
+			if (rs.next()== true) {
+				success =0;
+			}else if(rs.next() == false){
+				sql="INSERT INTO report2(report_idx,user_id,board_idx,content,report_id)VALUES(report2_seq.NEXTVAL,?,?,?,?)";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, dto.getUser_id());
+				ps.setInt(2, dto.getBoard_idx());
+				ps.setString(3, dto.getContent());
+				ps.setString(4, dto.getReport_id());
+				success=ps.executeUpdate();
+			}
+			
+			System.out.println(success+"리폿 성공여부");
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		
+		return success;
+	}
+
+	
+
+	
 	
 }

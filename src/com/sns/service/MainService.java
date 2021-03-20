@@ -8,6 +8,8 @@ import com.sns.dto.MainDTO;
 import com.sns.dto.ReplyDTO;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +39,7 @@ public class MainService {
 			MainDTO dto = fileupload.regist();
 			System.out.println(dto.getOriFileName() + "<<원래명" + dto.getNewFileName() + "<<CTM한명");
 			MainDAO dao = new MainDAO();
-			String page = "/flist";
+			String page = "";
 			String msg = "글 등록에 실패 하였습니다.";
 			long idx = dao.write(dto);
 			if (idx > 0) {
@@ -208,16 +210,38 @@ public class MainService {
 	}
 
 	public void like() throws ServletException, IOException {
+		
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		String board_idx = req.getParameter("board_idx");
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("user_id",loginId);
+		map.put("board_idx",board_idx);
 		
-		boolean success = false;
-		System.out.println("idx: "+board_idx+",id: "+loginId);
+		System.out.println("아이디: "+loginId+"/"+"게시글 번호: "+board_idx);
+		System.out.println("맵을 보여줘!"+map);
 		MainDAO dao =  new MainDAO();
+		
 		// 동일 게시글에 대한 이전 추천 여부 검색
-		//추가해야함!!!
+		int result = dao.likeChk(loginId,board_idx);
+		
+		if(result == 0) {//추천하지 않았으면 추천 추가
+			dao.likeupdate(loginId,board_idx);
+		}else {//추천했으면 추천 삭제
+			dao.likedelete(loginId,board_idx);
+		}
 	}
 
+
+//	public void likecnt() throws Exception {
+//		String idx = req.getParameter("board_idx");
+//		MainDAO dao = new MainDAO();
+//		
+//		int cnt = dao.likeCnt(idx);
+//		System.out.println(cnt);
+//	}
+	
+	
+	
 	public void array() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		MainDAO dao = new MainDAO();
@@ -228,9 +252,64 @@ public class MainService {
 			req.setAttribute("array", array);
 			msg = "";
 		}
-
+		
 		req.setAttribute("msg", msg);
 		dis = req.getRequestDispatcher("main.jsp");
 		dis.forward(req, resp);
 	}
+
+	public void singo() throws ServletException, IOException {
+		//신고에 넘겨줄 idx content 신고한 아이디 get >>req
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		String idx = req.getParameter("board_idx");
+		String user_id =req.getParameter("user_id");
+		System.out.println(loginId+"/"+idx +"/"+user_id);
+		
+		String msg ="로그인을 하여야합니다.";
+		if(loginId !=null) {
+			req.setAttribute("loginId", loginId);
+			req.setAttribute("idx", idx);
+			req.setAttribute("user_id", user_id);
+			msg="신고 사유를작성해주세요";
+		}
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher("declaration.jsp");
+		dis.forward(req, resp);
+	}
+
+	public void reportAction() throws ServletException, IOException {
+		String loginId = req.getParameter("loginId");
+		String board_idx = req.getParameter("board_idx");
+		String user_id = req.getParameter("user_id");
+		String content = req.getParameter("content");
+		
+		System.out.println(loginId+" / "+board_idx+" / "+user_id+" / "+content+" / Ck");
+		
+		MainDTO dto =new MainDTO();
+		
+		dto.setUser_id(loginId);  //신고한애
+		dto.setBoard_idx(Integer.valueOf(board_idx));
+		dto.setContent(content);
+		dto.setReport_id(user_id);//신고당한애
+		
+		MainDAO dao = new MainDAO();
+		int success = dao.reportWriting(dto);
+		
+		String msg ="이미신고한게시글입니다";
+		String page = "/singo";
+		if(success > 0) {
+			msg ="해당 게시글이 신고 접수 되었습니다 관리자가 확인하고 처리하겟습니다.";
+			page = "/flist";
+		}
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher(page);
+		dis.forward(req, resp);
+	}
+
+	
+		
+		
+		
+	
+
 }

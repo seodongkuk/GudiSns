@@ -67,9 +67,14 @@ public class MemberService {
 		String phone=req.getParameter("phone");
 		String email=req.getParameter("email");
 		System.out.println(id+"/"+pw+"/"+name+"/"+phone+"/"+email);
+		MemberDTO dto = new MemberDTO();
+		dto.setId(id);
+		dto.setPw(pw);
+		dto.setName(name);
+		dto.setPhone(phone);
+		dto.setEmail(email);
 
-
-	      return dao.join(id,pw,name,phone,email);
+	      return dao.join(dto);
 	}
 
 public boolean idChk() throws IOException {
