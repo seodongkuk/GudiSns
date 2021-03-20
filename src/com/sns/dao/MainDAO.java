@@ -378,27 +378,16 @@ public class MainDAO {
 
 	public int reportWriting(MainDTO dto) {
 		int success=0;
-		String sql ="SELECT * FROM REPORT2 WHERE USER_ID =? AND BOARD_IDX = ?";
 		
+		String sql="INSERT INTO report2(report_idx,user_id,board_idx,content,report_id)VALUES(report2_seq.NEXTVAL,?,?,?,?)";
 		try {
-			ps=conn.prepareStatement(sql);
-			ps.setString(1, dto.getUser_id());
-			ps.setInt(2, dto.getBoard_idx());
-			rs = ps.executeQuery();
-			
-			if (rs.next()== true) {
-				success =0;
-			}else if(rs.next() == false){
-				sql="INSERT INTO report2(report_idx,user_id,board_idx,content,report_id)VALUES(report2_seq.NEXTVAL,?,?,?,?)";
 				ps=conn.prepareStatement(sql);
 				ps.setString(1, dto.getUser_id());
 				ps.setInt(2, dto.getBoard_idx());
 				ps.setString(3, dto.getContent());
 				ps.setString(4, dto.getReport_id());
 				success=ps.executeUpdate();
-			}
-			
-			System.out.println(success+"리폿 성공여부");
+			    System.out.println(success+"리폿 성공여부");
 			
 			
 		} catch (SQLException e) {
@@ -426,6 +415,29 @@ public class MainDAO {
 		}finally {
 			resClose();
 		}
+		return success;
+	}
+
+	public int singoCk(MainDTO dto) {
+		int success = 0;
+		String sql ="SELECT * FROM REPORT2 WHERE USER_ID =? AND BOARD_IDX = ?";
+		
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, dto.getUser_id());
+			ps.setInt(2, dto.getBoard_idx());
+			rs = ps.executeQuery();	
+			if (rs.next()== true) {
+				success = 1;
+			}else if(rs.next() == false) {
+				success = 0;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		return success;
 	}
 }

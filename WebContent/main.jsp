@@ -225,11 +225,7 @@
 	if(msg != ""){
 		alert(msg);
 	}
-	
-<<<<<<< HEAD
-	
- 	function arrayEvt(){
-=======
+
  /* 	function arrayEvt(){
 >>>>>>> 625348d4470cee06902d4bf347c7b67fd27ad4b5
 	   	var $selectVal = $('#arr');

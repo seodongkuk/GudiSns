@@ -267,12 +267,22 @@ public class MainService {
 		String user_id =req.getParameter("user_id");
 		System.out.println(loginId+"/"+idx +"/"+user_id);
 		
-		if(loginId !=null) {
+		MainDTO dto = new MainDTO();
+		dto.setUser_id(loginId);
+		dto.setBoard_idx(Integer.valueOf(idx));
+		MainDAO dao = new MainDAO();
+		int success = dao.singoCk(dto);
+		System.out.println(success);
+		String msg= "";
+		if(success == 0) {
 			req.setAttribute("loginId", loginId);
 			req.setAttribute("idx", idx);
 			req.setAttribute("user_id", user_id);
+			msg="신고사유를 작성해주세요 ";
+		}else if(success == 1) {
+		 msg ="이미신고한게시글입니다";
 		}
-		
+		req.setAttribute("msg", msg);
 		dis = req.getRequestDispatcher("declaration.jsp");
 		dis.forward(req, resp);
 	}
@@ -294,9 +304,8 @@ public class MainService {
 		
 		MainDAO dao = new MainDAO();
 		int success = dao.reportWriting(dto);
-		
-		String msg ="이미신고한게시글입니다";
-		String page = "/singo";
+		String msg ="";
+		String page ="";
 		if(success > 0) {
 			msg ="해당 게시글이 신고 접수 되었습니다 관리자가 확인하고 처리하겟습니다.";
 			page = "/flist";

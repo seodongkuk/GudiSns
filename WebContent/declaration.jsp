@@ -50,9 +50,10 @@
         </div>
     </body>
     <script>
-            var msg = "${msg}";  
-			if (msg != null) {
+           var msg = "${msg}";  
+			if (msg == "이미신고한게시글입니다") {
 				alert(msg);
+				location.href='flist';
 			}		      
         </script>
 </html>

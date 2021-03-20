@@ -157,11 +157,11 @@ if(hash[2] != undefined){
 
 
 
+var loginid = "${loginId}";
+var dloginid = "${dto.user_id}";
 
 function edit() {
 	
-var loginid = "${loginId}";
-var dloginid = "${dto.user_id}";
         console.log(loginid+"/"+dloginid)
     if(loginid == dloginid){
         location.href='writeEdit?board_idx=${dto.board_idx}';
