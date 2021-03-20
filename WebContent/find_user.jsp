@@ -47,11 +47,13 @@
 			        <tr>
 			            <td rowspan="2"><img src="기본프사.png" width="70" height="70"></td>
 			            <td style="padding-right: 70px;">
-			            	<button onclick="location.href='otherProfile?id=${member2.user_id}'">${member2.user_id}</button>
+			            	<button onclick="location.href='otherProfile?id=${member2.user_id}'">
+			            		${member2.user_id}
+			            	</button>
 			            </td>  
 			            <td style="padding-left: 40px;">
-			                <button onclick="location.href = 'budReq'">친구요청</button>
-			                <!-- <button id="budReq">친구요청</button> -->
+			                <!-- <button onclick="location.href = 'budReq'">친구요청</button> -->
+			                <button id="budReq">친구요청</button>
 			                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">DM보내기</button>
 			                <button onclick=delChk()>친구삭제</button>
 			            </td>          
@@ -64,10 +66,19 @@
 	</body>
 	<script>
 	
-		/* $('#budReq').click(function()){
+		$('#budReq').click(function(){
 			
-		} */
-	
+			$.ajax({
+				type:'get'
+				,url:'budReq'
+				,dataType:'JSON'
+				,success:function(data){
+					alert(data.msg);
+				},error:function(e){
+					console.log(e);
+				}
+			});
+		});
 	
 		//Service에서 지정한 msg 값을 alert로 View
 		var msg = "${msg}";
@@ -75,15 +86,19 @@
 			alert(msg);
 		}
 		
-		/* var msg2 = "${confirm}"
-		if(msg2 != ""){
-			confirm(msg2);
-		} */
-		
 		function delChk(){
 			var chk = confirm('정말 삭제하시겠습니까?');
 			if(chk){
-				location.href = "budDel";
+				$.ajax({
+					type:'get'
+					,url:'budDel'
+					,dataType:'JSON'
+					,success:function(data){
+						alert(data.msg);
+					},error:function(e){
+						console.log(e);
+					}
+				});
 			}
 		}
 		

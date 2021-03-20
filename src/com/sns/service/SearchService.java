@@ -2,12 +2,14 @@ package com.sns.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.sns.dao.SearchDAO;
 import com.sns.dto.SearchDTO;
 
@@ -107,39 +109,59 @@ public class SearchService {
 		System.out.println("로그인 한 아이디: "+loginId+" / "+"친구요청 한 아이디: "+budId);
 		if(loginId != null) {			
 			dao = new SearchDAO();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			int success = 0;
+			System.out.println("친구요청 성공? "+success);
+
 			// 실패 할 경우
-			msg = "이미 친구요청을 한 유저 또는 상대방이 이미 친구요청을 했습니다.";
+			//msg = "이미 친구요청을 한 유저 또는 상대방이 이미 친구요청을 했습니다.";
 			if(loginId.equals(budId)) {
 				msg = "자기 자신에게 친구요청을 할 수 없습니다.";
 			}
 			// 성공 할 경우
 			if(dao.budReq(loginId,budId)>0) {
 				msg = "친구 요청을 보냈습니다.";
+				success = 1;
 			}
-			req.setAttribute("msg", msg);
-			dis = req.getRequestDispatcher("find_user.jsp");
-			dis.forward(req, resp);
+			map.put("msg", msg);
+			map.put("success", success);
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(map);
+			System.out.println(json);
+			
+			resp.setContentType("text/html; charset=UTF-8");//인코딩 타입
+			resp.setHeader("Access-Contrl-Allow-origin", "*");//크로스도메인 허용
+			resp.getWriter().print(json);//url에 출력
 		}
 	}
 
 	public void budDel() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		String budId = (String) req.getSession().getAttribute("budId");
-		System.out.println("로그인 한 아이디: "+loginId+" / "+"친구요청 한 아이디: "+budId);
+		System.out.println("로그인 한 아이디: "+loginId+" / "+"친구 삭제 할 아이디: "+budId);
 		
 		if(loginId != null) {
 			dao = new SearchDAO();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			int success = 0;
 			// 실패
 			msg = "친구 삭제에 실패했습니다.";
 			// 성공 할 경우
 			if(dao.budDel(loginId,budId)>0) {
-				msg = "";
-				confirm = "정말 삭제 하시겠습니까?";
+				msg = "삭제를 완료했습니다.";
+				success = 1;
 			}
-			req.setAttribute("msg", msg);
-			req.setAttribute("confirm", confirm);
-			dis = req.getRequestDispatcher("find_user.jsp");
-			dis.forward(req, resp);
+			map.put("msg", msg);
+			map.put("success", success);
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(map);
+			System.out.println(json);
+			
+			resp.setContentType("text/html; charset=UTF-8");//인코딩 타입
+			resp.setHeader("Access-Contrl-Allow-origin", "*");//크로스도메인 허용
+			resp.getWriter().print(json);//url에 출력
 		}
 	}
 
