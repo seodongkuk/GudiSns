@@ -211,34 +211,36 @@ public class MainService {
 
 	public void like() throws ServletException, IOException {
 		
-		String loginId = (String) req.getSession().getAttribute("loginId");
-		String board_idx = req.getParameter("board_idx");
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("user_id",loginId);
-		map.put("board_idx",board_idx);
+		String user_id = req.getParameter("id");
+		String board_idx = req.getParameter("idx");
+//		HashMap<String, String> map = new HashMap<String, String>();
+//		map.put("user_id",loginId);
+//		map.put("board_idx",board_idx);
 		
-		System.out.println("아이디: "+loginId+"/"+"게시글 번호: "+board_idx);
-		System.out.println("맵을 보여줘!"+map);
+		System.out.println("아이디: "+user_id+"/"+"게시글 번호: "+board_idx);
+//		System.out.println("맵을 보여줘!"+map);
 		MainDAO dao =  new MainDAO();
 		
 		// 동일 게시글에 대한 이전 추천 여부 검색
-		int result = dao.likeChk(loginId,board_idx);
+		int result = dao.likeChk(user_id,board_idx);
 		
 		if(result == 0) {//추천하지 않았으면 추천 추가
-			dao.likeupdate(loginId,board_idx);
+			dao =  new MainDAO();
+			dao.likeupdate(user_id,board_idx);
 		}else {//추천했으면 추천 삭제
-			dao.likedelete(loginId,board_idx);
+			dao =  new MainDAO();
+			dao.likedelete(user_id,board_idx);
 		}
 	}
 
 
-//	public void likecnt() throws Exception {
-//		String idx = req.getParameter("board_idx");
-//		MainDAO dao = new MainDAO();
-//		
-//		int cnt = dao.likeCnt(idx);
-//		System.out.println(cnt);
-//	}
+	public void likecnt() throws ServletException, IOException {
+		String board_idx = req.getParameter("idx");
+		MainDAO dao = new MainDAO();
+		
+		int cnt = dao.like_cnt(board_idx);
+		System.out.println(cnt);
+	}
 	
 	
 	

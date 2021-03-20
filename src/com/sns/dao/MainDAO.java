@@ -308,13 +308,13 @@ public class MainDAO {
 		return array;
 	}
 
-	public int likeChk(String loginId, String board_idx) {
+	public int likeChk(String user_id, String board_idx) {
 		int success=0;
 		String sql = "select count(*) as like_chk from like2 where board_idx=? and user_id=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, board_idx);
-			ps.setString(2, loginId);
+			ps.setString(2, user_id);
 			rs = ps.executeQuery();
 			
 			if(rs.next()) {
@@ -328,13 +328,13 @@ public class MainDAO {
 		return success;
 	}
 
-	public boolean likeupdate(String loginId, String board_idx) {
+	public boolean likeupdate(String user_id, String board_idx) {
 		boolean success=false;
 		String sql = "Insert INTO like2(board_idx,user_id) VALUES(?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, board_idx);
-			ps.setString(2, loginId);
+			ps.setString(2, user_id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -345,13 +345,13 @@ public class MainDAO {
 		
 	}
 
-	public boolean likedelete(String loginId, String board_idx) {
+	public boolean likedelete(String user_id, String board_idx) {
 		boolean success=false;
-		String sql = "delete from like2(board_idx,user_id) VALUES(?,?)";
+		String sql = "delete from like2 WHERE board_idx=? AND user_id=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, board_idx);
-			ps.setString(2, loginId);
+			ps.setString(2, user_id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -359,25 +359,6 @@ public class MainDAO {
 			resClose();
 		}
 		return !success;
-	}
-
-	public int likeCnt(String idx) {
-		int success=0;
-		String sql = "select count(*) as like_cnt from like2 where board_idx=?";
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, idx);
-			rs = ps.executeQuery();
-			
-			if(rs.next()) {
-				success = rs.getInt("like_cnt");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
-		}
-		return success;
 	}
 
 	public int reportWriting(MainDTO dto) {
@@ -414,8 +395,22 @@ public class MainDAO {
 		return success;
 	}
 
-	
-
-	
-	
+	public int like_cnt(String board_idx) {
+		int success=0;
+		String sql = "SELECT COUNT(*) as like_cnt from like2 where board_idx=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, board_idx);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				success = rs.getInt("like_cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
 }

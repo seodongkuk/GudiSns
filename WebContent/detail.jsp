@@ -144,7 +144,7 @@ function edit() {
     }else{
         alert("당신은 수정할 수있는 권한이 없습니다.");
     }
-}
+};
 
 	var msg = "${msg}";
 	
@@ -164,8 +164,8 @@ function edit() {
 			url: "like",
               type: "get",
               data: params,
-              success: function (data) {
-           	   	console.log(data);
+              success: function (params) {
+           	   	console.log(params);
             	  likeCnt();	
               },error:function(e){
   				console.log(e);	
@@ -173,10 +173,13 @@ function edit() {
 		});
 	});
 	function likeCnt(){
+		var $idx = $("#board_idx");
+		var params = {};
+		 params.idx = $idx.val();
 		$.ajax({
 			url: "likecnt",
                type: "get",
-               data: {"board_idx":$("#board_idx").val()},
+               data: params,
                success: function (cnt) {
             	   $(".like_count").html(cnt);	
                },error:function(e){
@@ -185,9 +188,5 @@ function edit() {
 		});
 	};
 	likeCnt();
-	
-	
-	
-	
 </script>
 </html>

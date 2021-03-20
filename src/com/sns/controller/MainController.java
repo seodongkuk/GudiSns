@@ -21,9 +21,8 @@ public class MainController extends HttpServlet {
 
 	private void dual(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uri = req.getRequestURI();
-		System.out.println(uri);
 		String ctx = req.getContextPath();
-		System.out.println(ctx);
+		
 		String sub = uri.substring(ctx.length());
 		System.out.println(sub);
 		
@@ -83,11 +82,11 @@ public class MainController extends HttpServlet {
 				service.like();
 				break;
 
-//			case "/likecnt" :
-//				
-//				System.out.println("추천수 보여줄게");
-//				//service.likecnt();
-//				break;
+			case "/likecnt" :
+				
+				System.out.println("추천수 보여줄게");
+				service.likecnt();
+				break;
 			
 			case "/array" :
 				
