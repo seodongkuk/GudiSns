@@ -51,11 +51,11 @@ public class MemberService {
 		
 	}
 	
-	public ArrayList<MemberDTO> main() {
-		MemberDAO dao = new MemberDAO();
-		ArrayList<MemberDTO> list = dao.list();
-		return list;
-	}
+//	public ArrayList<MemberDTO> main() {
+//		MemberDAO dao = new MemberDAO();
+//		ArrayList<MemberDTO> list = dao.list();
+//		return list;
+//	}
 	
 	
 	public boolean join() {

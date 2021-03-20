@@ -46,7 +46,82 @@ public class MainDAO {
 		}
 
 	}
+	
+	public ArrayList<MainDTO> flist(String loginId) {
+		MainDTO dto = null;
+		
+		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
+		
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate FROM board2 b, photo2 p, hashtag2 h  \r\n"
+				+ "							 WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n"
+				+ "                             IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n"
+				+ "WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002')) ORDER BY board_idx DESC";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				dto = new MainDTO();
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setRelease_state(rs.getString("release_state"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setOriFileName(rs.getString("oriFileName"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setHashTag(rs.getString("hashTag"));
+				dto.setWritedate(rs.getDate("writedate"));
+				
+				flist.add(dto);
+			}
+			
+		} catch (SQLException var5) {
+			var5.printStackTrace();
+			
+		}finally {
+			
+			resClose();
+		}
+		
+		return flist;
+		
+	}
+	
+	public ArrayList<MainDTO> mylist(String user_id) {
+		MainDTO dto = null;
+		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
 
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashtag, b.writedate FROM board2 b, photo2 p, hashtag2 h\r\n"
+				+ "    WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ?";
+
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, user_id);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				dto = new MainDTO();
+				dto.setRelease_state(rs.getString("release_state"));
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setOriFileName(rs.getString("oriFileName"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setHashTag(rs.getString("hashTag"));
+				dto.setWritedate(rs.getDate("writedate"));
+				list.add(dto);
+			}
+		} catch (SQLException var5) {
+			var5.printStackTrace();
+		}finally {
+			resClose();
+		}
+
+		return list;
+	}
+	
 	public long write(MainDTO dto) {
 		String sql = "INSERT INTO board2(board_idx,content,release_state,user_id)VALUES(board2_seq.NEXTVAL,?,?,?)";
 		long bIdx = 0L;
@@ -115,41 +190,6 @@ public class MainDAO {
 		}
 
 		return dto;
-	}
-
-	public ArrayList<MainDTO> mylist(String user_id) {
-		MainDTO dto = null;
-		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
-
-		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashtag FROM board2 b, photo2 p, hashtag2 h\r\n"
-				+ "    WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ?";
-
-
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, user_id);
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				dto = new MainDTO();
-				dto.setRelease_state(rs.getString("release_state"));
-				
-				//누군가 한글로 값을 넣어서 그런듯?
-				dto.setBoard_idx(rs.getInt("board_idx"));
-				dto.setContent(rs.getString("content"));
-				dto.setUser_id(rs.getString("user_id"));
-				dto.setOriFileName(rs.getString("oriFileName"));
-				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setHashTag(rs.getString("hashTag"));
-				list.add(dto);
-			}
-		} catch (SQLException var5) {
-			var5.printStackTrace();
-		}finally {
-			resClose();
-		}
-
-		return list;
 	}
 
 	public int edit(MainDTO dto) {
@@ -247,44 +287,6 @@ public class MainDAO {
 		return success;
 	}
 
-	public ArrayList<MainDTO> flist(String loginId) {
-		MainDTO dto = null;
-		
-		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
-
-		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag FROM board2 b, photo2 p, hashtag2 h  \r\n"
-				+ "							 WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n"
-				+ "                             IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n"
-				+ "WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002')) ORDER BY board_idx DESC";
-
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, loginId);
-			rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				dto = new MainDTO();
-				dto.setBoard_idx(rs.getInt("board_idx"));
-				dto.setContent(rs.getString("content"));
-				dto.setRelease_state(rs.getString("release_state"));
-				dto.setUser_id(rs.getString("user_id"));
-				dto.setOriFileName(rs.getString("oriFileName"));
-				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setHashTag(rs.getString("hashTag"));
-				flist.add(dto);
-				}
-
-		} catch (SQLException var5) {
-			var5.printStackTrace();
-
-		}finally {
-
-			resClose();
-		}
-
-		return flist;
-		
-	}
 	
 	//추천순 게시글 정렬
 //	public ArrayList<MainDTO> like_array(String loginId) {

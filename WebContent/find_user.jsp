@@ -46,7 +46,9 @@
 			    <table>
 			        <tr>
 			            <td rowspan="2"><img src="기본프사.png" width="70" height="70"></td>
-			            <td style="padding-right: 70px;">${member2.user_id}</td>  
+			            <td style="padding-right: 70px;">
+			            	<button onclick="location.href='otherProfile?id=${member2.user_id}'">${member2.user_id}</button>
+			            </td>  
 			            <td style="padding-left: 40px;">
 			                <button onclick="location.href = 'budReq'">친구요청</button>
 			                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">DM보내기</button>

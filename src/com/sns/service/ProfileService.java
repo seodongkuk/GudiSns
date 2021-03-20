@@ -1,11 +1,15 @@
 package com.sns.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sns.dao.ProfileDAO;
+import com.sns.dto.MainDTO;
 
 public class ProfileService {
 	
@@ -33,10 +37,17 @@ public class ProfileService {
 		String id = req.getParameter("id");
 		System.out.println("요청한 타인 프로필 아이디 : "+id);
 		
-		String page = "othersProfile.jsp";
+		String idx = req.getParameter("board_idx");
+		System.out.println("타인 id: "+id+"idx: "+idx);
 		
+		ProfileDAO dao = new ProfileDAO();
+		ArrayList<MainDTO> list = dao.otherlist(id);
+		System.out.println(list.size());
+		if (list != null && list.size() > 0) {
+			req.setAttribute("list", list);
+		}
 		req.setAttribute("id", id);
-		dis = req.getRequestDispatcher(page);
+		dis = req.getRequestDispatcher("othersProfile.jsp");
 		dis.forward(req, resp);
 		
 	}
