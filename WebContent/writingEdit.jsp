@@ -95,7 +95,7 @@
         <h2>글 수정</h2>
         <form action="edit" id="newWrite" class="filebox" method="post" enctype="multipart/form-data">
         <input type="hidden" name="board_idx" value="${dto.board_idx}"/>
-        
+        {dto.hashTag}
             <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000">${dto.content}</textarea><br>
             <input type="text" name="hashOne" class="hash" value="">
             <input type="text" name="hashTwo" class="hash" value="">

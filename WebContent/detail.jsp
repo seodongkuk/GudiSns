@@ -63,6 +63,7 @@
 	
 		
 		<div>
+			<span id="hash1"></span><span id="hash2"></span>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
 
             <input type="button"value="${dto.user_id}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
@@ -134,6 +135,22 @@
 	</body>
 </div>
 <script>
+var a = "${dto.hashTag}";
+
+var hash =a.split('#');
+
+var sh = "#";
+if(hash[1] != undefined){
+document.getElementById("hash1").innerHTML = sh+hash[1];
+}
+if(hash[2] != undefined){
+    document.getElementById("hash2").innerHTML = sh+hash[2];
+}
+
+
+
+
+
 var a = "${loginId}";
 var b = "${dto.user_id}";
 

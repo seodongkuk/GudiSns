@@ -377,6 +377,7 @@
         <div id="header">
            	<c:forEach items="${list}" var="myL">
            	<button onclick="location.href='del?board_idx=${myL.board_idx}'">게시글삭제</button>
+           	
             <table >
                 <tr>
                     <td>
@@ -388,7 +389,7 @@
                  </tr>
                 <tr>
                     <td class="profileBoard">
-                        <p id="hashTag">#코로나 #코로나종식</p>
+                        	${myL.hashTag}
                             <textarea style="width: 300px; resize: none; border: none; overflow: hidden;" readonly>
                             ${myL.content}
                             </textarea>
@@ -431,6 +432,25 @@
 
     </body>
      <script>
+     var a = "${myL.hashTag}";
+
+     var hash =a.split('#');
+
+     var sh = "#";
+     if(hash[1] != undefined){
+     document.getElementById("hash1").innerHTML = sh+hash[1];
+     }
+     if(hash[2] != undefined){
+         document.getElementById("hash2").innerHTML = sh+hash[2];
+     }
+     
+     
+     
+     
+     
+     
+     
+     
          	$(function(){
 		stickyFooter();
 

@@ -101,7 +101,7 @@
         </select>
         <div class="board">
             <c:forEach items="${flist}" var="flist">
-            	
+            		${flist.hashTag}
             		<form action="singo" method="post">
                 	<input type="hidden" name="board_idx" value="${flist.board_idx}" />
                 	<input type="hidden" name="user_id" value="${flist.user_id}" />

@@ -121,7 +121,8 @@ public class MainDAO {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
 
-		String sql = "SELECT * FROM photoboard2 WHERE user_id=?";
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashtag FROM board2 b, photo2 p, hashtag2 h\r\n"
+				+ "    WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ?";
 
 
 		try {
@@ -139,6 +140,7 @@ public class MainDAO {
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setHashTag(rs.getString("hashTag"));
 				list.add(dto);
 			}
 		} catch (SQLException var5) {
@@ -250,7 +252,10 @@ public class MainDAO {
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
 
-		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx WHERE release_state != 3 AND b.user_id IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002'))";
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag FROM board2 b, photo2 p, hashtag2 h  \r\n"
+				+ "							 WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n"
+				+ "                             IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n"
+				+ "WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002'))";
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -265,6 +270,7 @@ public class MainDAO {
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setHashTag(rs.getString("hashTag"));
 				flist.add(dto);
 				}
 
