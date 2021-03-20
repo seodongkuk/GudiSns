@@ -234,6 +234,9 @@
     	if(selectVal=="최신순"){
     		location.href='./array?select='+selectVal;
     	}
+    	else if(selectVal=="추천순"){
+    		location.href='./array?select='+selectVal;
+    	}
 	}
 
   	/* function arrayEvt(){

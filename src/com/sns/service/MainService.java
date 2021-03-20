@@ -9,12 +9,8 @@ import com.sns.dto.MainDTO;
 import com.sns.dto.ReplyDTO;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -257,11 +253,18 @@ public class MainService {
 				dis.forward(req, resp);
 			}
 		}else if (select.equals("추천순")){//추천했으면 추천 삭제
-//			dao =  new MainDAO();
-//			dao.recommend_array();
-		}
-		
+			dao =  new MainDAO();
+			System.out.println("추천순으로 정렬해줄게!");
+			ArrayList<MainDTO> array = dao.recommend_array(loginId);
+			if (array != null && array.size() > 0) {
+				System.out.println(array);
+				req.setAttribute("flist", array);
+				dis = req.getRequestDispatcher("main.jsp");
+				dis.forward(req, resp);
+				}
+			}
 	}
+	
 	public void singo() throws ServletException, IOException {
 		//신고에 넘겨줄 idx content 신고한 아이디 get >>req
 		String loginId = (String) req.getSession().getAttribute("loginId");
