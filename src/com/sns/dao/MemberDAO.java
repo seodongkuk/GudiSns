@@ -101,10 +101,10 @@ public class MemberDAO {
 		return success;
 	}
 //--------------------------------------------------------------------------임의로만든리스트
-public ArrayList<MemberDTO> list() {
-
-	return null;
-}
+//public ArrayList<MemberDTO> list() {
+//
+//	return null;
+//}
 //--------------------------------------------------------------------------아이디체크
 public boolean idChk(String id) throws SQLException {
 	boolean success = false;
