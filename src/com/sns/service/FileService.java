@@ -28,8 +28,8 @@ public class FileService {
 			String release = multi.getParameter("release_state");
 			
 			String tag1 = multi.getParameter("hashOne");
-			String tag2 = multi.getParameter("hashTwo");
-			String hashtag = tag1+tag2;
+			//String tag2 = multi.getParameter("hashTwo");
+			//String hashtag = tag1+tag2;
 			if (idx != null) {
 				dto.setBoard_idx(Integer.parseInt(idx));
 			}
