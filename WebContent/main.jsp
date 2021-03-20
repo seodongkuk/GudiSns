@@ -18,14 +18,6 @@
 	table, td, th, tr {
 		border: 1px solid white;
 		border-collapse: collapse;
-	}
-	
-	h2 {
-		font-size: 70;
-		padding-left: 265px;
-	}
-	
-	th, td {
 		padding: 5px;
 	}
 	
@@ -62,10 +54,7 @@
 		left: 1300px; 
 		top: 130px;
 		}
-	#like{
-		margin-left: -610px; 
-		float: left;
-	}
+	
 	div.board{
 		height: 75%;
 		width: 100%;
@@ -89,13 +78,10 @@
             <tr>
                 <td><input type="button" value="로그아웃" onclick="location.href='logout'"></td>
             </tr>
-            <button id="WriteBtn" onclick="location.href='newWriting.jsp'">
-                새 글쓰기
-            </button>
+            <button id="WriteBtn" onclick="location.href='newWriting.jsp'">새 글쓰기</button>
         </table>
-        <h2>구디SNS</h2>
+        <h2 style="font-size: 70;padding-left: 265px;">구디SNS</h2>
         <hr>
-        <!-- 정렬 기능 없앴음.....ㅠ -->
         <select id="arr" onchange="arrayEvt()" name="select">
         	<option value="" selected disabled>게시글 정렬</option>      
             <option class="recommend" value="추천순">추천순</option>
@@ -129,12 +115,19 @@
 
                         </td>
                         <td>
-                            <button id="like">♥</button>
-                            <input style="float: left; border: none; margin-left: -580px;" type="text"
-                                value="좋아요숫자"><span id="likecnt"></span>
-                           <p> 작성날짜 : 
-                           <input style="float: right; border: none; margin-left: -500px;"/>${flist.writedate}
-	         				</p>
+		                <div class="like">
+							<c:if test="${ loginId eq null }">
+								추천 기능은 <button type="button" id="login"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
+								<i class="fa fa-heart" style="font-size:16px;color:red"></i>
+								<span id="like_cnt" class="like_count">${cnt}</span>					
+							</c:if>
+							<c:if test="${ loginId ne null }">
+								<button id="likebtn"> 추천해줘~
+								<i class="fa fa-heart" style="font-size:16px;color:red"></i>
+								</button> <span id="like_cnt" class="like_count">${cnt}</span>
+							</c:if>
+						</div>
+					<p> 작성날짜 : <input style="float: right; border: none; margin-left: -500px;"/>${flist.writedate}</p>
                         </td>
                     </tr>
                     <form action="rlist" method="POST">
@@ -239,30 +232,43 @@
     	}
 	}
 
-  	/* function arrayEvt(){
-	   	var $selectVal = $('#arr');
-    	var params = {};
-    	params.sel = $selectVal.val();
-    	
-    	var flist = [];
-		   $.ajax({
-			url:"array"
-			,type:"get"//전송속도가 post보다 빠름
-			,data:params
-			,dataType:'JSON'
-			,success:function(data){
-				console.log(data.flist);
-				flist = data.flist;
-				$('#board_idx').empty();
-				$.each(flist, function(index, value){
-					console.log(index+":"+value.board_idx);
-				});
-
-			},error:function(request,status,error){
-		        //console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-			}
-         });
- 	};   */
-         
+ // 추천버튼 클릭시(추천 추가 또는 추천 제거)
+	$("#likebtn").click(function(){
+		var $idx = $("#board_idx");
+		 var $id = $("#user_id");
+		 var params = {};
+		 params.idx = $idx.val();
+		 params.id = $id.val();
+		$.ajax({
+			url: "like",
+              type: "get",
+              data: params,
+              dataType:'JSON',
+              success: function () {
+           	   	likeCnt();	
+              }
+		});
+	});
+	
+	 function likeCnt(){
+		var $idx = $("#board_idx");
+		var params = {};
+		 params.idx = $idx.val();
+		$.ajax({
+			url: "likecnt",
+            type: "get",
+               data: params,
+               dataType: 'JSON',
+               success: function (data) {
+            	   $("#like_cnt").html(data.cnt);	
+            	   console.log($("#like_cnt"));
+            	   console.log(data.cnt);
+            	   console.log(cnt);
+            	   
+               }
+		});
+	}
+	
+	likeCnt(); 
 </script>
 </html>
