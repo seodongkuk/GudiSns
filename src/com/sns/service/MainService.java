@@ -247,8 +247,12 @@ public class MainService {
 	public void array() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		MainDAO dao = new MainDAO();
-		ArrayList<MainDTO> array = dao.array(loginId);
-		
+		ArrayList<MainDTO> array = dao.latest_array(loginId);
+		String latest = req.getParameter("최신순");
+		String recommend = req.getParameter("추천순");
+		System.out.println(latest+"/"+recommend);
+		//1. 최신순 선택했을 때
+		//2. 추천순 선택했을 때 
 		String msg = "전체공개 게시글이 없고 친구도 없고 정렬할 게시글도 없네";
 		if (array != null && array.size() > 0) {
 			req.setAttribute("array", array);

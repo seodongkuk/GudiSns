@@ -54,7 +54,7 @@ public class MainDAO {
 		try {
 			ps = conn.prepareStatement(sql, new String[]{"board_idx"});
 			ps.setString(1, dto.getContent());
-			ps.setInt(2, dto.getRelease_state());
+			ps.setString(2, dto.getRelease_state());
 			ps.setString(3, dto.getUser_id());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
@@ -101,7 +101,7 @@ public class MainDAO {
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
 				dto.setUser_id(rs.getString("user_id"));
-				dto.setRelease_state(rs.getInt("release_state"));
+				dto.setRelease_state(rs.getString("release_state"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				dto.setHashTag(rs.getString("hashTag"));
@@ -131,7 +131,7 @@ public class MainDAO {
 
 			while (rs.next()) {
 				dto = new MainDTO();
-				dto.setRelease_state(rs.getInt("release_state"));
+				dto.setRelease_state(rs.getString("release_state"));
 				
 				//누군가 한글로 값을 넣어서 그런듯?
 				dto.setBoard_idx(rs.getInt("board_idx"));
@@ -157,7 +157,7 @@ public class MainDAO {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getContent());
-			ps.setInt(2, dto.getRelease_state());
+			ps.setString(2, dto.getRelease_state());
 			ps.setInt(3, dto.getBoard_idx());
 			success = ps.executeUpdate();
 			System.out.println(success + "갯수");
@@ -261,7 +261,7 @@ public class MainDAO {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
-				dto.setRelease_state(rs.getInt("release_state"));
+				dto.setRelease_state(rs.getString("release_state"));
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
@@ -279,13 +279,54 @@ public class MainDAO {
 		return flist;
 		
 	}
-
+	
+	//추천순 게시글 정렬
+//	public ArrayList<MainDTO> like_array(String loginId) {
+//		MainDTO dto = null;
+//		ArrayList<MainDTO> array = new ArrayList<MainDTO>();
+//
+//		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName "
+//				+ "FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx "
+//				+ "WHERE release_state != 3 AND b.user_id "
+//				+ "IN (SELECT b.user_id FROM board2 b WHERE b.user_id "
+//				+ "IN(SELECT b.bud_id FROM member2 m ,buddylist2 b "
+//				+ "WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')) ORDER BY board_idx DESC";
+//
+//		try {
+//			ps = conn.prepareStatement(sql);
+//			ps.setString(1, loginId);
+//			rs = ps.executeQuery();
+//			
+//			if(rs.next()) {
+//				dto = new MainDTO();
+//				dto.setBoard_idx(rs.getInt("board_idx"));
+//				dto.setContent(rs.getString("content"));
+//				dto.setUser_id(rs.getString("user_id"));
+//				dto.setOriFileName(rs.getString("oriFileName"));
+//				dto.setNewFileName(rs.getString("newFileName"));
+//				dto.setRelease_state(rs.getString("release_state"));
+//				array.add(dto);
+//				}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			resClose();
+//		}
+//		return array;
+//	}
+	
 	//친구공개 게시글 정렬해서 보기.
-	public ArrayList<MainDTO> array(String loginId) {
+	public ArrayList<MainDTO> latest_array(String loginId) {
 		MainDTO dto = null;
 		ArrayList<MainDTO> array = new ArrayList<MainDTO>();
 
-		String sql="select * from board2 WHERE user_id IN(SELECT bud_id FROM buddylist2 WHERE user_id=? AND state = '002') ORDER BY board_idx desc";
+		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName "
+				+ "FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx "
+				+ "WHERE release_state != 3 AND b.user_id "
+				+ "IN (SELECT b.user_id FROM board2 b WHERE b.user_id "
+				+ "IN(SELECT b.bud_id FROM member2 m ,buddylist2 b "
+				+ "WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')) ORDER BY board_idx DESC";
+
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
@@ -298,6 +339,7 @@ public class MainDAO {
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setRelease_state(rs.getString("release_state"));
 				array.add(dto);
 				}
 		} catch (SQLException e) {
@@ -397,14 +439,14 @@ public class MainDAO {
 
 	public int like_cnt(String board_idx) {
 		int success=0;
-		String sql = "SELECT COUNT(*) as like_cnt from like2 where board_idx=?";
+		String sql = "SELECT COUNT(*) as cnt from like2 where board_idx=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, board_idx);
 			rs = ps.executeQuery();
 			
 			if(rs.next()) {
-				success = rs.getInt("like_cnt");
+				success = rs.getInt("cnt");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

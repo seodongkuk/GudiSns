@@ -96,6 +96,7 @@
         <h2>구디SNS</h2>
         <hr>
         <select id="array" onchange="arrayEvt()">
+        	<option value="" selected disabled>게시글 정렬</option>      
             <option class="recommend" value="추천순">추천순</option>
             <option class="latest" value="최신순">최신순</option>
         </select>
@@ -224,29 +225,28 @@
 		alert(msg);
 	}
 	
-	
-	
-	//ReferenceError 일어남.
- 	/* function arrayEvt(){
-	   	var selectVal = document.getElementById('array').value;
-        $.ajax({
+ 	function arrayEvt(){
+	   	var $selectVal = $('#array');
+    	/* var $recommend = $(".rec"); 
+    	var $latest = $(".lat");  */
+    	 var params = {};
+		 params.sel = $selectVal.val();
+ 		console.log(params);
+        /*  $.ajax({
 			type:'get'//전송속도가 post보다 빠름
 			,url:'array'
-			,data:{'loginId':$('#loginId').val()}
-			,dataType:'JSON'
-			,success:function(obj){
-				console.log(obj);
-				 if(selectVal=="latest"){
+			,data:params
+			,success:function(params){
+				console.log(params);
+				 if(params=="최신순"){
 					alert("최신순으로 정렬해드릴게요.");
-					
-				} if(selectVal=="recommend"){
-					alert("추천순으로 정렬해드릴게요."); 
-					
+				}else if(params=="추천순"){
+					alert("추천순으로 정렬해드릴게요."); 	
 				},error:function(e){
 					console.log(e);	
 				}
 			}
-		});
-	} */
+		}); */
+	} 
 </script>
 </html>
