@@ -88,12 +88,11 @@
 			<div class="like">
 				<c:if test="${ loginId eq null }">
 					추천 기능은 <button type="button" id="login"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
-					<span class="like_count"></span>					
+					<span id="like_cnt" class="like_count">${cnt}</span>					
 				</c:if>
 				<c:if test="${ loginId ne null }">
-					<button id="likebtn"> 추천하기!
-					<span class="like_count">${cnt}</span>
-					</button> 
+					<button id="likebtn"> 추천
+					</button> <span id="like_cnt" class="like_count">${cnt}</span>
 				</c:if>
 			
 			</div>
@@ -181,11 +180,13 @@ function edit() {
 			url: "like",
               type: "get",
               data: params,
+              dataType:'JSON',
               success: function () {
            	   	likeCnt();	
               }
 		});
 	});
+	
 	 function likeCnt(){
 		var $idx = $("#board_idx");
 		var params = {};
@@ -194,13 +195,19 @@ function edit() {
 			url: "likecnt",
             type: "get",
                data: params,
-               success: function (params) {
-            	   $(".like_count").html(params);	
-            	   console.log(params);
+               dataType: 'JSON',
+               success: function (data) {
+            	   $("#like_cnt").html(data.cnt);	
+            	   console.log($("#like_cnt"));
+            	   console.log(data.cnt);
+            	   console.log(cnt);
+            	   
                }
 		});
-	};
+	}
+	
 	likeCnt(); 
+	
 var msg = "${msg}";
 	
 	if(msg != ""){

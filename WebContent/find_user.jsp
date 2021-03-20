@@ -51,8 +51,9 @@
 			            </td>  
 			            <td style="padding-left: 40px;">
 			                <button onclick="location.href = 'budReq'">친구요청</button>
+			                <!-- <button id="budReq">친구요청</button> -->
 			                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">DM보내기</button>
-			                <button onclick="location.href = 'budDel'">친구삭제</button>
+			                <button onclick=delChk()>친구삭제</button>
 			            </td>          
 			        </tr>
 			    </table>
@@ -62,15 +63,29 @@
 	    	src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<script>
+	
+		/* $('#budReq').click(function()){
+			
+		} */
+	
+	
 		//Service에서 지정한 msg 값을 alert로 View
 		var msg = "${msg}";
 		if(msg != ""){
 			alert(msg);
 		}
 		
-		var msg2 = "${confirm}"
-			if(msg2 != ""){
-				confirm(msg2);
+		/* var msg2 = "${confirm}"
+		if(msg2 != ""){
+			confirm(msg2);
+		} */
+		
+		function delChk(){
+			var chk = confirm('정말 삭제하시겠습니까?');
+			if(chk){
+				location.href = "budDel";
 			}
+		}
+		
 	</script>
 </html>

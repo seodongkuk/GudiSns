@@ -88,12 +88,12 @@ public class MainController extends HttpServlet {
 				service.likecnt();
 				break;
 			
-//			case "/array" :
-//				
-//				System.out.println("정렬 들어간다.");
-//				service.array();
-//			
-//			break;
+			case "/array" :
+				
+				System.out.println("정렬 들어간다.");
+				service.array();
+			
+			break;
 			
 			case "/singo" :
 				System.out.println("신고 요청이들어왓다.");

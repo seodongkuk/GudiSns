@@ -1,5 +1,6 @@
 package com.sns.service;
 
+import com.google.gson.Gson;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.sns.dao.MainDAO;
@@ -10,6 +11,7 @@ import com.sns.dto.ReplyDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -207,21 +209,23 @@ public class MainService {
 		String board_idx = req.getParameter("idx");
 		MainDAO dao = new MainDAO();
 		
+		HashMap<String,Object> map = new HashMap<String, Object>();
+	
 		int cnt = dao.like_cnt(board_idx);
-		System.out.println(cnt);
-		
-		if (cnt > 0) {
-			req.setAttribute("cnt", cnt);
+			System.out.println(cnt);
+			map.put("cnt",cnt);
+			Gson gson = new Gson();
+			String json = gson.toJson(map);
+			System.out.println(json);
+			
+			resp.getWriter().println(json);
 		}
-		
-		
-	}
 
 	public void like() throws ServletException, IOException {
 		
 		String user_id = req.getParameter("id");
 		String board_idx = req.getParameter("idx");
-
+		
 		System.out.println("아이디: "+user_id+"/"+"게시글 번호: "+board_idx);
 		MainDAO dao =  new MainDAO();
 		
@@ -235,31 +239,43 @@ public class MainService {
 			dao =  new MainDAO();
 			dao.likedelete(user_id,board_idx);
 		}
+		
 	}
 
-//	public void array() throws ServletException, IOException {
-//		String loginId = (String) req.getSession().getAttribute("loginId");
-//		MainDAO dao = new MainDAO();
-//		//ArrayList<MainDTO> array = dao.latest_array(loginId);
-//		String sel = req.getParameter("sel");
-//		//1. 최신순 선택했을 때
-//		//2. 추천순 선택했을 때 
+	public void array() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		MainDAO dao = new MainDAO();
+		//ArrayList<MainDTO> array = dao.latest_array(loginId);
+		String sel = req.getParameter("sel");
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		
 //		String msg = "전체공개 게시글이 없고 친구도 없고 정렬할 게시글도 없네";
-//		
-//		if(sel.equals("최신순")) {//추천하지 않았으면 추천 추가
-//			dao =  new MainDAO();
-//			System.out.println("최신순으로 정렬해줄게!");
-//			dao.latest_array(loginId);
-//		}else if (sel.equals("추천순")){//추천했으면 추천 삭제
+		
+		if(sel.equals("최신순")) {//추천하지 않았으면 추천 추가
+			dao =  new MainDAO();
+			System.out.println("최신순으로 정렬해줄게!");
+			ArrayList<MainDTO> array = dao.latest_array(loginId);
+			if (array != null && array.size() > 0) {
+				map.put("flist",array);
+				req.setAttribute("flist", array);
+				System.out.println(array);
+				Gson gson = new Gson();
+				String json = gson.toJson(map);
+				System.out.println(json);
+				resp.setContentType("text/html charset=UTF-8");
+				resp.setHeader("Access-Control-Allow-origin", "*");
+				resp.getWriter().println(json);
+				
+			}
+		}else if (sel.equals("추천순")){//추천했으면 추천 삭제
 //			dao =  new MainDAO();
 //			dao.recommend_array();
-//		}
+		}
 		
 //		req.setAttribute("msg", msg);
-//		dis = req.getRequestDispatcher("main.jsp");
-//		dis.forward(req, resp);
-//	}
-
+		dis = req.getRequestDispatcher("main.jsp");
+		dis.forward(req, resp);
+	}
 	public void singo() throws ServletException, IOException {
 		//신고에 넘겨줄 idx content 신고한 아이디 get >>req
 		String loginId = (String) req.getSession().getAttribute("loginId");

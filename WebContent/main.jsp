@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -94,20 +95,20 @@
         </table>
         <h2>구디SNS</h2>
         <hr>
-        <!-- 정렬 기능 없앴음.....ㅠ 
+        <!-- 정렬 기능 없앴음.....ㅠ -->
         <select id="arr" onchange="arrayEvt()">
         	<option value="" selected disabled>게시글 정렬</option>      
             <option class="recommend" value="추천순">추천순</option>
             <option class="latest" value="최신순">최신순</option>
-        </select> -->
+        </select>
         <div class="board">
             <c:forEach items="${flist}" var="flist">
             		${flist.hashTag}
             		<form action="singo" method="post">
-                	<input type="hidden" name="board_idx" value="${flist.board_idx}" />
-                	<input type="hidden" name="user_id" value="${flist.user_id}" />
-                	<input type="submit" value="신고하기" 
-                	style=" width: 100px; height: 20px; margin-left:75%;">
+	                	<input type="hidden" name="board_idx" value="${flist.board_idx}" />
+	                	<input type="hidden" name="user_id" value="${flist.user_id}" />
+	                	<input type="submit" value="신고하기" 
+	                	style=" width: 100px; height: 20px; margin-left:75%;">
             		</form>
                 <img src="타인프로필.gif" width="75" height="75" style="float: left;">
                 <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;"
@@ -152,7 +153,7 @@
 </body>
 
 	
-<script src="//code.jquery.com/jquery.min.js"></script>
+
 
 	<!-- style="position: absolute; float: left; scroll-behavior: auto;" -->
 <%-- =======
@@ -225,22 +226,32 @@
 	if(msg != ""){
 		alert(msg);
 	}
+<<<<<<< HEAD
 
  /* 	function arrayEvt(){
 >>>>>>> 625348d4470cee06902d4bf347c7b67fd27ad4b5
+=======
+	
+  	/* function arrayEvt(){
+>>>>>>> 4603181f2245ece0278355d5eca6159d447fb3c2
 	   	var $selectVal = $('#arr');
-    	 var params = {};
-		 params.sel = $selectVal.val();
- 		console.log(params);
-           $.ajax({
-			url:"flist"
+    	var params = {};
+    	params.sel = $selectVal.val();
+    	
+    	var flist = [];
+		   $.ajax({
+			url:"array"
 			,type:"get"//전송속도가 post보다 빠름
 			,data:params
-			,success:function(){
-				console.log(params);
-			}
-           });
- 	} */
+			,dataType:'JSON'
+			,success:function(data){
+				alert("뜨니?");
+			},error:function(request,status,error){
+		        console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		       }
+
+         });
+ 	};  */
          
 </script>
 </html>

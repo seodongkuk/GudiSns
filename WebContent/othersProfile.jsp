@@ -96,7 +96,7 @@
 	                <button onclick="location.href = 'budReq'">친구<br>요청</button>&nbsp;&nbsp;&nbsp;
 	                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">
 	                	DM<br>보내기</button>&nbsp;&nbsp;&nbsp;
-	                <button onclick="location.href = 'budDel'">친구<br>삭제</button>
+	                <button onclick=delChk()>친구<br>삭제</button>
 	            </td>          
 	        </tr>
 	    </table>
@@ -162,7 +162,13 @@
             con.style.visibility="visible";
         }
     } */
-
+	
+    function delChk(){
+		var chk = confirm('정말 삭제하시겠습니까?');
+		if(chk){
+			location.href = "budDel";
+		}
+	}
 </script>
 
 </html>

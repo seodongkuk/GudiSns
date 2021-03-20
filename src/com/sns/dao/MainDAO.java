@@ -163,7 +163,7 @@ public class MainDAO {
 
 	public MainDTO detail(String idx) {
 		MainDTO dto = null;
-		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag FROM board2 b, photo2 p, hashtag2 h" + 
+		String sql = "SELECT b.board_idx, b.writedate, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag FROM board2 b, photo2 p, hashtag2 h" + 
 							" WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.board_idx = ?";
 		
 		try {
@@ -180,6 +180,7 @@ public class MainDAO {
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				dto.setHashTag(rs.getString("hashTag"));
+				dto.setWritedate(rs.getDate("writedate"));
 			}
 
 			
@@ -289,40 +290,41 @@ public class MainDAO {
 
 	
 	//추천순 게시글 정렬
-//	public ArrayList<MainDTO> like_array(String loginId) {
-//		MainDTO dto = null;
-//		ArrayList<MainDTO> array = new ArrayList<MainDTO>();
-//
-//		String sql = "SELECT b.board_idx,b.release_state, b.content,b.user_id, p.oriFileName, p.newFileName "
-//				+ "FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx "
-//				+ "WHERE release_state != 3 AND b.user_id "
-//				+ "IN (SELECT b.user_id FROM board2 b WHERE b.user_id "
-//				+ "IN(SELECT b.bud_id FROM member2 m ,buddylist2 b "
-//				+ "WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')) ORDER BY board_idx DESC";
-//
-//		try {
-//			ps = conn.prepareStatement(sql);
-//			ps.setString(1, loginId);
-//			rs = ps.executeQuery();
-//			
-//			if(rs.next()) {
-//				dto = new MainDTO();
-//				dto.setBoard_idx(rs.getInt("board_idx"));
-//				dto.setContent(rs.getString("content"));
-//				dto.setUser_id(rs.getString("user_id"));
-//				dto.setOriFileName(rs.getString("oriFileName"));
-//				dto.setNewFileName(rs.getString("newFileName"));
-//				dto.setRelease_state(rs.getString("release_state"));
-//				array.add(dto);
-//				}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}finally {
-//			resClose();
-//		}
-//		return array;
-//	}
-//	
+	public ArrayList<MainDTO> latest_array(String loginId) {
+		MainDTO dto = null;
+		ArrayList<MainDTO> array = new ArrayList<MainDTO>();
+
+		String sql = "SELECT b.board_idx,b.release_state, b.writedate, b.content,b.user_id, p.oriFileName, p.newFileName "
+				+ "FROM board2 b LEFT OUTER JOIN photo2 p ON  p.board_idx=b.board_idx "
+				+ "WHERE release_state != 3 AND b.user_id "
+				+ "IN (SELECT b.user_id FROM board2 b WHERE b.user_id "
+				+ "IN(SELECT b.bud_id FROM member2 m ,buddylist2 b "
+				+ "WHERE (m.user_id = b.user_id AND b.user_id = ?) AND b.state = '002')) ORDER BY board_idx DESC";
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				dto = new MainDTO();
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setOriFileName(rs.getString("oriFileName"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setRelease_state(rs.getString("release_state"));
+				dto.setWritedate(rs.getDate("writedate"));
+				array.add(dto);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return array;
+	}
+	
 	public int likeChk(String user_id, String board_idx) {
 		int success=0;
 		String sql = "select count(*) as like_chk from like2 where board_idx=? and user_id=?";
