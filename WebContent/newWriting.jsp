@@ -92,7 +92,7 @@
 <body>
     <div id="newWritebox">
         <h2>새 글쓰기</h2>
-        <form action="newWrite" id="newWrite" class="filebox" method="post" enctype="multipart/form-data">
+        <form action="newWrite" id="newWrite" class="filebox" method="post" enctype="multipart/form-data" name="fomvl">
         <!-- 이미지가 서버에들어갈것 enc mult -->
         	<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
             <textarea name="textArea" id="text" cols="40" rows="10" maxlength="1000" placeholder="글을작성해주세요"></textarea><br>
@@ -110,7 +110,7 @@
                 <option value="003">나만보기</option>
             </select>
         </form>
-        <button type="button" form="newWrite" onclick="chkValue()">작성완료</button>
+        <button type="button" onclick="chkValue()">작성완료</button>
         <button type="button" onclick="location.href='flist'">취소</button>
         <!-- 자바스크립트로 메인으로 보내기 !-->
     </div>
@@ -127,22 +127,23 @@
     var msg = "${msg}";
 	if(msg!=""){
 		alert(msg);
-		location.href='flist';
+		location.href='flist'; 
 	} 
 	
 	
 	function chkValue(){
-        var tmp = document.form1.txt1.value.replace(/\s|　/gi, '');
+        var tmp = document.fomvl.textArea.value.replace(/\s|　/gi, '');
         // 정규식으로 공백, 엔터, 탭, 특수문자 공백 문자를 빈문자로 바꿈
         // 입력된 값에 대하여 위 정규식 처리를 하고 뭔가 남아있지 않다면
         // 값이 무의미 하다고 판단함.
  
         if(tmp == ''){
             alert('내용을 입력해 주세요');
+            return false;
+        }else{
+        	document.getElementById("newWrite").submit();
         }
-        else{
-            alert('OK');
-        }
+        
     }
 </script>
 </html>

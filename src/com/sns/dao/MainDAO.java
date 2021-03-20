@@ -41,8 +41,8 @@ public class MainDAO {
 			if (this.conn != null) {
 				this.conn.close();
 			}
-		} catch (Exception var2) {
-			var2.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -76,8 +76,8 @@ public class MainDAO {
 				flist.add(dto);
 			}
 			
-		} catch (SQLException var5) {
-			var5.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 			
 		}finally {
 			
@@ -113,8 +113,8 @@ public class MainDAO {
 				dto.setWritedate(rs.getDate("writedate"));
 				list.add(dto);
 			}
-		} catch (SQLException var5) {
-			var5.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}finally {
 			resClose();
 		}
@@ -155,8 +155,8 @@ public class MainDAO {
 				}
 			}
 		
-		} catch (SQLException var9) {
-			var9.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -186,8 +186,8 @@ public class MainDAO {
 			}
 
 			
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();;
 		} finally {
 			resClose();
 		}
@@ -214,8 +214,8 @@ public class MainDAO {
 				ps.setInt(2, dto.getBoard_idx());;
 				ps.executeUpdate();
 			}
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -243,8 +243,8 @@ public class MainDAO {
 			}
 
 			success = ps.executeUpdate();
-		} catch (SQLException var9) {
-			var9.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -263,8 +263,8 @@ public class MainDAO {
 			if (rs.next()) {
 				newFileName = rs.getString("newFileName");
 			}
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -276,6 +276,7 @@ public class MainDAO {
 		int success = 0;
 		System.out.println("다오"+idx);
 		String Sql;
+		
 		try {
 			if (newFileName != null) {
 				Sql = "DELETE FROM photo2 WHERE board_idx= ?";
@@ -289,8 +290,8 @@ public class MainDAO {
 			ps.setString(1, idx);
 			success = ps.executeUpdate();
 			
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -447,6 +448,8 @@ public class MainDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			resClose();
 		}
 		
 		

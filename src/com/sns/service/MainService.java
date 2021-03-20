@@ -126,7 +126,7 @@ public class MainService {
 	}
 
 	public void del() throws IOException {
-		String idx = this.req.getParameter("board_idx");
+		String idx = req.getParameter("board_idx");
 		System.out.println("delete idx => " + idx);
 		FileService upload = new FileService(req);
 		MainDAO dao = new MainDAO();
@@ -138,7 +138,7 @@ public class MainService {
 			upload.delete(newFileName);
 		}
 
-		this.resp.sendRedirect("./MyProfile");
+		resp.sendRedirect("./MyProfile");
 	}
 
 	public void detail() throws ServletException, IOException {
