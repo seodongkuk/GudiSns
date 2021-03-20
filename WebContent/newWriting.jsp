@@ -96,8 +96,8 @@
         <!-- 이미지가 서버에들어갈것 enc mult -->
         	<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
             <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000" placeholder="글을작성해주세요"></textarea><br>
-            <input type="text" name="hashOne" class="hash" value="첫번째해시태그">
-            <input type="text" name="hashTwo" class="hash" value="두번째해시태그">
+            <input type="text" name="hashOne" class="hash" placeholder="첫번째해시태그" value="">
+            <input type="text" name="hashTwo" class="hash" placeholder="두번째해시태그" value="">
             <!-- 추가 삭제는 자바사크립트로  -->
             <br>
             <label for="file">업로드</label>
@@ -141,10 +141,10 @@
         });
     });
     
-   /*  
-    var msg = "${msg}";
+    
+    /* var msg = "${msg}";
 	if(msg!=""){
 		alert(msg);
-	}	 */
+	} */
 </script>
 </html>

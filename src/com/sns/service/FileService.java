@@ -26,13 +26,26 @@ public class FileService {
 			String content = multi.getParameter("textArea");
 			String userid = multi.getParameter("user_id");
 			String release = multi.getParameter("release_state");
-			System.out.println(userid+"/"+idx + "/" + content + "/" + release);
+			
+			String tag1 = multi.getParameter("hashOne");
+			String tag2 = multi.getParameter("hashTwo");
+			String hashtag = tag1+tag2;
 			if (idx != null) {
 				dto.setBoard_idx(Integer.parseInt(idx));
 			}
+			System.out.println(userid+"/"+idx + "/" + content + "/" + release);
+			System.out.println("해시태그: "+tag1);
+			
+			/*if(tag1 != null && tag2 != null) {
+				dto.setHashTag(hashtag);
+			}else if(tag1 == null && tag2 != null) {
+				dto.setHashTag(tag2);
+			}else if(tag2 == null && tag1 != null) {
+				dto.setHashTag(tag1);
+			}*/
 
+			dto.setHashTag(tag1);
 			dto.setUser_id(userid);
-
 			dto.setContent(content);
 			dto.setRelease_state(Integer.valueOf(release));
 			String oriFileName = multi.getFilesystemName("photo");

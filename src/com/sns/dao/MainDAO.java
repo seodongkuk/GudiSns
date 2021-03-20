@@ -45,10 +45,10 @@ public class MainDAO {
 
 	}
 
-	public long write(MainDTO dto ) {
+	public long write(MainDTO dto) {
 		String sql = "INSERT INTO board2(board_idx,content,release_state,user_id)VALUES(board2_seq.NEXTVAL,?,?,?)";
 		long bIdx = 0L;
-
+		
 		try {
 			ps = conn.prepareStatement(sql, new String[]{"board_idx"});
 			ps.setString(1, dto.getContent());
@@ -68,13 +68,19 @@ public class MainDAO {
 					ps.setLong(3, bIdx);
 					ps.executeUpdate();
 				}
+				if(dto.getHashTag() != null) {
+					sql = "INSERT INTO hashTag2(board_idx, hashTag) VALUES(?,?)";
+					ps = conn.prepareStatement(sql);
+					ps.setLong(1, bIdx);
+					ps.setString(2, dto.getHashTag());
+					ps.executeUpdate();
+				}
 			}
 		} catch (SQLException var9) {
 			var9.printStackTrace();
 		} finally {
 			resClose();
 		}
-
 		return bIdx;
 	}
 

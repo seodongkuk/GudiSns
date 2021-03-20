@@ -14,6 +14,8 @@ public class MainDTO {
 	private String oriFileName;
 	private String newFileName;
 	
+	private String hashTag;
+	
 
 	public int getRelease_state() {
 		return release_state;
@@ -94,5 +96,13 @@ public class MainDTO {
 
 	public void setWritedate(Date writedate) {
 		this.writedate = writedate;
+	}
+
+	public String getHashTag() {
+		return hashTag;
+	}
+
+	public void setHashTag(String hashTag) {
+		this.hashTag = hashTag;
 	}
 }
