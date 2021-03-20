@@ -321,13 +321,11 @@ public class MainService {
 		MainDAO dao = new MainDAO();
 		int success = dao.reportWriting(dto);
 		String msg ="";
-		String page ="";
 		if(success > 0) {
 			msg ="해당 게시글이 신고 접수 되었습니다 관리자가 확인하고 처리하겟습니다.";
-			page = "/flist";
 		}
 		req.setAttribute("msg", msg);
-		dis = req.getRequestDispatcher(page);
+		dis = req.getRequestDispatcher("declaration.jsp");
 		dis.forward(req, resp);
 	}
 
