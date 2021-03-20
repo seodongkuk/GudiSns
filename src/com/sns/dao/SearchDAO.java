@@ -75,10 +75,10 @@ public class SearchDAO {
 		//해시태그 검색
 		if(find.equals("HashTag")) {
 			String sql = "SELECT b.user_id,b.board_idx,b.content,h.hashTag FROM Board2 b, HashTag2 h "
-					+"WHERE b.board_idx = h.board_idx AND b.board_idx IN (SELECT board_idx FROM HashTag2 WHERE hashTag = ?)";
+					+"WHERE b.board_idx = h.board_idx AND b.board_idx IN (SELECT board_idx FROM HashTag2 WHERE hashTag LIKE ?)";
 			try {
 				ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
-				ps.setString(1, search);//?대응
+				ps.setString(1, "%"+search+"%");//?대응
 				rs = ps.executeQuery();//3. 쿼리실행
 				while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
 					SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
