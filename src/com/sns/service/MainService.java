@@ -185,6 +185,7 @@ public class MainService {
 
 		ArrayList<MainDTO> flist = dao.flist(loginId);
 		dao = new MainDAO();
+		
 		System.out.println(flist.size());
 		
 		String msg = "친구없음";

@@ -77,8 +77,13 @@
 
            		<td>
             		<img src="게시물이미지.gif" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
+        		<p> 작성날짜 : 
+                           <input style="float: right; border: none; margin-left: -500px;"/>${flist.writedate}
+	         				</p>
         		</td>
+        		
            </tr>
+           <!-- 좋아요 기능! -->
 			<div class="like">
 				<c:if test="${ loginId eq null }">
 					추천 기능은 <button type="button" id="login"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>

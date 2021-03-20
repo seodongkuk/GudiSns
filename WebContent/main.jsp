@@ -94,11 +94,12 @@
         </table>
         <h2>구디SNS</h2>
         <hr>
+        <!-- 정렬 기능 없앴음.....ㅠ 
         <select id="arr" onchange="arrayEvt()">
         	<option value="" selected disabled>게시글 정렬</option>      
             <option class="recommend" value="추천순">추천순</option>
             <option class="latest" value="최신순">최신순</option>
-        </select>
+        </select> -->
         <div class="board">
             <c:forEach items="${flist}" var="flist">
             		${flist.hashTag}
@@ -130,8 +131,9 @@
                             <button id="like">♥</button>
                             <input style="float: left; border: none; margin-left: -580px;" type="text"
                                 value="좋아요숫자"><span id="likecnt"></span>
-                            <input style="float: right; border: none; margin-left: -500px;
-	            	type=" text" value="작성날짜:2021-03-10">
+                           <p> 작성날짜 : 
+                           <input style="float: right; border: none; margin-left: -500px;"/>${flist.writedate}
+	         				</p>
                         </td>
                     </tr>
                     <form action="rlist" method="POST">
@@ -224,7 +226,7 @@
 		alert(msg);
 	}
 	
- 	function arrayEvt(){
+ /* 	function arrayEvt(){
 	   	var $selectVal = $('#arr');
     	 var params = {};
 		 params.sel = $selectVal.val();
@@ -237,7 +239,7 @@
 				console.log(params);
 			}
            });
- 	}
+ 	} */
          
 </script>
 </html>
