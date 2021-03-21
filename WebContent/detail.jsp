@@ -70,31 +70,30 @@
   
        <table>
            <tr>
-        
            	 <button onclick=edit()>글 수정하기</button>
-          
-		         
-
+           	 
            		<td>
             		<img src="/GudiSns/photo/${dto.newFileName}" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
-		<p>	<span id="hash1"></span><span id="hash2"></span> </p>
+				<p>	<span id="hash1"></span><span id="hash2"></span> </p>
             			<p>${dto.content}</p>
             					
         		<p> 작성날짜 : 
                            <input style="float: right; border: none; margin-left: -500px;"/>${flist.writedate}
 	         				</p>
+
         		</td>
-        		
            </tr>
            <!-- 좋아요 기능! -->
 			<div class="like">
 				<c:if test="${ loginId eq null }">
 					추천 기능은 <button type="button" id="login"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
+					<i class="fa fa-heart" style="font-size:16px;color:red"></i>
 					<span id="like_cnt" class="like_count">${cnt}</span>					
 				</c:if>
 				<c:if test="${ loginId ne null }">
-					<button id="likebtn"> 추천
-					</button> <span id="like_cnt" class="like_count">${cnt}</span>
+					<button id="likebtn"> 추천해줘~</button>
+					<i class="fa fa-heart" style="font-size:16px;color:red"></i>
+					<span id="like_cnt" class="like_count">${cnt}</span>
 				</c:if>
 			
 			</div>
@@ -110,20 +109,14 @@
 		        </td>
 		    </tr>
 	    </table>     
-        <table>
-		    <tr>
-				<th>작성자</th>
-				<th>내용</th>
-				<th>삭제</th>
-			</tr>	
-			
+        <table>				
 			<c:forEach items="${list}" var="Reply2">
 			<tr>
 				<td>${Reply2.user_id}</td>
 				<td>${Reply2.content}</td>
 				<td>
-					<c:if test="${Reply2.user_id eq  loginId }">
-						<td><a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a></td>										 
+					<c:if test="${Reply2.user_id eq loginId }">
+						<a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a>										 
 					</c:if>
 				</td>
 			</tr>
@@ -169,7 +162,7 @@ function edit() {
         alert("당신은 수정할 수있는 권한이 없습니다.");
     }
 };	
-
+likeCnt(); 
 	// 추천버튼 클릭시(추천 추가 또는 추천 제거)
 	$("#likebtn").click(function(){
 		var $idx = $("#board_idx");
@@ -199,15 +192,11 @@ function edit() {
                dataType: 'JSON',
                success: function (data) {
             	   $("#like_cnt").html(data.cnt);	
-            	   console.log($("#like_cnt"));
-            	   console.log(data.cnt);
-            	   console.log(cnt);
-            	   
+            	   console.log($("#like_cnt")); 
                }
 		});
 	}
 	
-	likeCnt(); 
 	
 var msg = "${msg}";
 	
