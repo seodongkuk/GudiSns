@@ -26,6 +26,18 @@
                 margin: auto;
             	text-align: center;
             }
+            a:link{
+            	color:black;
+            	text-decoration: none;
+            }
+            a:visited{
+            	color:black;
+            	text-decoration: none;
+            }
+            a:hover{
+            	color:blue;
+            	text-decoration: underline;
+            }
         </style>	
 	</head>
 	<body>
@@ -47,12 +59,12 @@
 			        <tr>
 			            <td rowspan="2"><img src="기본프사.png" width="70" height="70"></td>
 			            <td style="padding-right: 70px;">
-			            	<button onclick="location.href='otherProfile?id=${member2.user_id}'">
-			            		${member2.user_id}
-			            	</button>
+			            	<a href="otherProfile?id=${member2.user_id}">
+			            		${member2.user_id}</a>
 			            </td>  
 			            <td style="padding-left: 40px;">
 			                <!-- <button onclick="location.href = 'budReq'">친구요청</button> -->
+			                <input type="hidden" id="budId" value="${member2.user_id}"/>
 			                <button id="budReq">친구요청</button>
 			                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">DM보내기</button>
 			                <button onclick=delChk()>친구삭제</button>
@@ -71,6 +83,9 @@
 			$.ajax({
 				type:'get'
 				,url:'budReq'
+				,data:{
+					"budId":$("#budId").val()
+				}
 				,dataType:'JSON'
 				,success:function(data){
 					alert(data.msg);
@@ -92,6 +107,9 @@
 				$.ajax({
 					type:'get'
 					,url:'budDel'
+					,data:{
+						"budId":$("#budId").val()
+					}
 					,dataType:'JSON'
 					,success:function(data){
 						alert(data.msg);

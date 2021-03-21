@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imgfile\icon.jpg">
     <title>타인 프로필</title>
+    <!-- 제이쿼리 사용을 위해 선언 -->
+	<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
     <style>
 		body {
 			width: 850px;
@@ -15,7 +17,7 @@
 			margin-left: 25%;
 			padding: 5px;
 			border: 1px solid black;
-			overflow: scroll;
+			overflow: hidden;
 		}
 		table, td, th, tr {
 			border: 1px solid white;
@@ -65,6 +67,7 @@
 		}
 		div.board{
 			width: 100%;
+			height: 750px;
 			margin-top: 15px;
 			overflow: scroll;
 		}
@@ -84,6 +87,7 @@
     </style>
 </head>
 <body>
+	<input type="hidden" id="otherId" value="${id}"/>
 	<h1>${id} 프로필</h1>
 	
         <table style="height: 20%">
@@ -93,7 +97,8 @@
 	            </td>
 	            <td style="padding-right: 70px;">${member2.user_id}</td>  
 	            <td id="btn">
-	                <button onclick="location.href = 'budReq'">친구<br>요청</button>&nbsp;&nbsp;&nbsp;
+	                <%-- <button onclick="location.href='budReq?budId=${id}'">친구<br>요청</button>&nbsp;&nbsp;&nbsp; --%>
+	                <button id="budReq">친구<br>요청</button>&nbsp;&nbsp;&nbsp;
 	                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">
 	                	DM<br>보내기</button>&nbsp;&nbsp;&nbsp;
 	                <button onclick=delChk()>친구<br>삭제</button>
@@ -162,11 +167,40 @@
             con.style.visibility="visible";
         }
     } */
-	
-    function delChk(){
+    
+    $("#budReq").click(function(){
+		
+		$.ajax({
+			type:'get'
+			,url:'budReq'
+			,data:{
+				"budId":$("#otherId").val()
+			}
+			,dataType:'JSON'
+			,success:function(data){
+				alert(data.msg);
+			},error:function(e){
+				console.log(e);
+			}
+		});
+	});
+    
+	function delChk(){
 		var chk = confirm('정말 삭제하시겠습니까?');
 		if(chk){
-			location.href = "budDel";
+			$.ajax({
+				type:'get'
+				,url:'budDel'
+				,data:{
+					"budId":$("#otherId").val()
+				}
+				,dataType:'JSON'
+				,success:function(data){
+					alert(data.msg);
+				},error:function(e){
+					console.log(e);
+				}
+			});
 		}
 	}
 </script>

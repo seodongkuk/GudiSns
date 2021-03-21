@@ -1,6 +1,7 @@
 package com.sns.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,12 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sns.service.ProfileService;
 
-@WebServlet({"/upload","/otherProfile"})
+@WebServlet({"/upload","/otherProfile","/MyProfile"})
 public class ProfileController extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		dual(req,resp);
 	}
 
@@ -25,13 +25,12 @@ public class ProfileController extends HttpServlet {
 		dual(req,resp);
 	}
 
-	private void dual(HttpServletRequest req, HttpServletResponse resp) 
-			throws ServletException, IOException {
+	private void dual(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ProfileService service = new ProfileService(req,resp);//업로드 서비스 객체화함
 		
 		String uri = req.getRequestURI();
 		String context = req.getContextPath();
-		String sub = uri.substring(context.length());				
+		String sub = uri.substring(context.length());
 		
 		req.setCharacterEncoding("UTF-8");
 		switch(sub) {
@@ -44,10 +43,14 @@ public class ProfileController extends HttpServlet {
 			System.out.println("타인 프로필 요청");
 			service.otherProfile();
 			break;
-		}
-		
-	}
+			
+		case "/MyProfile" :
+			System.out.println("내 프로필 요청");
+			service.mylist();
+			break;
 	
+		}
+	}
 	
 }
 

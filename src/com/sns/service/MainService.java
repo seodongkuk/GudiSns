@@ -99,28 +99,6 @@ public class MainService {
 		dis.forward(req, resp);
 	}
 
-	public void mylist() throws ServletException, IOException {
-		String loginId = (String) req.getSession().getAttribute("loginId");
-	
-		String idx = req.getParameter("board_idx");
-
-		System.out.println(loginId+"/"+idx);
-		
-		
-		MainDAO dao = new MainDAO();
-		ArrayList<MainDTO> list = dao.mylist(loginId);
-		System.out.println(list.size());
-		String msg = "게시글없음";
-		if (list != null && list.size() > 0) {
-			req.setAttribute("list", list);
-			msg = loginId;
-		}
-
-		req.setAttribute("msg", msg);
-		dis = req.getRequestDispatcher("MyProfile.jsp");
-		dis.forward(req, resp);
-	}
-
 	public void del() throws IOException {
 		String idx = req.getParameter("board_idx");
 		System.out.println("delete idx => " + idx);
