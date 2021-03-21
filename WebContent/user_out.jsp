@@ -36,8 +36,9 @@
             }
         </style>
     </head>
-    <form action="delinfo" method="post">
+    <form action="memberdel" method="post">
 	<input type="hidden" name="id" value="${sessionScope.id}"/>
+	
     <body>
         <h1>회원 탈퇴</h1>
         <h3>
@@ -49,9 +50,10 @@
           <button type="submit">회원탈퇴</button>
         </form>
     </body>
+   
    <script>
    $(function(){
-	   $('withdraw').click (function(){
+	   $('memberdel').click (function(){
 		   if(result==true){
 			   return true;
 		   }else{

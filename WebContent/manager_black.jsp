@@ -63,7 +63,7 @@
             <button>1</button>
             <button>다음</button>
         </div>    
-        <iframe src="manager_bottom.html" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+        <iframe src="manager_bottom.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
     </body>
     	<script>
 		//Service에서 지정한 msg 값을 alert로 View

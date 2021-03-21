@@ -56,22 +56,24 @@
                 </th>
                 <th>처리</th>
             </tr>
+            <c:forEach items="${reportList}" var="reportList">
             <tr>
-                <td></td>
-                <td></td>
+                <td>${reportList.report_idx}</td>
+                <td>${reportList.report_date}</td>
                 <td><a href="#">보기</a></td>
-                <td></td>
+                <td>${reportList.user_id}</td>
                 <td><input type="checkbox" id="ck_blind"></td>
                 <td><input type="checkbox" id="ck_black"></td>
                 <td><a href="#">처리하기</a></td>
             </tr>
-        </table>    
+        </table>   
+           </c:forEach> 
         <div class="paging">
             <button>이전</button>
             <button>1</button>
             <button>다음</button>
         </div>    
-        <iframe src="manager_bottom.html" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+        <iframe src="manager_bottom.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
     </body>
     	<script>
 		//Service에서 지정한 msg 값을 alert로 View
