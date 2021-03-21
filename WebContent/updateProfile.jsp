@@ -154,14 +154,6 @@
     </div>
 </body>
 <script>
-
-var msg = "${msg}";
-
-if(msg != ""){
-	alert(msg);
-}
-
-
 function next(){
 
 if(confirm("글 수정을 취소하시겠습니까 ?"))
@@ -201,6 +193,15 @@ else
            var cur = $(".filebox input[type='file']").val();
            $(".upload_name").val(cur);
        });
+
+   }
+       var msg = "${msg}";
+
+       if(msg != ""){
+       	alert(msg);
+       }   
+       
+       
 
 </script>
 

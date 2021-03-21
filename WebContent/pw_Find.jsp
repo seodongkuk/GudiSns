@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-       <form action="pwfind" method="post">
+      
         <title>비밀번호찾기</title>
         <style>
                h2{
@@ -47,7 +47,7 @@ table,td,th{
             <h2>패스워드 찾기</h2>
             
     <table>
-        <form>
+        <form action="pwfind" method="post">
         <tr>
             <td>
                 <input type="text" name="userId" placeholder="아이디"/>
@@ -55,7 +55,7 @@ table,td,th{
         </tr>
             <br/>
             <td>
-                <input type="email" name="userEamil" placeholder="이메일"/>
+                <input type="email" name="email" placeholder="이메일"/>
             </td>  
             <tr>
                 <td>

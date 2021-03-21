@@ -212,6 +212,7 @@ public String pwfind(String id, String email) {
 			success = ps.executeUpdate();
 			if(success > 0) {
 				System.out.println("유저 비밀번호 업데이트 성공");
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -296,36 +297,30 @@ public String pwfind(String id, String email) {
 		
 		return success;
 }	
-//-----------------------------------------------------------------------------//회원정보 삭제					
+//-----------------------------------------------------------------------------//회원탈퇴 시 패스워드 확인.				
 				
 				
 				
-			public int memberDel(String id, String pw) {
-				
-				String sql="DELETE pw FROM member2 WHERE user_id=? AND pw=?";
-				int success = -1;
-				try {
-					ps = conn.prepareStatement(sql);
-					ps.setString(1,id);
-					ps.setString(2,pw);
-					success = ps.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}finally {
-					try {
-						ps.close();
-						conn.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				}	
-				
-				return success;
-
+	public int memberdel(String id, String pw) {	
+		System.out.println(id+pw);
+		int result = 0;
+		
+		String sql="UPDATE member2 SET WITHDRAW_STATE='TRUE' WHERE user_id=?" ;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,id);
+			result = ps.executeUpdate();
+		if(result>0) {
+			System.out.println("탈퇴 성공");
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		resClose();
 	}
-
-
+	
+	return result;
 
 }
-
+}
 
