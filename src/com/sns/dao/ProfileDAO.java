@@ -102,6 +102,8 @@ public class ProfileDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 
 		return list;
@@ -151,9 +153,7 @@ public class ProfileDAO {
 			System.out.println("max page: "+maxPage);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
-		}
+		} 
 		return map;
 	}
 	
