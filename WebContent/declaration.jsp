@@ -50,13 +50,13 @@
         </div>
     </body>
     <script>
-            var msg = "${msg}";
-            if(msg!=""){
-                alert(msg);			
-            }		
-            
-            function a(){
-            	alert(msg);
-            }
+           var msg = "${msg}";  
+			if (msg == "이미신고한게시글입니다") {
+				alert(msg);
+				location.href='flist';
+			} else if(msg == "해당 게시글이 신고 접수 되었습니다 관리자가 확인하고 처리하겟습니다."){
+				alert(msg);
+				location.href='flist';
+			}	      
         </script>
 </html>

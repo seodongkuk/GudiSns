@@ -390,6 +390,7 @@
                 <tr>
                     <td class="profileBoard">
                         	${myL.hashTag}
+                        	
                             <textarea style="width: 300px; resize: none; border: none; overflow: hidden;" readonly>
                             ${myL.content}
                             </textarea>
@@ -433,7 +434,7 @@
     </body>
      <script>
      var a = "${myL.hashTag}";
-
+ #qweqw#fdsfsd
      var hash =a.split('#');
 
      var sh = "#";

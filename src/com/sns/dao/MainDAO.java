@@ -41,8 +41,8 @@ public class MainDAO {
 			if (this.conn != null) {
 				this.conn.close();
 			}
-		} catch (Exception var2) {
-			var2.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -55,7 +55,7 @@ public class MainDAO {
 		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate FROM board2 b, photo2 p, hashtag2 h  \r\n"
 				+ "							 WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n"
 				+ "                             IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n"
-				+ "WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002')) ORDER BY board_idx DESC";
+				+ "WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002')) ";
 		
 		try {
 			ps = conn.prepareStatement(sql);
@@ -76,8 +76,8 @@ public class MainDAO {
 				flist.add(dto);
 			}
 			
-		} catch (SQLException var5) {
-			var5.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 			
 		}finally {
 			
@@ -113,8 +113,8 @@ public class MainDAO {
 				dto.setWritedate(rs.getDate("writedate"));
 				list.add(dto);
 			}
-		} catch (SQLException var5) {
-			var5.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}finally {
 			resClose();
 		}
@@ -125,8 +125,9 @@ public class MainDAO {
 	public long write(MainDTO dto) {
 		String sql = "INSERT INTO board2(board_idx,content,release_state,user_id)VALUES(board2_seq.NEXTVAL,?,?,?)";
 		long bIdx = 0L;
-		
+			
 		try {
+			
 			ps = conn.prepareStatement(sql, new String[]{"board_idx"});
 			ps.setString(1, dto.getContent());
 			ps.setString(2, dto.getRelease_state());
@@ -153,8 +154,9 @@ public class MainDAO {
 					ps.executeUpdate();
 				}
 			}
-		} catch (SQLException var9) {
-			var9.printStackTrace();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -165,7 +167,7 @@ public class MainDAO {
 		MainDTO dto = null;
 		String sql = "SELECT b.board_idx, b.writedate, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag FROM board2 b, photo2 p, hashtag2 h" + 
 							" WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.board_idx = ?";
-
+		
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, idx);
@@ -184,8 +186,8 @@ public class MainDAO {
 			}
 
 			
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();;
 		} finally {
 			resClose();
 		}
@@ -204,8 +206,16 @@ public class MainDAO {
 			ps.setInt(3, dto.getBoard_idx());
 			success = ps.executeUpdate();
 			System.out.println(success + "갯수");
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+			
+			if(dto.getHashTag() != null) {
+				sql = "UPDATE hashTag2 SET hashTag=? WHERE board_idx=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, dto.getHashTag());
+				ps.setInt(2, dto.getBoard_idx());;
+				ps.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -233,8 +243,8 @@ public class MainDAO {
 			}
 
 			success = ps.executeUpdate();
-		} catch (SQLException var9) {
-			var9.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -253,8 +263,8 @@ public class MainDAO {
 			if (rs.next()) {
 				newFileName = rs.getString("newFileName");
 			}
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -266,6 +276,7 @@ public class MainDAO {
 		int success = 0;
 		System.out.println("다오"+idx);
 		String Sql;
+		
 		try {
 			if (newFileName != null) {
 				Sql = "DELETE FROM photo2 WHERE board_idx= ?";
@@ -279,8 +290,8 @@ public class MainDAO {
 			ps.setString(1, idx);
 			success = ps.executeUpdate();
 			
-		} catch (SQLException var8) {
-			var8.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			resClose();
 		}
@@ -306,7 +317,39 @@ public class MainDAO {
 			ps.setString(1, loginId);
 			rs = ps.executeQuery();
 			
-			if(rs.next()) {
+			while(rs.next()) {
+				dto = new MainDTO();
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setOriFileName(rs.getString("oriFileName"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setRelease_state(rs.getString("release_state"));
+				dto.setWritedate(rs.getDate("writedate"));
+				array.add(dto);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return array;
+	}
+	public ArrayList<MainDTO> recommend_array(String loginId) {
+		MainDTO dto = null;
+		ArrayList<MainDTO> array = new ArrayList<MainDTO>();
+
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate, cnt.cnt\r\n" + 
+				"        FROM board2 b, photo2 p, hashtag2 h, (SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt\r\n" + 
+				"				WHERE b.board_idx = p.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n" + 
+				"				IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n" + 
+				"				WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002')) ORDER BY cnt.cnt DESC NULLS LAST";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
 				dto = new MainDTO();
 				dto.setBoard_idx(rs.getInt("board_idx"));
 				dto.setContent(rs.getString("content"));
@@ -380,27 +423,16 @@ public class MainDAO {
 
 	public int reportWriting(MainDTO dto) {
 		int success=0;
-		String sql ="SELECT * FROM REPORT2 WHERE USER_ID =? AND BOARD_IDX = ?";
 		
+		String sql="INSERT INTO report2(report_idx,user_id,board_idx,content,report_id)VALUES(report2_seq.NEXTVAL,?,?,?,?)";
 		try {
-			ps=conn.prepareStatement(sql);
-			ps.setString(1, dto.getUser_id());
-			ps.setInt(2, dto.getBoard_idx());
-			rs = ps.executeQuery();
-			
-			if (rs.next()== true) {
-				success =0;
-			}else if(rs.next() == false){
-				sql="INSERT INTO report2(report_idx,user_id,board_idx,content,report_id)VALUES(report2_seq.NEXTVAL,?,?,?,?)";
 				ps=conn.prepareStatement(sql);
 				ps.setString(1, dto.getUser_id());
 				ps.setInt(2, dto.getBoard_idx());
 				ps.setString(3, dto.getContent());
 				ps.setString(4, dto.getReport_id());
 				success=ps.executeUpdate();
-			}
-			
-			System.out.println(success+"리폿 성공여부");
+			    System.out.println(success+"리폿 성공여부");
 			
 			
 		} catch (SQLException e) {
@@ -428,6 +460,31 @@ public class MainDAO {
 		}finally {
 			resClose();
 		}
+		return success;
+	}
+
+	public int singoCk(MainDTO dto) {
+		int success = 0;
+		String sql ="SELECT * FROM REPORT2 WHERE USER_ID =? AND BOARD_IDX = ?";
+		
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, dto.getUser_id());
+			ps.setInt(2, dto.getBoard_idx());
+			rs = ps.executeQuery();	
+			if (rs.next()== true) {
+				success = 1;
+			}else if(rs.next() == false) {
+				success = 0;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		
+		
 		return success;
 	}
 }
