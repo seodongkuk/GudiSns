@@ -390,12 +390,34 @@ public class MainDAO {
 
 	public boolean likeupdate(String user_id, String board_idx) {
 		boolean success=false;
-		String sql = "Insert INTO like2(board_idx,user_id) VALUES(?,?)";
+		String sql = "INSERT INTO like2(board_idx,user_id) VALUES(?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, board_idx);
 			ps.setString(2, user_id);
-			ps.executeUpdate();
+			if(ps.executeUpdate() > 0) {
+				sql = "SELECT b.user_id FROM board2 b "+
+						"WHERE b.board_idx IN (SELECT board_idx FROM like2 WHERE board_idx=? AND user_id=?)";
+				
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, board_idx);
+				ps.setString(2, user_id);
+				
+				rs = ps.executeQuery();
+				//만약 해당 게시글 작성자가 있다면...
+				if(rs.next()) {
+					//해당 게시글 작성자한테 댓글 알림을 보냅니다
+					String boardId = rs.getString("user_id");
+					sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'게시글알림')";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, user_id);
+					ps.setString(2, boardId);
+					
+					if(ps.executeUpdate() > 0) {
+						System.out.println("게시글 작성자한테 누가 추천했는지 송신");
+					}
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

@@ -56,7 +56,7 @@
 		        <a href="chatRoom?id=${sessionScope.loginId}" target="_parent">
 		            <li>DM</li>
 		        </a>
-		        <a href="AlarmList.jsp" target="_parent">
+		        <a href="alarmList?id=${sessionScope.loginId}" target="_parent">
 		            <li>알림</li>
 		        </a>
 		        <a href="MyProfile" target="_parent">

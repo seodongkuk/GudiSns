@@ -3,17 +3,14 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>DM 리스트 페이지</title>
+        <title>알림 리스트 </title>
         <style>
-            /* #dmBox{
-                margin-left: 10%;
-                border:1px solid black;
-                width: 800px;
-                height: 1000px;
-            } */
+        	body{
+        		overflow: hidden;
+        	}
             #alarmBox{
                 position: relative;
-                margin-left: 35%;
+                margin-left: 36%;
                 border:1px solid black;
                 width: 500px;
                 height: 200px;
@@ -36,81 +33,169 @@
                 margin-top: 70px;
             }
             #alarmSet{
-                /* display: none; */
+                display: none;
                 background-color: gray;
                 position: absolute;
                 border: solid 1px black;
                 width: 150px;
                 height: 145px;
                 text-align: left;
-                margin-left: 26.7%;
-                margin-top: 2.8%;
+                margin-left: 680px;
+                margin-top: 3%;
+            }
+            #container{
+            	height: 1100px;
+            	overflow: auto;
+            	
             }
         </style>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>      
     </head>
     <body>
+    	<div id="container">
     	<!-- 기본값은 모두 체크 -->
         <div id="alarmSet">
-            댓글알림<input type="checkbox" value="댓글알림" checked/>
+            댓글알림<input type="checkbox" name="alarmChk" value="댓글알림" checked/>
             <hr/>
-            게시글알림<input type="checkbox" value="게시글알림" checked/>
+            게시글알림<input type="checkbox" name="alarmChk" value="게시글알림" checked/>
             <hr/>
-            DM알림<input type="checkbox" value="DM알림" checked/>
+            DM알림<input type="checkbox" name="alarmChk" value="DM알림" checked/>
             <hr/>
-            친구요청알림<input type="checkbox" value="친구요청알림" checked/>
+            친구요청알림<input type="checkbox" name="alarmChk" value="친구요청알림" checked/>
             <hr/>
         </div>
         <!--Alt+Shift+B 를 누르면 실행-->
         <h2 style="text-align: center;">알람 리스트 </h2>
-            <button style="margin-left: 35%;">수신설정</button>
-            <button style="margin-left: 17.2%;">모든 알람 지우기</button>
-            <div id='alarmBox'>
-                <div class="content">
-                    - user1님으로부터 친구 요청이 들어왔습니다.
-                </div>
-                <div style="margin-left: 70%; margin-top: -15%;">
-                    21-03-10
-                </div>
-                
-                <div style="margin-left: 65%; margin-top: 25%;float: left;">
-                    <button> 수락하기 </button>
-                    <button> 무시하기 </button>
-                </div>
+            <button id="alarmSetting" style="margin-left: 35%;">수신설정</button>
+            <button onclick="location.href='alarmAllChk?myId=${sessionScope.loginId}'" style="margin-left: 17.2%;">모든 알람 지우기</button>
+            <!-- 현재 알림 리스트를 불러옴 -->
+            <c:forEach items="${list}" var="alarm">
+            	<!-- 만약 알림 내용이 친구요청알림 이면 해당 리스트 꺼내기 -->
+            	<c:if test="${alarm.alarm_content == '친구요청알림'}">
+		            <div id='alarmBox'>
+		                <div class="content">
+		                    ${alarm.user_id} 님으로부터 친구 요청이 들어왔습니다.
+		                </div>
+		                <div style="margin-left: 70%; margin-top: -15%;">
+		                    ${alarm.alarm_reg_date}
+		                </div>
+		                <div style="margin-left: 65%; margin-top: 25%;float: left;">
+		                    <button onclick="location.href='buddyAdd?myId=${sessionScope.loginId}&&budId=${alarm.user_id}'"> 수락하기 </button>
+		                    <button onclick="location.href='buddyIgnore?myId=${sessionScope.loginId}&&budId=${alarm.user_id}'"> 무시하기 </button>
+		                </div>
+		            </div>
+            	</c:if>
+            	<!-- 만약 알림 내용이 게시글알림 이면 해당 리스트 꺼내기 -->
+            	<c:if test="${alarm.alarm_content == '게시글알림'}">
+            		<input type="hidden"  id="likeIdx" value="${alarm.alarm_idx}"/>
+	            	<div id='alarmBox'>
+		                <div class="content">
+		                     ${alarm.user_id}님이 당신의 게시물을 추천 하였습니다.
+		                </div>
+		                <div style="margin-left: 70%; margin-top: -15%;">
+		                    ${alarm.alarm_reg_date}
+		                </div>
+		                <button style="margin-top: 150px; margin-left: -10px;" onclick=delChk(likeIdx.value)>삭제</button>
+            		</div>
+            	</c:if>
+            	<c:if test="${alarm.alarm_content == 'DM알림'}">
+            	    <input type="hidden" id="dmIdx" value="${alarm.alarm_idx}"/>
+	            	<div id='alarmBox'>
+		                <div class="content">
+		                    ${alarm.user_id}님으로부터 DM이 왔습니다
+		                </div>
+		                <div style="margin-left: 70%; margin-top: -15%;">
+		                    ${alarm.alarm_reg_date}
+		                </div>
+		                <button style="margin-top: 150px; margin-left: -10px;" onclick=delDmChk(dmIdx.value)>삭제</button>
+            		</div>
+            	</c:if>
+            	<c:if test="${alarm.alarm_content == '댓글알림'}">
+            	    <input type="hidden" id="commentIdx" value="${alarm.alarm_idx}"/>
+	            	<div id='alarmBox'>
+		                <div class="content">
+		                    ${alarm.user_id}님이 당신의 게시물에 댓글을 달았습니다.
+		                </div>
+		                <div style="margin-left: 70%; margin-top: -15%;">
+		                    ${alarm.alarm_reg_date}
+		                </div>
+		                <button style="margin-top: 150px; margin-left: -10px;" onclick=delCommentChk(commentIdx.value)>삭제</button>
+            		</div>
+            	</c:if>
+            </c:forEach>
             </div>
-
-            <div id='alarmBox'>
-                <div class="content">
-                    - other님이 당신의 게시물에 댓글을 달았습니다.
-                </div>
-                <div style="margin-left: 70%; margin-top: -15%;">
-                    21-03-10
-                </div>
-                <button style="margin-top: 150px; margin-left: -10px;">삭제</button>
-            </div>
-
-            <div id='alarmBox'>
-                <div class="content">
-                    - other님이 당신의 게시물을 추천 하였습니다.
-                </div>
-                <div style="margin-left: 70%; margin-top: -15%;">
-                    21-03-10
-                </div>
-                <button style="margin-top: 150px; margin-left: -10px;">삭제</button>
-            </div>
-
-            <div id='alarmBox'>
-                <div class="content">
-                    - user1님으로부터 친구 요청이 들어왔습니다.
-                </div>
-                <div style="margin-left: 70%; margin-top: -15%;">
-                    21-03-10
-                </div>
-                
-                <div style="margin-left: 65%; margin-top: 25%;float: left;">
-                    <button> 수락하기 </button>
-                    <button> 무시하기 </button>
-                </div>
-            </div>
+            <iframe src="navi.jsp" style="position:fixed; margin-left: 700px;" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 
     </body>
 </html>
+<script>
+
+	var id = "${sessionScope.loginId}";
+
+	//만약 수신설정 화면이 없을때 누르면 보이게하고
+	//아니라면 사라지게 한다
+	$("#alarmSetting").click(function(){
+		if($("#alarmSet").css("display") == 'none'){
+			$("#alarmSet").css({display:'block'});
+		}
+		else{
+			$("#alarmSet").css({display:'none'});
+
+		}
+	});
+
+
+	//자신의 게시글 좋아요 알림 삭제
+	function delChk(idx){
+		var chk = confirm('정말 삭제하시겠습니까?');
+		if(chk){
+			$.ajax({
+				type:'get'
+				,url:'likeAlarmDel?myId='+id+'&&idx='+idx
+				,dataType:'JSON'
+				,success:function(data){
+					console.log('삭제완료');
+				},error:function(e){
+					console.log(e);
+				}
+			});
+			location.reload();
+		}
+	}
+	
+	//자신에게 온 DM 알림 삭제
+	function delDmChk(idx){
+		var chk = confirm('정말 삭제하시겠습니까?');
+		if(chk){
+			$.ajax({
+				type:'get'
+				,url:'dmAlarmDel?myId='+id+'&&idx='+idx
+				,dataType:'JSON'
+				,success:function(data){
+					console.log('삭제완료');
+				},error:function(e){
+					console.log(e);
+				}
+			});
+			location.reload();
+		}
+	}
+	
+	//자신의 게시물 댓글 알림 삭제
+	function delCommentChk(idx){
+		var chk = confirm('정말 삭제하시겠습니까?');
+		if(chk){
+			$.ajax({
+				type:'get'
+				,url:'commentAlarmDel?myId='+id+'&&idx='+idx
+				,dataType:'JSON'
+				,success:function(data){
+					console.log('삭제완료');
+				},error:function(e){
+					console.log(e);
+				}
+			});
+			location.reload();
+		}
+	}
+</script>

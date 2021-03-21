@@ -137,6 +137,18 @@ public class SearchDAO {
 				ps.setString(1, loginId);
 				ps.setString(2, budId);
 				success = ps.executeUpdate();
+				
+				sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'친구요청알림')";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, loginId);
+				ps.setString(2, budId);
+				
+				if(ps.executeUpdate()>0) {
+					System.out.println("친구요청알림 전송 완료");
+				}else {
+					System.out.println("친구요청알림 전송 실패.. cause:상대방이 친구요청알림을 거부했습니다.");
+				}
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

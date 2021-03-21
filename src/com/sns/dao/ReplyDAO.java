@@ -89,7 +89,30 @@ public class ReplyDAO {
 			ps.setString(3, content);
 			if(ps.executeUpdate()>0){
 				success=true;
+				//댓글등록 후 해당 게시글의 작성자한테 댓글을 작성했다는 알림을 보냄(댓글 쓴 사람 아이디와 함께)
+				sql = "SELECT b.user_id FROM board2 b "+
+						"WHERE b.board_idx IN (SELECT board_idx FROM Reply2 WHERE board_idx=? AND user_id=?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, board_idx);
+				ps.setString(2, user_id);
+				
+				rs = ps.executeQuery();
+				//만약 해당 게시글 작성자가 있다면...
+				if(rs.next()) {
+					//해당 게시글 작성자한테 댓글 알림을 보냅니다
+					String boardId = rs.getString("user_id");
+					sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'댓글알림')";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, user_id);
+					ps.setString(2, boardId);
+					
+					if(ps.executeUpdate() > 0) {
+						System.out.println("게시글 작성자한테 댓글알림 전송 완료!!!");
+					}
+				}
 			}
+
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
