@@ -91,6 +91,27 @@ public class MemberDAO {
 			rs = ps.getGeneratedKeys();
 			if(ps.executeUpdate()>0) {
 				success = true;
+				
+				//회원가입시 기본알림셋팅을 부여하는 작업.. by 양상렬
+				sql = "INSERT INTO alarmsetting2(user_id,alarm_kind) VALUES(?,'DM알림')";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, dto.getId());
+				ps.executeUpdate();
+				
+				sql = "INSERT INTO alarmsetting2(user_id,alarm_kind) VALUES(?,'댓글알림')";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, dto.getId());
+				ps.executeUpdate();
+				
+				sql = "INSERT INTO alarmsetting2(user_id,alarm_kind) VALUES(?,'친구요청알림')";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, dto.getId());
+				ps.executeUpdate();
+				
+				sql = "INSERT INTO alarmsetting2(user_id,alarm_kind) VALUES(?,'게시글알림')";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, dto.getId());
+				ps.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

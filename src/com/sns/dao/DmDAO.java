@@ -173,7 +173,17 @@ public HashMap<String, Object> chatRoom(String id) {
 			ps.setString(6, toId);
 			ps.setString(7, content);
 			
-			ps.executeUpdate();
+			if(ps.executeUpdate() > 0) {
+				System.out.println("채팅 알림 전송!!!");
+				sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'DM알림')";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, fromId);
+				ps.setString(2, toId);
+				
+				if(ps.executeUpdate() > 0) {
+					System.out.println(fromId+"님이 받는사람("+toId+") 한테 DM을 보냈습니다.");
+				}
+			}
 			
 			System.out.println("채팅 업데이트 성공!!!");
 		} catch (SQLException e) {

@@ -122,6 +122,7 @@ public class SearchService {
 			if(dao.budReq(loginId,budId)>0) {
 				msg = "친구 요청을 보냈습니다.";
 				success = 1;
+				
 			}
 			map.put("msg", msg);
 			map.put("success", success);

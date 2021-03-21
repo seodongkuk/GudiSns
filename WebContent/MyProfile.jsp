@@ -105,7 +105,7 @@
             }
             a:hover{
             	color:blue;
-            	text-decoration: uderline;
+            	text-decoration: underline;
             }
             div.paging{
             	margin-left: 116px;
