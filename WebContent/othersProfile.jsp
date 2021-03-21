@@ -17,7 +17,7 @@
 			margin-left: 25%;
 			padding: 5px;
 			border: 1px solid black;
-			overflow: scroll;
+			overflow: hidden;
 		}
 		table, td, th, tr {
 			border: 1px solid white;
@@ -67,6 +67,7 @@
 		}
 		div.board{
 			width: 100%;
+			height: 750px;
 			margin-top: 15px;
 			overflow: scroll;
 		}
