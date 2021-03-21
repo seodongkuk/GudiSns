@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+     <script src="//code.jquery.com/jquery.min.js"></script>
         <meta charset="UTF-8">
         <title>회원탈퇴</title>
         <!-- favicon:사이트를 대표하는 탭창에 보여지는 이미지 -->
@@ -35,7 +36,7 @@
             }
         </style>
     </head>
-    <form action="memberDel" method="post">
+    <form action="delinfo" method="post">
 	<input type="hidden" name="id" value="${sessionScope.id}"/>
     <body>
         <h1>회원 탈퇴</h1>
@@ -48,4 +49,16 @@
           <button type="submit">회원탈퇴</button>
         </form>
     </body>
+   <script>
+   $(function(){
+	   $('withdraw').click (function(){
+		   if(result==true){
+			   return true;
+		   }else{
+			   return false;
+		   }
+	   });
+   });
+   
+   </script>
 </html>

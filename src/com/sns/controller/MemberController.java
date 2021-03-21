@@ -87,20 +87,26 @@ public class MemberController extends HttpServlet {
 			service.pwfind();
 			break;
 			
+		
+		
+		
 		case "/pwupdate":
 			System.out.println("패스워드 변경 요청");
 			msg="변경에 실패 했습니다.";
-			page="pw_Find";
+			page="index.jsp";
 		
-			if(service.pwupdate() > 0) {//성공
+			if(service.pwupdate()>0) {//성공
 				msg="변경 완료 되었습니다.";
 				page="index.jsp";
 			}
+			
 			System.out.println("page : "+page);
 			req.setAttribute("msg", msg);
-			dis = req.getRequestDispatcher(page);
-			dis.forward(req, resp);				
+		
 			break;
+			
+			
+		
 			
 			
 		case "/infopw":
@@ -133,10 +139,10 @@ public class MemberController extends HttpServlet {
 		case "/userinfoupdate":
 			System.out.println("업데이트 요청");
 			msg="수정에 실패 했습니다.";
-			page="MyProfile.jsp";
+			page="updateProfile.jsp";
 			if(service.userinfoupdate()==0) {//성공
 				msg="수정에 성공 하였습니다.";
-				page="main";
+				page="Myprofile";
 			}
 			System.out.println("page : "+page);
 			req.setAttribute("msg", msg);
@@ -146,10 +152,10 @@ public class MemberController extends HttpServlet {
 			
 			
 			
-		case "/memberDel": 
+		case "/delinfo": 
 	
 		System.out.println("회원 삭제 요청");
-		service.memberDel();
+		service.memberdel();
 		break;
 		
 		}

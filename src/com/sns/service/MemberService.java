@@ -190,7 +190,7 @@ public void pwfind()throws ServletException, IOException{
 	MemberDAO dao = new MemberDAO();
 	
 	String id=req.getParameter("userId");
-	String email = req.getParameter("userEamil");
+	String email = req.getParameter("email");
 	System.out.println(id + "/"+ email);
 
 	String pw = dao.pwfind(id,email);
@@ -214,25 +214,29 @@ public void pwfind()throws ServletException, IOException{
 }
 
 //-------------------------------------------------------------------//비밀번호 변경.
-      public int pwupdate() throws ServletException, IOException{
-		//파라메터 값이 잘 들어 오는가?
-		String pw=req.getParameter("userPw");
-		String id = req.getParameter("userId");
-		String email = req.getParameter("userEmail");
-		System.out.println(pw);
-		MemberDAO dao = new MemberDAO();
-		
-		MemberDTO dto = new MemberDTO();
-		dto.setPw(pw);
-		dto.setId(id);
-		dto.setEmail(email);
-		
-		return dao.pwupdate(dto);
+public int pwupdate() throws IOException{
+	//파라메터 값이 잘 들어 오는가?
+	String pw = req.getParameter("pw");
+	String id = (String) req.getSession().getAttribute("id");
+	String email = (String) req.getSession().getAttribute("email");
+	System.out.println(pw);
+	System.out.println(id);
+	System.out.println(email);
+	
+	MemberDAO dao = new MemberDAO();
+	
+	MemberDTO dto = new MemberDTO();
+	dto.setPw(pw);
+	dto.setId(id);
+	dto.setEmail(email);
+	
+	
+	
+	return dao.pwupdate(dto);
 }
-      
 //-----------------------------------------------------------------------------//정보수정 접근시 패스워드 확인.
-     
-  public void infopw() throws ServletException, IOException {
+   
+public void infopw() throws ServletException, IOException {
 	MemberDAO dao = new MemberDAO();
 	String id = (String) req.getSession().getAttribute("loginId");
 	String pw = req.getParameter("userPw");
@@ -260,8 +264,8 @@ public void pwfind()throws ServletException, IOException{
 		
 
 //------------------------------------------------------------//회원정보 창
-      
-    public MemberDTO userinfo() {
+    
+  public MemberDTO userinfo() {
 		String id = (String)req.getSession().getAttribute("loginId");
 		
 		System.out.println("상세보기 할 아이디 : "+id);
@@ -273,7 +277,7 @@ public void pwfind()throws ServletException, IOException{
 		MemberDAO dao = new MemberDAO();		
 		return dao.userinfo(id);
 	}
-  
+
 		
 //------------------------------------------------------------//회원정보 업데이트
 
@@ -298,15 +302,13 @@ public int userinfoupdate()throws ServletException, IOException {
 
 	return dao.userinfoupdate(dto);
 }
-//----------------------------------------------------------//회원탈퇴
+//----------------------------------------------------------//회원탈퇴 시 패스워드 확인.
 
 
-public void memberDel() throws ServletException, IOException {
+public void memberdel() throws ServletException, IOException {
 	MemberDAO dao = new MemberDAO();
-	
-	String id = (String)req.getSession().getAttribute("loginId");
+	String id = (String) req.getSession().getAttribute("loginId");
 	String pw = req.getParameter("userPw");
-	
 	
 	boolean inpw = dao.infopw(id,pw);
 	
@@ -316,16 +318,14 @@ public void memberDel() throws ServletException, IOException {
 	msg = "패스워드를 다시 입력해 주세요.";
 	
 	if(inpw) {
-		page = "index.jsp";
-		msg = "회원탈퇴 진행!!";
+		page = "index";
+		msg = "회원탈퇴 !!";
 		
 		req.getSession().setAttribute("pw", pw);
-		req.getSession().setAttribute("id", id);
+		req.getSession().setAttribute("loginId", id);
 	}
 	req.setAttribute("msg", msg);
 	dis = req.getRequestDispatcher(page);
 	dis.forward(req,resp);
 }
-
 }
-

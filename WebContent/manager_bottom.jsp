@@ -1,5 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
-    <head>
+   <head></head>
         <meta charset="UTF-8">
         <style>
             div.footer{
@@ -37,16 +41,23 @@
     <body>
         <div class="footer">
             <ul>
-                <a href="#">
-                     <li>블라인드 리스트</li>
-                 </a>
-                 <a href="#">
-                     <li>신고접수 리스트</li>
-                 </a>
-                 <a href="#">
-                     <li>블랙 리스트</li>
-                 </a>
+                <td>
+                <input type="button" value="블라인드 리스트" onclick="location.href='manager_blind.jsp'">
+                </td>
+   				<td>
+                <input type="button" value="신고 리스트" onclick="location.href='manager_bottom.jsp'">
+                </td>
+                <td>
+                <input type="button" value="블랙 리스트" onclick="location.href='manager_black.jsp'">
+              	</td>
              </ul>
         </div>
     </body>
+    	<script>
+		//Service에서 지정한 msg 값을 alert로 View
+		var msg = "${msg}";
+		if(msg != ""){
+			alert(msg);
+		}
+	</script>
 </html>
