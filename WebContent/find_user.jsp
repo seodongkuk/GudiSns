@@ -26,6 +26,18 @@
                 margin: auto;
             	text-align: center;
             }
+            a:link{
+            	color:black;
+            	text-decoration: none;
+            }
+            a:visited{
+            	color:black;
+            	text-decoration: none;
+            }
+            a:hover{
+            	color:blue;
+            	text-decoration: underline;
+            }
         </style>	
 	</head>
 	<body>
@@ -47,9 +59,8 @@
 			        <tr>
 			            <td rowspan="2"><img src="기본프사.png" width="70" height="70"></td>
 			            <td style="padding-right: 70px;">
-			            	<button onclick="location.href='otherProfile?id=${member2.user_id}'">
-			            		${member2.user_id}
-			            	</button>
+			            	<a href="otherProfile?id=${member2.user_id}">
+			            		${member2.user_id}</a>
 			            </td>  
 			            <td style="padding-left: 40px;">
 			                <!-- <button onclick="location.href = 'budReq'">친구요청</button> -->
