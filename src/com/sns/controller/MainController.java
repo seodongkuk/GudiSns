@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"/newWrite", "/writeEdit", "/MyProfile", "/edit", "/del", "/detail","/flist","/like","/likecnt","/array","/singo","/reportAction"})
+@WebServlet({"/newWrite", "/writeEdit", "/edit", "/del", "/detail","/flist","/like","/likecnt","/array","/singo","/reportAction"})
 public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.dual(req, resp);
@@ -45,12 +45,7 @@ public class MainController extends HttpServlet {
 					service.newWrite();
 				
 				break;
-			case "/MyProfile" :
-				
-					System.out.println("마이프로필에들어옴list보여줄준비");
-					service.mylist();
-				
-				break;
+			
 			case "/del" :
 				
 					System.out.println("삭제");

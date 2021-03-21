@@ -8,6 +8,9 @@ public class SearchDTO {
 	
 	private String hashTag;
 	private int rnum;
+	
+	private String bud_id;
+	private String state;
 
 	public String getUser_id() {
 		return user_id;
@@ -55,5 +58,21 @@ public class SearchDTO {
 
 	public void setRnum(int rnum) {
 		this.rnum = rnum;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getBud_id() {
+		return bud_id;
+	}
+
+	public void setBud_id(String bud_id) {
+		this.bud_id = bud_id;
 	}
 }
