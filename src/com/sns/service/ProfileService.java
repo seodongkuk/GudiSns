@@ -2,14 +2,18 @@ package com.sns.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.sns.dao.MainDAO;
 import com.sns.dao.ProfileDAO;
 import com.sns.dto.MainDTO;
+import com.sns.dto.SearchDTO;
 
 public class ProfileService {
 	
@@ -27,7 +31,6 @@ public class ProfileService {
 	}
 
 	public void upload() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -49,6 +52,43 @@ public class ProfileService {
 		req.setAttribute("id", id);
 		dis = req.getRequestDispatcher("othersProfile.jsp");
 		dis.forward(req, resp);
-		
 	}
+	
+	public void mylist() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
+	
+		String idx = req.getParameter("board_idx");
+		System.out.println(loginId+"/"+idx);
+		
+		ProfileDAO dao = new ProfileDAO();
+		
+		//페이징
+		String pageParam = req.getParameter("page");
+		System.out.println("page: "+pageParam);
+		
+		//1페이지 그룹 -> 1~10번
+		int group = 1;
+		if(pageParam != null) {
+			group = Integer.parseInt(pageParam);
+		}
+		HashMap<String, Object> map = dao.budlist(loginId, group);
+		
+		ArrayList<MainDTO> list = dao.mylist(loginId);
+		System.out.println("마이리스트 사이즈: "+list.size());
+		System.out.println("친구리스트"+map.size());
+		String msg = "게시글없음";
+		if (list != null && list.size() > 0) {
+			req.setAttribute("list", list);
+			msg = loginId;
+		}
+		req.setAttribute("msg", msg);
+		//페이징
+		req.setAttribute("maxPage", map.get("maxPage"));
+		req.setAttribute("budlist", map.get("budlist"));
+		req.setAttribute("currPage", group);
+		
+		dis = req.getRequestDispatcher("MyProfile.jsp");
+		dis.forward(req, resp);
+	}
+
 }

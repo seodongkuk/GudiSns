@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.sns.dto.MainDTO;
+import com.sns.dto.SearchDTO;
 
 public class ProfileDAO {
 	Connection conn = null;
@@ -72,5 +74,123 @@ public class ProfileDAO {
 		
 		return list;
 	}
+
+	public ArrayList<MainDTO> mylist(String user_id) {
+		MainDTO dto = null;
+		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
+
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashtag, b.writedate FROM board2 b, photo2 p, hashtag2 h\r\n"
+				+ "    WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ?";
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, user_id);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				dto = new MainDTO();
+				dto.setRelease_state(rs.getString("release_state"));
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setOriFileName(rs.getString("oriFileName"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setHashTag(rs.getString("hashTag"));
+				dto.setWritedate(rs.getDate("writedate"));
+				list.add(dto);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}	
+
+	public HashMap<String, Object> budlist(String loginId, int page) {
+		SearchDTO dto = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<SearchDTO> budlist = new ArrayList<SearchDTO>();
+		
+		//3개씩 페이징
+		int pagePercnt = 3;
+		int end = page * pagePercnt;
+		int start = end - (pagePercnt -1);
+		
+		/*String sql = "SELECT bud_id FROM buddylist2 WHERE (bud_id != ? AND user_id = ?) AND state = '002' UNION" + 
+				" SELECT user_id FROM buddylist2 WHERE (bud_id = ? AND user_id != ?) AND state = '002'";*/
+		
+		String sql = "SELECT * FROM (" + 
+				"SELECT ROW_NUMBER() OVER(ORDER BY bud_id DESC) AS rnum, bud_id FROM(" + 
+				"SELECT * FROM (" + 
+				"SELECT ROW_NUMBER() OVER(ORDER BY state DESC) AS rnum," + 
+				" bud_id FROM buddylist2 WHERE (bud_id != ? AND user_id = ?) AND state = '002')" + 
+				" UNION" + 
+				" SELECT * FROM (" + 
+				" SELECT ROW_NUMBER() OVER(ORDER BY state DESC) AS rnum," + 
+				" user_id FROM buddylist2 WHERE (bud_id = ? AND user_id != ?) AND state = '002'))) WHERE rnum BETWEEN ? AND ?";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			ps.setString(2, loginId);
+			ps.setString(3, loginId);
+			ps.setString(4, loginId);
+			ps.setInt(5, start);
+			ps.setInt(6, end);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto = new SearchDTO();
+				dto.setBud_id(rs.getString("bud_id"));
+				budlist.add(dto);
+			}
+			int maxPage = getMaxPage(loginId, pagePercnt);
+			map.put("budlist", budlist);
+			map.put("maxPage", maxPage);
+			System.out.println("max page: "+maxPage);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return map;
+	}
+	
+	private int getMaxPage(String loginId, int pagePercnt) {
+		
+		String sql = "SELECT COUNT(bud_id) AS cnt FROM(" + 
+				"SELECT bud_id FROM buddylist2 WHERE (bud_id != ? AND user_id = ?) AND state = '002' UNION" + 
+				" SELECT user_id FROM buddylist2 WHERE (bud_id = ? AND user_id != ?) AND state = '002')";
+		int max = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			ps.setString(2, loginId);
+			ps.setString(3, loginId);
+			ps.setString(4, loginId);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				int cnt = rs.getInt("cnt");
+				max = (int) Math.ceil(cnt/(double)pagePercnt);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return max;
+		
+	}
+
+/*	public HashMap<String, Object> paging(int group) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		//3개씩 페이징
+		int pagePercnt = 3;
+		int end = group * pagePercnt;
+		int start = end - (pagePercnt -1);
+		
+		String sql = "";
+		
+		return map;
+	}*/
 
 }

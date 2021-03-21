@@ -80,46 +80,11 @@ public class MainDAO {
 			e.printStackTrace();
 			
 		}finally {
-			
 			resClose();
 		}
 		
 		return flist;
 		
-	}
-	
-	public ArrayList<MainDTO> mylist(String user_id) {
-		MainDTO dto = null;
-		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
-
-		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashtag, b.writedate FROM board2 b, photo2 p, hashtag2 h\r\n"
-				+ "    WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ?";
-
-
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, user_id);
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				dto = new MainDTO();
-				dto.setRelease_state(rs.getString("release_state"));
-				dto.setBoard_idx(rs.getInt("board_idx"));
-				dto.setContent(rs.getString("content"));
-				dto.setUser_id(rs.getString("user_id"));
-				dto.setOriFileName(rs.getString("oriFileName"));
-				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setHashTag(rs.getString("hashTag"));
-				dto.setWritedate(rs.getDate("writedate"));
-				list.add(dto);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
-		}
-
-		return list;
 	}
 	
 	public long write(MainDTO dto) {
