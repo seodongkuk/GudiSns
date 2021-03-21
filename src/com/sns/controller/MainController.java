@@ -73,17 +73,14 @@ public class MainController extends HttpServlet {
 				
 				System.out.println("list보여줄준비");
 				service.flist();
-
-			break;
+				break;
 
 			case "/like" :
-				
 				System.out.println("추천 준비됬나?");
 				service.like();
 				break;
 
 			case "/likecnt" :
-				
 				System.out.println("추천수 보여줄게");
 				service.likecnt();
 				break;
@@ -92,8 +89,7 @@ public class MainController extends HttpServlet {
 				
 				System.out.println("정렬 들어간다.");
 				service.array();
-			
-			break;
+				break;
 			
 			case "/singo" :
 				System.out.println("신고 요청이들어왓다.");

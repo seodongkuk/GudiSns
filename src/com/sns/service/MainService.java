@@ -9,12 +9,8 @@ import com.sns.dto.MainDTO;
 import com.sns.dto.ReplyDTO;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -240,37 +236,35 @@ public class MainService {
 	public void array() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		MainDAO dao = new MainDAO();
-		//ArrayList<MainDTO> array = dao.latest_array(loginId);
-		String sel = req.getParameter("sel");
-		HashMap<String,Object> map = new HashMap<String, Object>();
 		
+		//ArrayList<MainDTO> array = dao.latest_array(loginId);
+		String select = req.getParameter("select");
+		System.out.println(select);
 //		String msg = "전체공개 게시글이 없고 친구도 없고 정렬할 게시글도 없네";
 		
-		if(sel.equals("최신순")) {//추천하지 않았으면 추천 추가
+		if(select.equals("최신순")) {
 			dao =  new MainDAO();
 			System.out.println("최신순으로 정렬해줄게!");
 			ArrayList<MainDTO> array = dao.latest_array(loginId);
 			if (array != null && array.size() > 0) {
-				map.put("flist",array);
-				req.setAttribute("flist", array);
 				System.out.println(array);
-				Gson gson = new Gson();
-				String json = gson.toJson(map);
-				System.out.println(json);
-				resp.setContentType("text/html charset=UTF-8");
-				resp.setHeader("Access-Control-Allow-origin", "*");
-				resp.getWriter().println(json);
-				
+				req.setAttribute("flist", array);
+				dis = req.getRequestDispatcher("main.jsp");
+				dis.forward(req, resp);
 			}
-		}else if (sel.equals("추천순")){//추천했으면 추천 삭제
-//			dao =  new MainDAO();
-//			dao.recommend_array();
-		}
-		
-//		req.setAttribute("msg", msg);
-		dis = req.getRequestDispatcher("main.jsp");
-		dis.forward(req, resp);
+		}else if (select.equals("추천순")){//추천했으면 추천 삭제
+			dao =  new MainDAO();
+			System.out.println("추천순으로 정렬해줄게!");
+			ArrayList<MainDTO> array = dao.recommend_array(loginId);
+			if (array != null && array.size() > 0) {
+				System.out.println(array);
+				req.setAttribute("flist", array);
+				dis = req.getRequestDispatcher("main.jsp");
+				dis.forward(req, resp);
+				}
+			}
 	}
+	
 	public void singo() throws ServletException, IOException {
 		//신고에 넘겨줄 idx content 신고한 아이디 get >>req
 		String loginId = (String) req.getSession().getAttribute("loginId");

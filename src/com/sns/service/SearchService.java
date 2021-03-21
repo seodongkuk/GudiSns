@@ -21,7 +21,6 @@ public class SearchService {
 	SearchDAO dao = null;//DB필요 -> DAO 객체화	
 	String page = "";
 	String msg = "";	
-	String confirm = ""; //예|아니오
 	RequestDispatcher dis = null;
 	
 	public SearchService(HttpServletRequest req, HttpServletResponse resp) {
@@ -105,7 +104,8 @@ public class SearchService {
 	public void budReq() throws ServletException, IOException {
 		
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		String budId = (String) req.getSession().getAttribute("budId");
+		//String budId = (String) req.getSession().getAttribute("budId");
+		String budId = req.getParameter("budId");
 		System.out.println("로그인 한 아이디: "+loginId+" / "+"친구요청 한 아이디: "+budId);
 		if(loginId != null) {			
 			dao = new SearchDAO();
@@ -114,7 +114,7 @@ public class SearchService {
 			System.out.println("친구요청 성공? "+success);
 
 			// 실패 할 경우
-			//msg = "이미 친구요청을 한 유저 또는 상대방이 이미 친구요청을 했습니다.";
+			msg = "이미 친구요청을 한 유저 또는 상대방이 이미 친구요청을 했습니다.";
 			if(loginId.equals(budId)) {
 				msg = "자기 자신에게 친구요청을 할 수 없습니다.";
 			}
@@ -138,7 +138,8 @@ public class SearchService {
 
 	public void budDel() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		String budId = (String) req.getSession().getAttribute("budId");
+		//String budId = (String) req.getSession().getAttribute("budId");
+		String budId = req.getParameter("budId");
 		System.out.println("로그인 한 아이디: "+loginId+" / "+"친구 삭제 할 아이디: "+budId);
 		
 		if(loginId != null) {
