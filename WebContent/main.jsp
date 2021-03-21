@@ -78,7 +78,7 @@
 </style>
 
 </head>
-<body>
+<body style="overflow:scroll; width:800px; height:100px;">
 
     <div class="main">
         <table style="float: left; margin-top: 55px;">
@@ -103,26 +103,25 @@
         </select>
         <div class="board">
             <c:forEach items="${flist}" var="flist">
-            		${flist.hashTag}
             		<form action="singo" method="post">
 	                	<input type="hidden" name="board_idx" value="${flist.board_idx}" />
 	                	<input type="hidden" name="user_id" value="${flist.user_id}" />
 	                	<input type="submit" value="신고하기" 
 	                	style=" width: 100px; height: 20px; margin-left:75%;">
             		</form>
-                <img src="타인프로필.gif" width="75" height="75" style="float: left;">
+                <img src="/GudiSns/photo/" width="75" height="75" style="float: left;">
                 <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;"
                     onclick="location.href='otherProfile?id=${flist.user_id}'">
                     ${flist.user_id}</button>
                 <table id="board_idx">
                     <tr>
                         <td>
-                            <img src="게시물이미지.gif" width="600" height="450" style="margin-top:100px" />
+                            <img src="/GudiSns/photo/${flist.newFileName}" width="600" height="450" style="margin-top:100px" />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                           
+                           		<p>${flist.hashTag}</p>
                                 <p>${flist.content}</p>
                                 <button id="moreShow" name="board_idx" value="${flist.board_idx}"
                                     onclick="location.href='detail?board_idx=${flist.board_idx}'">더보기</button>
@@ -226,6 +225,7 @@
 	if(msg != ""){
 		alert(msg);
 	}
+	
 
 
  /* 	function arrayEvt(){

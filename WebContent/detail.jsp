@@ -41,8 +41,8 @@
 </style>
 <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
+<body>
 <div class="board">
-	<body>
 		<table style="float: left; margin-top: 55px;">
 			<tr>
 				<td rowspan="2"><img src="유저프로필.gif" width="80" height="80"></td>
@@ -63,7 +63,6 @@
 	
 		
 		<div>
-			<span id="hash1"></span><span id="hash2"></span>
 			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
 
             <input type="button"value="${dto.user_id}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
@@ -74,10 +73,13 @@
         
            	 <button onclick=edit()>글 수정하기</button>
           
-		           
+		         
 
            		<td>
-            		<img src="게시물이미지.gif" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
+            		<img src="/GudiSns/photo/${dto.newFileName}" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
+		<p>	<span id="hash1"></span><span id="hash2"></span> </p>
+            			<p>${dto.content}</p>
+            					
         		<p> 작성날짜 : 
                            <input style="float: right; border: none; margin-left: -500px;"/>${flist.writedate}
 	         				</p>
@@ -137,8 +139,7 @@
 	    </form>
 		</div>
 	<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
-	</body>
-</div>
+</body>
 <script>
 var a = "${dto.hashTag}";
 
