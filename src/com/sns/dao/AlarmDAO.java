@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -38,9 +39,10 @@ public class AlarmDAO {
 		}
 	}
 
-	public ArrayList<AlarmDTO> alarmList(String loginId) {
-		
+	public HashMap<String, Object> alarmList(String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<AlarmDTO> list = new ArrayList<AlarmDTO>();
+		ArrayList<AlarmDTO> setting = new ArrayList<AlarmDTO>();
 		//현재 로그인한 사람의 알람리스트를 모두 가져온다..(알람 수신 여부가 0이 아닌 얘들로만 그리고 읽음 처리 안된 얘들만)
 		String sql = "SELECT * FROM alarmlist2 WHERE ((other_id=?) AND (alarm_read_state = 0)) "+ 
 			    "AND alarm_content IN (SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND alarm_state != 0)";
@@ -60,12 +62,25 @@ public class AlarmDAO {
 				dto.setAlarm_read_state(rs.getString("alarm_read_state"));
 				list.add(dto);
 			}
+			map.put("list",list);
+			//현재 유저의 수신 여부를 가져온다.
+			sql = "SELECT alarm_kind,alarm_state FROM alarmsetting2 WHERE user_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				AlarmDTO dto = new AlarmDTO();
+				dto.setAlarm_kind(rs.getString("alarm_kind"));
+				dto.setAlarm_state(rs.getString("alarm_state"));
+				setting.add(dto);
+			}
+			map.put("setting",setting);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			resClose();
 		}
-		return list;
+		return map;
 	}
 
 	public int buddyAdd(String userId, String buddyId) {
@@ -253,6 +268,79 @@ public class AlarmDAO {
 			resClose();
 		}
 		
+	}
+
+	public void alarmSetting(String loginId, String arr1, String arr2, String arr3, String arr4) {
+		
+		String sql = "";
+		
+		try {
+			
+			//만약 하나라도 빈 값이 있다면 수행함
+			if(arr1.equals(" ") || arr2.equals(" ") || arr3.equals(" ") || arr4.equals(" ")){
+					System.out.println("빈 값이 있습니다..");
+					sql = "UPDATE alarmsetting2 SET alarm_state = '0' WHERE user_id = ? AND alarm_kind NOT IN (?, ?, ?, ?)";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, loginId);
+					ps.setString(2, arr1);
+					ps.setString(3, arr2);
+					ps.setString(4, arr3);
+					ps.setString(5, arr4);
+					ps.executeUpdate();
+			
+			//만약 모두 빈 값일 경우 수행함 (전부 상태값 0)
+			}else if (arr1.equals(" ") && arr2.equals(" ") && arr3.equals(" ") && arr4.equals(" ")){
+				System.out.println("빈 값이 모두 있습니다..");
+				sql = "UPDATE alarmsetting2 SET alarm_state = '0' WHERE user_id = ? AND alarm_kind NOT IN (?, ?, ?, ?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, loginId);
+				ps.setString(2, arr1);
+				ps.setString(3, arr2);
+				ps.setString(4, arr3);
+				ps.setString(5, arr4);
+				ps.executeUpdate();
+			//만약 값이 한개라도 있다면...
+			}else {
+				System.out.println("값이 한개 이상 있습니다");
+			
+			if(arr1 != "" && (arr1.equals("DM알림") || arr1.equals("댓글알림") || arr1.equals("친구요청알림") || arr1.equals("게시글알림"))) {
+				  sql = "UPDATE alarmsetting2 SET alarm_state = '1' WHERE user_id = ? AND alarm_kind = ?";
+				  
+				}
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			ps.setString(2, arr1);
+			ps.executeUpdate();
+			
+			if(arr2 != "" && (arr2.equals("DM알림") || arr2.equals("댓글알림") || arr2.equals("친구요청알림") || arr2.equals("게시글알림"))) {
+				sql = "UPDATE alarmsetting2 SET alarm_state = '1' WHERE user_id = ? AND alarm_kind = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, loginId);
+				ps.setString(2, arr2);
+				ps.executeUpdate();
+			} 
+			
+			if(arr3 != "" && (arr3.equals("DM알림") || arr3.equals("댓글알림") || arr3.equals("친구요청알림") || arr3.equals("게시글알림"))) {
+				sql = "UPDATE alarmsetting2 SET alarm_state = '1' WHERE user_id = ? AND alarm_kind = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, loginId);
+				ps.setString(2, arr3);
+				ps.executeUpdate();
+			} 
+			
+			if(arr4 != "" && (arr4.equals("DM알림") || arr4.equals("댓글알림") || arr4.equals("친구요청알림") || arr4.equals("게시글알림"))) {
+				sql = "UPDATE alarmsetting2 SET alarm_state = '1' WHERE user_id = ? AND alarm_kind = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, loginId);
+				ps.setString(2, arr4);
+				ps.executeUpdate();
+			} 
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
 	}
 
 }
