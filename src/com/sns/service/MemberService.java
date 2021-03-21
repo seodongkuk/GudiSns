@@ -2,7 +2,6 @@ package com.sns.service;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -30,12 +29,40 @@ public class MemberService {
 	}
 	
 	
-	public boolean login() {
-		MemberDAO dao = new MemberDAO();
+	public void login() throws ServletException, IOException {
+		
 		String id = req.getParameter("userId");
 		String pw = req.getParameter("userPw");
 		System.out.println(id+"/"+pw);
-		return dao.login(id, pw);				
+		String loginId = req.getParameter("userId");
+		System.out.println(loginId);
+		page = "index.jsp";
+		msg = "아이디와 비밀번호를 확인해 주세요.";
+		MemberDAO dao=new MemberDAO();
+		boolean success=dao.login(id,pw);
+		
+		if(loginId.indexOf("admin") > -1){
+		System.out.println("어드민 로그인");
+		page = "admin_login";
+		req.getSession().setAttribute("loginId", loginId);
+		}else {
+		if (success) {			
+			if (checkBlackList()) {
+				page = "index.jsp";
+				msg = loginId + "블랙리스트 입니다.";
+				req.getSession().setAttribute("loginId", loginId);
+			} else {
+				page = "/flist";
+				msg = loginId + "님, 반갑습니다.";
+				req.getSession().setAttribute("loginId", loginId);
+				System.out.println(loginId.indexOf("admin"));				
+			}
+		}
+		}
+		System.out.println("로그인결과"+success);
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher(page);
+		dis.forward(req, resp);
 	}
 	
 	
@@ -58,23 +85,38 @@ public class MemberService {
 //	}
 	
 	
-	public boolean join() {
-		boolean success = false;
-		MemberDAO dao = new MemberDAO();
+	public void join() throws ServletException, IOException {
+		
 		String id=req.getParameter("id");
 		String pw=req.getParameter("pw");
 		String name=req.getParameter("name");
 		String phone=req.getParameter("phone");
 		String email=req.getParameter("email");
-		System.out.println(id+"/"+pw+"/"+name+"/"+phone+"/"+email);
+		System.out.println(id+pw+name+phone+email);
+		String join =req.getParameter(id+pw+name+phone+email);
+		System.out.println(req.getParameter(join));
 		MemberDTO dto = new MemberDTO();
 		dto.setId(id);
 		dto.setPw(pw);
 		dto.setName(name);
 		dto.setPhone(phone);
 		dto.setEmail(email);
+		MemberDAO dao = new MemberDAO();
+		boolean success=dao.join(dto);
+		
+		
+		msg = "회원가입에 실패 했습니다.";
+		page = "joinForm.jsp";
 
-	      return dao.join(dto);
+		if (success) {// 성공
+			msg = "회원가입을 축하 드립니다.";
+			page = "index.jsp";
+		}
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher(page);
+		dis.forward(req, resp);
+	
+
 	}
 
 public boolean idChk() throws IOException {

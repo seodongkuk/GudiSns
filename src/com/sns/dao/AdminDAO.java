@@ -53,7 +53,7 @@ public class AdminDAO {
 	}
 	public HashMap<String, Object> reportList(int page) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		int pagePerCnt = 10;
+		int pagePerCnt = 2;
 	
 		int end = page * pagePerCnt;	
 		int start = end-(pagePerCnt-1);
