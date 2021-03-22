@@ -95,7 +95,7 @@
         <form action="newWrite" id="newWrite" class="filebox" method="post" enctype="multipart/form-data" name="fomvl">
         <!-- 이미지가 서버에들어갈것 enc mult -->
         	<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
-            <textarea name="textArea" id="text" cols="40" rows="10" maxlength="1000" placeholder="글을작성해주세요"></textarea><br>
+            <textarea name="textArea" id="text" cols="40" rows="10" maxlength="10" placeholder="글을작성해주세요"></textarea><br>
             <input type="text" name="hashOne" class="hash" placeholder="#을꼭입력후 글작성해주세요" value="#">
             <input type="text" name="hashTwo" class="hash" placeholder="#을꼭입력후 글작성해주세요" value="#">
             <!-- 추가 삭제는 자바사크립트로  -->
@@ -142,5 +142,22 @@
         }
         
     }
+	
+	 var hashvl = document.getElementById("hash1").value;
+
+     if(hashvl.charAt(0) !='#'){
+        alert('해시태그앞에는 #을붙여주세요')
+     }
+
+	
+	$(document).ready(function () {
+        $('#text').keyup(function () {
+            if ($(this).val().length > $(this).attr('maxlength')) {
+                alert('제한길이 초과');
+                $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+            }
+        });
+    });
+	
 </script>
 </html>

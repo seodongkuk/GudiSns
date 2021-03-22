@@ -96,7 +96,7 @@
         <form action="edit" id="newWrite" class="filebox" method="post" enctype="multipart/form-data" name="fomvl">
         <input type="hidden" name="board_idx" value="${dto.board_idx}"/>
         
-            <textarea name="textArea" id="#" cols="40" rows="10" maxlength="1000">${dto.content}</textarea><br>
+            <textarea name="textArea" id="text" cols="40" rows="10" maxlength="1000">${dto.content}</textarea><br>
             <input type="text" name="hashOne" id="hash1" class="hash" value="">
             <input type="text" name="hashTwo" id="hash2" class="hash" value="">
             <!-- 추가 삭제는 자바사크립트로  -->
@@ -162,5 +162,20 @@ function hashyo(){
         }
         
     }
+    
+    
+    
+    
+    
+    
+    
+    $(document).ready(function () {
+        $('#text').keyup(function () {
+            if ($(this).val().length > $(this).attr('maxlength')) {
+                alert('제한길이 초과');
+                $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+            }
+        });
+    });
 </script>
 </html>

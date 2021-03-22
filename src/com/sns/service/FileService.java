@@ -14,7 +14,7 @@ public class FileService {
 	}
 
 	public MainDTO regist() {
-		String savePath = "C:/upload/";
+		String savePath = "C:/upload";
 		System.out.println(savePath);
 		int maxSize = 10*1024*1024;
 		MainDTO dto = null;
