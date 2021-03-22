@@ -10,7 +10,6 @@ import java.util.HashMap;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
 import com.sns.dto.AdminDTO;
 
 public class AdminDAO {
@@ -61,7 +60,7 @@ public class AdminDAO {
 		
 		String sql="SELECT * FROM "
 				+"(SELECT ROW_NUMBER() OVER(ORDER BY report_idx DESC) AS rnum,report_idx,user_id,board_idx,content,report_date,report_state,admin_id	 FROM Report2)"
-				+ "WHERE rnum BETWEEN ? AND ?";;
+				+ "WHERE rnum BETWEEN ? AND ?";
 		ArrayList<AdminDTO> reportList = new ArrayList<AdminDTO>();		
 		try {
 			ps = conn.prepareStatement(sql);
@@ -107,4 +106,27 @@ public class AdminDAO {
 		}		
 		return max;
 	}
+	public AdminDTO  report_content(String report_idx) {
+		AdminDTO dto =null;
+		String sql="SELECT * FROM Report2 Where report_idx=? ";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,report_idx);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				dto = new AdminDTO();
+				dto.setReport_idx(rs.getInt("report_idx"));
+				dto.setContent(rs.getString("content"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}		
+		
+		return dto;
+
+		
 }
+}
+

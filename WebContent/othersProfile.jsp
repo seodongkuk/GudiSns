@@ -99,7 +99,7 @@
 	            <td id="btn">
 	                <%-- <button onclick="location.href='budReq?budId=${id}'">친구<br>요청</button>&nbsp;&nbsp;&nbsp; --%>
 	                <button id="budReq">친구<br>요청</button>&nbsp;&nbsp;&nbsp;
-	                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">
+	                <button onclick="location.href='DM_Room?id=${id}&&create=${sessionScope.loginId}'">
 	                	DM<br>보내기</button>&nbsp;&nbsp;&nbsp;
 	                <button onclick=delChk()>친구<br>삭제</button>
 	            </td>          
@@ -125,9 +125,20 @@
 	      			</form>
 	             </tr>
 	             <tr>
-	                 <td>
-	                     <img src="게시물이미지.gif" width="600" height="450" style="margin-top:50px" />
-	                 </td>
+	                 <!-- <td>
+	                     <img src="게시물이미지.gif" width="600" height="450" 
+	                     	style="margin-top:100px; margin-left: -74px;" />
+	                 </td> -->
+	                 <c:if test="${list.newFileName ne null }">
+                        <td>
+                            <img src="/GudiSns/photo/${list.newFileName}" width="600" height="450" style="margin-top:100px;" />
+                        </td>
+                        </c:if>
+                        <c:if test="${list.newFileName eq null }">
+                         <td>
+                            <img src="/GudiSns/photo/${list.newFileName}" width="600" height="0" style="margin-top:100px; visibility: hidden;" />
+                        </td>
+                        </c:if>
 	             </tr>
 	             <tr>
 	                 <td>
@@ -137,11 +148,11 @@
 	                        onclick="location.href='detail?board_idx=${list.board_idx}'">더보기</button>
 	                 </td>
 	                 <td>
-	                     <button id="like">♥</button>
+	                     <!-- <button id="like">♥</button>
 	                     <input style="float: left; border: none; margin-left: -580px;" type="text"
-	                         value="좋아요숫자"><span id="likecnt"></span>
+	                         value="좋아요숫자"><span id="likecnt"></span> -->
 	                     <input style="float: right; border: none; margin-left: -500px;
-	      				type=" text" value="작성날짜:2021-03-10">
+	      				type=" text" value="${list.writedate}">
 	                 </td>
 	             </tr>
 	             <form action="rlist" method="POST">

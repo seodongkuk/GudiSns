@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sns.service.ReplyService;
 
-@WebServlet({"/rlist","/rwrite","/rdel"})
+@WebServlet({"/rlist","/rwrite","/rdel","/redit"})
 public class ReplyController extends HttpServlet{
 	
 	@Override
@@ -37,6 +37,7 @@ public class ReplyController extends HttpServlet{
 			System.out.println("댓글리스트 요청");
 			reply.rlist();
 			break;
+			
 		case "/rwrite":
 			System.out.println("댓글쓰기 요청");
 			reply.rwrite();
@@ -44,6 +45,11 @@ public class ReplyController extends HttpServlet{
 		
 		case "/rdel":
 			System.out.println("댓글삭제 요청");
+			reply.rdel();
+			break;
+			
+		case "/redit":
+			System.out.println("댓글수정 요청");
 			reply.rdel();
 			break;
 		}

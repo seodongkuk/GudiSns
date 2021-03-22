@@ -50,7 +50,7 @@
     <body>
         
         <center>
-            <h2><img src="???" width="100" height="100">구디SNS</h2>
+            <h2><img src="icon.jpg" width="100" height="100">구디SNS</h2>
         
         <table>
             <form action="login" method="POST">

@@ -64,7 +64,7 @@ public HashMap<String, Object> chatRoom(String id) {
 				" (SELECT dm_idx,sendtime,content,read_state,user_id,recieve_id," + 
 				"ROW_NUMBER() OVER(PARTITION BY dm_idx ORDER BY sendtime DESC) as rnum FROM dm2" + 
 				" WHERE user_id = ? OR recieve_id = ?)" + 
-				" WHERE rnum = 1";
+				" WHERE rnum = 1 ORDER BY sendtime DESC";
 		
 		boolean success = false;
 		
@@ -132,6 +132,7 @@ public HashMap<String, Object> chatRoom(String id) {
 				map.put("chatIdx", rs.getInt("chat_idx"));
 				map.put("success", success);
 				System.out.println(map.get("chatIdx"));
+				resClose();
 				return map;
 			}else {
 				//현재 대화 요청한 사람과 요청받은 사람의 방번호를 새로 만듦
@@ -236,6 +237,7 @@ public HashMap<String, Object> chatRoom(String id) {
 				map.put("success", success);
 				map.put("chatIdx",chatIdx);
 				System.out.println(chatIdx+" 번호의 방은 기존에 만들어졌습니다.");
+				resClose();
 				return map;
 			}
 			ps = conn.prepareStatement(sql);
@@ -310,18 +312,18 @@ public HashMap<String, Object> chatRoom(String id) {
 
 	//로그인 한 아이디가
 	public boolean readUpdate(String loginId, String idx) {
-		String sql = "UPDATE dm2 SET read_state = 'true' WHERE dm_idx = ? AND user_id=? AND read_state != 'true'";
+		String sql = "UPDATE dm2 SET read_state = 'true' WHERE dm_idx = ? AND user_id != ? AND read_state IS NULL";
 		
 		try {
 			ps = conn.prepareStatement(sql);
 			
 			ps.setString(1, idx);
 			ps.setString(2, loginId);
-			
 			if(ps.executeUpdate() > 0) {
 				System.out.println("read state 읽음 처리 완료");
 			}else {
 				System.out.println("이미 읽음 상태입니다.");
+				resClose();
 				return false;
 			}
 		} catch (SQLException e) {
