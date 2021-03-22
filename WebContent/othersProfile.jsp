@@ -126,7 +126,8 @@
 	             </tr>
 	             <tr>
 	                 <td>
-	                     <img src="게시물이미지.gif" width="600" height="450" style="margin-top:50px" />
+	                     <img src="게시물이미지.gif" width="600" height="450" 
+	                     	style="margin-top:100px; margin-left: -74px;" />
 	                 </td>
 	             </tr>
 	             <tr>

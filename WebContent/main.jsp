@@ -41,6 +41,8 @@
 	input[type='submit'] {
 		background-color: rgb(240, 207, 207);
 		border: 0px;
+		margin-right: 110px;
+    	margin-top: 50px;
 	}
 	
 	td {
@@ -64,6 +66,9 @@
 		left: 1300px; 
 		z-index: 1;
 	}
+	div.like{
+		margin-left: -1292px;
+	}
 </style>
 
 </head>
@@ -72,7 +77,8 @@
     <div class="main">
         <table style="float: left; margin-top: 55px;">
             <tr>
-                <td rowspan="2"><img src="유저프로필.gif" width="80px" height="80px"></td>
+            	<!-- 프로필사진 -->
+                <td rowspan="2"><img src="기본프사.png" width="80px" height="80px"></td>
                 <td><input type="button" value="${loginId}" style="background-color: white; font-weight: bold;"></td>
             </tr>
             <tr>
@@ -90,25 +96,27 @@
        
         	<div class="board">
             <c:forEach items="${flist}" var="flist">
-            		${flist.hashTag}
             		<form action="singo" method="post">
-	                	<input type="hidden" name="board_idx" value="${flist.board_idx}" />
-	                	<input type="hidden" name="user_id" value="${flist.user_id}" />
+	                	<input type="hidden" id="board_idx" value="${flist.board_idx}" />
+	                	<input type="hidden" id="user_id" value="${flist.user_id}" />
 	                	<input type="submit" value="신고하기" 
-	                	style=" width: 100px; height: 20px; margin-left:75%;">
+	                	style=" width: 75px; height: 25px; float: right; margin-bottom: -25px; ">
             		</form>
-                <img src="타인프로필.gif" width="75" height="75" style="float: left;">
+            		<!-- 프로필사진 -->
+                <img src="기본프사.png" width="75" height="75" style="float: left;">
                 <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;"
                     onclick="location.href='otherProfile?id=${flist.user_id}'">
                     ${flist.user_id}</button>
                 <table id="board_idx">
                     <tr>
                         <td>
-                            <img src="게시물이미지.gif" width="600" height="450" style="margin-top:100px" />
+                            <img src="게시물이미지.gif" width="600" height="450" 
+                            	style="margin-top:100px; margin-left: 106px;" />
                         </td>
                     </tr>
                     <tr>
                         <td>
+			            		<p>${flist.hashTag}</p>
                                 <p>${flist.content}</p>
                                 <button id="moreShow" name="board_idx" value="${flist.board_idx}"
                                     onclick="location.href='detail?board_idx=${flist.board_idx}'">더보기</button>
@@ -122,12 +130,12 @@
 								<span id="like_cnt" class="like_count">${cnt}</span>					
 							</c:if>
 							<c:if test="${ loginId ne null }">
-								<button id="likebtn"> 추천해줘~
+								<button id="likebtn">추천
 								<i class="fa fa-heart" style="font-size:16px;color:red"></i>
 								</button> <span id="like_cnt" class="like_count">${cnt}</span>
 							</c:if>
 						</div>
-					<p> 작성날짜 : <input style="float: right; border: none; margin-left: -500px;"/>${flist.writedate}</p>
+					<p style="margin-top: -17px;">${flist.writedate}</p>
                         </td>
                     </tr>
                     <form action="rlist" method="POST">
