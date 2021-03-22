@@ -11,8 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import com.sns.dao.AdminDAO;
+import com.sns.dto.AdminDTO;
 
 public class AdminService {
 	
@@ -75,11 +75,24 @@ public class AdminService {
 		
 	}
 
-	public void report_content() {
-		String loginId = (String) req.getSession().getAttribute("loginId");
+	public void report_content() throws ServletException, IOException {
+		String report_idx =req.getParameter("report_idx");
+		System.out.println("report_idx :"+report_idx+"입니다.");
+		
+		
+		AdminDAO dao= new AdminDAO();
+		AdminDTO dto=dao.report_content(report_idx);
+		if(dto != null) {
+			dao = new AdminDAO();
+			page="manger_report.jsp";
+		
+		}
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher(page);
+		
+		dis.forward(req, resp);
 		
 	}
-
 	
 
 }

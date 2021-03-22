@@ -152,6 +152,26 @@ public class ReplyDAO {
 		}
 		return success;
 	}
+
+	/*public int edit(String board_idx, String user_id, String content) {
+		int success=0;
+		String sql = "SELECT count(*) AS edit_chk from reply2 where board_idx=? and user_id=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, board_idx);
+			ps.setString(2, user_id);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				success = rs.getInt("like_chk");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}*/
 	
 	
 }

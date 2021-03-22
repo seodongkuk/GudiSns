@@ -99,7 +99,7 @@
 	            <td id="btn">
 	                <%-- <button onclick="location.href='budReq?budId=${id}'">친구<br>요청</button>&nbsp;&nbsp;&nbsp; --%>
 	                <button id="budReq">친구<br>요청</button>&nbsp;&nbsp;&nbsp;
-	                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">
+	                <button onclick="location.href='DM_Room?id=${id}&&create=${sessionScope.loginId}'">
 	                	DM<br>보내기</button>&nbsp;&nbsp;&nbsp;
 	                <button onclick=delChk()>친구<br>삭제</button>
 	            </td>          
