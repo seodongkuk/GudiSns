@@ -105,7 +105,6 @@ public class MainService {
 		FileService upload = new FileService(req);
 		MainDAO dao = new MainDAO();
 		String newFileName = dao.getFileName(idx);
-		dao = new MainDAO();
 		int success = dao.del(idx, newFileName);
 		if (success > 0 && newFileName != null) {
 			System.out.println("파일삭제");
@@ -132,7 +131,6 @@ public class MainService {
 		int rcnt = rao.rcnt(board_idx);
 		
 		if (dto != null) {
-			dao = new MainDAO();
 			page = "/detail.jsp";
 			req.setAttribute("dto", dto);
 			req.setAttribute("list", list);	

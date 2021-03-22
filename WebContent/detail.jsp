@@ -162,7 +162,11 @@ function edit() {
     }else{
         alert("당신은 수정할 수있는 권한이 없습니다.");
     }
-};	
+};
+
+
+
+
 likeCnt(); 
 	// 추천버튼 클릭시(추천 추가 또는 추천 제거)
 	$("#likebtn").click(function(){

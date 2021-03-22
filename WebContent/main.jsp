@@ -100,8 +100,8 @@
         	<div class="board">
             <c:forEach items="${flist}" var="flist">
             		<form action="singo" method="post">
-	                	<input type="hidden" id="board_idx" value="${flist.board_idx}" />
-	                	<input type="hidden" id="user_id" value="${flist.user_id}" />
+	                	<input type="hidden" name="board_idx" value="${flist.board_idx}" />
+	                	<input type="hidden" name="user_id" value="${flist.user_id}" />
 	                	<input type="submit" value="신고하기" 
 	                	style=" width: 75px; height: 25px; float: right; margin-bottom: -25px; ">
             		</form>
