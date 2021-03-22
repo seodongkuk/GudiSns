@@ -109,9 +109,16 @@
                     ${flist.user_id}</button>
                 <table id="board_idx">
                     <tr>
+                        <c:if test="${flist.newFileName ne null }">
                         <td>
-                            <img src="/GudiSns/photo/${flist.newFileName}" width="600" height="450" style="margin-top:100px" />
+                            <img src="/GudiSns/photo/${flist.newFileName}" width="600" height="450" style="margin-top:100px;" />
                         </td>
+                        </c:if>
+                        <c:if test="${flist.newFileName eq null }">
+                         <td>
+                            <img src="/GudiSns/photo/${flist.newFileName}" width="600" height="0" style="margin-top:100px; visibility: hidden;" />
+                        </td>
+                        </c:if>
                     </tr>
                     <tr>
                         <td>
