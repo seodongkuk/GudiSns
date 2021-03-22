@@ -204,7 +204,7 @@ public class MainService {
 
 	public void array() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		MainDAO dao = new MainDAO();
+		MainDAO dao =null;
 		
 		//ArrayList<MainDTO> array = dao.latest_array(loginId);
 		String select = req.getParameter("select");
