@@ -310,14 +310,13 @@ public HashMap<String, Object> chatRoom(String id) {
 
 	//로그인 한 아이디가
 	public boolean readUpdate(String loginId, String idx) {
-		String sql = "UPDATE dm2 SET read_state = 'true' WHERE dm_idx = ? AND user_id=? AND read_state != 'true'";
+		String sql = "UPDATE dm2 SET read_state = 'true' WHERE dm_idx = ? AND user_id != ? AND read_state IS NULL";
 		
 		try {
 			ps = conn.prepareStatement(sql);
 			
 			ps.setString(1, idx);
 			ps.setString(2, loginId);
-			
 			if(ps.executeUpdate() > 0) {
 				System.out.println("read state 읽음 처리 완료");
 			}else {
