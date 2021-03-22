@@ -172,11 +172,14 @@ public class SearchDAO {
 	//친구 삭제
 	public int budDel(String loginId, String budId) {
 		int success = 0;
-		String sql = "DELETE FROM BuddyList2 WHERE user_id=? AND bud_id=? AND state='002'";
+		/*String sql = "DELETE FROM BuddyList2 WHERE user_id=? AND bud_id=? AND state='002'";*/
+		String sql = "DELETE FROM BuddyList2 WHERE (user_id=? AND bud_id=?)OR(bud_id=? AND user_id=?) AND state='002'";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
 			ps.setString(2, budId);
+			ps.setString(3, loginId);
+			ps.setString(4, budId);
 			success = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
