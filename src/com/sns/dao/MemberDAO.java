@@ -286,17 +286,10 @@ public String pwfind(String id, String email) {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			
-			try {
-				ps.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
+			resClose();
+		}				
 		return success;
-}	
+	}
 //-----------------------------------------------------------------------------//회원탈퇴 시 패스워드 확인.				
 				
 				
