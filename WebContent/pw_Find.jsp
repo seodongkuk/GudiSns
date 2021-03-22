@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-      
+    
         <title>비밀번호찾기</title>
         <style>
                h2{
@@ -48,27 +48,39 @@ table,td,th{
             
     <table>
         <form action="pwfind" method="post">
+     
+	    	<input type="hidden" name="pw" value="${sessionScope.pw}"/>
+	    	
+        
         <tr>
             <td>
                 <input type="text" name="userId" placeholder="아이디"/>
             </td>
         </tr>
+        
             <br/>
+           
+           
+           
             <td>
-                <input type="email" name="email" placeholder="이메일"/>
+            	<input type="email" name=email placeholder="이메일"/>
             </td>  
-            <tr>
-                <td>
+          
+    <tr>
+        <td>
         <input type="submit" value="비밀번호 찾기"/>
         </td>
-        </tr>
-       </td>       
+     </tr>
+          
        <tr>
            <td style="color: red;">입력하신 정보와 일치하는 아이디가 없습니다.
             이름 또는 전화번호를 다시 확인해주세요</td>
-        </tr> 
-    </form>
+           </td>
+       </tr> 
 
+
+
+</form>	
     </table>
 
 
@@ -85,7 +97,11 @@ table,td,th{
           
         </CENTER>
     </body>
-    <script>
-      
+  <script>
+    var msg = "${msg}";
+
+    if(msg != ""){
+    	alert(msg);
+    }
     </script>
 </html>
