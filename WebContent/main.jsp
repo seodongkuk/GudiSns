@@ -107,7 +107,7 @@
                 <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;"
                     onclick="location.href='otherProfile?id=${flist.user_id}'">
                     ${flist.user_id}</button>
-                <table id="board_idx">
+                <table>
                     <tr>
                         <td>
                             <img src="/GudiSns/photo/${flist.newFileName}" width="600" height="450" style="margin-top:100px" />
@@ -119,32 +119,11 @@
                                 <p>${flist.content}</p>
                                 <button id="moreShow" name="board_idx" value="${flist.board_idx}"
                                     onclick="location.href='detail?board_idx=${flist.board_idx}'">더보기</button>
-
                         </td>
                         <td>
-		                <%-- <div class="like">
-							<c:if test="${ loginId eq null }">
-								추천 기능은 <button type="button" id="login"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
-								<i class="fa fa-heart" style="font-size:16px;color:red"></i>
-								<span id="like_cnt" class="like_count">${cnt}</span>					
-							</c:if>
-							<c:if test="${ loginId ne null }">
-								<button id="likebtn">추천
-								<i class="fa fa-heart" style="font-size:16px;color:red"></i>
-								</button> <span id="like_cnt" class="like_count">${cnt}</span>
-							</c:if>
-						</div> --%>
 							<p style="margin-top: -17px;">${flist.writedate}</p>
                         </td>
                     </tr>
-                    <form action="rlist" method="POST">
-                        <tr>
-                            <td>
-                                <p style="font-size: 15px; color: grey;">
-                                    	댓글 모두 ${rcnt}개입니다.</p>
-                            </td>
-                        </tr>
-                    </form>
                 </table>
             </c:forEach>
         </div>

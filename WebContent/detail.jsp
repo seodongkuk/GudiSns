@@ -195,7 +195,7 @@ likeCnt();
             	   console.log($("#like_cnt")); 
                }
 		});
-	}
+	};
 	
 	
 var msg = "${msg}";
