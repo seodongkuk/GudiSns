@@ -22,6 +22,7 @@ public class MainDAO {
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
 			this.conn = ds.getConnection();
+			
 		} catch (Exception var3) {
 			var3.printStackTrace();
 		}

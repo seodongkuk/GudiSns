@@ -10,7 +10,7 @@
 		<style>
             body{
                 width: 850px;
-				height: 850px;
+				height: 1032px;
 				margin-left: 25%;
 				padding: 5px;
 				border: 1px solid black;
@@ -53,7 +53,7 @@
 	        </form>
     	</div>
     	<br>
-    	<div style="height: 83%">
+    	<div style="height: 100%;">
 	    	<c:forEach items="${list}" var="member2">
 			    <table>
 			        <tr>
@@ -73,7 +73,7 @@
 			    </table>
 			</c:forEach>
 		</div>
-	    <iframe style="position: absolute; margin-top: -20px" 
+	    <iframe style="position: absolute; margin-top: -160px" 
 	    	src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<script>

@@ -4,6 +4,7 @@ package com.sns.service;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -75,16 +76,16 @@ public class AdminService {
 		
 	}
 
-	public void report_content() throws ServletException, IOException {
-		String report_idx =req.getParameter("report_idx");
-		System.out.println("report_idx :"+report_idx+"입니다.");
-		
+	public void report_detail() throws ServletException, IOException {
+		String board_idx =req.getParameter("board_idx");
+		System.out.println("해당글 글번호:"+board_idx+"입니다.");
 		
 		AdminDAO dao= new AdminDAO();
-		AdminDTO dto=dao.report_content(report_idx);
-		if(dto != null) {
-			dao = new AdminDAO();
-			page="manger_report.jsp";
+		ArrayList<AdminDTO> report_detail= dao.report_detail(board_idx);
+		dao = new AdminDAO();
+		if(report_detail != null) {
+			req.setAttribute("report_detail", report_detail);
+			page="report_detail.jsp";
 		
 		}
 		req.setAttribute("msg", msg);

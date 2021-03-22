@@ -3,8 +3,61 @@ package com.sns.dto;
 import java.sql.Date;
 
 public class AdminDTO {
-	
+	private String user_id;
+	private int board_idx;
+	private String content;
+	private Date report_date;
+	private String report_state;
+	private String admin_id;
 	private int report_idx;
+	private String release_state;
+	private String OriFileName;
+	private String NewFileName;
+	private String HashTag;
+	private Date Writedate;
+	
+	
+
+
+	public String getOriFileName() {
+		return OriFileName;
+	}
+
+	public void setOriFileName(String oriFileName) {
+		OriFileName = oriFileName;
+	}
+
+	public String getNewFileName() {
+		return NewFileName;
+	}
+
+	public void setNewFileName(String newFileName) {
+		NewFileName = newFileName;
+	}
+
+	public String getHashTag() {
+		return HashTag;
+	}
+
+	public void setHashTag(String hashTag) {
+		HashTag = hashTag;
+	}
+
+	public Date getWritedate() {
+		return Writedate;
+	}
+
+	public void setWritedate(Date writedate) {
+		Writedate = writedate;
+	}
+
+	public String getRelease_state() {
+		return release_state;
+	}
+
+	public void setRelease_state(String release_state) {
+		this.release_state = release_state;
+	}
 	public int getReport_idx() {
 		return report_idx;
 	}
@@ -48,12 +101,6 @@ public class AdminDTO {
 		this.admin_id = admin_id;
 	}
 //----------------------------------------------------------------------------------------------
-	private String user_id;
-	private int board_idx;
-	private String content;
-	private Date report_date;
-	private String report_state;
-	private String admin_id;
 	
 
 }
