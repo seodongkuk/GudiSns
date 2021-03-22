@@ -52,14 +52,20 @@ public class MainDAO {
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
 		
-		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate FROM board2 b, photo2 p, hashtag2 h \r\n"
-				+ "							 WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n"
-				+ "                             IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n"
-				+ "WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002')) ";
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate FROM board2 b, photo2 p, hashtag2 h\r\n"
+				+ "            WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n"
+				+ "            IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n"
+				+ "            WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002'))\r\n"
+				+ "UNION\r\n"
+				+ "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate FROM board2 b, photo2 p, hashtag2 h\r\n"
+				+ "            WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n"
+				+ "            IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.user_id FROM member2 m ,buddylist2 b\r\n"
+				+ "            WHERE (m.user_id = b.bud_id AND b.bud_id = ? ) AND b.state = '002'))";
 		
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
+			ps.setString(2, loginId);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
