@@ -67,7 +67,7 @@
             <tr>
                 <td>${reportList.report_idx}</td>
                 <td>${reportList.report_date}</td>
-                <td><a href="#" >보기</a></td>
+                <td>${reportList.content}<a href="./report_content">테스트</a></td>
                 <td>${reportList.user_id}</td>
                 <td><input type="checkbox" id="ck_blind"></td>
                 <td><input type="checkbox" id="ck_black"></td>
@@ -93,4 +93,11 @@
 		</div>
         <iframe src="manager_bottom.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
     </body>
+    <script>
+	var msg = "${msg}";
+	
+	if(msg != ""){
+		alert(msg);
+	}
+	</script>
 </html>
