@@ -96,8 +96,8 @@
         <!-- 이미지가 서버에들어갈것 enc mult -->
         	<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
             <textarea name="textArea" id="text" cols="40" rows="10" maxlength="10" placeholder="글을작성해주세요"></textarea><br>
-            <input type="text" name="hashOne" class="hash" placeholder="#을꼭입력후 글작성해주세요" value="#">
-            <input type="text" name="hashTwo" class="hash" placeholder="#을꼭입력후 글작성해주세요" value="#">
+            <input type="text" name="hashOne" class="hash" placeholder="#을꼭입력후 글작성해주세요" >
+            <input type="text" name="hashTwo" class="hash" placeholder="#을꼭입력후 글작성해주세요" >
             <!-- 추가 삭제는 자바사크립트로  -->
             <br>
             <label for="file">업로드</label>
