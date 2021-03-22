@@ -103,7 +103,9 @@ public class AdminDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		}finally {
+			resClose();
+		}
 		return max;
 	}
 	public AdminDTO  report_content(String report_idx) {
