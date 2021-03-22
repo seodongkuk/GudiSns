@@ -53,7 +53,7 @@
 				<td><input type="button" value="로그아웃"
 					onclick="location.href='logout'"></td>
 			</tr>
-			<button>
+			<button button id="WriteBtn" onclick="location.href='newWriting.jsp'">
 				새 글쓰기
 			</button>
 		</table>
