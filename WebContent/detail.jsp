@@ -71,7 +71,8 @@
        <table>
            <tr>
            	 <button onclick=edit()>글 수정하기</button>
-           	 
+           	 <button onclick="location.href='del?board_idx=${dto.board_idx}'" style="margin-top: 10px;margin-bottom: -34px;">
+           		게시글삭제</button>
            		<td>
             		<img src="/GudiSns/photo/${dto.newFileName}" alt="이미지 없음"width="600" height="450"style="margin-top:100px" />
 				<p>	<span id="hash1"></span><span id="hash2"></span> </p>
