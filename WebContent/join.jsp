@@ -1,100 +1,96 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>회원가입</title>
-         <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <style>
-           h2{
-               padding: 30;
-               font-size: 70;
-           }
-           table{
-               height: 40%;
-               width: 50%
-           }
-            table,td,th{
-                /* 
+<head>
+<meta charset="utf-8">
+<title>회원가입</title>
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+<style>
+h2 {
+	padding: 30;
+	font-size: 70;
+}
+
+table {
+	height: 40%;
+	width: 50%
+}
+
+table, td, th {
+	/* 
                 border: 1px solid black;
                 border-collapse: collapse;
                 */
-            } 
-            th, td{
-                padding: 10px;
-            }
-            input[type='text'],input[type='password'],input[type='email']{
-                width: 100%;
-            }
-            #photo{
-                width: 60%;
-            }
-            #userId{
-                width: 60%;
-            }
-            button,input[type='button'], input[type='submit']{
-              
-               background-color: rgb(240, 207, 207);
-               border: 0px;
-            }
-        </style>
-       
-    </head>
-    <body>
-       <center>
-        <h2>구디SNS 회원가입</h2>
-    
-            <table>
-                <tr>
-                    <th>아이디</th>
-                    <td>
-                        <input id="userId" type="text"/>
-                        <input type="button" id="idChk" value="아이디중복체크">
-                    </td>
-                </tr>
-                <tr>
-                </tr>
-                <tr>
-                    <th>비밀번호</th>
-                    <td>
-                        <input type="password" id="userPw" class="pass"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>비밀번호 확인</th>
-                    <td>
-                        <input type="password" id="userPwChk" class="pass"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <td id="passFail" style="color: red; display: none;">비밀번호 일치 하지 않습니다.</td>
-                    </th>
-                </tr>
-                <tr>
-                    <th>이름</th>
-                    <td>
-                        <input type="text" id="userName"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>핸드폰번호</th>
-                    <td>
-                        <input type="text" id="userPhone"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>이메일</th>
-                    <td>
-                        <input type="email" id="userEmail"/>
-                    </td>
-                </tr>
-            </table>
-            <button style="padding: 10;margin: 10; font-size: 15;">회원가입</button>
-      </center>
-    </body>
-  <script>
+	
+}
+
+th, td {
+	padding: 10px;
+}
+
+input[type='text'], input[type='password'], input[type='email'] {
+	width: 100%;
+}
+
+#photo {
+	width: 60%;
+}
+
+#userId {
+	width: 60%;
+}
+
+button, input[type='button'], input[type='submit'] {
+	background-color: rgb(240, 207, 207);
+	border: 0px;
+}
+</style>
+
+</head>
+<body>
+	<center>
+		<h2>구디SNS 회원가입</h2>
+
+		<table>
+			<tr>
+				<th>아이디</th>
+				<td><input id="userId" type="text" /> <input type="button"
+					id="idChk" value="아이디중복체크"></td>
+			</tr>
+			<tr>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td><input type="password" id="userPw" class="pass" /></td>
+			</tr>
+			<tr>
+				<th>비밀번호 확인</th>
+				<td><input type="password" id="userPwChk" class="pass" /></td>
+			</tr>
+			<tr>
+				<th>
+				<td id="passFail" style="color: red; display: none;">비밀번호 일치 하지
+					않습니다.</td>
+				</th>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td><input type="text" id="userName" /></td>
+			</tr>
+			<tr>
+				<th>핸드폰번호</th>
+				<td><input type="text" id="userPhone" /></td>
+			</tr>
+			<tr>
+				<th>이메일</th>
+				<td><input type="email" id="userEmail" /></td>
+			</tr>
+		</table>
+		<button style="padding: 10; margin: 10; font-size: 15;">회원가입</button>
+	</center>
+</body>
+<script>
 		var overChk = false;//중복 체크 여부
 	
 		$("#idChk").click(function(){			
@@ -143,6 +139,12 @@
 					$age.focus();
 				}else if($email.val()==''){
 					alert('이메일을 입력해 주세요!');
+					$email.focus();
+				}else if($email.val().indexOf('@')<0){}
+					alert('@가 없네요?');
+					$email.focus();
+				}else if($email.val().indexOf('.')<0){}
+					alert('.이  없어요!');
 					$email.focus();
 				}else{
 					var params = {};

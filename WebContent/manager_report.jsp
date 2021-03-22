@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <title>신고접수 리스트</title>
         <!-- favicon:사이트를 대표하는 탭창에 보여지는 이미지 -->
-        <link rel="icon" href="icon.jpg">
+    
         <style>
 			.pageArea span{
 				font-size: 12px;
@@ -51,7 +51,7 @@
         <h1>관리자 모드</h1>
         <h3>신고접수 리스트</h3>
         <input type="button" onclick="location.href='logout'" value="로그아웃"/>
-        <table>
+        <table class="table">
             <tr>
                 <th>신고접수 번호</th>
                 <th>등록일</th>
@@ -67,7 +67,7 @@
             <tr>
                 <td>${reportList.report_idx}</td>
                 <td>${reportList.report_date}</td>
-                <td><a href="report_detail?board_idx=${reportList.board_idx}">${reportList.content}</a></td>
+                <td><a href="./report_detail?board_idx=${reportList.board_idx}">${reportList.content}</a></td>
                 <td>${reportList.user_id}</td>
                 <td><input type="checkbox" id="ck_blind"></td>
                 <td><input type="checkbox" id="ck_black"></td>
@@ -79,19 +79,19 @@
 			<span>
 				<c:if test="${currPage == 1}">이전</c:if>
 				<c:if test="${currPage > 1}">
-					<a href="./admin_login?page=${currPage-1}">이전</a>
+					<a href="./report_list?page=${currPage-1}">이전</a>
 				</c:if>				
 			</span>
 			<span id="page">${currPage}</span>
 			<span>
 				<c:if test="${currPage == maxPage}">다음</c:if>
 				<c:if test="${currPage < maxPage}">
-					<a href="./admin_login?page=${currPage+1}">다음</a>
+					<a href="./report_list?page=${currPage+1}">다음</a>
 				</c:if>	
 				
 			</span>
 		</div>
-        <iframe src="manager_bottom.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+        <iframe src="manager_bottom.jsp" width="800px" height="500px" scrolling="no" frameborder="0"></iframe>
     </body>
   
 </html>

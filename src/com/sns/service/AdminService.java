@@ -79,9 +79,8 @@ public class AdminService {
 	public void report_detail() throws ServletException, IOException {
 		String board_idx =req.getParameter("board_idx");
 		System.out.println("해당글 글번호:"+board_idx+"입니다.");
-		
 		AdminDAO dao= new AdminDAO();
-		ArrayList<AdminDTO> report_detail= dao.report_detail(board_idx);
+		AdminDTO report_detail= dao.report_detail(board_idx);
 		dao = new AdminDAO();
 		if(report_detail != null) {
 			req.setAttribute("report_detail", report_detail);
@@ -93,6 +92,30 @@ public class AdminService {
 		
 		dis.forward(req, resp);
 		
+	}
+
+	public void report_list() throws ServletException, IOException {
+		String pageParam = req.getParameter("page");
+		
+		String admin_id = (String)req.getSession().getAttribute("admin_loginId");
+		msg = admin_id + "관리자님 반갑습니다.";		
+		
+		int group = 1;
+		if(pageParam != null) {
+			group = Integer.parseInt(pageParam);
+		}
+				
+		AdminDAO reportListDAO = new AdminDAO();
+		HashMap<String, Object> map = reportListDAO.reportList(group);
+		
+		req.setAttribute("maxPage", map.get("maxPage"));
+		req.setAttribute("reportList", map.get("reportList"));
+		req.setAttribute("currPage", group);
+		
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher("manager_report.jsp");
+		
+		dis.forward(req, resp);
 	}
 	
 

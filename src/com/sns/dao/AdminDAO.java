@@ -109,13 +109,9 @@ public class AdminDAO {
 		}
 		return max;
 	}
-	public ArrayList<AdminDTO> report_detail(String board_idx) {
-		AdminDTO dto =null;
-		ArrayList<AdminDTO> report_detail = new ArrayList<AdminDTO>();
-		String sql="SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate FROM board2 b, photo2 p, hashtag2 h \r\n"
-				+ "							 WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n"
-				+ "                             IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n"
-				+ 							"WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002')) ";
+	public AdminDTO report_detail(String board_idx) {
+		AdminDTO dto =null;		
+		String sql="select b.board_idx, b.user_id, b.content, b.writedate, b.report_state, b.release_state, p.orifilename, p.newfilename from board2 b left join photo2 p on b.board_idx = p.board_idx where b.board_idx=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,board_idx);
@@ -128,16 +124,15 @@ public class AdminDAO {
 				dto.setUser_id(rs.getString("user_id"));
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setHashTag(rs.getString("hashTag"));
 				dto.setWritedate(rs.getDate("writedate"));
-				report_detail.add(dto);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			resClose();
 		}
-		return report_detail;		
+		return dto;		
 
 		
 }
