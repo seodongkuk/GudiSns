@@ -75,11 +75,7 @@ public HashMap<String, Object> chatRoom(String id) {
 			ps.setString(2, id);
 			
 			rs = ps.executeQuery();
-//			if(!rs.next()) {
-//				System.out.println("현재 dm 방이 존재하지 않음");
-//				map.put("success", success);
-//				return map;
-//			}else {
+
 			while(rs.next()) {
 					DmDTO dm = new DmDTO();
 					dm.setDm_idx(rs.getInt("dm_idx"));
@@ -90,11 +86,11 @@ public HashMap<String, Object> chatRoom(String id) {
 					dm.setRecieve_id(rs.getString("recieve_id"));
 					list.add(dm);
 					success = true;
-//				}
+				}
 				
 				map.put("list", list);
 				map.put("success", success);
-			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -102,8 +98,6 @@ public HashMap<String, Object> chatRoom(String id) {
 		}
 		System.out.println("방 개수 : "+list.size());
 		return map;
-			
-		
 	}
 
 
@@ -247,18 +241,7 @@ public HashMap<String, Object> chatRoom(String id) {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				DmDTO dmAll = new DmDTO();
-
-//				if(rs.getString("recieve_id").equals(id) || rs.getString("user_id").equals(create)) {
-//					success_two = true;
-//				}else if(rs.getString("recieve_id").equals(create) || rs.getString("user_id").equals(id)) {
-//					success_two = true;
-//				}else {
-//					success_two = false;
-//					map.put("success_chk", success_two);
-//					return map;
-//				}
-				
+				DmDTO dmAll = new DmDTO();				
 				dmAll.setSendtime(rs.getString("time"));
 				dmAll.setContent(rs.getString("content"));
 				dmAll.setRead_state(rs.getString("read_state"));
@@ -268,7 +251,6 @@ public HashMap<String, Object> chatRoom(String id) {
 			}
 			
 			map.put("list", list);
-//			map.put("success_chk", success_two);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -310,7 +292,7 @@ public HashMap<String, Object> chatRoom(String id) {
 
 
 
-	//로그인 한 아이디가
+	//로그인 한 아이디가 내가 아니라면 상대방 메시지 읽음 처리
 	public boolean readUpdate(String loginId, String idx) {
 		String sql = "UPDATE dm2 SET read_state = 'true' WHERE dm_idx = ? AND user_id != ? AND read_state IS NULL";
 		
