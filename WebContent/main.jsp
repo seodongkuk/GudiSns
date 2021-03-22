@@ -110,15 +110,12 @@
                 <table id="board_idx">
                     <tr>
                         <td>
-                            <img src="게시물이미지.gif" width="600" height="450" 
-                            	style="margin-top:100px; margin-left: 106px;" />
                             <img src="/GudiSns/photo/${flist.newFileName}" width="600" height="450" style="margin-top:100px" />
                         </td>
                     </tr>
                     <tr>
                         <td>
 			            		<p>${flist.hashTag}</p>
-                           		<p>${flist.hashTag}</p>
                                 <p>${flist.content}</p>
                                 <button id="moreShow" name="board_idx" value="${flist.board_idx}"
                                     onclick="location.href='detail?board_idx=${flist.board_idx}'">더보기</button>
