@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sns.service.AdminService;
 
-@WebServlet({ "/admin_login", "/report_content" })
+@WebServlet({ "/admin_login", "/report_detail" })
 public class AdminController extends HttpServlet {
 
 	/**
@@ -49,9 +49,9 @@ public class AdminController extends HttpServlet {
 			System.out.println("관리자로그인요청");
 			break;
 
-		case "/report_content":
+		case "/report_detail":
 			System.out.println("신고사유보기");
-			service.report_content();
+			service.report_detail();
 			break;
 
 		}
