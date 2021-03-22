@@ -16,7 +16,7 @@
             #header{
                 position: relative;
                 width: 800px;
-                height: 450px;
+                height: 460px;
                 margin-left: 20px;
                 left: 0; 
                 right: 0; 
@@ -91,7 +91,7 @@
                 color: grey;
             }
             #moreShow{
-                margin-left: 40%;
+                margin-left: 251px;
                 margin-top: -3px;
                 float: left;
             }
@@ -136,7 +136,7 @@
 	                ${msg}
 	            </div>
 	            <div>
-	                <img style="width: 150px; height: 170px;" src="기본프사.png"/>
+	                <img style="width: 150px; height: 150px;" src="기본프사.png"/>
 	            </div>
 	                <input
 	                	type="button" class="member" value="회원정보 수정" onclick="location.href='info_pass.jsp'">
@@ -179,21 +179,28 @@
            	
 			<input type="hidden" name="board_idx" value="${myL.board_idx}"/>
             <table style="margin: auto; padding: 15px;">
+            	<tr>
+                     <td>
+                            <button onclick="location.href='del?board_idx=${myL.board_idx}'" style="margin-top: 6px;margin-left: 475px;">
+           							게시글삭제</button>
+           			<td>
+           		</tr>
                 <tr>
                     <!-- <td>
                         <img src="게시물이미지.gif" style="margin-top:10px; width:400px; height:300px;"/>
                     </td> -->
                     <c:if test="${myL.newFileName ne null }">
                         <td>
-                            <img src="/GudiSns/photo/${myL.newFileName}" style="width:400px; height:300px;" />
+                            <img src="/GudiSns/photo/${myL.newFileName}" style="width:540px; height:300px;" />
                         </td>
                     </c:if>
                     <c:if test="${myL.newFileName eq null }">
                          <td>
-                            <img src="/GudiSns/photo/${myL.newFileName}" style="width:400px; height:0px; visibility: hidden;" />
+                            <img src="/GudiSns/photo/${myL.newFileName}" style="width:540px; height:0px; visibility: hidden;" />
                         </td>
                    </c:if>
                  </tr>
+                 
                 <tr>
                     <td class="profileBoard">
                         	<p>${myL.hashTag}</p>
@@ -201,7 +208,7 @@
                             <button id="moreShow" onclick="location.href='detail?board_idx=${myL.board_idx}'">더보기</button>
                      </td> 
                      <td>
-							<p style="margin-top: -17px;">${myL.writedate}</p>
+							<p style="margin-top: -17px;margin-left: -85px;">${myL.writedate}</p>
                         </td>
                  </tr>
             	<!-- <tr>
@@ -237,7 +244,7 @@
     </body>
      <script>
      var a = "${myL.hashTag}";
- 	/* #qweqw#fdsfsd */
+
      var hash =a.split('#');
 
      var sh = "#";

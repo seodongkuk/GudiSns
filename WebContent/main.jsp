@@ -58,7 +58,7 @@
 		}
 	
 	div.board{
-		height: 800px;
+		height: 770px;
 		width: 100%;
 		overflow: scroll;
 	}
@@ -75,7 +75,7 @@
 <body style="overflow:scroll; width:832px; height:1029px;">
 
     <div class="main">
-        <table style="float: left; margin-top: 55px;">
+        <table style="float: left; margin-top: 55px; margin-bottom: 20px;">
             <tr>
             	<!-- 프로필사진 -->
                 <td rowspan="2"><img src="기본프사.png" width="80px" height="80px"></td>
@@ -103,7 +103,7 @@
 	                	style=" width: 75px; height: 25px; float: right; margin-bottom: -25px; ">
             		</form>
             		<!-- 프로필사진 -->
-                <img src="/GudiSns/photo/" width="75" height="75" style="float: left;">
+                <img src="/GudiSns/photo/" width="75" height="75" style="float: left; margin-left: 9px;">
                 <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;"
                     onclick="location.href='otherProfile?id=${flist.user_id}'">
                     ${flist.user_id}</button>
@@ -111,7 +111,7 @@
                     <tr>
                         <c:if test="${flist.newFileName ne null }">
                         <td>
-                            <img src="/GudiSns/photo/${flist.newFileName}" width="600" height="450" style="margin-top:100px;" />
+                            <img src="/GudiSns/photo/${flist.newFileName}" width="600" height="450" style="margin-top:100px; margin-left: -73px;" />
                         </td>
                         </c:if>
                         <c:if test="${flist.newFileName eq null }">
@@ -121,17 +121,18 @@
                         </c:if>
                     </tr>
                     <tr>
-                        <td>
+                        <td style="padding-right: 140px;">
 			            		<p>${flist.hashTag}</p>
                                 <p>${flist.content}</p>
                                 <button id="moreShow" name="board_idx" value="${flist.board_idx}"
                                     onclick="location.href='detail?board_idx=${flist.board_idx}'">더보기</button>
                         </td>
                         <td>
-							<p style="margin-top: -17px;">${flist.writedate}</p>
+							<p style="margin-top: -17px; margin-left: -225px;">${flist.writedate}</p>
                         </td>
                     </tr>
                 </table>
+                    <br>
             </c:forEach>
         </div>
     </div>
