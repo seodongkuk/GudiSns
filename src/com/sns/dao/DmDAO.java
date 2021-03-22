@@ -64,7 +64,7 @@ public HashMap<String, Object> chatRoom(String id) {
 				" (SELECT dm_idx,sendtime,content,read_state,user_id,recieve_id," + 
 				"ROW_NUMBER() OVER(PARTITION BY dm_idx ORDER BY sendtime DESC) as rnum FROM dm2" + 
 				" WHERE user_id = ? OR recieve_id = ?)" + 
-				" WHERE rnum = 1";
+				" WHERE rnum = 1 ORDER BY sendtime DESC";
 		
 		boolean success = false;
 		
