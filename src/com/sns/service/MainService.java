@@ -148,22 +148,14 @@ public class MainService {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		System.out.println(loginId+" : loginid");
 		MainDAO dao = new MainDAO();
-		String board_idx = req.getParameter("board_idx");
-
-		//댓글 개수 가져오기
-		ReplyDAO rao = new ReplyDAO();
-		int rcnt = rao.rcnt(board_idx);
-
+	
 		ArrayList<MainDTO> flist = dao.flist(loginId);
 		dao = new MainDAO();
 		
 		System.out.println(flist.size());
-		
 		String msg = "친구없음";
 		if (flist != null && flist.size() > 0) {
-			
 			req.setAttribute("flist", flist);
-			req.setAttribute("rcnt", rcnt);
 			msg = "";
 		}
 		
