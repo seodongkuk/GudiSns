@@ -162,17 +162,17 @@ public class ReplyDAO {
 		return success;
 	}
 
-	/*public int edit(String board_idx, String user_id, String content) {
+	/*public int edit() {
 		int success=0;
-		String sql = "SELECT count(*) AS edit_chk from reply2 where board_idx=? and user_id=?";
+		String sql = "UPDATE Reply2 SET content=? where cmt_idx=?";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, board_idx);
-			ps.setString(2, user_id);
-			rs = ps.executeQuery();
+			ps.setString(1, content);
+			ps.setString(2, cmt_idx);
+			success=ps.executeUpdate();
 			
-			if(rs.next()) {
-				success = rs.getInt("like_chk");
+			if(success>0) {
+				System.out.println("댓글 수정 성공")
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

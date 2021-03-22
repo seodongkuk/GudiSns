@@ -50,7 +50,7 @@ public class ReplyController extends HttpServlet{
 			
 		case "/redit":
 			System.out.println("댓글수정 요청");
-			reply.rdel();
+			reply.redit();
 			break;
 		}
 	}

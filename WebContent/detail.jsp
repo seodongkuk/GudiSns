@@ -100,8 +100,7 @@
 			</div>
         </table>
 		</div>
-
-        
+		<!-- 댓글 개수 불러오기 -->
         <table>
         	<tr>
 		        <td>
@@ -110,19 +109,26 @@
 		        </td>
 		    </tr>
 	    </table>     
+	    
+	    <!-- 댓글  수정, 삭제 폼 -->
         <table>				
 			<c:forEach items="${list}" var="Reply2">
+				<input type="hidden" id="board_idx" name="brd" value="${dto.board_idx}"/>  
+				<input type="hidden" id="cmt_idx" name="cmt" value="${Reply2.cmt_idx}"/>   
+				<input type="hidden" id="content" name="content" value="${Reply2.content}"/>       
 			<tr>
 				<td>${Reply2.user_id}</td>
 				<td>${Reply2.content}</td>
 				<td>
 					<c:if test="${Reply2.user_id eq loginId }">
+						<button id="redit" onclick="update_reply()">수정</button>
 						<a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a>										 
 					</c:if>
 				</td>
 			</tr>
 			</c:forEach>
 		</table>
+		<!-- 댓글 작성 폼 -->
 	    <form action="rwrite" method="POST">
 	        <td>
 	        	<input type="hidden" id="user_id" name="user_id" value="${loginId}"/>
@@ -135,6 +141,45 @@
 	<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 </body>
 <script>
+function update_reply(){
+	var content = $("#content");
+	var board_idx = $("#board_idx");
+	var idx = $("#cmt_idx");
+	var id = $("#user_id");
+	 var params = {};
+	 params.content = content.val();
+	 params.board_idx = board_idx.val();
+	 params.idx = idx.val();
+	 params.id = id.val();
+	console.log(params)
+	$.ajax({
+		url: "redit",
+          type: "get",
+          data: params,
+          dataType:'JSON',
+          success: function (data) {
+       	   	console.log(data)
+          }
+	});
+};
+
+$("#likebtn").click(function(){
+	var $idx = $("#board_idx");
+	 var $id = $("#user_id");
+	 var params = {};
+	 params.idx = $idx.val();
+	 params.id = $id.val();
+	$.ajax({
+		url: "like",
+          type: "get",
+          data: params,
+          dataType:'JSON',
+          success: function () {
+       	   	likeCnt();	
+          }
+	});
+});
+
 var a = "${dto.hashTag}";
 
 var hash =a.split('#');
