@@ -174,15 +174,29 @@ public HashMap<String, Object> chatRoom(String id) {
 			ps.setString(7, content);
 			
 			if(ps.executeUpdate() > 0) {
-				System.out.println("채팅 알림 전송!!!");
-				sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'DM알림')";
-				ps = conn.prepareStatement(sql);
-				ps.setString(1, fromId);
-				ps.setString(2, toId);
 				
-				if(ps.executeUpdate() > 0) {
-					System.out.println(fromId+"님이 받는사람("+toId+") 한테 DM을 보냈습니다.");
+				sql = "SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND (alarm_kind = 'DM알림' AND alarm_state = '1')";
+				
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, toId);
+				
+				rs = ps.executeQuery();
+				//알림 수신 설정이 되어있다면 보내고...
+				if(rs.next()) {
+					System.out.println("채팅 알림 전송!!!");
+					sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'DM알림')";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, fromId);
+					ps.setString(2, toId);
+					
+					if(ps.executeUpdate() > 0) {
+						System.out.println(fromId+"님이 받는사람("+toId+") 한테 DM을 보냈습니다.");
+					}
+				}else {
+					System.out.println("상대방이 DM 수신을 거부했습니다.");
 				}
+				
+
 			}
 			
 			System.out.println("채팅 업데이트 성공!!!");
@@ -296,7 +310,7 @@ public HashMap<String, Object> chatRoom(String id) {
 
 	//로그인 한 아이디가
 	public boolean readUpdate(String loginId, String idx) {
-		String sql = "UPDATE dm2 SET read_state = 'true' WHERE dm_idx = ? AND recieve_id=? AND read_state != 'true'";
+		String sql = "UPDATE dm2 SET read_state = 'true' WHERE dm_idx = ? AND user_id=? AND read_state != 'true'";
 		
 		try {
 			ps = conn.prepareStatement(sql);
