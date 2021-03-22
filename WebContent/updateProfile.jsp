@@ -107,6 +107,7 @@
         </div>
         <div class="container">
             <form action="userinfoupdate" method="post">
+            	<input type="hidden" name="userId" value="${sessionScope.id}"/>
       
                 <table class="filebox">
                     <tr>
@@ -122,7 +123,7 @@
                     <td><input type="text" id="password2" name="userPw" onkeyup=test();></td>
                     </tr>
                     <tr>
-                    <td id="password2ck">비밀번호가 일치하지않습니다</p></td>
+                    
                         <td></td>
                     </tr>
                     <tr>

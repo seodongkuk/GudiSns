@@ -203,7 +203,6 @@ public String pwfind(String id, String email) {
 		return pw;
 	}
 
-
 //-------------------------------------------------------------------비번 변경
 		
 		public int pwupdate(MemberDTO dto) {
@@ -301,26 +300,6 @@ public String pwfind(String id, String email) {
 				
 				
 				
-	public int memberdel(String id, String pw) {	
-		System.out.println(id+pw);
-		int result = 0;
-		
-		String sql="UPDATE member2 SET WITHDRAW_STATE='TRUE' WHERE user_id=?" ;
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1,id);
-			result = ps.executeUpdate();
-		if(result>0) {
-			System.out.println("탈퇴 성공");
-		}
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}finally {
-		resClose();
-	}
-	
-	return result;
 
-}
 }
 

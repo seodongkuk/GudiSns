@@ -10,7 +10,7 @@
 		<style>
             body{
                 width: 850px;
-                height: 850px;
+                height: 1032px;
                 margin-left:25%;
                 padding: 5px;
                 border: 1px solid black;

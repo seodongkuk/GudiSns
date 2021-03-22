@@ -150,7 +150,6 @@ public class MainService {
 		MainDAO dao = new MainDAO();
 	
 		ArrayList<MainDTO> flist = dao.flist(loginId);
-		dao = new MainDAO();
 		
 		System.out.println(flist.size());
 		String msg = "친구없음";
@@ -205,7 +204,7 @@ public class MainService {
 
 	public void array() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		MainDAO dao = new MainDAO();
+		MainDAO dao =null;
 		
 		//ArrayList<MainDTO> array = dao.latest_array(loginId);
 		String select = req.getParameter("select");
