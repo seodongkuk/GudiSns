@@ -16,7 +16,7 @@
             #header{
                 position: relative;
                 width: 800px;
-                height: 400px;
+                height: 460px;
                 margin-left: 20px;
                 left: 0; 
                 right: 0; 
@@ -27,7 +27,7 @@
                 /* position: relative; */
                 border:1px solid black;
                 width: 100%;
-                height: 45%;
+                height: 42%;
                 /* overflow: scroll; */
                 /*중앙 정렬*/
                 top: 0;
@@ -36,16 +36,20 @@
                 left: 0;
                 margin: auto;
             }
+            div.mypf{
+            	margin-left: 47px;
+            }
             .friendList{
-                position: absolute;
+                /* position: absolute;
                 margin: auto;
                 top: -435px;
-    			left: -90px;
+    			left: -90px; */
                 bottom: 0;
                 margin-left: 50%;
+                margin-top: -352px;
                 border:1px solid black;
                 width: 350px;
-                height: 350px;
+                height: 329px;
             }
             img{
                 margin-left: 20px;
@@ -87,8 +91,8 @@
                 color: grey;
             }
             #moreShow{
-                margin-left: 40%;
-                margin-top: 20px;
+                margin-left: 251px;
+                margin-top: -3px;
                 float: left;
             }
             a{
@@ -107,9 +111,12 @@
             	color:blue;
             	text-decoration: underline;
             }
+            td{
+            	text-align: center;
+            }
             div.paging{
             	margin-left: 116px;
-    			margin-top: 17px;
+    			margin-top: 28px;
             }
             #page{
             	font-weight: 600;
@@ -124,18 +131,20 @@
         <h2 style="text-align: center;">내 프로필 </h2>
         
         <div id="dmBox">
-            <div class="userId" name="myId">
-                ${msg}
-            </div>
-            <div>
-                <img style="width: 150px; height: 170px;" src="기본프사.png"/>
-            </div>
-                <input
-                	type="button" class="member" value="회원정보 수정" onclick="location.href='info_pass.jsp'">
-                <input style="padding-left: 40px;" 
-                	type="button" class="member" value="회원 탈퇴" onclick="location.href='user_out.jsp'">
-                 <form action="memberDel" method="post"></form>
-		          <input type="hidden" name="id" value="${sessionScope.id}"/>
+        	<div class="mypf">
+	            <div class="userId" name="myId">
+	                ${msg}
+	            </div>
+	            <div>
+	                <img style="width: 150px; height: 150px;" src="기본프사.png"/>
+	            </div>
+	                <input
+	                	type="button" class="member" value="회원정보 수정" onclick="location.href='info_pass.jsp'">
+	                <input style="padding-left: 40px;" 
+	                	type="button" class="member" value="회원 탈퇴" onclick="location.href='user_out.jsp'">
+	                 <form action="memberDel" method="post"></form>
+			          <input type="hidden" name="id" value="${sessionScope.id}"/>
+        	</div>
 
                 <div class="friendList">
                     <p>친구목록</p>
@@ -144,14 +153,13 @@
                     	<table>
                     		<tr class="friendId">
                     			<!-- 경로설정 -->
-                    			<td><img src="기본프사.png"/><br/> 
-                    			<td style="padding-top: 14px"><a href="otherProfile?id=${myBud.bud_id}">
+                    			<td style="padding-top: 10px"><img src="기본프사.png"/><br/> 
+                    			<td style="padding-top: 24px"><a href="otherProfile?id=${myBud.bud_id}">
                     				${myBud.bud_id}</a><br/>
                     			</td>
                     		</tr>
                     	</table>
                     </c:forEach>
-                    <hr/>
                     <div class="paging">
                     	<c:if test="${currPage == 1}">이전</c:if>
                     	<c:if test="${currPage > 1}">
@@ -168,35 +176,48 @@
         <hr/>
         <div id="header">
            	<c:forEach items="${list}" var="myL">
-           	<button onclick="location.href='del?board_idx=${myL.board_idx}'">게시글삭제</button>
            	
-            <table >
+			<input type="hidden" name="board_idx" value="${myL.board_idx}"/>
+            <table style="margin: auto; padding: 15px;">
+            	<tr>
+                     <td>
+                            <button onclick="location.href='del?board_idx=${myL.board_idx}'" style="margin-top: 6px;margin-left: 475px;">
+           							게시글삭제</button>
+           			<td>
+           		</tr>
                 <tr>
-                    <td>
-                    ${myL.release_state}
-      					<input type="hidden" name="board_idx" value="${myL.board_idx}"/>
-      					
-                        <img src="/GudiSns/photo/${myL.newFileName}" style="margin-top:10px; width:400px; height:300px;"/>
-                        <!-- src 파일경로 지정해주기.. -->
-                    </td>
+                    <!-- <td>
+                        <img src="게시물이미지.gif" style="margin-top:10px; width:400px; height:300px;"/>
+                    </td> -->
+                    <c:if test="${myL.newFileName ne null }">
+                        <td>
+                            <img src="/GudiSns/photo/${myL.newFileName}" style="width:540px; height:300px;" />
+                        </td>
+                    </c:if>
+                    <c:if test="${myL.newFileName eq null }">
+                         <td>
+                            <img src="/GudiSns/photo/${myL.newFileName}" style="width:540px; height:0px; visibility: hidden;" />
+                        </td>
+                   </c:if>
                  </tr>
+                 
                 <tr>
                     <td class="profileBoard">
-                        	
-                        	${myL.hashTag}
-                            <p style="width: 300px; resize: none; border: none; overflow: hidden;" readonly>
-                            ${myL.content}
-                            </p>
+                        	<p>${myL.hashTag}</p>
+                            <p>${myL.content}</p>
                             <button id="moreShow" onclick="location.href='detail?board_idx=${myL.board_idx}'">더보기</button>
                      </td> 
+                     <td>
+							<p style="margin-top: -17px;margin-left: -85px;">${myL.writedate}</p>
+                        </td>
                  </tr>
-            <tr>
+            	<!-- <tr>
            		 <td>
-                 <button class="btn-like" style="font-size: 50px;background-color: white;border: none;float: left;">♥</button>
-                 <input style="float: left;margin-top: 30px;border: none;" type="text" value="+20">
+	                 <button class="btn-like" style="font-size: 50px;background-color: white;border: none;float: left;">♥</button>
+	                 <input style="float: left;margin-top: 30px;border: none;" type="text" value="+20">
             	 </td>
-             </tr>
-            <tr>
+             	</tr> -->
+            <!-- <tr>
                 <td style="margin:0; padding: 0;">
                      <hr>
                 </td>
@@ -213,7 +234,7 @@
                      <textarea style="width: 345px; resize: none;"  placeholder="댓글을 입력해주세요."></textarea>
                      <input type="button" value="댓글등록" style="float: right;height: 30;">
                  </td>
-             </tr>     
+             </tr>      -->
           </table>
           
         	</c:forEach>
@@ -223,7 +244,7 @@
     </body>
      <script>
      var a = "${myL.hashTag}";
- 	/* #qweqw#fdsfsd */
+
      var hash =a.split('#');
 
      var sh = "#";

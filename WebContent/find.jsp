@@ -10,7 +10,7 @@
 		<style>
             body{
                 width: 850px;
-                height: 850px;
+                height: 1032px;
                 margin-left:25%;
                 padding: 5px;
                 border: 1px solid black;
@@ -51,7 +51,7 @@
 	    </div>
 	    <br/>
        <h3>오늘의 해시태그 Top3</h3>
-       <div style="height: 70%">
+       <div style="height: 75%">
 	        <c:forEach items="${tag}" var="HashTag2">
 		        <ul>
 		            <li>${HashTag2.rnum}.  ${HashTag2.hashTag}</li>

@@ -40,7 +40,7 @@ table,td,th{
     </head>
 
     <body>
-<form action="idfind" method="post">
+
 
         <CENTER>
       
@@ -49,7 +49,8 @@ table,td,th{
             <h2>아이디 찾기</h2>
             
     <table>
-        <form>
+    <form action="idfind" method="post">
+        
         <tr>
             <td>
                 <input type="text" name="userName" placeholder="이름을 입력해주세요"/>
