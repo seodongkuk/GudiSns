@@ -77,12 +77,12 @@
 				<p>	<span id="hash1"></span><span id="hash2"></span> </p>
             			<p>${dto.content}</p>
             					
-        		<p> 작성날짜 : 
-                           <input style="float: right; border: none; margin-left: -500px;"/>${flist.writedate}
-	         				</p>
-
         		</td>
+
            </tr>
+        		<td>
+					<p style="margin-top: -75px;">${dto.writedate}</p>
+                </td>
            <!-- 좋아요 기능! -->
 			<div class="like">
 				<c:if test="${ loginId eq null }">
