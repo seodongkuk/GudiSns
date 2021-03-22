@@ -162,11 +162,6 @@
 		alert(msg);
 	}
 
-<<<<<<< HEAD
- /* 	function arrayEvt(){
-	
-=======
->>>>>>> 3f77e2903d26f3c815ce613c652c0e7b406eccea
 	function arrayEvt(){
 		var selectVal = $('#arr').val();
     	console.log(selectVal);
