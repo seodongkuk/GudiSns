@@ -52,9 +52,11 @@
 	#WriteBtn{
 		background-color: rgb(240, 207, 207);
 		border: 0px;
-		position: absolute; 
+		/* position: absolute; 
 		left: 1300px; 
-		top: 130px;
+		top: 130px; */
+		margin-left: 450px;
+    	margin-top: 45px;
 		}
 	
 	div.board{
@@ -63,8 +65,8 @@
 		overflow: scroll;
 	}
 	#arr{
-		left: 1300px; 
-		z-index: 1;
+		margin-left: 418px;
+    	margin-top: 12px;
 	}
 	div.like{
 		margin-left: -1292px;
@@ -84,15 +86,16 @@
             <tr>
                 <td><input type="button" value="로그아웃" onclick="location.href='logout'"></td>
             </tr>
-            <button id="WriteBtn" onclick="location.href='newWriting.jsp'">새 글쓰기</button>
         </table>
         <h2 style="font-size: 70;padding-left: 265px;">구디SNS</h2>
         <hr>
-        <select id="arr" onchange="arrayEvt()" name="select">
-        	<option value="" selected disabled>게시글 정렬</option>      
-            <option class="recommend" value="추천순">추천순</option>
-            <option class="latest" value="최신순">최신순</option>
-        </select>
+	        <button id="WriteBtn" onclick="location.href='newWriting.jsp'">
+	        	새 글쓰기</button>
+	        <select id="arr" onchange="arrayEvt()" name="select">
+	        	<option value="" selected disabled>게시글 정렬</option>      
+	            <option class="recommend" value="추천순">추천순</option>
+	            <option class="latest" value="최신순">최신순</option>
+	        </select>
        
         	<div class="board">
             <c:forEach items="${flist}" var="flist">
@@ -103,7 +106,7 @@
 	                	style=" width: 75px; height: 25px; float: right; margin-bottom: -25px; ">
             		</form>
             		<!-- 프로필사진 -->
-                <img src="/GudiSns/photo/" width="75" height="75" style="float: left; margin-left: 9px;">
+                <img src="/GudiSns/photo/" width="75" height="75" style="float: left; margin-left: 20px;">
                 <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;"
                     onclick="location.href='otherProfile?id=${flist.user_id}'">
                     ${flist.user_id}</button>
