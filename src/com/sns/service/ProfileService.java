@@ -73,6 +73,7 @@ public class ProfileService {
 		}
 		HashMap<String, Object> map = dao.budlist(loginId, group);
 		
+		dao = new ProfileDAO();
 		ArrayList<MainDTO> list = dao.mylist(loginId);
 		System.out.println("마이리스트 사이즈: "+list.size());
 		System.out.println("친구리스트"+map.size());

@@ -56,8 +56,11 @@ public class FileService {
 					oriFile.renameTo(newFile);
 					dto.setOriFileName(oriFileName);
 					dto.setNewFileName(newFileName);
+					String path ="";
+					path = newFile.getParent().toString();
+					System.out.println("path//확인"+path);
 				
-			
+					
 			}else {
 				System.out.println("파일을 않너음");
 			}

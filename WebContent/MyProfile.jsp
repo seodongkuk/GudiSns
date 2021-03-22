@@ -175,17 +175,18 @@
                     <td>
                     ${myL.release_state}
       					<input type="hidden" name="board_idx" value="${myL.board_idx}"/>
-                        <img src="게시물이미지.gif" style="margin-top:10px; width:400px; height:300px;"/>
+      					
+                        <img src="/GudiSns/photo/${myL.newFileName}" style="margin-top:10px; width:400px; height:300px;"/>
                         <!-- src 파일경로 지정해주기.. -->
                     </td>
                  </tr>
                 <tr>
                     <td class="profileBoard">
-                        	${myL.hashTag}
                         	
-                            <textarea style="width: 300px; resize: none; border: none; overflow: hidden;" readonly>
+                        	${myL.hashTag}
+                            <p style="width: 300px; resize: none; border: none; overflow: hidden;" readonly>
                             ${myL.content}
-                            </textarea>
+                            </p>
                             <button id="moreShow" onclick="location.href='detail?board_idx=${myL.board_idx}'">더보기</button>
                      </td> 
                  </tr>

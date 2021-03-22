@@ -150,7 +150,7 @@
         var inputMsg = document.getElementById('inputMsg');
         
     	// 로컬에서 테스트할 때 사용하는 URL입니다.
-     	var webSocket = new WebSocket('ws://localhost/GudiSns/webChatServer');
+     	var webSocket = new WebSocket('ws://localhost:8080/GudiSns/webChatServer');
     	
     	//웹소켓이 연결되었을 때 실행되는 얘들?
     	webSocket.onerror = function(e){

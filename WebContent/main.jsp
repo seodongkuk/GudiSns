@@ -72,7 +72,7 @@
 </style>
 
 </head>
-<body>
+<body style="overflow:scroll; width:800px; height:100px;">
 
     <div class="main">
         <table style="float: left; margin-top: 55px;">
@@ -102,21 +102,33 @@
 	                	<input type="submit" value="신고하기" 
 	                	style=" width: 75px; height: 25px; float: right; margin-bottom: -25px; ">
             		</form>
+<<<<<<< HEAD
             		<!-- 프로필사진 -->
                 <img src="기본프사.png" width="75" height="75" style="float: left;">
+=======
+                <img src="/GudiSns/photo/" width="75" height="75" style="float: left;">
+>>>>>>> 5ac5fc1d9842d925c1bdcc6b3dc391c05d07a3fc
                 <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;"
                     onclick="location.href='otherProfile?id=${flist.user_id}'">
                     ${flist.user_id}</button>
                 <table id="board_idx">
                     <tr>
                         <td>
+<<<<<<< HEAD
                             <img src="게시물이미지.gif" width="600" height="450" 
                             	style="margin-top:100px; margin-left: 106px;" />
+=======
+                            <img src="/GudiSns/photo/${flist.newFileName}" width="600" height="450" style="margin-top:100px" />
+>>>>>>> 5ac5fc1d9842d925c1bdcc6b3dc391c05d07a3fc
                         </td>
                     </tr>
                     <tr>
                         <td>
+<<<<<<< HEAD
 			            		<p>${flist.hashTag}</p>
+=======
+                           		<p>${flist.hashTag}</p>
+>>>>>>> 5ac5fc1d9842d925c1bdcc6b3dc391c05d07a3fc
                                 <p>${flist.content}</p>
                                 <button id="moreShow" name="board_idx" value="${flist.board_idx}"
                                     onclick="location.href='detail?board_idx=${flist.board_idx}'">더보기</button>
@@ -227,6 +239,15 @@
 	if(msg != ""){
 		alert(msg);
 	}
+<<<<<<< HEAD
+	
+
+
+ /* 	function arrayEvt(){
+>>>>>>> 625348d4470cee06902d4bf347c7b67fd27ad4b5
+=======
+=======
+>>>>>>> 697aad6d02a74fad8338d3dcda1dd1edc27cd632
 	
 	function arrayEvt(){
 		var selectVal = $('#arr').val();
