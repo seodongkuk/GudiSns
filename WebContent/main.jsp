@@ -239,16 +239,7 @@
 	if(msg != ""){
 		alert(msg);
 	}
-<<<<<<< HEAD
-	
 
-
- /* 	function arrayEvt(){
->>>>>>> 625348d4470cee06902d4bf347c7b67fd27ad4b5
-=======
-=======
->>>>>>> 697aad6d02a74fad8338d3dcda1dd1edc27cd632
-	
 	function arrayEvt(){
 		var selectVal = $('#arr').val();
     	console.log(selectVal);
