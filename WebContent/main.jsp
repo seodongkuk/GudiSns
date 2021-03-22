@@ -122,7 +122,7 @@
 
                         </td>
                         <td>
-		                <div class="like">
+		                <%-- <div class="like">
 							<c:if test="${ loginId eq null }">
 								추천 기능은 <button type="button" id="login"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
 								<i class="fa fa-heart" style="font-size:16px;color:red"></i>
@@ -133,8 +133,8 @@
 								<i class="fa fa-heart" style="font-size:16px;color:red"></i>
 								</button> <span id="like_cnt" class="like_count">${cnt}</span>
 							</c:if>
-						</div>
-					<p style="margin-top: -17px;">${flist.writedate}</p>
+						</div> --%>
+							<p style="margin-top: -17px;">${flist.writedate}</p>
                         </td>
                     </tr>
                     <form action="rlist" method="POST">
@@ -171,43 +171,5 @@
     	}
 	}
 
- // 추천버튼 클릭시(추천 추가 또는 추천 제거)
-	$("#likebtn").click(function(){
-		var $idx = $("#board_idx");
-		 var $id = $("#user_id");
-		 var params = {};
-		 params.idx = $idx.val();
-		 params.id = $id.val();
-		$.ajax({
-			url: "like",
-              type: "get",
-              data: params,
-              dataType:'JSON',
-              success: function () {
-           	   	likeCnt();	
-              }
-		});
-	});
-	
-	 function likeCnt(){
-		var $idx = $("#board_idx");
-		var params = {};
-		 params.idx = $idx.val();
-		$.ajax({
-			url: "likecnt",
-            type: "get",
-               data: params,
-               dataType: 'JSON',
-               success: function (data) {
-            	   $("#like_cnt").html(data.cnt);	
-            	   console.log($("#like_cnt"));
-            	   console.log(data.cnt);
-            	   console.log(cnt);
-            	   
-               }
-		});
-	}
-	
-	likeCnt(); 
 </script>
 </html>
