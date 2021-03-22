@@ -48,6 +48,9 @@
             	overflow: auto;
             	
             }
+            #noAlarm{
+            	margin-left: 1000px;
+            }
         </style>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>      
     </head>
@@ -55,20 +58,62 @@
     	<div id="container">
     	<!-- 기본값은 모두 체크 -->
         <div id="alarmSet">
-            댓글알림<input type="checkbox" name="alarmChk" value="댓글알림" checked/>
-            <hr/>
-            게시글알림<input type="checkbox" name="alarmChk" value="게시글알림" checked/>
-            <hr/>
-            DM알림<input type="checkbox" name="alarmChk" value="DM알림" checked/>
-            <hr/>
-            친구요청알림<input type="checkbox" name="alarmChk" value="친구요청알림" checked/>
-            <hr/>
+            
+            <form action="alarmSet" method="get" name="alarm">
+            <!-- 현재 유저의 셋팅값을 모두 가져온다.. -->
+         	<c:forEach items="${setting}" var="settings">
+        		<c:choose>
+        	    <c:when test="${settings.alarm_kind == '댓글알림' && settings.alarm_state == '1'}">
+		            댓글알림<input type="checkbox" name="alarmChk" value="댓글알림" checked/>
+		            <hr/>
+	           </c:when>
+			   <c:when test="${settings.alarm_kind == '댓글알림' && settings.alarm_state == '0'}">
+		            댓글알림<input type="checkbox" name="alarmChk" value="댓글알림"/>
+		            <hr/>
+			   </c:when>
+	            </c:choose>
+
+	            <c:choose>
+	            <c:when test="${settings.alarm_kind == '게시글알림' && settings.alarm_state == '1'}">
+	            게시글알림<input type="checkbox" name="alarmChk" value="게시글알림" checked/>
+	            <hr/>
+	            </c:when>
+	            <c:when test="${settings.alarm_kind == '게시글알림' && settings.alarm_state == '0'}">
+	            게시글알림<input type="checkbox" name="alarmChk" value="게시글알림"/>
+	            <hr/>
+	            </c:when>
+	            </c:choose>
+	            
+	           <c:choose>
+	            <c:when test="${settings.alarm_kind == 'DM알림' && settings.alarm_state == '1'}">
+	            DM알림<input type="checkbox" name="alarmChk" value="DM알림" checked/>
+	            <hr/>
+	            </c:when>
+	            <c:when test="${settings.alarm_kind == 'DM알림' && settings.alarm_state == '0'}">
+	            DM알림<input type="checkbox" name="alarmChk" value="DM알림"/>
+	            <hr/>
+	            </c:when>
+	            </c:choose>
+	            
+	            <c:choose>
+	            <c:when test="${settings.alarm_kind == '친구요청알림' && settings.alarm_state == '1'}">
+	            친구요청알림<input type="checkbox" name="alarmChk" value="친구요청알림" checked/>
+	            <hr/>
+	            </c:when>
+	            <c:when test="${settings.alarm_kind == '친구요청알림' && settings.alarm_state == '0'}">
+	            친구요청알림<input type="checkbox" name="alarmChk" value="친구요청알림"/>
+	            <hr/>
+	            </c:when>
+	            </c:choose>
+	          </c:forEach>
+	          </form>
         </div>
         <!--Alt+Shift+B 를 누르면 실행-->
         <h2 style="text-align: center;">알람 리스트 </h2>
             <button id="alarmSetting" style="margin-left: 35%;">수신설정</button>
             <button onclick="location.href='alarmAllChk?myId=${sessionScope.loginId}'" style="margin-left: 17.2%;">모든 알람 지우기</button>
             <!-- 현재 알림 리스트를 불러옴 -->
+            <p id="noAlarm">현재 알림이 존재하지 않습니다...</p>
             <c:forEach items="${list}" var="alarm">
             	<!-- 만약 알림 내용이 친구요청알림 이면 해당 리스트 꺼내기 -->
             	<c:if test="${alarm.alarm_content == '친구요청알림'}">
@@ -131,6 +176,12 @@
 <script>
 
 	var id = "${sessionScope.loginId}";
+	
+	var list = "${list}";
+	if(document.getElementById('alarmBox')){
+		//채팅 시작 문구를 숨긴다.
+		$('#noAlarm').css('display','none');
+	} 
 
 	//만약 수신설정 화면이 없을때 누르면 보이게하고
 	//아니라면 사라지게 한다
@@ -140,6 +191,9 @@
 		}
 		else{
 			$("#alarmSet").css({display:'none'});
+			
+			var alarm = document.alarm;
+			alarm.submit();
 
 		}
 	});

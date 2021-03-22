@@ -89,6 +89,15 @@ public class ReplyDAO {
 			ps.setString(3, content);
 			if(ps.executeUpdate()>0){
 				success=true;
+				
+				sql = "SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND (alarm_kind = '댓글알림' AND alarm_state = '1')";
+				
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, user_id);
+				
+				rs = ps.executeQuery();
+				
+				if(rs.next()) {
 				//댓글등록 후 해당 게시글의 작성자한테 댓글을 작성했다는 알림을 보냄(댓글 쓴 사람 아이디와 함께)
 				sql = "SELECT b.user_id FROM board2 b "+
 						"WHERE b.board_idx IN (SELECT board_idx FROM Reply2 WHERE board_idx=? AND user_id=?)";
@@ -109,6 +118,10 @@ public class ReplyDAO {
 					if(ps.executeUpdate() > 0) {
 						System.out.println("게시글 작성자한테 댓글알림 전송 완료!!!");
 					}
+				
+				}
+				}else {
+					System.out.println("해당 유저는 댓글알림이 거부 상태입니다.");
 				}
 			}
 

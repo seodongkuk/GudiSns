@@ -1,20 +1,17 @@
 package com.sns.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
-import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.sns.dao.AdminDAO;
 import com.sns.service.AdminService;
 
-@WebServlet({ "/admin_login" })
+@WebServlet({ "/admin_login", "/report_content" })
 public class AdminController extends HttpServlet {
 
 	/**
@@ -30,7 +27,7 @@ public class AdminController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		dual(req, resp);
 	}
 
@@ -40,68 +37,24 @@ public class AdminController extends HttpServlet {
 		String uri = req.getRequestURI();
 		String context = req.getContextPath();
 		String sub = uri.substring(context.length());
-		System.out.println("sub : " + sub);
 		AdminService service = new AdminService(req, resp);
+		req.setCharacterEncoding("UTF-8");
+		System.out.println("sub : " + sub);
 
-		RequestDispatcher dis = null;
-		String page = "";
-		String msg = "";
-
-		HttpSession session = req.getSession();
-		if (session.getAttribute("msg") != null) {
-			session.removeAttribute("msg");
-		}
+		
 		switch (sub) {
 
 		case "/admin_login":
-			
-			String loginId = (String) req.getSession().getAttribute("loginId");
-			
-			if(loginId != null) {
-			System.out.println("admin 로그인 요청");
-			boolean success = service.admin_login();
-			System.out.println("admin 로그인 결과 : " + success);
-
-			page = "index.jsp";
-			msg = "아이디와 비밀번호를 확인해 주세요.";
-			
-
-			if (success) {
-					page = "manager_report.jsp";
-					String admin_loginId = req.getParameter("userId");
-					msg = admin_loginId + "관리자님 반갑습니다.";
-					req.getSession().setAttribute("admin_loginId", admin_loginId);
-					
-					
-					
-					int group = 1;
-					String pageParam = req.getParameter("page");
-					if(pageParam != null) {
-						group = Integer.parseInt(pageParam);
-					}
-							
-					AdminDAO reportListDAO = new AdminDAO();
-					HashMap<String, Object> map = reportListDAO.reportList(group);
-					
-					req.setAttribute("maxPage", map.get("maxPage"));
-					req.setAttribute("reportList", map.get("reportList"));
-					req.setAttribute("currPage", group);
-					
-					
-				}
-			req.setAttribute("msg", msg);
-			dis = req.getRequestDispatcher(page);
-			dis.forward(req, resp);
-			}else {
-				resp.sendRedirect("./index.jsp");
-			}
-			
+			service.admin_login();
+			System.out.println("관리자로그인요청");
 			break;
-			
-	
-			
-			}
-		
+
+		case "/report_content":
+			System.out.println("신고사유보기");
+			service.report_content();
+			break;
+
+		}
+
 	}
 }
-

@@ -371,16 +371,30 @@ public class MainDAO {
 				rs = ps.executeQuery();
 				//만약 해당 게시글 작성자가 있다면...
 				if(rs.next()) {
-					//해당 게시글 작성자한테 댓글 알림을 보냅니다
 					String boardId = rs.getString("user_id");
-					sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'게시글알림')";
-					ps = conn.prepareStatement(sql);
-					ps.setString(1, user_id);
-					ps.setString(2, boardId);
+					sql = "SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND (alarm_kind = '게시글알림' AND alarm_state = '1')";
 					
-					if(ps.executeUpdate() > 0) {
-						System.out.println("게시글 작성자한테 누가 추천했는지 송신");
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, boardId);
+					
+					rs = ps.executeQuery();
+					
+					if(rs.next()) {
+						//해당 게시글 작성자한테 댓글 알림을 보냅니다
+						
+						sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'게시글알림')";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, user_id);
+						ps.setString(2, boardId);
+						
+						if(ps.executeUpdate() > 0) {
+							System.out.println("게시글 작성자한테 누가 추천했는지 송신");
+						}
+					}else {
+						System.out.println("현재 상대방의 게시글알림수신여부가 거부 상태 입니다.");
 					}
+					
+
 				}
 			}
 		} catch (SQLException e) {

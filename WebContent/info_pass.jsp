@@ -54,9 +54,7 @@
             PW <input type="password" name="userPw" placeholder="비밀번호를 입력 해주세요."'/>
             </td>
         </tr>
-        <tr>
-            <td style="color: red;">비밀번호가 일치 하지 않습니다.</td>
-        </tr>
+    
 
          <br/>
          

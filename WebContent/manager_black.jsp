@@ -1,7 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>블라인드 리스트</title>
+        <title>블랙리스트</title>
         <!-- favicon:사이트를 대표하는 탭창에 보여지는 이미지 -->
         <link rel="icon" href="icon.jpg">
         <style>
@@ -38,28 +42,20 @@
     </head>
     <body>
         <h1>관리자 모드</h1>
-        <h3>블라인드 리스트</h3>
+        <h3>블랙 리스트</h3>
         <p>유저 <input type="text"> <button>검색</button></p>
         <table>
             <tr>
-                <th>신고접수 번호</th>
-                <th>등록일</th>
-                <th>신고사유</th>
-                <th>신고자</th>
-                <th>블랙</th>
-                <th>블라<br/>
-                    인드
-                </th>
-                <th>처리</th>
+                <th>프로필</th>
+                <th>블랙리스트</th>
+                <th>처리한 관리자</th>
+                <th>상태</th>
             </tr>
             <tr>
+                <td><img src="#"/></td>
+                <td>NO: 아이디: 등록날짜: </td>
                 <td></td>
-                <td></td>
-                <td><a href="#">보기</a></td>
-                <td></td>
-                <td><input type="checkbox" id="ck_blind"></td>
-                <td><input type="checkbox" id="ck_black"></td>
-                <td><a href="#">처리하기</a></td>
+                <td><a href="#">해제</a></td>
             </tr>
         </table>    
         <div class="paging">
@@ -67,6 +63,14 @@
             <button>1</button>
             <button>다음</button>
         </div>    
-        <iframe src="manager_bottom.html" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+        <iframe src="manager_bottom.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
     </body>
+    	<script>
+		//Service에서 지정한 msg 값을 alert로 View
+		var msg = "${msg}";
+		if(msg != ""){
+			alert(msg);
+		}
+	</script>
+    
 </html>

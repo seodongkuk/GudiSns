@@ -7,6 +7,13 @@
         <!-- favicon:사이트를 대표하는 탭창에 보여지는 이미지 -->
         <link rel="icon" href="icon.jpg">
         <style>
+			.pageArea span{
+				font-size: 12px;
+				border : 1px solid lightgray;
+				padding: 2px 10px;		
+				margin: 5px;		
+				color : gray;
+			}
             body{
                 width: 700px;
                 margin: 20px 550px;
@@ -60,7 +67,7 @@
             <tr>
                 <td>${reportList.report_idx}</td>
                 <td>${reportList.report_date}</td>
-                <td><a href="#">보기</a></td>
+                <td><a href="#" >보기</a></td>
                 <td>${reportList.user_id}</td>
                 <td><input type="checkbox" id="ck_blind"></td>
                 <td><input type="checkbox" id="ck_black"></td>
@@ -68,13 +75,22 @@
             </tr>
             </c:forEach>
         </table>        
-        <span id="page">${currPage}</span>
+      <div class="pageArea">
+			<span>
+				<c:if test="${currPage == 1}">이전</c:if>
+				<c:if test="${currPage > 1}">
+					<a href="./admin_login?page=${currPage-1}">이전</a>
+				</c:if>				
+			</span>
+			<span id="page">${currPage}</span>
 			<span>
 				<c:if test="${currPage == maxPage}">다음</c:if>
 				<c:if test="${currPage < maxPage}">
-					<a href="./?page=${currPage+1}">다음</a>	
-				</c:if>
-				</span>
-        <iframe src="manager_bottom.html" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+					<a href="./admin_login?page=${currPage+1}">다음</a>
+				</c:if>	
+				
+			</span>
+		</div>
+        <iframe src="manager_bottom.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
     </body>
 </html>
