@@ -130,11 +130,18 @@ public class MemberDAO {
 public boolean idChk(String id) throws SQLException {
 	boolean success = false;
 	String sql="SELECT user_id FROM member2 WHERE USER_ID=?";
-
+	try {
 		ps = conn.prepareStatement(sql);
 		ps.setString(1,id);
 		rs = ps.executeQuery();
 		success = rs.next();
+	
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		resClose();
+	}
+	System.out.println("회원가입 성공 여부 : "+success);
 		return !success;
 	}
 
@@ -286,17 +293,10 @@ public String pwfind(String id, String email) {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			
-			try {
-				ps.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
+			resClose();
+		}				
 		return success;
-}	
+	}
 //-----------------------------------------------------------------------------//회원탈퇴 시 패스워드 확인.				
 				
 				

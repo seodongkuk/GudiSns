@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sns.dao.MainDAO;
 import com.sns.dao.ReplyDAO;
 import com.sns.dto.ReplyDTO;
 
@@ -63,6 +64,31 @@ public class ReplyService {
 		System.out.println("댓글리스트사이즈:"+list.size());
 		req.setAttribute("list", list);
 		RequestDispatcher dis = req.getRequestDispatcher("detail.jsp");
+		dis.forward(req, resp);
+	}
+	
+	public void redit() throws ServletException, IOException {
+		String board_idx = req.getParameter("board_idx");
+		String user_id = req.getParameter("user_id");
+		String content = req.getParameter("content");
+		System.out.println(board_idx+"/"+user_id+"/"+content);
+		
+		String msg="댓글 수정 실패!";
+		String page="/detail?board_idx="+board_idx;
+		
+		
+		/*
+		 * int result = dao.edit(board_idx,user_id,content);
+		 * System.out.println("댓글 수정 result"+result);
+		 */
+		
+		/*
+		 * if(result==1) { page="/detail?board_idx="+board_idx; msg="댓글 작성을 완료했습니다.";
+		 * }else { page="/detail?board_idx="+board_idx; msg="댓글 작성을 완료했습니다."; }
+		 */
+		 
+		req.setAttribute("msg", msg);
+		RequestDispatcher dis = req.getRequestDispatcher(page);
 		dis.forward(req, resp);
 	}
 
