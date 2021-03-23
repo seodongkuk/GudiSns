@@ -2,12 +2,14 @@ package com.sns.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.sns.dao.MainDAO;
 import com.sns.dao.ReplyDAO;
 import com.sns.dto.ReplyDTO;
@@ -43,8 +45,9 @@ public class ReplyService {
 	}
 	
 	public void redit() throws ServletException, IOException {
+		resp.setCharacterEncoding("UTF-8");
 		String board_idx = req.getParameter("board_idx");
-		String cmt_idx = req.getParameter("idx");
+		int cmt_idx = Integer.parseInt(req.getParameter("idx"));
 		String user_id = req.getParameter("id");
 		String content = req.getParameter("content");
 		System.out.println(board_idx+"/"+cmt_idx+"/"+user_id+"/"+content);
@@ -52,20 +55,23 @@ public class ReplyService {
 		String msg="댓글 수정 실패!";
 		String page="/detail?board_idx="+board_idx;
 		
+		String result = dao.edit(content,cmt_idx);
+		System.out.println("댓글 수정 result"+result);
 		
-		/*
-		 * int result = dao.edit(content,cmt_idx);
-		 * System.out.println("댓글 수정 result"+result);
-		 */
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("edit",result);
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+		System.out.println(json);
+		resp.setContentType("text/html charset-UTF-8");
+		resp.getWriter().println(json);
 		
 		/*
 		 * if(result==1) { page="/detail?board_idx="+board_idx; msg="댓글 작성을 완료했습니다.";
 		 * }else { page="/detail?board_idx="+board_idx; msg="댓글 작성을 완료했습니다."; }
 		 */
 		 
-		req.setAttribute("msg", msg);
-		RequestDispatcher dis = req.getRequestDispatcher(page);
-		dis.forward(req, resp);
+		
 	}
 	
 	public void rdel() throws ServletException, IOException {

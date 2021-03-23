@@ -112,16 +112,24 @@
 	    
 	    <!-- 댓글  수정, 삭제 폼 -->
         <table>				
-			<c:forEach items="${list}" var="Reply2">
-				<input type="hidden" id="board_idx" name="brd" value="${dto.board_idx}"/>  
-				<input type="hidden" id="cmt_idx" name="cmt" value="${Reply2.cmt_idx}"/>   
-				<input type="hidden" id="content" name="content" value="${Reply2.content}"/>       
+			<c:forEach items="${list}" var="Reply2" varStatus="status">
+				<input type="hidden" id="board_idx${status.index}" name="brd" value="${dto.board_idx}"/>  
+				<input type="hidden" id="cmt_idx${status.index}" name="cmt" value="${Reply2.cmt_idx}"/>   
+				<input type="hidden" name="content" value="${Reply2.content}"/>       
 			<tr>
+				<td>${status.index}</td>
 				<td>${Reply2.user_id}</td>
-				<td>${Reply2.content}</td>
+				<td>
+					<span id="changeMsg${status.index}">${Reply2.content}</span>
+					<span>
+						<input type="text"  id="content${status.index}" value="${Reply2.content}"/>
+					
+					</span>
+				</td>
 				<td>
 					<c:if test="${Reply2.user_id eq loginId }">
-						<button id="redit" onclick="update_reply()">수정</button>
+						<button id="redit${status.index}">수정적용</button>
+						<button>수정하기</button>
 						<a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a>										 
 					</c:if>
 				</td>
@@ -141,7 +149,40 @@
 	<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 </body>
 <script>
-function update_reply(){
+$("body").on("click", "[id^=redit]", function(event) {
+	console.log("댓글 수정 요청 ");
+	console.log( this.id);
+	var $idx = $('#'+this.id).val();
+	var number = this.id.substring(5,1000);
+	console.log(number);
+	
+	var $content = $('#content'+number).val();
+	var idx = $("#cmt_idx"+number).val();
+	console.log(idx+"/"+$content);
+	
+	var $changeMsg = $('#changeMsg'+number);
+	
+	var params = {};
+	params.content = $content;
+	params.idx = idx;
+	
+	$.ajax({
+		url: "redit",
+          type: "post",
+          data: params,
+          dataType:'JSON',
+          success: function (data) {
+        	console.log(data);
+       	   	console.log(data.edit);
+       	 	$changeMsg.html(data.edit);
+          }
+	});
+	
+});
+
+/*
+function update_reply(){ //댓글 수정 함수
+	
 	var content = $("#content");
 	var board_idx = $("#board_idx");
 	var idx = $("#cmt_idx");
@@ -162,7 +203,7 @@ function update_reply(){
           }
 	});
 };
-
+*/
 var a = "${dto.hashTag}";
 
 var hash =a.split('#');
