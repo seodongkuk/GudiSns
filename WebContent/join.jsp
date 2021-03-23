@@ -140,10 +140,10 @@ button, input[type='button'], input[type='submit'] {
 				}else if($email.val()==''){
 					alert('이메일을 입력해 주세요!');
 					$email.focus();
-				}else if($email.val().indexOf('@')<0){}
+				}else if($email.val().indexOf('@')<0){
 					alert('@가 없네요?');
 					$email.focus();
-				}else if($email.val().indexOf('.')<0){}
+				}else if($email.val().indexOf('.')<0){
 					alert('.이  없어요!');
 					$email.focus();
 				}else{
@@ -176,7 +176,7 @@ button, input[type='button'], input[type='submit'] {
 				alert('중복 체크를 해 주세요!');
 				$id.focus();
 			}
-		});
+		});	
 		
 	    //2. 비밀번호 일치 여부...
 	    $('.pass').keyup(function(){
