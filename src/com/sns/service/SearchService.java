@@ -155,7 +155,7 @@ public class SearchService {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			int success = 0;
 			// 실패
-			msg = "친구 삭제에 실패했습니다.";
+			msg = "친구 관계여야만 친구 삭제가 가능합니다.";
 			// 성공 할 경우
 			if(dao.budDel(loginId,budId)>0) {
 				msg = "삭제를 완료했습니다.";

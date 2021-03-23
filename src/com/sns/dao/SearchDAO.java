@@ -108,7 +108,6 @@ public class SearchDAO {
 				if(search.equals(loginId)) {
 					return list;
 				}else {
-					
 					while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
 						SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
 						//dto에 담기
@@ -168,8 +167,6 @@ public class SearchDAO {
 						System.out.println("친구요청알림 전송 실패.. cause:상대방이 친구요청알림을 거부했습니다.");
 					}
 				}
-
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
