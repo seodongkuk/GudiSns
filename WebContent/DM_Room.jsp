@@ -94,7 +94,7 @@
                         ${msg.sendtime}
                     </p>
                     	<!-- 만약 상대방이 읽지 않았다면 읽지않은거니 표시 -->
-	                    <c:if test="${empty msg.read_state}">
+	                    <c:if test="${not msg.read_state || msg.read_state == null}">
 	                    <span id="beforeRead" style="margin-left: 70%; margin-top: 5%; bottom: auto;">
 	                        <span style="color: blue;">new </span>읽지 않음
 	                    </span>
@@ -129,7 +129,7 @@
             </div>
             <!-- 채팅 보내는 역할 -->
             <div style="margin-top: 10px;">
-                <textarea name="msg" id="inputMsg" style="width: 30%; margin-left: 30%; resize: none;"></textarea>
+                <textarea maxlength="200" name="msg" id="inputMsg" style="width: 30%; margin-left: 30%; resize: none;"></textarea>
             </div>
                 <input type="submit" value="전송" id="msg-send" 
                 	style="width: 50px; height: 30px; margin-left: 520px; margin-top: -33px;"/>
@@ -137,11 +137,19 @@
 	 			<iframe 
 	 				src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0" ></iframe>
     </body>
+    <script type="text/javascript">
+
+	</script>
     <script>
+    
+
+	   // Ajax 통신중인지를 확인하는 전역변수 설정
     	//채팅방 들어올때 무조건 스크롤 맨밑으로...
     	$("#dmRoom").scrollTop($("#dmRoom")[0].scrollHeight);
     	//만약 대화 내용이 있다면...
     	var list = "${list}";
+    	var size = 0;
+
     	if(list != ""){
     		//채팅 시작 문구를 숨긴다.
 			$('#noChat').css('display','none');
@@ -150,7 +158,7 @@
         var inputMsg = document.getElementById('inputMsg');
         
     	// 로컬에서 테스트할 때 사용하는 URL입니다.
-     	var webSocket = new WebSocket('ws://localhost:8080/GudiSns/webChatServer');
+     	var webSocket = new WebSocket('ws://localhost/GudiSns/webChatServer');
     	
     	//웹소켓이 연결되었을 때 실행되는 얘들?
     	webSocket.onerror = function(e){
@@ -158,6 +166,7 @@
     	};
     	webSocket.onopen = function(e){
     		onOpen(e);
+    		console.log(e);
     	};
     	webSocket.onmessage = function(e){
     		onMessage(e);
@@ -215,7 +224,7 @@
     	}
     		
     	function onOpen(e){
-    		
+    		console.log(msg);
     	}
     	
     	function onError(e){
@@ -223,9 +232,13 @@
     	}
     	
     	function send(){
+    		
+    		var timeout = null;
     		var sessionId =  "${sessionScope.loginId}";
     		var chatMsg = inputMsg.value;
     		var patId = getParameterByName('id');
+        	var idx = getParameterByName('idx');
+        	
     		
     		//날짜 관련 함수(moment를 이용해 포맷 맞출것임)
     		var today = new Date();
@@ -237,7 +250,7 @@
     		}
     		//채팅 내용을 보낸다
     		//내 채팅이 보여질 부분
-    		var $chat = $("<div id='myMsgBox'>"+
+/*     		var $chat = $("<div id='myMsgBox'>"+
                     "<p style='position: absolute; margin-left: 1%; top: auto; bottom: 5%;  padding-left: 3px;'>"
                     +moment(today).format('YY/MM/DD HH:mm')
                 +"</p>"
@@ -250,50 +263,53 @@
                 +"</p>"
                 +"</div>"
                 +"</div>");
-    		$('#dmRoom').append($chat);
+    		$('#dmRoom').append($chat); */
     		//만약 DM방 초대받은 사람이면..(FROM 초대받은 사람, TO 생성자)
     		if(patId == sessionId){
-    			console.log(patId);
+    			//webSocket에 해당 내용을 전달한다.
+    			webSocket.send(sessionId+":"+chatMsg+":"+getParameterByName('create')+":"+idx);
     			//DB에 저장하기 위해 ajax 방식으로 호출
-        		$(function(){
+    		//만약 DM방 만든 사람이면..(FROM 생성자, TO 초대받은 사람)
+/*                 		$(function(){
+            				$.ajax({
+            					type: "POST"
+            					,url: "DM_Room?id="+patId+"&&create="+getParameterByName('create')+"&&idx="+idx
+            					,data:{
+            						fromId: encodeURIComponent(patId)
+            						,toId: encodeURIComponent(getParameterByName('create'))
+            						,content: encodeURIComponent(chatMsg)
+            						,idx: encodeURIComponent(idx)
+            					}
+            					,success: function(result){
+            						
+            					}
+            				});
+            			}); */
+    			location.reload();
+    		}else{
+    			//webSocket에 해당 내용을 전달한다.
+    			webSocket.send(sessionId+":"+chatMsg+":"+patId+":"+idx);
+/*         		$(function(){
     				$.ajax({
     					type: "POST"
-    					,url: "./webChatServer"
+    					,url: "DM_Room?id="+patId+"&&create="+getParameterByName('create')+"&&idx="+idx
     					,data:{
-    						fromId: encodeURIComponent(sessionId)
+    						fromId: encodeURIComponent(patId)
     						,toId: encodeURIComponent(getParameterByName('create'))
     						,content: encodeURIComponent(chatMsg)
+    						,idx: encodeURIComponent(idx)
     					}
     					,success: function(result){
     						
     					}
     				});
-    			});
-    			//webSocket에 해당 내용을 전달한다.
-    			webSocket.send(sessionId+":"+chatMsg+":"+getParameterByName('create'));
-    		//만약 DM방 만든 사람이면..(FROM 생성자, TO 초대받은 사람)
-    		}else{
-    			//DB에 저장하기 위해 ajax 방식 호출
-        		$(function(){
-    				$.ajax({
-    					type: "POST"
-    					,url: "./webChatServer"
-    					,data:{
-    						fromId: encodeURIComponent(sessionId)
-    						,toId: encodeURIComponent(patId)
-    						,content: encodeURIComponent(chatMsg)
-    					}
-    					,success: function(result){
-    						
-    					}
-    				});
-    			});
-    			//webSocket에 해당 내용을 전달한다.
-    			webSocket.send(sessionId+":"+chatMsg+":"+patId);
+    			}); */
+    			
+    			location.reload();
     		}
     		
 
-    		
+
     		
     		if(chatMsg != null){
     			$('#noChat').css('display','none');
@@ -308,13 +324,8 @@
     <!-- 채팅 전송 기능.. 엔터를 쳐도 보내고 클릭해도 보낼 수 있다. -->
     <script type="text/javascript">
 	$(function(){
-		$('#inputMsg').keydown(function(key){
-			if(key.keyCode == 13){
-				$('#inputMsg').focus();
-				send();
-			}
-		});
 		$('#msg-send').click(function(){
+			$('#inputMsg').focus();
 			send();
 		});
 		

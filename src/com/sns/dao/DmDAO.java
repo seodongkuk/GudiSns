@@ -316,4 +316,24 @@ public HashMap<String, Object> chatRoom(String id) {
 		return true;
 	}
 
+	public void userTwoJoin(int userSize, String idx) {
+		String sql = "UPDATE dm2 SET read_state = 'true' WHERE dm_idx = ? AND read_state IS NULL";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, idx);
+			if(ps.executeUpdate() > 0) {
+				System.out.println("read state 읽음 처리 완료");
+			}else {
+				System.out.println("이미 읽음 상태입니다.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+	}
+
 }

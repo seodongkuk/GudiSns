@@ -113,7 +113,7 @@
             <button id="alarmSetting" style="margin-left: 35%;">수신설정</button>
             <button onclick="location.href='alarmAllChk?myId=${sessionScope.loginId}'" style="margin-left: 17.2%;">모든 알람 지우기</button>
             <!-- 현재 알림 리스트를 불러옴 -->
-            <p id="noAlarm">현재 알림이 존재하지 않습니다...</p>
+
             <c:forEach items="${list}" var="alarm">
             	<!-- 만약 알림 내용이 친구요청알림 이면 해당 리스트 꺼내기 -->
             	<c:if test="${alarm.alarm_content == '친구요청알림'}">
@@ -168,7 +168,9 @@
             		</div>
             	</c:if>
             </c:forEach>
+            <p id="noAlarm">현재 알림이 존재하지 않습니다...</p>
             </div>
+            
             <iframe src="navi.jsp" style="position:fixed; margin-left: 700px;" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 
     </body>

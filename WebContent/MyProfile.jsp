@@ -143,6 +143,7 @@
 	                <input style="padding-left: 40px;" 
 	                	type="button" class="member" value="회원 탈퇴" onclick="location.href='user_out.jsp'">
 	                 <form action="memberDel" method="post"></form>
+	                  <input type="button" style="width:150px;margin-left:20px;" value="프로필 사진 수정" onclick="window.open('ProfilePhotoEdit.jsp','window_name','width=430,height=500,left=300,top=300,location=no,status=no,scrollbars=yes');"/>
 			          <input type="hidden" name="id" value="${sessionScope.id}"/>
         	</div>
 

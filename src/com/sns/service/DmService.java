@@ -92,6 +92,11 @@ public class DmService {
 		
 		System.out.println("DM 정보"+id+"/"+create+"/"+idx);
 		
+		//나를 유저 검색해서 나한테 보내려고 하면 못하게 팅겨보냄
+		if(create.equals(id)) {
+			resp.sendRedirect("./flist");
+		}else {
+		
 		//현재 방의 내용을 모두 가져온다.
 		HashMap<String,Object> map = dao.dmRoom(id,create,idx);
 		
@@ -136,8 +141,10 @@ public class DmService {
 			
 		RequestDispatcher dis = req.getRequestDispatcher(page);
 		dis.forward(req, resp);
+		
+		
 		}
-//	}
+	}
 	
 	//
 	public void dmList() throws ServletException, IOException{
