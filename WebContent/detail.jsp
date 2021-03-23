@@ -163,23 +163,6 @@ function update_reply(){
 	});
 };
 
-$("#likebtn").click(function(){
-	var $idx = $("#board_idx");
-	 var $id = $("#user_id");
-	 var params = {};
-	 params.idx = $idx.val();
-	 params.id = $id.val();
-	$.ajax({
-		url: "like",
-          type: "get",
-          data: params,
-          dataType:'JSON',
-          success: function () {
-       	   	likeCnt();	
-          }
-	});
-});
-
 var a = "${dto.hashTag}";
 
 var hash =a.split('#');

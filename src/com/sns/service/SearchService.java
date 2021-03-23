@@ -49,15 +49,18 @@ public class SearchService {
 		System.out.println("검색 항목: "+find);
 		System.out.println("검색 내용: "+search);
 		
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		System.out.println("검색 아이디: "+search +" / "+ loginId);
+		
 		//해시태그 검색
 		if(find.equals("HashTag")) {
-			list = dao.findTag(find,search);
+			list = dao.findTag(find,search,loginId);
 			System.out.println("리스트 널값? " + list);// 반환받은 리스트 널값 확인
 			System.out.println("리스트 사이즈? " + list.size());// 반환받은 리스트 사이즈 확인
 			// 실패 할 경우
 			msg = "검색한 해시태그의 게시글이 없습니다.";
 			page = "/todayTag";
-			if(search == null || search == "" || search.equals(" ")) {
+			if(search == null || search.equals("") || search.equals("#")) {
 				msg = "검색 할 해시태그를 입력해주세요!";
 				page = "/todayTag";
 			}
@@ -73,7 +76,7 @@ public class SearchService {
 		
 		//유저 검색
 		}else if(find.equals("User")) {
-			list = dao.findTag(find,search);
+			list = dao.findTag(find,search,loginId);
 			System.out.println("리스트 널값? " + list);// 반환받은 리스트 널값 확인
 			System.out.println("리스트 사이즈? " + list.size());// 반환받은 리스트 사이즈 확인
 			// 실패 할 경우
@@ -81,6 +84,10 @@ public class SearchService {
 			page = "/todayTag";
 			if(search == null || search == "" || search.equals(" ")) {
 				msg = "검색 할 유저를 입력해주세요!";
+				page = "/todayTag";
+			}
+			if(search.equals(loginId)) {
+				msg = "본인의 아이디 검색은 불가능 합니다.";
 				page = "/todayTag";
 			}
 			// 성공 할 경우
@@ -148,7 +155,7 @@ public class SearchService {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			int success = 0;
 			// 실패
-			msg = "친구 삭제에 실패했습니다.";
+			msg = "친구 관계여야만 친구 삭제가 가능합니다.";
 			// 성공 할 경우
 			if(dao.budDel(loginId,budId)>0) {
 				msg = "삭제를 완료했습니다.";

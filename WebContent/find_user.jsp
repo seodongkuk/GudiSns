@@ -63,23 +63,23 @@
 			            		${member2.user_id}</a>
 			            </td>  
 			            <td style="padding-left: 40px;">
-			                <!-- <button onclick="location.href = 'budReq'">친구요청</button> -->
 			                <input type="hidden" id="budId" value="${member2.user_id}"/>
+			                <%-- <input type="hidden" id="budId2"	value="${member2.bud_id }"/> --%>
 			                <button id="budReq">친구요청</button>
 			                <button onclick="location.href='DM_Room?id=${member2.user_id}&&create=${sessionScope.loginId}'">DM보내기</button>
-			                <button onclick=delChk()>친구삭제</button>
+			                <button onclick=delChk() id="budDel">친구삭제</button>
+			                <%-- <input type="hidden" id="budState" value="${member2.state}"/> --%>
 			            </td>          
 			        </tr>
 			    </table>
 			</c:forEach>
 		</div>
-	    <iframe style="position: absolute; margin-top: -160px" 
+	    <iframe style="position: absolute; margin-top: -160px;" 
 	    	src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 	</body>
 	<script>
 	
 		$('#budReq').click(function(){
-			
 			$.ajax({
 				type:'get'
 				,url:'budReq'
@@ -103,6 +103,14 @@
 		
 		function delChk(){
 			var chk = confirm('정말 삭제하시겠습니까?');
+			/* var loginId = ${loginId};
+			var budId = $("#budId").val();
+			var userId = $("#budId2").val();
+			//var budState = $("#budState").val();
+			/* WHERE (user_id=? AND bud_id=?)OR(bud_id=? AND user_id=?) AND state='002' */
+			/* if(budId != loginId || userId != loginId){
+				$("#budDel").css("display") == "none";
+			} */
 			if(chk){
 				$.ajax({
 					type:'get'

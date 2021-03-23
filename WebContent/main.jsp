@@ -133,6 +133,13 @@
                         <td>
 							<p style="margin-top: -17px; margin-left: -225px;">${flist.writedate}</p>
                         </td>
+                        <td>
+                        	<p style="margin-top: -17px; margin-left: -500px;">추천 수: ${flist.cnt}</p>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                    	<td>댓글 개수는 ${flist.rcnt} 입니다.
                     </tr>
                 </table>
                     <br>

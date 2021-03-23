@@ -185,16 +185,4 @@ public class ProfileDAO {
 		
 	}
 
-/*	public HashMap<String, Object> paging(int group) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		//3개씩 페이징
-		int pagePercnt = 3;
-		int end = group * pagePercnt;
-		int start = end - (pagePercnt -1);
-		
-		String sql = "";
-		
-		return map;
-	}*/
-
 }

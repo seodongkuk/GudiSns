@@ -201,7 +201,7 @@ public void pwfind()throws ServletException, IOException{
 	msg = "아이디, 이메일을 다시 입력해 주세요.";
 	
 	if(pw!="") {
-		page = "index.jsp";
+		page = "pw_reset.jsp";
 		msg = id+"님의 비번은"+pw+"입니다.";
 		
 		req.getSession().setAttribute("pw", pw);
@@ -212,25 +212,29 @@ public void pwfind()throws ServletException, IOException{
 }
 
 //-------------------------------------------------------------------//비밀번호 변경.
-public int pwupdate() throws IOException{
-	//파라메터 값이 잘 들어 오는가?
-	String pw = req.getParameter("pw");
-	String id = (String) req.getSession().getAttribute("userId");
-	String email = (String) req.getSession().getAttribute("email");
-	System.out.println(pw);
-	System.out.println(id);
-	System.out.println(email);
-	
+
+public void pwupdate() throws ServletException, IOException {
 	MemberDAO dao = new MemberDAO();
+	boolean success = false;
+	String newPw = req.getParameter("newPw");
+	String id = req.getParameter("id");
+	System.out.println("새 비번입력:"+newPw);
 	
-	MemberDTO dto = new MemberDTO();
-	dto.setPw(pw);
-	dto.setId(id);
-	dto.setEmail(email);
+	msg= "비밀번호를 다시 확인해 주세요.";
+	page = "pw_Find.jsp";
+	
+	success=dao.pwupdate(id,newPw);
+	if(success) {
+		msg="비밀번호가 수정되었습니다.";
+		page="index.jsp";
+	}
+	req.setAttribute("msg", msg);
+	dis = req.getRequestDispatcher(page);
+	dis.forward(req,resp);
 	
 	
-	
-	return dao.pwupdate(dto);
+
+
 }
 //-----------------------------------------------------------------------------//정보수정 접근시 패스워드 확인.
    

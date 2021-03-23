@@ -70,7 +70,7 @@ public class SearchDAO {
 		return tag;		
 	}
 		
-	public ArrayList<SearchDTO> findTag(String find, String search) {
+	public ArrayList<SearchDTO> findTag(String find, String search, String loginId) {
 		ArrayList<SearchDTO> list = new ArrayList<SearchDTO>();		
 		//해시태그 검색
 		if(find.equals("HashTag")) {
@@ -78,16 +78,20 @@ public class SearchDAO {
 					+"WHERE b.board_idx = h.board_idx AND b.board_idx IN (SELECT board_idx FROM HashTag2 WHERE hashTag LIKE ?)";
 			try {
 				ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
-				ps.setString(1, "%"+search+"%");//?대응
+				ps.setString(1, '%'+search+'%');//?대응
 				rs = ps.executeQuery();//3. 쿼리실행
-				while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
-					SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
-					//dto에 담기
-					dto.setUser_id(rs.getString("user_id"));
-					dto.setBoard_idx(rs.getInt("board_idx"));
-					dto.setContent(rs.getString("content"));
-					dto.setHashTag(rs.getString("hashTag"));
-					list.add(dto);//담긴 dto를 list에 넣기				
+				if(search == null || search == "" || search == " " || search.equals("#")) {
+					return list;
+				}else {
+					while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
+						SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
+						//dto에 담기
+						dto.setUser_id(rs.getString("user_id"));
+						dto.setBoard_idx(rs.getInt("board_idx"));
+						dto.setContent(rs.getString("content"));
+						dto.setHashTag(rs.getString("hashTag"));
+						list.add(dto);//담긴 dto를 list에 넣기				
+					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -96,17 +100,43 @@ public class SearchDAO {
 			}		
 		//유저 검색
 		}else if(find.equals("User")) {
+			
+			/*String sql = "SELECT user_id, bud_id, state FROM buddylist2 WHERE (user_id = ? AND bud_id = ?) AND state = '002'" + 
+							" UNION" + 
+							" SELECT user_id, bud_id, state FROM buddylist2 WHERE (bud_id = ? AND user_id = ?) AND state = '002'";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, search);
+				ps.setString(2, loginId);
+				ps.setString(3, search);
+				ps.setString(4, loginId);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					SearchDTO dto = new SearchDTO();
+					dto.setUser_id(rs.getString("user_id"));
+					dto.setBud_id(rs.getString("bud_id"));
+					dto.setState(rs.getString("state"));
+					list.add(dto);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}*/
+			
 			String sql = "SELECT user_id,name FROM member2 WHERE user_id = ?";
 			try {
 				ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
 				ps.setString(1, search);//?대응
 				rs = ps.executeQuery();//3. 쿼리실행
-				while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
-					SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
-					//dto에 담기
-					dto.setUser_id(rs.getString("user_id"));
-					dto.setName(rs.getString("name"));
-					list.add(dto);//담긴 dto를 list에 넣기				
+				if(search.equals(loginId)) {
+					return list;
+				}else {
+					while(rs.next()) {
+						SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
+						//dto에 담기
+						dto.setUser_id(rs.getString("user_id"));
+						dto.setName(rs.getString("name"));
+						list.add(dto);//담긴 dto를 list에 넣기				
+					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -159,8 +189,6 @@ public class SearchDAO {
 						System.out.println("친구요청알림 전송 실패.. cause:상대방이 친구요청알림을 거부했습니다.");
 					}
 				}
-
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

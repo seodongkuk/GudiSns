@@ -18,7 +18,8 @@ public class MainDTO {
 	//리폿
 	private String report_id;
 	
-
+	private int cnt;//추천 개수
+	private int rcnt;//댓글 개수
 	public String getRelease_state() {
 		return release_state;
 	}
@@ -114,5 +115,22 @@ public class MainDTO {
 	
 	public void setReport_id(String report_id) {
 		this.report_id = report_id;
+	}
+
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+
+	public int getRcnt() {
+		return rcnt;
+	}
+
+	public void setRcnt(int rcnt) {
+		this.rcnt = rcnt;
 	}
 }
