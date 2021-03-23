@@ -42,6 +42,18 @@
 				width: 100%;
 				overflow: scroll;
             }
+            a:link{
+            	color:black;
+            	text-decoration: none;
+            }
+            a:visited{
+            	color:black;
+            	text-decoration: none;
+            }
+            a:hover{
+            	color:blue;
+            	text-decoration: underline;
+            }            
         </style>
 	</head>	       
 	    <body>	        
@@ -52,7 +64,7 @@
 	                    <option value="HashTag" selected>해시태그</option>
 	                    <option value="User">유저</option>
 	                </select>
-	                <input type="text" name="search" placeholder="검색어를 입력해주세요.">
+	                <input type="text" name="search" id="sch" placeholder="검색어를 입력해주세요.">
 	                <button>검색</button>
 	            </form>
 	        </div>
@@ -60,21 +72,49 @@
 		        <c:forEach items="${list}" var="member2">
 		            <table style="float: left;margin-top:40px; width: 250px">
 		                <tr>
-		                    <td rowspan="2"><img src="기본프사.png" width="70" height="70"></td>
-		                    <td>${member2.user_id}</td>            
+		                    <%-- <td rowspan="2"><img src="기본프사.png" width="70" height="70"></td>
+		                    <td>${member2.user_id}</td>   --%>       
+		                    <td rowspan="2"><img src="/GudiSns/photo/" width="70" height="70"></td>
+				            <td><a style="font-weight:bold;"
+				                    href="otherProfile?id=${member2.user_id}">
+				                    ${member2.user_id}</a>   
+			                </td>
 		                </tr> 
 		            </table>	
 		            <table>
 		                <tr>
-		                    <td><button style="color: red; margin-left: 90%;">신고</button></td>
+		                    <!-- <td><button style="color: red; margin-left: 90%;">신고</button></td> -->
+		                    <form action="singo" method="post">
+			                	<input type="hidden" name="board_idx" value="${member2.board_idx}" />
+			                	<input type="hidden" name="user_id" value="${member2.user_id}" />
+			                	<input type="submit" value="신고하기" 
+			                	style="color: red; margin-left: 85%;">
+		            		</form>
 		                </tr>	
+		                <tr>
+	                        <c:if test="${member2.newFileName ne null }">
+	                        <td>
+	                            <img src="/GudiSns/photo/${member2.newFileName}" width="600" height="450" style="margin-top:100px; margin-left: -73px;" />
+	                        </td>
+	                        </c:if>
+	                        <c:if test="${member2.newFileName eq null }">
+	                         <td>
+	                            <img src="/GudiSns/photo/${member2.newFileName}" width="600" height="0" style="margin-top:100px; visibility: hidden;" />
+	                        </td>
+	                        </c:if>
+	                    </tr>
 				        <tr>
 				            <td>
 				                <p>${member2.hashTag}</p>
 				                <p>${member2.content}</p>
+				                <button id="moreShow" name="board_idx" value="${member2.board_idx}"
+                                    onclick="location.href='detail?board_idx=${member2.board_idx}'">더보기</button>
 				            </td>
+				            <td>
+								<p style="margin-top: -17px; margin-left: -225px;">${member2.writedate}</p>
+	                        </td>
 				        </tr>
-				        <tr>
+				        <!-- <tr>
 						   <td>
 						        <button class="btn-like" style="font-size: 40px;background-color: white;border: none;float: left;">♥</button>
 						        <input style="float: left;margin-top: 10px;border: none;"  value="추천수">
@@ -92,7 +132,7 @@
 						        <p>2번댓글</p>
 						        <p>3번댓글</p>
 						    </td>
-						</tr>
+						</tr> -->
 					</table>
 				</c:forEach>
 	        </div>
@@ -100,10 +140,21 @@
 					src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 		</body>
 		<script>
-		//Service에서 지정한 msg 값을 alert로 View
-		var msg = "${msg}";
-		if(msg != ""){
-			alert(msg);
-		}
-	</script>
+			
+			/* var hash = $('#sch').val();
+			if(hash == "" || hash == " "){
+				alert("검색 할 해시태그를 입력해주세요!");
+				location.href = "todayTag";
+			} */
+			
+			/* if(hash != "" || hash != null){
+				location.href = "find_tag.jsp";
+			} */
+		
+			//Service에서 지정한 msg 값을 alert로 View
+			var msg = "${msg}";
+			if(msg != ""){
+				alert(msg);
+			}
+		</script>
 </html>
