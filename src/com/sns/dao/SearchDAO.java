@@ -100,6 +100,28 @@ public class SearchDAO {
 			}		
 		//유저 검색
 		}else if(find.equals("User")) {
+			
+			/*String sql = "SELECT user_id, bud_id, state FROM buddylist2 WHERE (user_id = ? AND bud_id = ?) AND state = '002'" + 
+							" UNION" + 
+							" SELECT user_id, bud_id, state FROM buddylist2 WHERE (bud_id = ? AND user_id = ?) AND state = '002'";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, search);
+				ps.setString(2, loginId);
+				ps.setString(3, search);
+				ps.setString(4, loginId);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					SearchDTO dto = new SearchDTO();
+					dto.setUser_id(rs.getString("user_id"));
+					dto.setBud_id(rs.getString("bud_id"));
+					dto.setState(rs.getString("state"));
+					list.add(dto);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}*/
+			
 			String sql = "SELECT user_id,name FROM member2 WHERE user_id = ?";
 			try {
 				ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
@@ -108,7 +130,7 @@ public class SearchDAO {
 				if(search.equals(loginId)) {
 					return list;
 				}else {
-					while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
+					while(rs.next()) {
 						SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
 						//dto에 담기
 						dto.setUser_id(rs.getString("user_id"));

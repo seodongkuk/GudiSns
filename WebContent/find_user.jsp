@@ -108,7 +108,7 @@
 			var userId = $("#budId2").val();
 			//var budState = $("#budState").val();
 			/* WHERE (user_id=? AND bud_id=?)OR(bud_id=? AND user_id=?) AND state='002' */
-			if(budId != loginId || userId != loginId){
+			/* if(budId != loginId || userId != loginId){
 				$("#budDel").css("display") == "none";
 			} */
 			if(chk){
