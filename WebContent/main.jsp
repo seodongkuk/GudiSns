@@ -138,6 +138,9 @@
                         </td>
                         
                     </tr>
+                    <tr>
+                    	<td>댓글 개수는 ${flist.rcnt} 입니다.
+                    </tr>
                 </table>
                     <br>
             </c:forEach>

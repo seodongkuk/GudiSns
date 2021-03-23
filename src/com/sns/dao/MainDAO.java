@@ -53,12 +53,12 @@ public class MainDAO {
 		
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
 		
-		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate,cnt.cnt FROM board2 b, photo2 p, hashtag2 h, (SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt\r\n" + 
-				"				WHERE b.board_idx = p.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n" + 
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate,cnt.cnt, r.rcnt FROM board2 b, photo2 p, hashtag2 h, (SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt, (SELECT board_idx, COUNT(*) rcnt FROM reply2 GROUP BY board_idx) r\r\n" + 
+				"				WHERE b.board_idx = p.board_idx(+) AND  b.board_idx = r.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n" + 
 				"                IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n" + 
 				"                WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002'))\r\n" + 
-				"				UNION SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate,cnt.cnt FROM board2 b, photo2 p, hashtag2 h, (SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt\r\n" + 
-				"				WHERE b.board_idx = p.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id \r\n" + 
+				"				UNION SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate,cnt.cnt, r.rcnt FROM board2 b, photo2 p, hashtag2 h, (SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt, (SELECT board_idx, COUNT(*) rcnt FROM reply2 GROUP BY board_idx) r\r\n" + 
+				"				WHERE b.board_idx = p.board_idx(+) AND  b.board_idx = r.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id \r\n" + 
 				"				IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.user_id FROM member2 m ,buddylist2 b \r\n" + 
 				"				WHERE (m.user_id = b.bud_id AND b.bud_id = ? ) AND b.state = '002'))";
 		
@@ -79,6 +79,8 @@ public class MainDAO {
 				dto.setHashTag(rs.getString("hashTag"));
 				dto.setWritedate(rs.getDate("writedate"));
 				dto.setCnt(rs.getInt("cnt"));
+				dto.setRcnt(rs.getInt("rcnt"));
+				
 				flist.add(dto);
 			}
 			
