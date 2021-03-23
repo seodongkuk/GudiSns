@@ -57,7 +57,7 @@ public class SearchService {
 			// 실패 할 경우
 			msg = "검색한 해시태그의 게시글이 없습니다.";
 			page = "/todayTag";
-			if(search == null || search == "" || search.equals(" ")) {
+			if(search == null || search.equals("")) {
 				msg = "검색 할 해시태그를 입력해주세요!";
 				page = "/todayTag";
 			}

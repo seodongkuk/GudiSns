@@ -78,16 +78,20 @@ public class SearchDAO {
 					+"WHERE b.board_idx = h.board_idx AND b.board_idx IN (SELECT board_idx FROM HashTag2 WHERE hashTag LIKE ?)";
 			try {
 				ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
-				ps.setString(1, "%"+search+"%");//?대응
+				ps.setString(1, '%'+search+'%');//?대응
 				rs = ps.executeQuery();//3. 쿼리실행
-				while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
-					SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
-					//dto에 담기
-					dto.setUser_id(rs.getString("user_id"));
-					dto.setBoard_idx(rs.getInt("board_idx"));
-					dto.setContent(rs.getString("content"));
-					dto.setHashTag(rs.getString("hashTag"));
-					list.add(dto);//담긴 dto를 list에 넣기				
+				if(search == null || search == "" || search == " ") {
+					return list;
+				}else {
+					while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
+						SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
+						//dto에 담기
+						dto.setUser_id(rs.getString("user_id"));
+						dto.setBoard_idx(rs.getInt("board_idx"));
+						dto.setContent(rs.getString("content"));
+						dto.setHashTag(rs.getString("hashTag"));
+						list.add(dto);//담긴 dto를 list에 넣기				
+					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
