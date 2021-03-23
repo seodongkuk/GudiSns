@@ -90,20 +90,12 @@ public class MemberController extends HttpServlet {
 		
 		
 		
+	
 		case "/pwupdate":
-			System.out.println("패스워드 변경 요청");
-			msg="변경에 실패 했습니다.";
-			page="index.jsp";
-		
-			if(service.pwupdate()>0) {//성공
-				msg="변경 완료 되었습니다.";
-				page="index.jsp";
-			}
-			
-			System.out.println("page : "+page);
-			req.setAttribute("msg", msg);
-		
+			System.out.println("비번 찾기요청");	
+			service.pwfind();
 			break;
+			
 			
 			
 		

@@ -205,29 +205,28 @@ public String pwfind(String id, String email) {
 
 //-------------------------------------------------------------------비번 변경
 		
-		public int pwupdate(MemberDTO dto) {
-		String sql="UPDATE member2 SET pw=? WHERE user_id=? AND email=?";
-		int success = -1;
-		try {
-			ps = conn.prepareStatement(sql);			
-			ps.setString(1, dto.getPw());
-			ps.setString(2, dto.getId());
-			ps.setString(3, dto.getEmail());
-			
-			System.out.println("업데이트 쿼리 시작"+dto.getId()+dto.getEmail());
-			success = ps.executeUpdate();
-			if(success > 0) {
-				System.out.println("유저 비밀번호 업데이트 성공");
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
-		}
+	
 		
-		return success;
-	}
+		public boolean pwupdate(String id, String newPw) {
+			
+			String sql = "UPDATE member SET pw=? WHERE id=?";
+			boolean success = false;
+			
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, newPw);
+				ps.setString(2, id);
+				if(ps.executeUpdate()>0) {
+					success=true;
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				resClose();
+			}
+			return success;
+			
+		}
 		
 //--------------------------------------------------------------정보수정 접근시 패스워드 확인.
 		
@@ -297,6 +296,7 @@ public String pwfind(String id, String email) {
 		return success;
 	}
 //-----------------------------------------------------------------------------//회원탈퇴 시 패스워드 확인.				
+	
 				
 				
 				
