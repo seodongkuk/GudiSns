@@ -70,7 +70,7 @@ public class SearchDAO {
 		return tag;		
 	}
 		
-	public ArrayList<SearchDTO> findTag(String find, String search) {
+	public ArrayList<SearchDTO> findTag(String find, String search, String loginId) {
 		ArrayList<SearchDTO> list = new ArrayList<SearchDTO>();		
 		//해시태그 검색
 		if(find.equals("HashTag")) {
@@ -80,7 +80,7 @@ public class SearchDAO {
 				ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
 				ps.setString(1, '%'+search+'%');//?대응
 				rs = ps.executeQuery();//3. 쿼리실행
-				if(search == null || search == "" || search == " ") {
+				if(search == null || search == "" || search == " " || search.equals("#")) {
 					return list;
 				}else {
 					while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
@@ -105,12 +105,17 @@ public class SearchDAO {
 				ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
 				ps.setString(1, search);//?대응
 				rs = ps.executeQuery();//3. 쿼리실행
-				while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
-					SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
-					//dto에 담기
-					dto.setUser_id(rs.getString("user_id"));
-					dto.setName(rs.getString("name"));
-					list.add(dto);//담긴 dto를 list에 넣기				
+				if(search.equals(loginId)) {
+					return list;
+				}else {
+					
+					while(rs.next()) {//4. 데이터 존재 여부에 따라 값 넣기 -> DTO에 한번에 담기
+						SearchDTO dto = new SearchDTO(); //DTO에 담기 위해 겍체화
+						//dto에 담기
+						dto.setUser_id(rs.getString("user_id"));
+						dto.setName(rs.getString("name"));
+						list.add(dto);//담긴 dto를 list에 넣기				
+					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
