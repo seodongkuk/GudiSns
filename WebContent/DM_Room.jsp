@@ -158,7 +158,7 @@
         var inputMsg = document.getElementById('inputMsg');
         
     	// 로컬에서 테스트할 때 사용하는 URL입니다.
-     	var webSocket = new WebSocket('ws://localhost/GudiSns/webChatServer');
+     	var webSocket = new WebSocket('ws://localhost:8080/GudiSns/webChatServer');
     	
     	//웹소켓이 연결되었을 때 실행되는 얘들?
     	webSocket.onerror = function(e){
@@ -171,7 +171,6 @@
     	webSocket.onmessage = function(e){
     		onMessage(e);
     	};
-    	
     	
     	function onMessage(e){
     		//가져온 채팅을 담는다
@@ -217,7 +216,9 @@
     		}
     		
     		//메인 내용에 추가한다.
-    		$('#dmRoom').append($chat);
+    			$('#dmRoom').append($chat);
+
+    		
 
     		
     		$("#dmRoom").scrollTop($("#dmRoom")[0].scrollHeight);
@@ -269,23 +270,10 @@
     			//webSocket에 해당 내용을 전달한다.
     			webSocket.send(sessionId+":"+chatMsg+":"+getParameterByName('create')+":"+idx);
     			//DB에 저장하기 위해 ajax 방식으로 호출
-    		//만약 DM방 만든 사람이면..(FROM 생성자, TO 초대받은 사람)
-/*                 		$(function(){
-            				$.ajax({
-            					type: "POST"
-            					,url: "DM_Room?id="+patId+"&&create="+getParameterByName('create')+"&&idx="+idx
-            					,data:{
-            						fromId: encodeURIComponent(patId)
-            						,toId: encodeURIComponent(getParameterByName('create'))
-            						,content: encodeURIComponent(chatMsg)
-            						,idx: encodeURIComponent(idx)
-            					}
-            					,success: function(result){
-            						
-            					}
-            				});
-            			}); */
-    			location.reload();
+            	setInterval(function() {
+            		location.reload();
+            	},100);
+    		//메시지를 보내면 0.1초마다 페이지 새로고침
     		}else{
     			//webSocket에 해당 내용을 전달한다.
     			webSocket.send(sessionId+":"+chatMsg+":"+patId+":"+idx);
@@ -305,12 +293,14 @@
     				});
     			}); */
     			
-    			location.reload();
+            	setInterval(function() {
+            		location.reload();
+            	},100);
     		}
     		
 
 
-    		
+    		//채팅내용이 있으면 채팅 없을 경우의 내용 숨김
     		if(chatMsg != null){
     			$('#noChat').css('display','none');
     		}
@@ -321,7 +311,7 @@
     	}
     </script>
     
-    <!-- 채팅 전송 기능.. 엔터를 쳐도 보내고 클릭해도 보낼 수 있다. -->
+    <!-- 채팅 전송 기능.. 클릭해서 보낼 수 있다. -->
     <script type="text/javascript">
 	$(function(){
 		$('#msg-send').click(function(){

@@ -2,6 +2,7 @@ package com.sns.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -163,7 +164,7 @@ public class DmService {
 			System.out.println(chat_idx+userId+recieveId);
 			
 			//가져온 파라메터를 모두 담는다
-			String page = "DM_Room?id="+recieveId+"&&create="+userId+"&&idx="+chat_idx;
+			String page = "DM_Room?id="+URLEncoder.encode(recieveId,"UTF-8")+"&&create="+URLEncoder.encode(userId,"UTF-8")+"&&idx="+chat_idx;
 		
 		//최종 페이지가 보여져야 하기 때문에 resp 방식으로 페이지 이동
 		resp.sendRedirect(page);

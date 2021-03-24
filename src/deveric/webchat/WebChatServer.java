@@ -1,17 +1,15 @@
 package deveric.webchat;
 
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -25,33 +23,47 @@ import vo.ChatClient;
 
 //이 어노테이션을 명시함으로서 WEB 소켓으로 접속 가능한 URL 정보를 명시하여 소켓 서버를 생성해주며 프로퍼티를 통해 decoder나 encoder를 명시할 수 있다. 
 @ServerEndpoint("/webChatServer")
-//DM_Room.jsp에서 요청이 들어올떄..
-@WebServlet({"/webChatServer"})
 public class WebChatServer extends HttpServlet {
 	private static Map<Session, ChatClient> users = Collections.synchronizedMap(new HashMap<Session, ChatClient>());
 
 	//자바 웹소켓 모듈 어노테이션
 	@OnMessage
-	public void onMsg(String message, Session session) throws IOException, ServletException {
+	public void onMsg(String message, Session session) throws IOException, ServletException, InterruptedException {
 		//String userName = users.get(session).getName();
 		System.out.println(message+":"+users.size());
 		
 		String idx = "";
+		String fromId = "";
+		String content = "";
+		String toId = "";
 		int userSize = users.size();
 		String[] msg = message.split(":");
-		String fromId = msg[0];
-		String content = msg[1];
-		String toId = msg[2];
-		idx = msg[3];
 		//접속 유저가 2명이라면...
-
 		
-		if(fromId != null && toId != null && content != null) {
+		//배열의 사이즈가 다를 수 있으니
+		//for문으로 각각 담는게 좋다
+		for(int i=0;i<msg.length;i++) {
+			if(i == 0) {
+				fromId = msg[i];
+			}
+			else if(i == 1) {
+				content = msg[i];
+			}
+			else if(i == 2) {
+				toId = msg[i];
+			}else {
+				idx = msg[i];
+			}
+		}
+
+		//기본적으로 내용 업데이트를 먼저 시작한다.
+		if(fromId != "" && toId != "" && content != "") {
 			DmService dm = new DmService(null,null);
 			
 			dm.newMsg(fromId, toId, content);
 			
-			if(userSize >= 2 && idx != null) {
+			//만약 접속중인 유저가 2명이상이면..
+			if(userSize >= 2 && idx != "") {
 				System.out.println("현재 유저가 2명이므로 보낸 메시지는 자동 읽음 처리 됩니다..");
 				DmDAO dao = new DmDAO();
 				
@@ -74,6 +86,7 @@ public class WebChatServer extends HttpServlet {
 				System.out.println("현재 세션의 이름"+currentSession);
 				//상대방한테 보내는 메시지
 				if (!currentSession.equals(session)) { 
+					TimeUnit.MILLISECONDS.sleep(100);
 					currentSession.getBasicRemote().sendText(message);
 
 				}
@@ -82,32 +95,10 @@ public class WebChatServer extends HttpServlet {
 
 	}
 
-	//DM내용 INSERT 요청
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
-	
-		dual(req,resp);
-	}
-
-	private void dual(HttpServletRequest req, HttpServletResponse resp)  throws ServletException, IOException{
-		
-		System.out.println("ajax로 다시 방을 불러옵니다");
-		String id = req.getParameter("fromId");
-		String create = req.getParameter("toId");
-		String idx = req.getParameter("idx");
-		
-		String page = "DM_Room?id="+id+"&&create="+create+"&&idx="+idx;
-		
-		resp.sendRedirect(page);
-		
-	}
-
 	//자바 웹소켓 모듈 어노테이션
 	//DM_Room.jsp에 입장하자마자 실행됨(세션 부여 역할을 한다..)
 	@OnOpen
 	public void onOpen(Session session) {
-		int size = users.size();
 		String userName = "user";
 		int rand_num = (int) (Math.random() * 1000);
 
@@ -144,7 +135,6 @@ public class WebChatServer extends HttpServlet {
 	//세션 연결되어 있는 사람이 접속을 끊으면 실행됨(세션 삭제)
 	@OnClose
 	public void onClose(Session session) {
-		String userName = users.get(session).getName();
 		users.remove(session);
 		//sendNotice(userName + "님이 퇴장하셨습니다. 현재 사용자 " + users.size() + "명");
 	}
