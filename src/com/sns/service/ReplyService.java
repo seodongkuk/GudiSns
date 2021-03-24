@@ -46,31 +46,22 @@ public class ReplyService {
 	
 	public void redit() throws ServletException, IOException {
 		resp.setCharacterEncoding("UTF-8");
-		String board_idx = req.getParameter("board_idx");
 		int cmt_idx = Integer.parseInt(req.getParameter("idx"));
-		String user_id = req.getParameter("id");
 		String content = req.getParameter("content");
-		System.out.println(board_idx+"/"+cmt_idx+"/"+user_id+"/"+content);
-		
-		String msg="댓글 수정 실패!";
-		String page="/detail?board_idx="+board_idx;
+		System.out.println("댓글번호 : "+cmt_idx+"/ 댓글 내용 : "+content);
 		
 		String result = dao.edit(content,cmt_idx);
-		System.out.println("댓글 수정 result"+result);
+		System.out.println("수정한 내용 : "+result);
 		
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("edit",result);
 		Gson gson = new Gson();
 		String json = gson.toJson(map);
+		
 		System.out.println(json);
+		
 		resp.setContentType("text/html charset-UTF-8");
 		resp.getWriter().println(json);
-		
-		/*
-		 * if(result==1) { page="/detail?board_idx="+board_idx; msg="댓글 작성을 완료했습니다.";
-		 * }else { page="/detail?board_idx="+board_idx; msg="댓글 작성을 완료했습니다."; }
-		 */
-		 
 		
 	}
 	
