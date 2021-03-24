@@ -119,7 +119,7 @@
 		              	<td>
 			            	<input type="hidden" name="board_idx" value="${list.board_idx}" />
 			            	<input type="hidden" name="user_id" value="${list.user_id}" />
-			            	<input style=" width: 75px; height: 25px; float: right; margin-bottom: -25px;" 
+			            	<input style=" width: 75px; height: 25px; float: right; margin-bottom: -5px;" 
 			            		type="submit" value="신고하기">
 		              	</td>
 	      			</form>

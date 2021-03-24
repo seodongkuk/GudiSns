@@ -253,6 +253,7 @@ public class MainService {
 			msg="신고사유를 작성해주세요 ";
 		}else if(success == 1) {
 		 msg ="이미신고한게시글입니다";
+		 //디스페처를 두번쓸생각을햇으면 됫음 .
 		}
 		req.setAttribute("msg", msg);
 		dis = req.getRequestDispatcher("declaration.jsp");

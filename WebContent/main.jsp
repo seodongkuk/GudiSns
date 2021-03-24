@@ -103,7 +103,7 @@
 	                	<input type="hidden" name="board_idx" value="${flist.board_idx}" />
 	                	<input type="hidden" name="user_id" value="${flist.user_id}" />
 	                	<input type="submit" value="신고하기" 
-	                	style=" width: 75px; height: 25px; float: right; margin-bottom: -25px; ">
+	                	style=" width: 75px; height: 25px; float: right; margin-bottom: -5px; ">
             		</form>
             		<!-- 프로필사진 -->
                 <img src="/GudiSns/photo/" width="75" height="75" style="float: left; margin-left: 20px;">

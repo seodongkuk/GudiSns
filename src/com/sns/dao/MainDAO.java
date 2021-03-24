@@ -238,9 +238,7 @@ public class MainDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
-		}
+		} 
 
 		return newFileName;
 	}
