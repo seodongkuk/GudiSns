@@ -116,24 +116,27 @@
 				<input type="hidden" id="board_idx${status.index}" name="brd" value="${dto.board_idx}"/>  
 				<input type="hidden" id="cmt_idx${status.index}" name="cmt" value="${Reply2.cmt_idx}"/>   
 				<input type="hidden" name="content" value="${Reply2.content}"/>       
+			<!-- 댓글 보이는 창! -->
 			<tr>
-				<td>${status.index}</td>
+			<!-- <td>${status.index}</td>-->
 				<td>${Reply2.user_id}</td>
 				<td>
 					<span id="changeMsg${status.index}">${Reply2.content}</span>
-					<span>
-						<input type="text"  id="content${status.index}" value="${Reply2.content}"/>
-					
-					</span>
+					<c:if test="${Reply2.user_id eq loginId }">
+						<input style="display:none;" type="text" class="edittext" id="content${status.index}" value="${Reply2.content}"/>
+					</c:if>
 				</td>
 				<td>
 					<c:if test="${Reply2.user_id eq loginId }">
-						<button id="redit${status.index}">수정적용</button>
-						<button>수정하기</button>
-						<a href="rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}">삭제</a>										 
+					
+						<button style="display:none;" id="redit${status.index}" class="complete">수정적용</button>
+						<button id="upclick${status.index}" class="update">수정하기</button>
+						<button class="delete" onclick="location.href='rdel?board_idx=${dto.board_idx}&&cmt_idx=${Reply2.cmt_idx}'">삭제</button>										 
+					
 					</c:if>
 				</td>
 			</tr>
+			
 			</c:forEach>
 		</table>
 		<!-- 댓글 작성 폼 -->
@@ -145,14 +148,28 @@
 	            <button>댓글 작성</button>
 	        </td>
 	    </form>
-		</div>
 	<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 </body>
 <script>
+
+//수정시도버튼
+$("body").on("click", "[id^=upclick]", function(event) {
+	console.log("선택한 값"+this.id);
+	var number = this.id.substring(7);
+	//console.log($('#content'+number));
+	//var $button = $('.update'+number);
+	//console.log($button);
+	$(".edittext").hide();
+	$('#content'+number).show();
+	$("#redit"+number).show();
+	$(".delete").hide();
+	$(".update").hide();
+	
+});
+//수정완료버튼
 $("body").on("click", "[id^=redit]", function(event) {
 	console.log("댓글 수정 요청 ");
 	console.log( this.id);
-	var $idx = $('#'+this.id).val();
 	var number = this.id.substring(5,1000);
 	console.log(number);
 	
@@ -175,35 +192,17 @@ $("body").on("click", "[id^=redit]", function(event) {
         	console.log(data);
        	   	console.log(data.edit);
        	 	$changeMsg.html(data.edit);
-          }
+       	 	alert("댓글을 수정하였습니다.");
+       	 	
+       	  }
 	});
-	
+	$(".complete").hide();
+	$(".edittext").hide();
+	$(".update").show();
+	$(".delete").show();
 });
 
-/*
-function update_reply(){ //댓글 수정 함수
-	
-	var content = $("#content");
-	var board_idx = $("#board_idx");
-	var idx = $("#cmt_idx");
-	var id = $("#user_id");
-	 var params = {};
-	 params.content = content.val();
-	 params.board_idx = board_idx.val();
-	 params.idx = idx.val();
-	 params.id = id.val();
-	console.log(params)
-	$.ajax({
-		url: "redit",
-          type: "get",
-          data: params,
-          dataType:'JSON',
-          success: function (data) {
-       	   	console.log(data)
-          }
-	});
-};
-*/
+
 var a = "${dto.hashTag}";
 
 var hash =a.split('#');
@@ -250,9 +249,11 @@ likeCnt();
               data: params,
               dataType:'JSON',
               success: function () {
-           	   	likeCnt();	
+           	   	likeCnt();
+           	 	
               }
 		});
+		location.reload();
 	});
 	
 	 function likeCnt(){
@@ -267,6 +268,7 @@ likeCnt();
                success: function (data) {
             	   $("#like_cnt").html(data.cnt);	
             	   console.log($("#like_cnt")); 
+            	
                }
 		});
 	};

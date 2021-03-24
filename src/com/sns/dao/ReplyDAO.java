@@ -167,19 +167,22 @@ public class ReplyDAO {
 		int success=0;
 		String result = "";
 		String sql = "UPDATE Reply2 SET content=? where cmt_idx=?";
+		//댓글 수정하기
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, content);
 			ps.setInt(2, cmt_idx);
 			success=ps.executeUpdate();
+			//수정할 댓글 가져오기
 			if(success>0) {
-				System.out.println("댓글 수정 성공");
 				sql = "SELECT content FROM Reply2 where cmt_idx=?";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, cmt_idx);
 				rs = ps.executeQuery();
+				//수정한 댓글 result 에 저장
 				if(rs.next()) {
 					result = rs.getString("content");
+					System.out.println("댓글 수정 성공");
 				}
 			}
 		} catch (SQLException e) {
