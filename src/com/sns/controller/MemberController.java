@@ -18,7 +18,7 @@ import com.sns.dto.MemberDTO;
 import com.sns.service.MemberService;
 
 @WebServlet({ "/login", "/join", "/logout", "/main", "/idChk", "/idfind", "/pwfind"
-	,"/pwupdate","/infopw","/userinfoupdate","/userinfo","/memberDel/"})
+	,"/pwupdate","/infopw","/userinfoupdate","/userinfo","/delid"})
 public class MemberController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -142,6 +142,10 @@ public class MemberController extends HttpServlet {
 			dis.forward(req, resp);				
 			break;
 			
+		case"/delid":
+			System.out.println("회원탈퇴");
+			service.delid();
+			break;
 			
 			
 			

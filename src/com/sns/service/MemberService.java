@@ -304,7 +304,33 @@ public void infopw() throws ServletException, IOException {
 		return dao.userinfoupdate(dto);
 }
 //----------------------------------------------------------//회원탈퇴 시 패스워드 확인.
+  public void delid() throws ServletException, IOException {
+		String id = (String) req.getSession().getAttribute("loginId");
+		MemberDTO dto= new MemberDTO();
+		dto.setId(id);
+		
+		
+		
+		MemberDAO dao = new MemberDAO();
+		
+		boolean delid= dao.delid(dto);
 
+		page="main.jsp";
+
+		if(delid){
+			System.out.println("성공");
+			page="logout";
+		}else {
+			System.out.println("실패");
+		}
+
+		
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher(page);
+		dis.forward(req, resp);
+		
+		
+	}
 
 
 }

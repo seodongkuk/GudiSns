@@ -40,7 +40,7 @@ public class MemberDAO {
 	//--------------------------------------------------------------------로그인
 	public boolean login(String id, String pw) {			
 		boolean success = false;
-		String sql="SELECT user_id FROM member2 WHERE USER_ID=? AND PW=?";
+		String sql="SELECT user_id FROM member2 WHERE USER_ID=? AND PW=? AND WITHDRAW_STATE='FALSE'";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,id);
@@ -295,8 +295,23 @@ public String pwfind(String id, String email) {
 		}				
 		return success;
 	}
-//-----------------------------------------------------------------------------//회원탈퇴 시 패스워드 확인.				
-	
+//-----------------------------------------------------------------------------//회원탈퇴			
+	public boolean  delid(MemberDTO  dto) {
+		String sql="UPDATE member2 SET WITHDRAW_STATE='TRUE' WHERE user_id=?";
+		boolean success=false;
+		try {
+		ps=conn.prepareStatement(sql);
+		ps.setString(1, dto.getId());
+		if(ps.executeUpdate()>0) {
+			success=true;
+		}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+		}
 				
 				
 				
