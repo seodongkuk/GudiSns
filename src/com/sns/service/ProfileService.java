@@ -56,40 +56,41 @@ public class ProfileService {
 	
 	public void mylist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-	
-		String idx = req.getParameter("board_idx");
-		System.out.println(loginId+"/"+idx);
+		if(loginId != null) {
+			String idx = req.getParameter("board_idx");
+			System.out.println(loginId+"/"+idx);
 		
-		ProfileDAO dao = new ProfileDAO();
+			ProfileDAO dao = new ProfileDAO();
 		
 		//페이징
-		String pageParam = req.getParameter("page");
-		System.out.println("page: "+pageParam);
+			String pageParam = req.getParameter("page");
+			System.out.println("page: "+pageParam);
 		
-		//1페이지 그룹 -> 1~10번
-		int group = 1;
-		if(pageParam != null) {
-			group = Integer.parseInt(pageParam);
-		}
-		HashMap<String, Object> map = dao.budlist(loginId, group);
+			//1페이지 그룹 -> 1~10번
+			int group = 1;
+			if(pageParam != null) {
+				group = Integer.parseInt(pageParam);
+			}
+			HashMap<String, Object> map = dao.budlist(loginId, group);
 		
-		dao = new ProfileDAO();
-		ArrayList<MainDTO> list = dao.mylist(loginId);
-		System.out.println("마이리스트 사이즈: "+list.size());
-		System.out.println("친구리스트"+map.size());
-		String msg = "게시글없음";
-		if (list != null && list.size() > 0) {
-			req.setAttribute("list", list);
-			msg = loginId;
-		}
-		req.setAttribute("msg", msg);
+			dao = new ProfileDAO();
+			ArrayList<MainDTO> list = dao.mylist(loginId);
+			System.out.println("마이리스트 사이즈: "+list.size());
+			System.out.println("친구리스트"+map.size());
+			String msg = "게시글없음";
+			if (list != null && list.size() > 0) {
+				req.setAttribute("list", list);
+				msg = loginId;
+			}
+			req.setAttribute("msg", msg);
 		//페이징
-		req.setAttribute("maxPage", map.get("maxPage"));
-		req.setAttribute("budlist", map.get("budlist"));
-		req.setAttribute("currPage", group);
+			req.setAttribute("maxPage", map.get("maxPage"));
+			req.setAttribute("budlist", map.get("budlist"));
+			req.setAttribute("currPage", group);
 		
-		dis = req.getRequestDispatcher("MyProfile.jsp");
-		dis.forward(req, resp);
+			dis = req.getRequestDispatcher("MyProfile.jsp");
+			dis.forward(req, resp);
+		}
 	}
 
 }
