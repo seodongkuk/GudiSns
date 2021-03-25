@@ -21,6 +21,7 @@ public class ProfileService {
 	HttpServletRequest req = null;
 	HttpServletResponse resp = null;
 	String msg = "";
+	String page = "";
 	RequestDispatcher dis = null;
 
 	public ProfileService(HttpServletRequest req, HttpServletResponse resp) {
@@ -36,22 +37,26 @@ public class ProfileService {
 
 	//타인 게시글의 아이디를 눌렀을 때 해당 아이디의 프로필로 넘어가는 서비스
 	public void otherProfile() throws ServletException, IOException{
-		
+		String loginId = (String) req.getSession().getAttribute("loginId");
 		String id = req.getParameter("id");
 		System.out.println("요청한 타인 프로필 아이디 : "+id);
 		
 		String idx = req.getParameter("board_idx");
 		System.out.println("타인 id: "+id+"idx: "+idx);
 		
-		ProfileDAO dao = new ProfileDAO();
-		ArrayList<MainDTO> list = dao.otherlist(id);
-		System.out.println(list.size());
-		if (list != null && list.size() > 0) {
-			req.setAttribute("list", list);
+		if(!loginId.equals(id)) { //로그인 한 아이디와 클릭한 아이디가 다를경우에만
+			ProfileDAO dao = new ProfileDAO();
+			ArrayList<MainDTO> list = dao.otherlist(id);
+			System.out.println(list.size());
+			if (list != null && list.size() > 0) {
+				req.setAttribute("list", list);
+				req.setAttribute("id", id);
+				dis = req.getRequestDispatcher("othersProfile.jsp");
+				dis.forward(req, resp);
+			}
+		}else {
+			resp.sendRedirect("./flist");
 		}
-		req.setAttribute("id", id);
-		dis = req.getRequestDispatcher("othersProfile.jsp");
-		dis.forward(req, resp);
 	}
 	
 	public void mylist() throws ServletException, IOException {

@@ -32,23 +32,28 @@ public class ProfileController extends HttpServlet {
 		String context = req.getContextPath();
 		String sub = uri.substring(context.length());
 		
-		req.setCharacterEncoding("UTF-8");
-		switch(sub) {
-		case "/upload":
-			System.out.println("프로필사진등록");
-			service.upload();
-			break;
+		String sessionId = (String) req.getSession().getAttribute("loginId");
+		
+		if(sessionId != null) {
+			req.setCharacterEncoding("UTF-8");
+			switch(sub) {
+			case "/upload":
+				System.out.println("프로필사진등록");
+				service.upload();
+				break;
 			
-		case "/otherProfile":
-			System.out.println("타인 프로필 요청");
-			service.otherProfile();
-			break;
-			
-		case "/MyProfile" :
-			System.out.println("내 프로필 요청");
-			service.mylist();
-			break;
-	
+			case "/otherProfile":
+				System.out.println("타인 프로필 요청");
+				service.otherProfile();
+				break;
+				
+			case "/MyProfile" :
+				System.out.println("내 프로필 요청");
+				service.mylist();
+				break;
+			}
+		}else {
+			resp.sendRedirect("./index.jsp");
 		}
 	}
 	

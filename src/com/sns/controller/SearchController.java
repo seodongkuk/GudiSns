@@ -35,7 +35,7 @@ public class SearchController extends HttpServlet {
 		SearchService service = new SearchService(req,resp);
 		
 		String sessionId = (String) req.getSession().getAttribute("loginId");
-		System.out.println("로그인한아이디: "+sessionId);
+		//System.out.println("로그인한아이디: "+sessionId);
 		
 		if(sessionId != null) {
 			
