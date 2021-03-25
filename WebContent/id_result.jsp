@@ -40,7 +40,7 @@
         <form>
         <tr>
             <td>
-           <jsp:include page="idbox.jsp"/>
+                    회원님의 ID는  ${idfind}  입니다.
             </td>
         </tr>
             <br/>

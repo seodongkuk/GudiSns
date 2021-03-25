@@ -93,7 +93,7 @@ public class MemberController extends HttpServlet {
 	
 		case "/pwupdate":
 			System.out.println("비번 찾기요청");	
-			service.pwfind();
+			service.pwupdate();
 			break;
 			
 			

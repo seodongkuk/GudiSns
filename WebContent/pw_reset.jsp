@@ -37,11 +37,9 @@
             <h1>비밀번호 재설정</h1>
             
     <table>
-        <form action="pwupdate" method="post">
+       <form action="pwupdate?id=${id}" method="POST">
    		
-			<input type="hidden" name="userId" value="${sessionScope.id}"/>
-	    	<input type="hidden" name="email" value="${sessionScope.email}"/>
-	    
+		
         <tr>
                 <td>
                   
@@ -49,12 +47,12 @@
         </tr>
         <tr>
         <td>
-            PW <input type="password" name="pw" placeholder="비밀번호를 입력해주세요."/>
+            PW <input type="password" name="newPw" placeholder="비밀번호를 입력해주세요."/>
         </td>  
     </tr>
         <tr>
             <td>
-                PW 재확인 <input type="password" name="pw" placeholder="비밀번호를 재입력 해주세요."/>
+                PW 재확인 <input type="password" name="newPw" placeholder="비밀번호를 재입력 해주세요."/>
             </td>
         </tr>
         <tr>
@@ -67,8 +65,9 @@
         <input type="submit" value="비밀번호 재설정"/>
         </td>       
      
-    </form>
+
     </table>
+        </form>
 
 </CENTER>
     </body>

@@ -6,7 +6,7 @@
         <meta charset="utf-8">
     
         <title>비밀번호찾기</title>
-        <style>
+  <style>
                h2{
                padding: 30;
                font-size: 70;
@@ -49,24 +49,28 @@ table,td,th{
     <table>
         <form action="pwfind" method="post">
      
-	    	<input type="hidden" name="pw" value="${sessionScope.pw}"/>
-	    	
-        
-        <tr>
-            <td>
-                <input type="text" name="userId" placeholder="아이디"/>
-            </td>
-        </tr>
-        
-            <br/>
-           
-           
-           
-            <td>
-            	<input type="email" name=email placeholder="이메일"/>
-            </td>  
+	            <tr>
+                    <th>아이디</th>
+                    <td>
+                        <input type="text" id="userId" name="userId" placeholder="아이디를 입력해주세요."/>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th>이름</th>
+                    <td>
+                        <input type="text" id="userName"name="userName" placeholder="이름을 입력해주세요."/>
+                    </td>
+                </tr>
+                 
+                 <tr>
+                    <th>핸드폰 번호</th>
+                    <td>
+                        <input type="text" id="userPhone" name="userPhone" maxlength="13" placeholder="핸드폰번호를 입력해주세요."/>
+                    </td>
+                </tr>
           
-    <tr>
+   <tr>
         <td>
         <input type="submit" value="비밀번호 찾기"/>
         </td>
@@ -80,7 +84,7 @@ table,td,th{
 
 
 
-</form>	
+		</form>	
     </table>
 
 

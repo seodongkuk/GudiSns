@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+
 import com.sns.dto.MemberDTO;
 
 public class MemberDAO {
@@ -149,84 +150,79 @@ public boolean idChk(String id) throws SQLException {
 //--------------------------------------------------------------------아이디 찾기
 
 
-public HashMap<String, Object> idfind(String name, String phone) {
-	
-	String sql ="SELECT user_id,reg_date FROM member2 WHERE name=? AND phone=?";
+/* 아이디찾기 */
+public String idfind(String name, String phone) {
+
+	String sql = "SELECT user_id FROM member2 WHERE name=? AND phone=?";
 	String id = "";
-	Date reg_date = null;
-	
-	HashMap<String, Object> map = new HashMap<String, Object>();
-
-	
-	try {
-	ps = conn.prepareStatement(sql);
-	ps.setString(1, name);
-	ps.setInt(2, Integer.parseInt(phone));
-	rs=ps.executeQuery();
-	
-	if(rs.next()) {
-		id = rs.getString("user_id");
-		reg_date = rs.getDate("reg_date");
-		map.put("id",id);
-		map.put("reg_date", reg_date);
-	}
-} catch (SQLException e) {
-	e.printStackTrace();
-}finally {
-	resClose();
-}
-	System.out.println(id);
-	return map;
-}
-
-//-------------------------------------------------------------------비번 찾기
-public String pwfind(String id, String email) {
-
-	String sql="SELECT pw FROM member2 WHERE USER_ID=? AND email=?";
-	String pw = "";
 	try {
 		ps = conn.prepareStatement(sql);
-		ps.setString(1, id);
-		ps.setString(2, email);
+		ps.setString(1, name);
+		ps.setString(2, phone);
 		rs = ps.executeQuery();
-		
-		if(rs.next()) {
-			pw=rs.getString("pw");
+		if (rs.next()) {
+			id = rs.getString("user_id");
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
-	}finally {
+	} finally {
 		resClose();
-		
 	}
-		System.out.println(pw);
-		return pw;
+
+	System.out.println(id);
+	return id;
+}
+
+
+
+
+/* 비밀번호 찾기 */
+public boolean pwfind(String id, String name, String phone) {
+
+	String sql = "SELECT pw FROM member2 WHERE user_id=? AND name=? AND phone=?";
+	boolean pw = false;
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, id);
+		ps.setString(2, name);
+		ps.setString(3, phone);
+		rs = ps.executeQuery();
+		if (rs.next()) {
+			pw = true;
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		resClose();
 	}
+	System.out.println(pw);
+	return pw;
+}
 
 //-------------------------------------------------------------------비번 변경
 		
 	
 		
-		public boolean pwupdate(String id, String newPw) {
-			
-			String sql = "UPDATE member SET pw=? WHERE id=?";
-			boolean success = false;
-			
-			try {
-				ps = conn.prepareStatement(sql);
-				ps.setString(1, newPw);
-				ps.setString(2, id);
-				if(ps.executeUpdate()>0) {
-					success=true;
-				}
-			}catch (SQLException e) {
-				e.printStackTrace();
-			}finally {
-				resClose();
-			}
-			return success;
-			
+public boolean pwupdate(String id, String newPw) {
+
+	String sql = "UPDATE member2 SET pw=? WHERE user_id=?";
+	boolean success = false;
+
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, newPw);
+		ps.setString(2, id);
+		if (ps.executeUpdate() > 0) {
+			success = true;
 		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		resClose();
+	}
+
+	return success;
+}
 		
 //--------------------------------------------------------------정보수정 접근시 패스워드 확인.
 		
