@@ -182,7 +182,7 @@
             <table style="margin: auto; padding: 15px;">
             	<tr>
                      <td>
-                            <button onclick="location.href='del?board_idx=${myL.board_idx}'" style="margin-top: 6px;margin-left: 475px;">
+                            <button  onclick="location.href='del?board_idx=${myL.board_idx}'"  style="margin-top: 6px;margin-left: 475px;">
            							게시글삭제</button>
            			<td>
            		</tr>
@@ -244,6 +244,13 @@
 
     </body>
      <script>
+     var msg = "${delmsg}";
+ 	
+ 	if(msg != ""){
+ 		alert(delmsg);
+ 	}
+ 	
+ 	
      var a = "${myL.hashTag}";
 
      var hash =a.split('#');
@@ -283,6 +290,8 @@
     $(".btn-like").click(function() {
 	    $(this).toggleClass("done");
     });
+    
+    
      </script>
 
 </html>

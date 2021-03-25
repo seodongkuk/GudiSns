@@ -72,46 +72,52 @@ public class MainService {
 
 	public void edit() throws IOException, ServletException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		FileService upload = new FileService(req);
-		
-		MainDTO dto = upload.regist();
-		MainDAO dao = new MainDAO();
-		dao.edit(dto);
-		
-		if (dto.getOriFileName() != null) {
-			int idx = dto.getBoard_idx();
-			System.out.println("업로드 할 게시판 번호: "+idx);
-			dao = new MainDAO();
+		if(loginId != null) {
 			
-			String delFileName = dao.getFileName(String.valueOf(idx));
-			System.out.println("삭제할파일"+delFileName);
- 			dao = new MainDAO();
- 			
-			dao.updateFileName(delFileName, dto);
+			FileService upload = new FileService(req);
 			
-			if (delFileName != null) {
-				upload.delete(delFileName);
+			MainDTO dto = upload.regist();
+			MainDAO dao = new MainDAO();
+			dao.edit(dto);
+			
+			if (dto.getOriFileName() != null) {
+				int idx = dto.getBoard_idx();
+				System.out.println("업로드 할 게시판 번호: "+idx);
+				dao = new MainDAO();
+				
+				String delFileName = dao.getFileName(String.valueOf(idx));
+				System.out.println("삭제할파일"+delFileName);
+				dao = new MainDAO();
+				
+				dao.updateFileName(delFileName, dto);
+				
+				if (delFileName != null) {
+					upload.delete(delFileName);
+				}
 			}
+			
+			System.out.println(dto.getBoard_idx());
+			dis =req.getRequestDispatcher("detail?board_idx="+dto.getBoard_idx());
+			dis.forward(req, resp);
 		}
-	
-		System.out.println(dto.getBoard_idx());
-		dis =req.getRequestDispatcher("detail?board_idx="+dto.getBoard_idx());
-		dis.forward(req, resp);
 	}
 
-	public void del() throws IOException {
-		String idx = req.getParameter("board_idx");
-		System.out.println("delete idx => " + idx);
-		FileService upload = new FileService(req);
-		MainDAO dao = new MainDAO();
-		String newFileName = dao.getFileName(idx);
-		int success = dao.del(idx, newFileName);
-		if (success > 0 && newFileName != null) {
-			System.out.println("파일삭제");
-			upload.delete(newFileName);
-		}
-
-		resp.sendRedirect("./MyProfile");
+	public void del() throws IOException{
+		String loginId = (String) req.getSession().getAttribute("loginId");
+		if(loginId !=null) {
+			String idx = req.getParameter("board_idx");
+			System.out.println("delete idx => " + idx);
+			FileService upload = new FileService(req);
+			MainDAO dao = new MainDAO();
+			String newFileName = dao.getFileName(idx);
+			int success = dao.del(idx, newFileName);
+			if (success > 0 && newFileName != null) {
+				System.out.println("파일삭제");
+				upload.delete(newFileName);
+				}
+			resp.sendRedirect("./MyProfile");
+			
+			}
 	}
 
 	public void detail() throws ServletException, IOException {
@@ -144,22 +150,25 @@ public class MainService {
 
 	public void flist() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		System.out.println(loginId+" : loginid");
-		MainDAO dao = new MainDAO();
-	
-		ArrayList<MainDTO> flist = dao.flist(loginId);
-		
-		System.out.println(flist.size());
-		String msg = "친구없음";
-		if (flist != null && flist.size() > 0) {
-			req.setAttribute("flist", flist);
-			msg = "";
+		if(loginId != null) {
+			
+			System.out.println(loginId+" : loginid");
+			MainDAO dao = new MainDAO();
+			
+			ArrayList<MainDTO> flist = dao.flist(loginId);
+			
+			System.out.println(flist.size());
+			String msg = "친구없음";
+			if (flist != null && flist.size() > 0) {
+				req.setAttribute("flist", flist);
+				msg = "";
+			}
+			
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher("main.jsp");
+			dis.forward(req, resp);
+			
 		}
-		
-		req.setAttribute("msg", msg);
-		dis = req.getRequestDispatcher("main.jsp");
-		dis.forward(req, resp);
-		
 	}
 	
 	public void likecnt() throws ServletException, IOException {
@@ -247,29 +256,32 @@ public class MainService {
 	public void singo() throws ServletException, IOException {
 		//신고에 넘겨줄 idx content 신고한 아이디 get >>req
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		String idx = req.getParameter("board_idx");
-		String user_id =req.getParameter("user_id");
-		System.out.println(loginId+"/"+idx +"/"+user_id);
-		
-		MainDTO dto = new MainDTO();
-		dto.setUser_id(loginId);
-		dto.setBoard_idx(Integer.valueOf(idx));
-		MainDAO dao = new MainDAO();
-		int success = dao.singoCk(dto);
-		System.out.println(success);
-		String msg= "";
-		if(success == 0) {
-			req.setAttribute("loginId", loginId);
-			req.setAttribute("idx", idx);
-			req.setAttribute("user_id", user_id);
-			msg="신고사유를 작성해주세요 ";
-		}else if(success == 1) {
-		 msg ="이미신고한게시글입니다";
-		 //디스페처를 두번쓸생각을햇으면 됫음 .
+		if(loginId != null) {
+			
+			String idx = req.getParameter("board_idx");
+			String user_id =req.getParameter("user_id");
+			System.out.println(loginId+"/"+idx +"/"+user_id);
+			
+			MainDTO dto = new MainDTO();
+			dto.setUser_id(loginId);
+			dto.setBoard_idx(Integer.valueOf(idx));
+			MainDAO dao = new MainDAO();
+			int success = dao.singoCk(dto);
+			System.out.println(success);
+			String msg= "";
+			if(success == 0) {
+				req.setAttribute("loginId", loginId);
+				req.setAttribute("idx", idx);
+				req.setAttribute("user_id", user_id);
+				msg="신고사유를 작성해주세요 ";
+			}else if(success == 1) {
+				msg ="이미신고한게시글입니다";
+				//디스페처를 두번쓸생각을햇으면 됫음 .
+			}
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher("declaration.jsp");
+			dis.forward(req, resp);
 		}
-		req.setAttribute("msg", msg);
-		dis = req.getRequestDispatcher("declaration.jsp");
-		dis.forward(req, resp);
 	}
 
 	public void reportAction() throws ServletException, IOException {
