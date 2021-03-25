@@ -87,7 +87,7 @@
            <!-- 좋아요 기능! -->
 			<div class="like">
 				<c:if test="${ loginId eq null }">
-					추천 기능은 <button type="button" id="login"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
+					추천 기능은 <button onclick="location.href='./'"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
 					<i class="fa fa-heart" style="font-size:16px;color:red"></i>
 					<span id="like_cnt" class="like_count">${cnt}</span>					
 				</c:if>
@@ -109,7 +109,7 @@
 		        </td>
 		    </tr>
 	    </table>     
-	    
+   
 	    <!-- 댓글  수정, 삭제 폼 -->
         <table>				
 			<c:forEach items="${list}" var="Reply2" varStatus="status">
@@ -140,14 +140,19 @@
 			</c:forEach>
 		</table>
 		<!-- 댓글 작성 폼 -->
-	    <form action="rwrite" method="POST">
-	        <td>
-	        	<input type="hidden" id="user_id" name="user_id" value="${loginId}"/>
-	        	<input type="hidden" id="board_idx" name="board_idx" value="${dto.board_idx}"/>
-	            <b>${loginId}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
-	            <button>댓글 작성</button>
-	        </td>
-	    </form>
+		<c:if test="${loginId eq null }">
+		    댓글을 입력하려면<button onclick="location.href='./'"><b>로그인</b></button> 해주세요
+		</c:if>
+	    <c:if test="${loginId ne null}">
+		    <form action="rwrite" method="POST">
+		        <td>
+		        	<input type="hidden" id="user_id" name="user_id" value="${loginId}"/>
+		        	<input type="hidden" id="board_idx" name="board_idx" value="${dto.board_idx}"/>
+		            <b>${loginId}</b> : <input type="text" name="content" size="70" placeholder="댓글을 입력해주세요."> 
+		            <button>댓글 작성</button>
+		        </td>
+		    </form>
+		</c:if>
 	<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
 </body>
 <script>
