@@ -24,9 +24,11 @@ public class MemberService {
 	MemberDAO dao = null;
 	
 	
+	
 	public MemberService(HttpServletRequest req, HttpServletResponse resp) {
 		this.req = req;
 		this.resp = resp;
+		dao=new MemberDAO();
 	}
 	
 	
@@ -149,32 +151,50 @@ public boolean idChk() throws IOException {
 }
 //---------------------------------------------------------------//아이디 찾기.
 
+/*아이디 찾기*/
 public void idfind() throws ServletException, IOException {
 	
-	String name = req.getParameter("userName");
-	String phone = req.getParameter("userPhone");
+	String name = req.getParameter("name");
+	String phone = req.getParameter("phone");
 	System.out.println(name + "/" + phone);
+//	MemberDAO dao = new MemberDAO();				
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	String id = "";
+	try {
+		id = dao.idfind(name, phone);
+		System.out.println("아이디찾기 : "+id);
 
-	String id = dao.idfind(name, phone);
-	
-	System.out.println("아이디찾기 : "+id);
-	
-	
-	if(id!="") {
-		page = "id_result.jsp";
-		msg = name+" 님의 아이디는"+id+" 입니다.";
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("use", id);
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+		System.out.println(json);
+		resp.getWriter().print(json);
+		// 페이지에 그려주는것.
 		
-		req.getSession().setAttribute("idfind", id); // "idfind"라는 이름으로 session에 저장
-	}else{
-		page = "id_Find.jsp";
-
-		
-	}
-	req.setAttribute("msg", msg);
-	dis = req.getRequestDispatcher(page);
-	dis.forward(req, resp);
+	}	
 
 }
+
+/*아이디찾기 두번째 요청*/
+public void idfind1() throws ServletException, IOException{
+	
+	String id = req.getParameter("id");
+	System.out.println(id);	
+	page="id_result.jsp";
+
+	req.setAttribute("idfind", id);
+	dis = req.getRequestDispatcher(page);
+	dis.forward(req, resp);
+	
+}
+
+
+
+
 
 
 //----------------------------------------------------------------------//비밀번호 찾기.

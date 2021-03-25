@@ -150,7 +150,6 @@ public boolean idChk(String id) throws SQLException {
 //--------------------------------------------------------------------아이디 찾기
 
 
-/* 아이디찾기 */
 public String idfind(String name, String phone) {
 
 	String sql = "SELECT user_id FROM member2 WHERE name=? AND phone=?";
@@ -161,7 +160,7 @@ public String idfind(String name, String phone) {
 		ps.setString(2, phone);
 		rs = ps.executeQuery();
 		if (rs.next()) {
-			id = rs.getString("user_id");
+			id = rs.getString("user_id"); 
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();

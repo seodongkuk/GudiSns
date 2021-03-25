@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
         <title>아이디 확인</title>
         <style>
                h1{
@@ -67,11 +68,6 @@
         </CENTER>
     </body>
     <script>
-    var msg = "${msg}";
 
-    if(msg != ""){
-    	alert(msg);
-    }
-      
     </script>
 </html>
