@@ -42,13 +42,13 @@
     <body>
     	<div class="bar">
     	 <ul>
-                <a href="manager_blind.jsp" target="_parent">
+                <a href="./blind_list" target="_parent">
                      <li>블라인드 리스트</li>
                  </a>
                  <a href="./report_list" target="_parent">
                      <li>신고접수 리스트</li>
                  </a>
-                 <a href="manager_black.jsp" target="_parent">
+                 <a href="./black_list" target="_parent">
                      <li>블랙 리스트</li>
                  </a>
              </ul>

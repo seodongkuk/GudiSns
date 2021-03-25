@@ -15,9 +15,64 @@ public class AdminDTO {
 	private String NewFileName;
 	private String HashTag;
 	private Date Writedate;
+	private String blk_state;
+	private String reason;
+	private int blk_idx;
+	private Date proc_date;
+	private String blind_state;
+	private Date blind_date;
+	
 	
 	
 
+
+	public String getBlind_state() {
+		return blind_state;
+	}
+
+	public void setBlind_state(String blind_state) {
+		this.blind_state = blind_state;
+	}
+
+	public Date getBlind_date() {
+		return blind_date;
+	}
+
+	public void setBlind_date(Date blind_date) {
+		this.blind_date = blind_date;
+	}
+
+	public String getBlk_state() {
+		return blk_state;
+	}
+
+	public void setBlk_state(String blk_state) {
+		this.blk_state = blk_state;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public int getBlk_idx() {
+		return blk_idx;
+	}
+
+	public void setBlk_idx(int blk_idx) {
+		this.blk_idx = blk_idx;
+	}
+
+	public Date getProc_date() {
+		return proc_date;
+	}
+
+	public void setProc_date(Date proc_date) {
+		this.proc_date = proc_date;
+	}
 
 	public String getOriFileName() {
 		return OriFileName;

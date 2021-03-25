@@ -6,11 +6,18 @@
     <head>
         <meta charset="UTF-8">
         <title>블랙리스트</title>
-        <!-- favicon:사이트를 대표하는 탭창에 보여지는 이미지 -->
+        
         <link rel="icon" href="icon.jpg">
         <style>
+        	.pageArea span{
+				font-size: 12px;
+				border : 1px solid lightgray;
+				padding: 2px 10px;		
+				margin: 5px;		
+				color : gray;
+			}
             body{
-                width: 700px;
+               width: 700px;
                 margin: 20px 550px;
                 padding: 50px;
                 text-align: center;
@@ -43,30 +50,42 @@
     <body>
         <h1>관리자 모드</h1>
         <h3>블랙 리스트</h3>
-        <p>유저 <input type="text"> <button>검색</button></p>
+        <input type="button" onclick="location.href='logout'" value="로그아웃"/>
+
         <table>
             <tr>
-                <th>프로필</th>
                 <th>블랙리스트</th>
-                <th>처리한 관리자</th>
+                <th>등록날짜</th>
                 <th>상태</th>
             </tr>
+            <c:forEach items="${blackList}" var="blackList">
             <tr>
-                <td><img src="#"/></td>
-                <td>NO: 아이디: 등록날짜: </td>
-                <td></td>
+                <td>ID:${blackList.user_id}</td>
+                <td>${blackList.proc_date}</td>
                 <td><a href="#">해제</a></td>
             </tr>
+            </c:forEach>
         </table>    
-        <div class="paging">
-            <button>이전</button>
-            <button>1</button>
-            <button>다음</button>
-        </div>    
-        <iframe src="manager_bottom.jsp" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+        <div class="pageArea">
+			<span>
+				<c:if test="${currPage == 1}">이전</c:if>
+				<c:if test="${currPage > 1}">
+					<a href="./black_list?page=${currPage-1}">이전</a>
+				</c:if>				
+			</span>
+			<span id="page">${currPage}</span>
+			<span>
+				<c:if test="${currPage == maxPage}">다음</c:if>
+				<c:if test="${currPage < maxPage}">
+					<a href="./black_list?page=${currPage+1}">다음</a>
+				</c:if>	
+				
+			</span>
+		</div>  
+        <iframe src="manager_bottom.jsp" width="800px" height="500px" scrolling="no" frameborder="0"></iframe>
+       
     </body>
     	<script>
-		//Service에서 지정한 msg 값을 alert로 View
 		var msg = "${msg}";
 		if(msg != ""){
 			alert(msg);
