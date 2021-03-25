@@ -88,12 +88,11 @@
 			<div class="like">
 				<c:if test="${ loginId eq null }">
 					추천 기능은 <button onclick="location.href='./'"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br/>
-					<i class="fa fa-heart" style="font-size:16px;color:red"></i>
+					<img src="./img/unlike.JPG" style="width:30px;"/>
 					<span id="like_cnt" class="like_count">${cnt}</span>					
 				</c:if>
 				<c:if test="${ loginId ne null }">
-					<button id="likebtn"> 추천해줘~</button>
-					<i class="fa fa-heart" style="font-size:16px;color:red"></i>
+					<img id="likebtn" src="./img/unlike.JPG" style="width:30px;"/>
 					<span id="like_cnt" class="like_count">${cnt}</span>
 				</c:if>
 			
@@ -256,10 +255,15 @@ likeCnt();
               success: function (data) {
 
            	 	console.log(data.result);
- 
+           	 	if(data.result==0){
+           	 		$("#likebtn").attr("src","./img/like.JPG");
+           	 	likeCnt();
+           	 	}else if(data.result==1){
+           	 		$("#likebtn").attr("src","./img/unlike.JPG");
+           	 	likeCnt();
+           	 	}
               }
         });
-		//location.reload();
 	});
 	
 	 function likeCnt(){
