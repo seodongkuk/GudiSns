@@ -253,12 +253,13 @@ likeCnt();
               type: "get",
               data: params,
               dataType:'JSON',
-              success: function () {
-           	   	likeCnt();
-           	 	
+              success: function (data) {
+
+           	 	console.log(data.result);
+ 
               }
-		});
-		location.reload();
+        });
+		//location.reload();
 	});
 	
 	 function likeCnt(){
