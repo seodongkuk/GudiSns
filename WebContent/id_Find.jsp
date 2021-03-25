@@ -83,8 +83,9 @@ table,td,th{
             <input style="margin: 10;" type="button" value="비밀번호 찾기" onclick="location.href='pw_Find.jsp'"/></br>
         </td>
         <td>
-            <input type="button"  value="로그인 하기" onclick="location.href='index.jsp'" />
-        </td>   
+            <input type="button"  value="홈 이동" onclick="location.href='index.jsp'" />
+        </td>  
+         
     
           
         </CENTER>
