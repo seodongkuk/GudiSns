@@ -105,7 +105,7 @@
             <input class="upload_name" value="파일을 넣어주세요">
             <br>
             <select name="release_state" id="selectBox">
-                <option value="001">전체공개</option>
+             <!--    <option value="001">전체공개</option> -->
                 <option value="002">친구공개</option>
                 <option value="003">나만보기</option>
             </select>

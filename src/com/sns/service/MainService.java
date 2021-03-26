@@ -113,6 +113,7 @@ public class MainService {
 			int success = dao.del(idx, newFileName);
 			System.out.println("파일삭제여부"+newFileName+success);
 			String delmsg= "글삭제가되지않았읍니다";
+			
 			if(success>0) {
 				delmsg="글삭제되었습니다.";
 			}
@@ -165,9 +166,12 @@ public class MainService {
 			MainDAO dao = new MainDAO();
 			
 			ArrayList<MainDTO> flist = dao.flist(loginId);
-			
 			System.out.println(flist.size());
 			String msg = "친구없음";
+			
+			
+			
+			
 			if (flist != null && flist.size() > 0) {
 				req.setAttribute("flist", flist);
 				msg = "";

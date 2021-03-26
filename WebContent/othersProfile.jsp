@@ -159,7 +159,7 @@
 	                 <tr>
 	                     <td>
 	                         <p style="font-size: 15px; color: grey;">
-	                             댓글 모두 ${rcnt}개입니다.</p>
+	                             댓글 모두 ${list.rcnt}개입니다.</p>
 	                     </td>
 	                 </tr>
 	             </form>
