@@ -60,6 +60,7 @@ public class MemberController extends HttpServlet {
 //---------------------------------------------------------------------------		
 		case "/logout":
 			req.getSession().removeAttribute("loginId");
+			req.getSession().removeAttribute("admin_loginId"); //관리자로그인세션 널값처리
 			resp.sendRedirect("index.jsp");
 			System.out.println(session.getAttribute("userId"));				//세션 널값 처리
 			break;
@@ -139,7 +140,7 @@ public class MemberController extends HttpServlet {
 			page="updateProfile.jsp";
 			if(service.userinfoupdate()!=0) {
 				msg="수정에 성공 하였습니다.";
-				page="/logout";
+				page="/index.jsp";
 			}
 			System.out.println("page : "+page);
 			req.setAttribute("msg", msg);

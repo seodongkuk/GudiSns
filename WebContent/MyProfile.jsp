@@ -244,11 +244,7 @@
 
     </body>
      <script>   
-     var msg = "${delmsg}";
- 	
- 	if(msg != ""){
- 		alert(msg);
- 	}
+  
  	
      var a = "${myL.hashTag}";
 
@@ -289,6 +285,13 @@
     $(".btn-like").click(function() {
 	    $(this).toggleClass("done");
     });
+    
+    var msg = "${msg}";
+
+    if(msg != ""){
+    	alert(msg);
+    }
+    
     
     
      </script>
