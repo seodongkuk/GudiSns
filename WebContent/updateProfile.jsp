@@ -116,11 +116,15 @@
                     </tr>
                     <tr>
                         <td>PW</td>
-                    <td><input type="text" name="userPw" id="password1" maxlength="10"></td>
+                    <td><input type="password" name="userPw" id="newPw" maxlength="10" placeholder="비밀번호 "></td>
                     </tr>
                     <tr>
                         <td>PW재확인</td>
-                    <td><input type="text" id="password2" name="userPw" maxlength="10" onkeyup=test();></td>
+                    <td>
+                        <input type="password" name="userPw" id="pwConfirm" maxlength="10" placeholder="비밀번호 확인."/>
+                        <br/>
+                        <span id="passChk"></span>
+                    </td>
                     </tr>
                     <tr>
                     
@@ -140,7 +144,7 @@
                     </tr>
                     <tr>
                     <td>
-                       <input type="submit" value="회원정보 수정"/>
+                       <input type="button" id="btn" value="회원정보 수정"/>
                        </td>
                      </tr>
                 </table>
@@ -152,43 +156,68 @@
     </div>
 </body>
 <script>
-function next(){
-
-if(confirm("글 수정을 취소하시겠습니까 ?"))
-{
-   //예 
-//    this.self.close();
-             
-}
-else
-{
-// 아니오
-
+var msg="${msg}";
+if(msg!=""){
+	alert(msg);
 }
 
 
+var $newPw = $("#newPw");
+var $pwConfirm = $("#pwConfirm");
+var pwChk = false;
 
+//pw에 한글 입력안되게(영어 숫자 특수문자만)
+$(document).ready(function(){
+	  $("input[name=newPw]").keyup(function(event){ 
+	   if (!(event.keyCode >=37 && event.keyCode<=40)) {
+	    var inputVal = $(this).val();
+	    $(this).val(inputVal.replace(/[^a-z0-9~!@#$%^&*()_.,+<>?:{}]/gi,''));
+	   }
+	  });
+	});
 
-     function test() {
-      var p1 = document.getElementById('password1').value;
-      var p2 = document.getElementById('password2').value;
-      var p3 = document.getElementById('password2ck');
-      if( p1 != p2 ) {
-        p3.style.visibility="visible";
-    } else{
-        p3.style.visibility="visible";
-          p3.innerHTML="비밀번호가 일치 합니다!"
-        
-      }
-
+	//pw가 5자 이상인가?
+$('#newPw').focusout(function(){
+    if($(this).val()!==$('#pwConfirm').val()){
+        $('#passChk').html('비밀번호가 일치하지 않습니다.');
+        $('#passChk').css('color','red');
+        pwChk = false;
+    }else{
+        $('#passChk').html('비밀번호가 일치합니다.');
+        $('#passChk').css('color','green');
+        pwChk = true;
     }
+}); 
+//pw와 pw확인이 값이 일치하는가?
+$('#pwConfirm').keyup(function(){
+    if($(this).val()!==$('#newPw').val()){
+        $('#passChk').html('비밀번호가 일치하지 않습니다.');
+        $('#passChk').css('color','red');
+        pwChk = false;
+    }else{
+        $('#passChk').html('비밀번호가 일치합니다.');
+        $('#passChk').css('color','green');
+        pwChk = true;
+    }
+});
 
+$('#btn').click(function(){
+	if($newPw.val()==""||$pwConfirm==""){//비밀번호 또는 비밀번호확인이 공백일때
+		console.log($newPw.val());
+		alert("비밀번호를 입력해주세요.")
+		$newPw.focus();
+	}else if($newPw.val().length<5){
+		alert("비밀번호는 5자 이상 입력해주세요!!");
+		$newPw.focus();
+	}else if(pwChk==false){
+		alert("비밀번호가 일치하지 않습니다.");
+		$newPw.focus();
+	}else{
+		console.log("비밀번호가 수정되었습니다.");
+		$('form').submit();
+	}
+});
 
-
-   
-       
-       
 
 </script>
-
 </html>

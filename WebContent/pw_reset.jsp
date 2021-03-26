@@ -51,13 +51,13 @@
                 <tr>
                     <th>비밀번호 변경</th>
                     <td>
-                        <input type="password" id="newPw" name="newPw" maxlength="15" placeholder="새로운 비밀번호를 입력해주세요."/>
+                        <input type="password" id="newPw" name="newPw" maxlength="10" placeholder="새로운 비밀번호를 입력해주세요."/>
                     </td>
                 </tr>
                 <tr>
                     <th>비밀번호 재확인</th>
                     <td>
-                        <input type="password" id="pwConfirm" maxlength="20" placeholder="비밀번호 확인."/>
+                        <input type="password" id="pwConfirm" maxlength="10" placeholder="비밀번호 확인."/>
                         <br/>
                         <span id="passChk"></span>
                     </td>

@@ -18,7 +18,7 @@ import com.sns.dto.MemberDTO;
 import com.sns.service.MemberService;
 
 @WebServlet({ "/login", "/join", "/logout", "/main", "/idChk", "/idfind", "/pwfind"
-	,"/pwupdate","/infopw","/userinfoupdate","/userinfo","/delid","/idfind1"})
+	,"/pwupdate","/infopw","/userinfoupdate","/userinfo","/delid","/idfind1","/memberdel"})
 public class MemberController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -98,7 +98,7 @@ public class MemberController extends HttpServlet {
 		
 	
 		case "/pwupdate":
-			System.out.println("비번 찾기요청");	
+			System.out.println("비번 수정요청");	
 			service.pwupdate();
 			break;
 			
@@ -137,10 +137,11 @@ public class MemberController extends HttpServlet {
 		case "/userinfoupdate":
 			System.out.println("업데이트 요청");
 			msg="수정에 실패 했습니다.";
-			page="updateProfile.jsp";
+			page="/updateProfile.jsp";
+			
 			if(service.userinfoupdate()!=0) {
 				msg="수정에 성공 하였습니다.";
-				page="/index.jsp";
+				page="/main.jsp";
 			}
 			System.out.println("page : "+page);
 			req.setAttribute("msg", msg);
