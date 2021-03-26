@@ -182,7 +182,7 @@
             <table style="margin: auto; padding: 15px;">
             	<tr>
                      <td>
-                            <button  onclick="location.href='del?board_idx=${myL.board_idx}'"  style="margin-top: 6px;margin-left: 475px;">
+                         <button onclick="location.href='del?board_idx=${myL.board_idx}'" style="margin-top: 6px;margin-left: 475px;">
            							게시글삭제</button>
            			<td>
            		</tr>
@@ -243,13 +243,12 @@
         <iframe src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 
     </body>
-     <script>
+     <script>   
      var msg = "${delmsg}";
  	
  	if(msg != ""){
- 		alert(delmsg);
+ 		alert(msg);
  	}
- 	
  	
      var a = "${myL.hashTag}";
 

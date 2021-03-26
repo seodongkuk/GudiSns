@@ -101,8 +101,8 @@ public class MainService {
 			dis.forward(req, resp);
 		}
 	}
-
-	public void del() throws IOException{
+	
+	public void del() throws IOException, ServletException{
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		if(loginId !=null) {
 			String idx = req.getParameter("board_idx");
@@ -111,11 +111,19 @@ public class MainService {
 			MainDAO dao = new MainDAO();
 			String newFileName = dao.getFileName(idx);
 			int success = dao.del(idx, newFileName);
+			String delmsg= "글삭제가되지않았읍니다";
+			if(success>0) {
+				delmsg="글삭제되었습니다.";
+			}
 			if (success > 0 && newFileName != null) {
 				System.out.println("파일삭제");
 				upload.delete(newFileName);
+				delmsg="글과사진이삭제되었습니다.";
 				}
-			resp.sendRedirect("./MyProfile");
+			
+			req.setAttribute("delmsg", delmsg);
+			dis=req.getRequestDispatcher("/MyProfile");
+			dis.forward(req, resp);
 			
 			}
 	}
@@ -297,11 +305,5 @@ public class MainService {
 		dis = req.getRequestDispatcher("declaration.jsp");
 		dis.forward(req, resp);
 	}
-
-	
-		
-		
-		
-	
 
 }

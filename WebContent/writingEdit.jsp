@@ -114,7 +114,7 @@
                 <option value="002" <c:if test="${dto.release_state == 2}"> selected="selected"</c:if>>친구공개</option>
                 <option value="003" <c:if test="${dto.release_state == 3}"> selected="selected"</c:if>>나만보기</option>
             </select>
-        <button >수정완료</button>
+        <button type="button" onclick="chkValue()">수정완료</button>
         </form>
         <button type="button" onclick="location.href='detail?board_idx=${dto.board_idx}'">취소</button>
         <!-- 자바스크립트로 메인으로 보내기 !-->
@@ -149,21 +149,46 @@ function hashyo(){
         });
     });
     
-    
-    function chkValue(){
+    function chkValue() {
         var tmp = document.fomvl.textArea.value.replace(/\s|　/gi, '');
-      
-        if(tmp == ''){
+
+        var hashvl = document.fomvl.hashOne.value;
+
+        var hashvl2 = document.fomvl.hashTwo.value;
+
+
+
+        if (tmp == '') {
             alert('내용을 입력해 주세요');
             return false;
-        }else{
-        	document.getElementById("newWrite").submit();
-        	alert('수정완료');
-        }
+        } 
         
+        if (hashvl.charAt(0) == ('#')) {
+            if (hashvl.charAt(1) == '' ) {
+                alert("#이후 글을작성해주세요")
+                return false;
+            }
+        } 
+        
+        if (hashvl.charAt(0) != '' && hashvl.charAt(0) != ('#')) {
+            alert("해시태그에 #을 붙여주세요");
+            return false;
+            // 글을쓰긴햇는데 이자쉭 #을안붙엿네    
+
+        }if(hashvl2.charAt(0) != '' && hashvl2.charAt(0) != ('#')){
+            alert("해시태그에 #을 붙여주세요");
+             return false;
+        } 
+        if(hashvl2.charAt(0) == ('#')){
+            if( hashvl2.charAt(1) == ''){
+                alert("#이후 글을작성해주세요")
+                return false;
+            }
+        }
+          return document.getElementById("newWrite").submit();
+        
+
     }
-    
-    
     
     
     
