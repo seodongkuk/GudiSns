@@ -62,15 +62,17 @@ public class ReplyDAO {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, board_idx);
 			rs = ps.executeQuery();
-			while(rs.next()) {
-				ReplyDTO dto = new ReplyDTO();
-				dto.setCmt_idx(rs.getInt("cmt_idx"));
-				dto.setBoard_idx(rs.getInt("board_idx"));
-				dto.setUser_id(rs.getString("user_id"));
-				dto.setContent(rs.getString("content"));
 				
-				list.add(dto);
-			}
+					while(rs.next()) {
+						ReplyDTO dto = new ReplyDTO();
+				 
+						dto.setCmt_idx(rs.getInt("cmt_idx"));
+						dto.setBoard_idx(rs.getInt("board_idx"));
+						dto.setUser_id(rs.getString("user_id"));			
+						dto.setContent(rs.getString("content"));
+						list.add(dto);
+				}
+			
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -87,54 +89,59 @@ public class ReplyDAO {
 			ps.setString(1, user_id);
 			ps.setString(2, board_idx);
 			ps.setString(3, content);
-			if(ps.executeUpdate()>0){
-				success=true;
-				
-				sql = "SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND (alarm_kind = '댓글알림' AND alarm_state = '1')";
-				
-				ps = conn.prepareStatement(sql);
-				ps.setString(1, user_id);
-				
-				rs = ps.executeQuery();
-				
-				if(rs.next()) {
-				//댓글등록 후 해당 게시글의 작성자한테 댓글을 작성했다는 알림을 보냄(댓글 쓴 사람 아이디와 함께)
-				sql = "SELECT b.user_id FROM board2 b "+
-						"WHERE b.board_idx IN (SELECT board_idx FROM Reply2 WHERE board_idx=? AND user_id=?)";
-				ps = conn.prepareStatement(sql);
-				ps.setString(1, board_idx);
-				ps.setString(2, user_id);
-				
-				rs = ps.executeQuery();
-				//만약 해당 게시글 작성자가 있다면...
-				if(rs.next()) {
-					
-					String boardId = rs.getString("user_id");
+			if(content.equals("")) {
+				System.out.println("내용이 없어요");
+				System.out.println(success);
+				return success;
+			}else {
+				if(ps.executeUpdate()>0){
+					System.out.println("내용이 있어요");	
+					success = true;
 					sql = "SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND (alarm_kind = '댓글알림' AND alarm_state = '1')";
 					
 					ps = conn.prepareStatement(sql);
-					ps.setString(1, boardId);
+					ps.setString(1, user_id);
 					
 					rs = ps.executeQuery();
 					
 					if(rs.next()) {
-					//해당 게시글 작성자한테 댓글 알림을 보냅니다
-					sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'댓글알림')";
+					//댓글등록 후 해당 게시글의 작성자한테 댓글을 작성했다는 알림을 보냄(댓글 쓴 사람 아이디와 함께)
+					sql = "SELECT b.user_id FROM board2 b "+
+							"WHERE b.board_idx IN (SELECT board_idx FROM Reply2 WHERE board_idx=? AND user_id=?)";
 					ps = conn.prepareStatement(sql);
-					ps.setString(1, user_id);
-					ps.setString(2, boardId);
+					ps.setString(1, board_idx);
+					ps.setString(2, user_id);
 					
-					if(ps.executeUpdate() > 0) {
-						System.out.println("게시글 작성자한테 댓글알림 전송 완료!!!");
-					}
-					}else {
-						System.out.println("해당 유저는 댓글알림이 거부 상태입니다.");
+					rs = ps.executeQuery();
+					//만약 해당 게시글 작성자가 있다면...
+					if(rs.next()) {
+						
+						String boardId = rs.getString("user_id");
+						sql = "SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND (alarm_kind = '댓글알림' AND alarm_state = '1')";
+						
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, boardId);
+						
+						rs = ps.executeQuery();
+						
+						if(rs.next()) {
+						//해당 게시글 작성자한테 댓글 알림을 보냅니다
+						sql = "INSERT INTO alarmlist2(alarm_idx,user_id,other_id,alarm_content) VALUES(alarm2_seq.NEXTVAL,?,?,'댓글알림')";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, user_id);
+						ps.setString(2, boardId);
+						
+						if(ps.executeUpdate() > 0) {
+							System.out.println("게시글 작성자한테 댓글알림 전송 완료!!!");
+						}
+						}else {
+							System.out.println("해당 유저는 댓글알림이 거부 상태입니다.");
+						}
 					}
 				}
 				}
+				
 			}
-
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

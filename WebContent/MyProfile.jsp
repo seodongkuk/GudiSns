@@ -141,8 +141,8 @@
 	                <input
 	                	type="button" class="member" value="회원정보 수정" onclick="location.href='info_pass.jsp'">
 	                <input style="padding-left: 40px;" 
-	                	type="button" class="member" value="회원 탈퇴" onclick="location.href='delid'">
-	                 <form action="memberDel" method="post"></form>
+	                	type="button" class="member" value="회원 탈퇴" onclick="location.href='user_out.jsp'">
+	                
 	                  
 			          <input type="hidden" name="id" value="${sessionScope.id}"/>
         	</div>
