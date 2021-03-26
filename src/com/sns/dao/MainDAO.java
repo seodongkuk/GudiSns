@@ -239,14 +239,14 @@ public class MainDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
-
+		System.out.println("삭제파일 존재여부 : "+newFileName);
 		return newFileName;
 	}
 
 	public int del(String idx, String newFileName) {
 		int success = 0;
 		System.out.println("다오"+idx);
-		String Sql;
+		String Sql = "";
 		
 		try {
 			if (newFileName != null) {

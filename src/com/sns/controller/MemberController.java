@@ -60,6 +60,7 @@ public class MemberController extends HttpServlet {
 //---------------------------------------------------------------------------		
 		case "/logout":
 			req.getSession().removeAttribute("loginId");
+			req.getSession().removeAttribute("admin_loginId"); //관리자로그인세션 널값처리
 			resp.sendRedirect("index.jsp");
 			System.out.println(session.getAttribute("userId"));				//세션 널값 처리
 			break;

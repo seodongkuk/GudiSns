@@ -82,10 +82,16 @@
         }
         button{
             position: relative;
-            top: 190px;
+            top: 170px;
+            left: 70px;
             width:110px;
-            height:30px
+            height:30px;
 
+        }
+        #sbbutton{
+            position: relative;
+            top: 200px;
+            left: -160px;
         }
     </style>
 </head>
@@ -114,7 +120,7 @@
                 <option value="002" <c:if test="${dto.release_state == 2}"> selected="selected"</c:if>>친구공개</option>
                 <option value="003" <c:if test="${dto.release_state == 3}"> selected="selected"</c:if>>나만보기</option>
             </select>
-        <button type="button" onclick="chkValue()">수정완료</button>
+        <button type="button" onclick="chkValue()" id="sbbutton">수정완료</button>
         </form>
         <button type="button" onclick="location.href='detail?board_idx=${dto.board_idx}'">취소</button>
         <!-- 자바스크립트로 메인으로 보내기 !-->
