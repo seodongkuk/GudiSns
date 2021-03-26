@@ -47,8 +47,9 @@ public class ProfileDAO {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
 		
-		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashtag FROM board2 b, photo2 p, hashtag2 h"
-				+ " WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ?";
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, b.writedate,p.oriFileName, p.newFileName, h.hashtag, cnt.cnt, r.rcnt \r\n" + 
+				"FROM board2 b, photo2 p, hashtag2 h, (SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt, (SELECT board_idx, COUNT(*) rcnt FROM reply2 GROUP BY board_idx)r\r\n" + 
+				"WHERE b.board_idx = p.board_idx(+) AND b.board_idx = r.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ? ORDER BY board_idx DESC";
 		
 		try {
 			ps = conn.prepareStatement(sql);
@@ -64,6 +65,9 @@ public class ProfileDAO {
 				dto.setOriFileName(rs.getString("oriFileName"));
 				dto.setNewFileName(rs.getString("newFileName"));
 				dto.setHashTag(rs.getString("hashTag"));
+				dto.setWritedate(rs.getDate("writedate"));
+				dto.setCnt(rs.getInt("cnt"));
+				dto.setRcnt(rs.getInt("rcnt"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {
@@ -79,8 +83,10 @@ public class ProfileDAO {
 		MainDTO dto = null;
 		ArrayList<MainDTO> list = new ArrayList<MainDTO>();
 
-		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashtag, b.writedate FROM board2 b, photo2 p, hashtag2 h\r\n"
-				+ "    WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ?";
+		//최신순 정렬
+		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashtag, b.writedate,cnt.cnt, r.rcnt "
+				+ "FROM board2 b, photo2 p, hashtag2 h,(SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt, (SELECT board_idx, COUNT(*) rcnt FROM reply2 GROUP BY board_idx)r\r\n"
+				+ "    WHERE b.board_idx = p.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.board_idx = r.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.user_id = ? ORDER BY board_idx DESC";
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -97,6 +103,8 @@ public class ProfileDAO {
 				dto.setNewFileName(rs.getString("newFileName"));
 				dto.setHashTag(rs.getString("hashTag"));
 				dto.setWritedate(rs.getDate("writedate"));
+				dto.setCnt(rs.getInt("cnt"));
+				dto.setRcnt(rs.getInt("rcnt"));
 				list.add(dto);
 			}
 			
