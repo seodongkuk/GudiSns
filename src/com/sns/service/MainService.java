@@ -130,8 +130,8 @@ public class MainService {
 
 	public void detail() throws ServletException, IOException {
 		String board_idx = req.getParameter("board_idx");
-
-		String loginId = (String) req.getSession().getAttribute("");
+		
+		String loginId = (String) req.getSession().getAttribute("loginId");
 		System.out.println(loginId);
 		System.out.println("글번호 : "+board_idx);
 
@@ -200,6 +200,7 @@ public class MainService {
 		
 		String user_id = req.getParameter("id");
 		String board_idx = req.getParameter("idx");
+		HashMap<String,Object> map = new HashMap<String, Object>();
 		
 		System.out.println("아이디: "+user_id+"/"+"게시글 번호: "+board_idx);
 		MainDAO dao =  new MainDAO();
@@ -210,9 +211,20 @@ public class MainService {
 		if(result == 0) {//추천하지 않았으면 추천 추가
 			dao =  new MainDAO();
 			dao.likeupdate(user_id,board_idx);
+			map.put("result",result);
+			Gson gson = new Gson();
+			String json = gson.toJson(map);
+			System.out.println(json);
+			
+			resp.getWriter().println(json);
 		}else {//추천했으면 추천 삭제
 			dao =  new MainDAO();
 			dao.likedelete(user_id,board_idx);
+			map.put("result",result);
+			Gson gson = new Gson();
+			String json = gson.toJson(map);
+			System.out.println(json);
+			resp.getWriter().println(json);
 		}
 		
 	}

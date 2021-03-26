@@ -98,9 +98,10 @@ public class AdminService {
 		String pageParam = req.getParameter("page");
 		
 		String admin_id = (String)req.getSession().getAttribute("admin_loginId");
-		msg = admin_id + "관리자님 반갑습니다.";		
+			
 		
 		int group = 1;
+		if(admin_id!=null) {
 		if(pageParam != null) {
 			group = Integer.parseInt(pageParam);
 		}
@@ -111,12 +112,64 @@ public class AdminService {
 		req.setAttribute("maxPage", map.get("maxPage"));
 		req.setAttribute("reportList", map.get("reportList"));
 		req.setAttribute("currPage", group);
-		
-		req.setAttribute("msg", msg);
 		dis = req.getRequestDispatcher("manager_report.jsp");
 		
 		dis.forward(req, resp);
+		}else {
+			page="logout";
+		}
 	}
 	
 
+	public void black_list() throws ServletException, IOException {
+		String pageParam = req.getParameter("page");
+		
+		String admin_id = (String)req.getSession().getAttribute("admin_loginId");
+				
+		
+		int group = 1;
+		if(admin_id!=null) {
+		if(pageParam != null) {
+			group = Integer.parseInt(pageParam);
+		}
+				
+		AdminDAO blacklistDAO = new AdminDAO();
+		HashMap<String, Object> map = blacklistDAO.blackList(group);
+		
+		req.setAttribute("maxPage", map.get("maxPage"));
+		req.setAttribute("blackList", map.get("blackList"));
+		req.setAttribute("currPage", group);
+		dis = req.getRequestDispatcher("manager_black.jsp");
+		
+		dis.forward(req, resp);
+		}else {
+			page="logout";
+		}
+	}
+	
+	public void blind_list() throws ServletException, IOException {
+		String pageParam = req.getParameter("page");
+		
+		String admin_id = (String)req.getSession().getAttribute("admin_loginId");
+						
+		int group = 1;
+		if(admin_id!=null) {
+		if(pageParam != null) {
+			group = Integer.parseInt(pageParam);
+		}
+		
+		AdminDAO blindlistDAO = new AdminDAO();
+		HashMap<String, Object> map = blindlistDAO.blindlist(group);
+			
+		req.setAttribute("maxPage", map.get("maxPage"));
+		req.setAttribute("blindList", map.get("blindList"));
+		req.setAttribute("currPage", group);
+		dis = req.getRequestDispatcher("manager_blind.jsp");
+		
+		dis.forward(req, resp);
+		}else {
+			page="logout";
+		}
+	}
+	
 }

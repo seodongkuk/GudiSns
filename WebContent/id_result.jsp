@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
         <title>아이디 확인</title>
         <style>
                h1{
@@ -40,7 +41,7 @@
         <form>
         <tr>
             <td>
-           <jsp:include page="idbox.jsp"/>
+                    회원님의 ID는  ${idfind}  입니다.
             </td>
         </tr>
             <br/>
@@ -59,19 +60,14 @@
         <td>    
             <input style="margin: 10;" type="button" value="비밀번호 찾기" onclick="location.href='pw_Find.jsp'"/></br>
         </td>
-        <td>
-            <input type="button" value="로그인 하기" />
-        </td>   
+        <td>    
+            <input style="margin: 10;" type="button" value="메인 페이지" onclick="location.href='index.jsp'"/></br>
+        </td>  
 
           
         </CENTER>
     </body>
     <script>
-    var msg = "${msg}";
 
-    if(msg != ""){
-    	alert(msg);
-    }
-      
     </script>
 </html>

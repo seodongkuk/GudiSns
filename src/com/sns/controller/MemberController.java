@@ -18,7 +18,7 @@ import com.sns.dto.MemberDTO;
 import com.sns.service.MemberService;
 
 @WebServlet({ "/login", "/join", "/logout", "/main", "/idChk", "/idfind", "/pwfind"
-	,"/pwupdate","/infopw","/userinfoupdate","/userinfo","/delid"})
+	,"/pwupdate","/infopw","/userinfoupdate","/userinfo","/delid","/idfind1"})
 public class MemberController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -81,6 +81,11 @@ public class MemberController extends HttpServlet {
 			System.out.println("아이디 찾기요청");	
 			service.idfind();
 			break;
+			
+		case "/idfind1":
+			System.out.println("아이디 찾기요청");	
+			service.idfind1();
+			break;
 		
 		case "/pwfind":
 			System.out.println("비번 찾기요청");	
@@ -93,7 +98,7 @@ public class MemberController extends HttpServlet {
 	
 		case "/pwupdate":
 			System.out.println("비번 찾기요청");	
-			service.pwfind();
+			service.pwupdate();
 			break;
 			
 			

@@ -21,11 +21,14 @@ public class MemberService {
 	String page = "";
 	String msg = "";	
 	RequestDispatcher dis = null;
+	MemberDAO dao = null;
+	
 	
 	
 	public MemberService(HttpServletRequest req, HttpServletResponse resp) {
 		this.req = req;
 		this.resp = resp;
+		dao=new MemberDAO();
 	}
 	
 	
@@ -148,94 +151,102 @@ public boolean idChk() throws IOException {
 }
 //---------------------------------------------------------------//아이디 찾기.
 
-public void idfind()throws ServletException, IOException{
-	MemberDAO dao = new MemberDAO();
+/*아이디 찾기*/
+public void idfind() throws ServletException, IOException {
 	
-	String name=req.getParameter("userName");
-	String phone = req.getParameter("userPhone");
-	System.out.println(name + "/"+ phone);
-	
-	HashMap<String, Object> map = dao.idfind(name,phone);
-	
+	String name = req.getParameter("name");
+	String phone = req.getParameter("phone");
+	System.out.println(name + "/" + phone);
+//	MemberDAO dao = new MemberDAO();				
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	String id = "";
+	try {
+		id = dao.idfind(name, phone);
+		System.out.println("아이디찾기 : "+id);
 
-	String id = (String) map.get("id");
-	Date reg_date = (Date)map.get("reg_date");
-	
-
-	System.out.println("아이디 찾기:"+id);
-	
-	
-	page = "id_Find.jsp";
-	msg = "이름, 핸드폰 번호를 다시 입력해 주세요.";
-	
-	   if(id!="") {
-		page = "id_result.jsp";
-		msg = name+"님의 아이디는"+id+"입니다.";
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("use", id);
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+		System.out.println(json);
+		resp.getWriter().print(json);
+		// 페이지에 그려주는것.
 		
-		req.getSession().setAttribute("id", id);
-		req.getSession().setAttribute("reg_date", reg_date);
-	
-	
-	}
-	req.setAttribute("msg", msg);
-	dis = req.getRequestDispatcher(page);
-	dis.forward(req,resp);
+	}	
+
 }
+
+/*아이디찾기 두번째 요청*/
+public void idfind1() throws ServletException, IOException{
+	
+	String id = req.getParameter("id");
+	System.out.println(id);	
+	page="id_result.jsp";
+
+	req.setAttribute("idfind", id);
+	dis = req.getRequestDispatcher(page);
+	dis.forward(req, resp);
+	
+}
+
+
+
+
 
 
 //----------------------------------------------------------------------//비밀번호 찾기.
 
 
-public void pwfind()throws ServletException, IOException{
+/*비밀번호 찾기*/
+public void pwfind() throws ServletException, IOException{
+	
+	
+	String id = req.getParameter("userId");
+	String name = req.getParameter("userName");
+	String phone = req.getParameter("userPhone");
+	System.out.println("여기냐"+id+"/"+name+"/"+phone);
+	
 	MemberDAO dao = new MemberDAO();
-	
-	String id=req.getParameter("userId");
-	String email = req.getParameter("email");
-	System.out.println(id + "/"+ email);
-
-	String pw = dao.pwfind(id,email);
-	
-	System.out.println("비번 찾기:"+pw);
+//	msg = "아이디, 이름, 핸드폰번호를 다시 확인 후 입력해주세요.";
 	
 	page = "pw_Find.jsp";
-	msg = "아이디, 이메일을 다시 입력해 주세요.";
 	
-	if(pw!="") {
+	if(dao.pwfind(id, name, phone)) {
 		page = "pw_reset.jsp";
-		msg = id+"님의 비번은"+pw+"입니다.";
-		
-		req.getSession().setAttribute("pw", pw);
+		msg = "비밀번호를 수정해주세요.";
+		req.setAttribute("id", id);
 	}
 	req.setAttribute("msg", msg);
 	dis = req.getRequestDispatcher(page);
-	dis.forward(req,resp);
+	dis.forward(req, resp);
+	
 }
 
-//-------------------------------------------------------------------//비밀번호 변경.
-
+/*비밀번호 찾기 후 수정*/
 public void pwupdate() throws ServletException, IOException {
 	MemberDAO dao = new MemberDAO();
+	
 	boolean success = false;
 	String newPw = req.getParameter("newPw");
 	String id = req.getParameter("id");
-	System.out.println("새 비번입력:"+newPw);
+	System.out.println("새비밀번호: "+newPw);
 	
-	msg= "비밀번호를 다시 확인해 주세요.";
+	msg="비밀번호를 다시 확인해주세요.";
 	page = "pw_Find.jsp";
 	
-	success=dao.pwupdate(id,newPw);
+	success = dao.pwupdate(id,newPw);
+	System.out.println("비밀번호 수정 : " + success);
 	if(success) {
-		msg="비밀번호가 수정되었습니다.";
+		msg="비밀번호가 수정 되었습니다.";
 		page="index.jsp";
 	}
 	req.setAttribute("msg", msg);
-	dis = req.getRequestDispatcher(page);
-	dis.forward(req,resp);
-	
-	
-
-
-}
+	dis=req.getRequestDispatcher(page);
+	dis.forward(req, resp);
+	}
 //-----------------------------------------------------------------------------//정보수정 접근시 패스워드 확인.
    
 public void infopw() throws ServletException, IOException {

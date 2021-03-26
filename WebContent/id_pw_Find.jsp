@@ -42,7 +42,7 @@ table,td,th{
 
     <body>
         <CENTER>
-        <div><img src="로고.gif" width="100" height="100"></div>
+        <div><img src="기본프사.png" width="100" height="100"></div>
         <div style="font-size: 20;font-weight:bold;color: dimgrey;">
         <p>로그인에 문제가 있나요?</p>
         <p>당신이 찾고자 하는 것을</p>
@@ -55,9 +55,9 @@ table,td,th{
                 <input type="button" value="비밀번호찾기" onclick="location.href='pw_Find.jsp'">
             </td>
         <hr/>
-        <input type="button" value="회원가입하기">
+        <input type="button" value="회원가입하기" onclick="location.href='join.jsp'">
         <br>
-        <input type="button" value="로그인하기">
+        <input type="button" value="로그인하기" onclick="location.href='index.jsp'">
         </CENTER>
     </body>
     <script>

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sns.service.AdminService;
 
-@WebServlet({ "/admin_login", "/report_detail","/report_list" })
+@WebServlet({ "/admin_login", "/report_detail","/report_list","/black_list","/blind_list"})
 public class AdminController extends HttpServlet {
 
 	/**
@@ -54,10 +54,16 @@ public class AdminController extends HttpServlet {
 			service.report_detail();
 			break;
 		case "/report_list":
-			System.out.println("신고사유보기");
+			System.out.println("신고리스트보기");
 			service.report_list();
 			break;
-
+		case "/black_list":
+			System.out.println("블랙리스트보기");
+			service.black_list();
+			break;
+		case"/blind_list":
+			System.out.println("블라인드리스트");
+			service.blind_list();
 		}
 
 	}
