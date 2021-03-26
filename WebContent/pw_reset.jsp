@@ -4,6 +4,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
         <title>PW RESET</title>
         <style>
 
@@ -46,24 +47,26 @@
                 </td>
         </tr>
         <tr>
-        <td>
-            PW <input type="password" id="newPw" name="newPw" maxlength="10" placeholder="비밀번호를 입력해주세요."/>
-        </td>  
-    </tr>
-        <tr>
-            <td>
-                PW 재확인 <input type="password" id="pwConfirm" name="newPw" maxlength="10" placeholder="비밀번호를 재입력 해주세요."/>
-            </td>
-        </tr>
-                       <br/>
-                       <td>
+       <tr>
+                <tr>
+                    <th>비밀번호 변경</th>
+                    <td>
+                        <input type="password" id="newPw" name="newPw" maxlength="15" placeholder="새로운 비밀번호를 입력해주세요."/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>비밀번호 재확인</th>
+                    <td>
+                        <input type="password" id="pwConfirm" maxlength="20" placeholder="비밀번호 확인."/>
+                        <br/>
                         <span id="passChk"></span>
                     </td>
+                </tr>
 
          <br/>
        
          <td> 
-        <input type="submit" id="btn" value="비밀번호 재설정"/>
+        <input type="button" id="btn" value="비밀번호 재설정"/>
         </td>       
      
 
@@ -73,7 +76,7 @@
 </CENTER>
     </body>
     
-    <script>
+ <script>
 	var msg="${msg}";
 	if(msg!=""){
 		alert(msg);
@@ -136,5 +139,9 @@
     	}
     });
     
-    </script>
+    /* else{
+	alert("비밀번호가 변경되었습니다.");
+	location.href="login.jsp";
+} */
+	</script>
 </html>
