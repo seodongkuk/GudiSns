@@ -47,11 +47,11 @@ public class SearchDAO {
 		ArrayList<SearchDTO> tag = new ArrayList<SearchDTO>();
 		//해시태그 TOP3
 		String sql = "SELECT * FROM (" + 
-				"SELECT ROW_NUMBER() OVER(ORDER BY COUNT(h.hashtag) DESC) AS rnum," + 
-				" h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
-				" WHERE b.board_idx = h.board_idx AND TO_CHAR(b.writeDate,'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')" + 
-				" GROUP BY h.hashtag" + 
-				" ) WHERE rnum <= 3";
+							" SELECT ROW_NUMBER() OVER(ORDER BY COUNT(h.hashtag) DESC) AS rnum," + 
+							" h.hashtag, COUNT(h.hashtag) FROM hashtag2 h, board2 b" + 
+							" WHERE b.board_idx = h.board_idx AND b.release_state != '003' AND TO_CHAR(b.writeDate,'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')" + 
+							" GROUP BY h.hashtag" + 
+							" ) WHERE rnum <= 3";
 		try {
 			ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
 			rs = ps.executeQuery();//3. 쿼리실행
@@ -74,8 +74,8 @@ public class SearchDAO {
 		ArrayList<SearchDTO> list = new ArrayList<SearchDTO>();		
 		//해시태그 검색
 		if(find.equals("HashTag")) {
-			String sql = "SELECT b.user_id,b.board_idx,b.content,h.hashTag FROM Board2 b, HashTag2 h "
-					+"WHERE b.board_idx = h.board_idx AND b.board_idx IN (SELECT board_idx FROM HashTag2 WHERE hashTag LIKE ?)";
+			String sql = "SELECT b.user_id,b.board_idx,b.content,h.hashTag FROM Board2 b, HashTag2 h" + 
+							" WHERE b.board_idx = h.board_idx AND b.release_state != '003' AND b.board_idx IN (SELECT board_idx FROM HashTag2 WHERE hashTag LIKE ?)";
 			try {
 				ps = conn.prepareStatement(sql);//2. PrepareStatement 준비
 				ps.setString(1, '%'+search+'%');//?대응
