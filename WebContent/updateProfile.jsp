@@ -116,11 +116,11 @@
                     </tr>
                     <tr>
                         <td>PW</td>
-                    <td><input type="text" name="userPw" id="password1"></td>
+                    <td><input type="text" name="userPw" id="password1" maxlength="10"></td>
                     </tr>
                     <tr>
                         <td>PW재확인</td>
-                    <td><input type="text" id="password2" name="userPw" onkeyup=test();></td>
+                    <td><input type="text" id="password2" name="userPw" maxlength="10" onkeyup=test();></td>
                     </tr>
                     <tr>
                     
@@ -136,18 +136,15 @@
                     </tr>
                     <tr>
                         <td>EMAIL</td>
-                    <td><input type="text" name="email" value="${info.email}"></td>
+                    <td><input type="email" name="email" value="${info.email}"></td>
                     </tr>
                     <tr>
-                        <td>프로필사진</td>
-                        <td>
-                            <label for="file">업로드</label>
-                            <input type="file" id="file">
-                            <input class="upload_name" value="파일업로드 해주세요">
-                        </td>
-                    </tr>
+                    <td>
+                       <input type="submit" value="회원정보 수정"/>
+                       </td>
+                     </tr>
                 </table>
-                <button type="submit"  >회원정보 수정</button>
+              
             </form>
         </div>
         
@@ -188,19 +185,7 @@ else
 
 
 
-   $(document).ready(function () {
-       var fileTarget = $('#file');
-       fileTarget.on('change', function () { // 값이 변경되면
-           var cur = $(".filebox input[type='file']").val();
-           $(".upload_name").val(cur);
-       });
-
-   }
-       var msg = "${msg}";
-
-       if(msg != ""){
-       	alert(msg);
-       }   
+   
        
        
 

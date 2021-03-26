@@ -139,7 +139,7 @@ public class MemberController extends HttpServlet {
 			page="updateProfile.jsp";
 			if(service.userinfoupdate()!=0) {
 				msg="수정에 성공 하였습니다.";
-				page="/logout";
+				page="/index.jsp";
 			}
 			System.out.println("page : "+page);
 			req.setAttribute("msg", msg);
