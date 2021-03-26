@@ -117,7 +117,7 @@ public class AdminService {
 		
 		dis.forward(req, resp);
 		}else {
-			page="logout";
+			resp.sendRedirect("./index.jsp");
 		}
 	}
 	
@@ -144,15 +144,14 @@ public class AdminService {
 		
 		dis.forward(req, resp);
 		}else {
-			page="logout";
+			resp.sendRedirect("./index.jsp");
 		}
 	}
 	
 	public void blind_list() throws ServletException, IOException {
 		String pageParam = req.getParameter("page");
-		
 		String admin_id = (String)req.getSession().getAttribute("admin_loginId");
-						
+		
 		int group = 1;
 		if(admin_id!=null) {
 		if(pageParam != null) {
@@ -169,7 +168,7 @@ public class AdminService {
 		
 		dis.forward(req, resp);
 		}else {
-			page="logout";
+			resp.sendRedirect("./index.jsp");
 		}
 	}
 	
