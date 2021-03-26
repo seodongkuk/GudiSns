@@ -49,7 +49,7 @@ public class ProfileDAO {
 		
 		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, b.writedate,p.oriFileName, p.newFileName, h.hashtag, cnt.cnt, r.rcnt \r\n" + 
 				"FROM board2 b, photo2 p, hashtag2 h, (SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt, (SELECT board_idx, COUNT(*) rcnt FROM reply2 GROUP BY board_idx)r\r\n" + 
-				"WHERE b.board_idx = p.board_idx(+) AND b.board_idx = r.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ? ORDER BY board_idx DESC";
+				"WHERE b.board_idx = p.board_idx(+) AND b.board_idx = r.board_idx(+) AND release_state!=3 AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND b.user_id = ? ORDER BY board_idx DESC";
 		
 		try {
 			ps = conn.prepareStatement(sql);
