@@ -128,7 +128,7 @@ public class MemberDAO {
 //	return null;
 //}
 //--------------------------------------------------------------------------아이디체크
-public boolean idChk(String id) throws SQLException {
+public boolean idChk(String id) {
 	boolean success = false;
 	String sql="SELECT user_id FROM member2 WHERE USER_ID=?";
 	try {

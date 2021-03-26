@@ -28,7 +28,7 @@ public class MemberService {
 	public MemberService(HttpServletRequest req, HttpServletResponse resp) {
 		this.req = req;
 		this.resp = resp;
-		dao=new MemberDAO();
+		// 서비스 객체화 하자마자 dao 호출하지말것 (안쓸 수 도 있으니)
 	}
 	
 	
@@ -41,7 +41,7 @@ public class MemberService {
 		System.out.println(loginId);
 		page = "index.jsp";
 		msg = "아이디와 비밀번호를 확인해 주세요.";
-		MemberDAO dao=new MemberDAO();
+		dao = new MemberDAO();
 		boolean success=dao.login(id,pw);
 		
 		if(loginId.indexOf("admin") > -1){
@@ -69,8 +69,8 @@ public class MemberService {
 	}
 	
 	
-	public boolean checkBlackList() {
-		MemberDAO dao = new MemberDAO();
+	public boolean checkBlackList() throws ServletException, IOException{
+		dao = new MemberDAO();
 		String id = req.getParameter("userId");
 		String blackListState= dao.findBlackListbyuserId(id);
 		System.out.println("블랙리스트여부"+blackListState);
@@ -104,7 +104,7 @@ public class MemberService {
 		dto.setName(name);
 		dto.setPhone(phone);
 		dto.setEmail(email);
-		MemberDAO dao = new MemberDAO();
+		dao = new MemberDAO();
 		boolean success=dao.join(dto);
 		
 		
@@ -122,31 +122,29 @@ public class MemberService {
 
 	}
 
-public boolean idChk() throws IOException {
+public boolean idChk() throws ServletException, IOException {
 	
 	String id = req.getParameter("id");
 	boolean success = false;
 	System.out.println("id : "+id);
-	MemberDAO dao = new MemberDAO();
+	dao = new MemberDAO();
 	
 	
 	HashMap<String, Object> map = new HashMap<String, Object>();
 			
-	try {
+	
 		success = dao.idChk(id);
 		System.out.println("아이디 사용여부 : "+success);			
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}finally {
+	
 		
-		dao.resClose();						
+							
 		map.put("use", success);
 		Gson gson = new Gson();
 		String json = gson.toJson(map);
 		System.out.println(json);
 	
 		resp.getWriter().print(json);
-	}
+	
 	return success;
 }
 //---------------------------------------------------------------//아이디 찾기.
@@ -156,18 +154,14 @@ public void idfind() throws ServletException, IOException {
 	
 	String name = req.getParameter("name");
 	String phone = req.getParameter("phone");
-	System.out.println(name + "/" + phone);
-//	MemberDAO dao = new MemberDAO();				
+	System.out.println(name + "/" + phone);			
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	String id = "";
-	try {
+	dao = new MemberDAO();
+
 		id = dao.idfind(name, phone);
 		System.out.println("아이디찾기 : "+id);
 
-	}catch(Exception e) {
-		e.printStackTrace();
-	}finally {
-		dao.resClose();
 		map.put("use", id);
 		Gson gson = new Gson();
 		String json = gson.toJson(map);
@@ -175,7 +169,7 @@ public void idfind() throws ServletException, IOException {
 		resp.getWriter().print(json);
 		// 페이지에 그려주는것.
 		
-	}	
+	
 
 }
 
@@ -209,7 +203,7 @@ public void pwfind() throws ServletException, IOException{
 	String phone = req.getParameter("userPhone");
 	System.out.println("여기냐"+id+"/"+name+"/"+phone);
 	
-	MemberDAO dao = new MemberDAO();
+	dao = new MemberDAO();
 //	msg = "아이디, 이름, 핸드폰번호를 다시 확인 후 입력해주세요.";
 	
 	page = "pw_Find.jsp";
@@ -227,7 +221,7 @@ public void pwfind() throws ServletException, IOException{
 
 /*비밀번호 찾기 후 수정*/
 public void pwupdate() throws ServletException, IOException {
-	MemberDAO dao = new MemberDAO();
+	dao = new MemberDAO();
 	
 	boolean success = false;
 	String newPw = req.getParameter("newPw");
@@ -250,7 +244,7 @@ public void pwupdate() throws ServletException, IOException {
 //-----------------------------------------------------------------------------//정보수정 접근시 패스워드 확인.
    
 public void infopw() throws ServletException, IOException {
-	MemberDAO dao = new MemberDAO();
+	dao = new MemberDAO();
 	String id = (String) req.getSession().getAttribute("loginId");
 	String pw = req.getParameter("userPw");
 	
@@ -277,7 +271,7 @@ public void infopw() throws ServletException, IOException {
 
 //------------------------------------------------------------//회원정보 창
     
-  public MemberDTO userinfo() {
+  public MemberDTO userinfo() throws ServletException, IOException{
 		String id = (String)req.getSession().getAttribute("loginId");
 		
 		System.out.println("상세보기 할 아이디 : "+id);
@@ -286,7 +280,7 @@ public void infopw() throws ServletException, IOException {
 //		}
 		
 		
-		MemberDAO dao = new MemberDAO();		
+		dao = new MemberDAO();		
 		return dao.userinfo(id);
 	}
 
@@ -294,7 +288,7 @@ public void infopw() throws ServletException, IOException {
 //------------------------------------------------------------//회원정보 업데이트
 
 
-  public int userinfoupdate()throws ServletException, IOException {
+  public int userinfoupdate() throws ServletException, IOException {
 		
 		String id=req.getParameter("userId");
 		String pw=req.getParameter("userPw");
@@ -303,7 +297,7 @@ public void infopw() throws ServletException, IOException {
 		String phone=req.getParameter("phone");
 		
 		System.out.println(id+"/"+pw+"/"+name+"/"+email+"/"+phone);
-		MemberDAO dao = new MemberDAO();
+		dao = new MemberDAO();
 		
 		MemberDTO dto = new MemberDTO();
 		dto.setId(id);
@@ -322,7 +316,7 @@ public void infopw() throws ServletException, IOException {
 		
 		
 		
-		MemberDAO dao = new MemberDAO();
+		dao = new MemberDAO();
 		
 		boolean delid= dao.delid(dto);
 
