@@ -169,7 +169,7 @@ public class SearchDAO {
 				success = ps.executeUpdate();
 				if(success > 0) {
 				
-					sql = "SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND (alarm_kind = '친구요청알림' AND alarm_state = '1')";
+					sql = "SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND (alarm_kind = '친구요청알림' AND alarm_state = '001')";
 					
 					ps = conn.prepareStatement(sql);
 					ps.setString(1, budId);
