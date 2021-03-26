@@ -106,7 +106,7 @@
 	                	style=" width: 75px; height: 25px; float: right; margin-bottom: -5px; ">
             		</form>
             		<!-- 프로필사진 -->
-                <img src="/GudiSns/photo/" width="75" height="75" style="float: left; margin-left: 20px;">
+                <img src="기본프사.png" width="75" height="75" style="float: left; margin-left: 20px;">
                 <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;"
                     onclick="location.href='otherProfile?id=${flist.user_id}'">
                     ${flist.user_id}</button>
@@ -139,7 +139,7 @@
                         
                     </tr>
                     <tr>
-                    	<td>댓글 개수는 ${flist.rcnt} 입니다.
+                    	<td style="text-align: left; padding-left: 150px; font-weight: 600;">댓글 개수는 ${flist.rcnt} 개 입니다.</td>
                     </tr>
                 </table>
                     <br>

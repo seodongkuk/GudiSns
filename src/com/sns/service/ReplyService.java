@@ -31,14 +31,16 @@ public class ReplyService {
 		String user_id = req.getParameter("user_id");
 		String content = req.getParameter("content");
 		System.out.println(board_idx+"/"+user_id+"/"+content);
+		String page="/detail?board_idx="+board_idx;
+		String msg="";
+		boolean write = dao.write(board_idx,user_id,content);
 		
-		String msg="작성 실패!";
-		String page="replyForm.jsp";
+		System.out.println("댓글내용없음");
+		msg="댓글에 내용을 넣어주세요.";
 		
-		if(dao.write(board_idx,user_id,content)) {
-			page="/detail?board_idx="+board_idx;
-			msg="댓글 작성을 완료했습니다.";			
-		}
+		if(write) {
+		  msg="댓글 작성을 완료했습니다.";
+		 }
 		req.setAttribute("msg", msg);
 		RequestDispatcher dis = req.getRequestDispatcher(page);
 		dis.forward(req, resp);
@@ -69,7 +71,7 @@ public class ReplyService {
 		String board_idx = req.getParameter("board_idx");
 		String cmt_idx = req.getParameter("cmt_idx");
 		System.out.println("delete idx : "+cmt_idx);
-		String page="/";
+		String page="detail?board_idx="+board_idx;
 		String msg="삭제에 실패하였습니다.";
 		
 		if(dao.del(cmt_idx)) {

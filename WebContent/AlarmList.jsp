@@ -152,7 +152,7 @@
 		                <div style="margin-left: 70%; margin-top: -15%;">
 		                    ${alarm.alarm_reg_date}
 		                </div>
-		                <button style="margin-top: 150px; margin-left: -10px;" onclick=delDmChk(dmIdx.value)>삭제</button>
+		                <button style="margin-top: 150px; margin-left: -10px;" onclick=delDmChk()>삭제</button>
             		</div>
             	</c:if>
             	<c:if test="${alarm.alarm_content == '댓글알림'}">
@@ -202,7 +202,8 @@
 
 
 	//자신의 게시글 좋아요 알림 삭제
-	function delChk(idx){
+	function delChk(){
+		var idx = $("#likeIdx").val();
 		var chk = confirm('정말 삭제하시겠습니까?');
 		if(chk){
 			$.ajax({
@@ -215,12 +216,14 @@
 					console.log(e);
 				}
 			});
-			location.reload();
+			
 		}
+		location.reload();
 	}
 	
 	//자신에게 온 DM 알림 삭제
-	function delDmChk(idx){
+	function delDmChk(){
+		var idx = $("#dmIdx").val();
 		var chk = confirm('정말 삭제하시겠습니까?');
 		if(chk){
 			$.ajax({
@@ -233,12 +236,14 @@
 					console.log(e);
 				}
 			});
-			location.reload();
+			
 		}
+		location.reload();
 	}
 	
 	//자신의 게시물 댓글 알림 삭제
-	function delCommentChk(idx){
+	function delCommentChk(){
+		var idx = $("#commentIdx").val();
 		var chk = confirm('정말 삭제하시겠습니까?');
 		if(chk){
 			$.ajax({
@@ -251,7 +256,8 @@
 					console.log(e);
 				}
 			});
-			location.reload();
+			
 		}
+		location.reload();
 	}
 </script>

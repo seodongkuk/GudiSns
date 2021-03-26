@@ -141,8 +141,8 @@
 	                <input
 	                	type="button" class="member" value="회원정보 수정" onclick="location.href='info_pass.jsp'">
 	                <input style="padding-left: 40px;" 
-	                	type="button" class="member" value="회원 탈퇴" onclick="location.href='delid'">
-	                 <form action="memberDel" method="post"></form>
+	                	type="button" class="member" value="회원 탈퇴" onclick="location.href='user_out.jsp'">
+	                
 	                  
 			          <input type="hidden" name="id" value="${sessionScope.id}"/>
         	</div>
@@ -212,30 +212,10 @@
 							<p style="margin-top: -17px;margin-left: -85px;">${myL.writedate}</p>
                         </td>
                  </tr>
-            	<!-- <tr>
-           		 <td>
-	                 <button class="btn-like" style="font-size: 50px;background-color: white;border: none;float: left;">♥</button>
-	                 <input style="float: left;margin-top: 30px;border: none;" type="text" value="+20">
-            	 </td>
-             	</tr> -->
-            <!-- <tr>
-                <td style="margin:0; padding: 0;">
-                     <hr>
-                </td>
-             </tr>
-             <tr>
-                 <td>
-                     <p style="color: grey;">전체 댓글 : 5개</p>
-                     - USER2: 그래그래~!</br>
-                     - USER3: 마스크 꼭 하자!</br>
-                 </td>
-             </tr>
-             <tr>
-                 <td>
-                     <textarea style="width: 345px; resize: none;"  placeholder="댓글을 입력해주세요."></textarea>
-                     <input type="button" value="댓글등록" style="float: right;height: 30;">
-                 </td>
-             </tr>      -->
+                 <br/>
+ 				<tr>
+                    <td style="text-align: left; padding-left: 188px; font-weight: 600;">댓글 개수는 ${myL.rcnt} 개 입니다.</td>
+               	</tr>
           </table>
           
         	</c:forEach>

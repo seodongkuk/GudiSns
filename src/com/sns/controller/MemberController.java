@@ -154,6 +154,13 @@ public class MemberController extends HttpServlet {
 			break;
 			
 			
+		case"/memberdel":
+			System.out.println("회원탈퇴");
+			service.memberdel();
+			break;
+		
+			
+			
 			
 		
 		}
