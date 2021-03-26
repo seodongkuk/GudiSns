@@ -153,8 +153,8 @@
 		        </td>
 		    </form>
 		</c:if>
-	<iframe src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 	</div>
+	<iframe src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 </body>
 <script>
 
