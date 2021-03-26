@@ -119,7 +119,9 @@ public class MainDAO {
 					ps.setLong(3, bIdx);
 					ps.executeUpdate();
 				}
-				if(dto.getHashTag() != null) {
+				if(!dto.getHashTag().equals("")) {
+					
+					System.out.println("다오"+dto.getHashTag());
 					sql = "INSERT INTO hashTag2(board_idx, hashTag) VALUES(?,?)";
 					ps = conn.prepareStatement(sql);
 					ps.setLong(1, bIdx);
