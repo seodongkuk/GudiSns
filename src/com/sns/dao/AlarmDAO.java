@@ -44,8 +44,8 @@ public class AlarmDAO {
 		ArrayList<AlarmDTO> list = new ArrayList<AlarmDTO>();
 		ArrayList<AlarmDTO> setting = new ArrayList<AlarmDTO>();
 		//현재 로그인한 사람의 알람리스트를 모두 가져온다..(알람 수신 여부가 0이 아닌 얘들로만 그리고 읽음 처리 안된 얘들만)
-		String sql = "SELECT * FROM alarmlist2 WHERE ((other_id=?) AND (alarm_read_state = 0)) "+ 
-			    "AND alarm_content IN (SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND alarm_state != 0)";
+		String sql = "SELECT * FROM alarmlist2 WHERE ((other_id=?) AND (alarm_read_state = '0')) "+ 
+			    "AND alarm_content IN (SELECT alarm_kind FROM alarmsetting2 WHERE user_id = ? AND alarm_state != '0')";
 		
 		try {
 			ps = conn.prepareStatement(sql);
@@ -162,7 +162,7 @@ public class AlarmDAO {
 			}
 			
 			//로그인한 유저가 요청을 했고 친구요청알람을 받는 사람이라면.. 읽음 처리
-			sql = "UPDATE alarmlist2 SET alarm_read_state = 1 WHERE (user_id=? AND other_id=?) AND alarm_content='친구요청알림' AND alarm_read_state = 0";
+			sql = "UPDATE alarmlist2 SET alarm_read_state = '1' WHERE (user_id=? AND other_id=?) AND alarm_content='친구요청알림' AND alarm_read_state = '0'";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, buddyId);
 			ps.setString(2, userId);
@@ -183,7 +183,7 @@ public class AlarmDAO {
 	public void alarmAllChk(String userId) {
 
 		//친구요청알림을 제외한 로그인 유저의 알람확인여부를 읽음 처리 한다.
-		String sql = "UPDATE alarmlist2 SET alarm_read_state = 1 WHERE (other_id=? AND alarm_content != '친구요청알림') AND alarm_read_state = 0";
+		String sql = "UPDATE alarmlist2 SET alarm_read_state = '1' WHERE (other_id=? AND alarm_content != '친구요청알림') AND alarm_read_state = '0'";
 		
 		try {
 			ps = conn.prepareStatement(sql);
@@ -205,11 +205,11 @@ public class AlarmDAO {
 
 	public void alarmLikeDel(String userId, String idx) {
 		//친구요청알림을 제외한 로그인 유저의 알람확인여부를 읽음 처리 한다.
-		String sql = "UPDATE alarmlist2 SET alarm_read_state = 1 WHERE alarm_idx=? AND (other_id=? AND alarm_content = '게시글알림') AND alarm_read_state = 0";
+		String sql = "UPDATE alarmlist2 SET alarm_read_state = '1' WHERE alarm_idx=? AND (other_id=? AND alarm_content = '게시글알림') AND alarm_read_state = '0'";
 		
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, idx);
+			ps.setInt(1, Integer.parseInt(idx));
 			ps.setString(2, userId);
 			
 			if(ps.executeUpdate() > 0) {
@@ -227,9 +227,10 @@ public class AlarmDAO {
 	}
 
 	public void alarmDmDel(String userId, String idx) {
-		String sql = "UPDATE alarmlist2 SET alarm_read_state = 1 WHERE alarm_idx=? AND (other_id=? AND alarm_content = 'DM알림') AND alarm_read_state = 0";
+		String sql = "UPDATE alarmlist2 SET alarm_read_state = '1' WHERE alarm_idx=? AND (other_id=? AND alarm_content = 'DM알림') AND alarm_read_state = '0'";
 		
 		try {
+			System.out.println(idx+" : "+userId);
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, idx);
 			ps.setString(2, userId);
@@ -249,7 +250,7 @@ public class AlarmDAO {
 	}
 
 	public void alarmCommentDel(String userId, String idx) {
-		String sql = "UPDATE alarmlist2 SET alarm_read_state = 1 WHERE alarm_idx=? AND (other_id=? AND alarm_content = '댓글알림') AND alarm_read_state = 0";
+		String sql = "UPDATE alarmlist2 SET alarm_read_state = '1' WHERE alarm_idx=? AND (other_id=? AND alarm_content = '댓글알림') AND alarm_read_state = '0'";
 		
 		try {
 			ps = conn.prepareStatement(sql);

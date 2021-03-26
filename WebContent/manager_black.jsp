@@ -50,7 +50,7 @@
     <body>
         <h1>관리자 모드</h1>
         <h3>블랙 리스트</h3>
-        <input type="button" onclick="location.href='logout'" value="로그아웃"/>
+
 
         <table>
             <tr>

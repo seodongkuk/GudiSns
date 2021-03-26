@@ -111,6 +111,7 @@ public class MainService {
 			MainDAO dao = new MainDAO();
 			String newFileName = dao.getFileName(idx);
 			int success = dao.del(idx, newFileName);
+			System.out.println("파일삭제여부"+newFileName+success);
 			String delmsg= "글삭제가되지않았읍니다";
 			if(success>0) {
 				delmsg="글삭제되었습니다.";

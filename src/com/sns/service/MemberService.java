@@ -308,7 +308,7 @@ public void infopw() throws ServletException, IOException {
 
 		return dao.userinfoupdate(dto);
 }
-//----------------------------------------------------------//회원탈퇴 시 패스워드 확인.
+//----------------------------------------------------------
   public void delid() throws ServletException, IOException {
 		String id = (String) req.getSession().getAttribute("loginId");
 		MemberDTO dto= new MemberDTO();
@@ -325,6 +325,7 @@ public void infopw() throws ServletException, IOException {
 		if(delid){
 			System.out.println("성공");
 			page="logout";
+			msg = "탈퇴 되었습니다..";
 		}else {
 			System.out.println("실패");
 		}
@@ -335,6 +336,32 @@ public void infopw() throws ServletException, IOException {
 		dis.forward(req, resp);
 		
 		
+	}
+  
+//회원탈퇴 시 패스워드 확인.
+  
+  public void memberdel() throws ServletException, IOException {
+		dao = new MemberDAO();
+		String id = (String) req.getSession().getAttribute("loginId");
+		String pw = req.getParameter("userPw");
+		
+		boolean inpw = dao.infopw(id,pw);
+		
+		System.out.println(inpw);
+		
+		page = "MyProfile.jsp";
+		msg = "패스워드를 다시 입력해 주세요.";
+		
+		if(inpw) {
+			page = "userinfo";
+			msg = "비밀번호를 입력해 주세요";
+			
+			req.getSession().setAttribute("pw", pw);
+			req.getSession().setAttribute("id", id);
+		}
+		req.setAttribute("msg", msg);
+		dis = req.getRequestDispatcher(page);
+		dis.forward(req,resp);
 	}
 
 

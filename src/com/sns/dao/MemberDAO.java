@@ -307,6 +307,27 @@ public boolean pwupdate(String id, String newPw) {
 		}
 		return success;
 		}
+	
+	
+	public boolean memberdel(String id, String pw) {	
+		System.out.println(id+pw);
+		boolean success = false;
+		String sql="SELECT pw FROM member2 WHERE user_id=? AND pw=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,id);
+			ps.setString(2,pw);
+			rs = ps.executeQuery();
+			success = rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}		
+		return success;
+	}
+
+
 				
 				
 				
