@@ -111,26 +111,6 @@
 				            <td>
 								<p style="margin-top: -17px; margin-left: -225px;">${member2.writedate}</p>
 	                        </td>
-				        </tr>
-				        <!-- <tr>
-						   <td>
-						        <button class="btn-like" style="font-size: 40px;background-color: white;border: none;float: left;">♥</button>
-						        <input style="float: left;margin-top: 10px;border: none;"  value="추천수">
-						    </td>
-						</tr>
-						<tr>
-		    				<td style="margin:0; padding: 0;";>
-		        			<hr>
-		    				</td>
-						</tr>
-						<tr>
-						    <td>
-						        <p style="font-size: 15px; color: grey;" >댓글 모두 3개입니다.</p>
-						        <p>1번댓글</p>
-						        <p>2번댓글</p>
-						        <p>3번댓글</p>
-						    </td>
-						</tr> -->
 					</table>
 				</c:forEach>
 	        </div>

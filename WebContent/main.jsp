@@ -139,7 +139,7 @@
                         
                     </tr>
                     <tr>
-                    	<td>댓글 개수는 ${flist.rcnt} 입니다.
+                    	<td style="text-align: left; padding-left: 150px; font-weight: 600;">댓글 개수는 ${flist.rcnt} 개 입니다.</td>
                     </tr>
                 </table>
                     <br>

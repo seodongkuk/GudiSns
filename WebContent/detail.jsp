@@ -21,6 +21,7 @@
 	h2 {
 		font-size: 70;
 		padding-left: 265px;
+		margin-bottom: 25px;
 	}
 
 	#like{
@@ -28,7 +29,7 @@
 		float: left;
 	}
 	div.board{
-		height: 75%;
+		height: 905px;
 		width: 100%;
 		overflow: scroll;
 	}
@@ -45,7 +46,7 @@
 <div class="board">
 		<table style="float: left; margin-top: 55px;">
 			<tr>
-				<td rowspan="2"><img src="유저프로필.gif" width="80" height="80"></td>
+				<td rowspan="2"><img src="기본프사.png" width="80" height="80"></td>
 				<td><input type="button" value="${loginId}"
 					style="background-color: white; font-weight: bold;"></td>
 			</tr>
@@ -53,9 +54,9 @@
 				<td><input type="button" value="로그아웃"
 					onclick="location.href='logout'"></td>
 			</tr>
-			<button button id="WriteBtn" onclick="location.href='newWriting.jsp'">
+			<!-- <button button id="WriteBtn" onclick="location.href='newWriting.jsp'">
 				새 글쓰기
-			</button>
+			</button> -->
 		</table>
 		
 		<h2>구디SNS</h2>
@@ -63,7 +64,7 @@
 	
 		
 		<div>
-			<img src="타인프로필.gif" width="75" height="75" style="float: left;">
+			<img src="기본프사.png" width="75" height="75" style="float: left;">
 
             <input type="button"value="${dto.user_id}" style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;" >
 
@@ -152,7 +153,8 @@
 		        </td>
 		    </form>
 		</c:if>
-	<iframe src="navi.jsp" width="850px" height="1000px" scrolling="no" frameborder="0"></iframe>
+	<iframe src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
+	</div>
 </body>
 <script>
 
