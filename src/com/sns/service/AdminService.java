@@ -34,9 +34,10 @@ public class AdminService {
 		String id = req.getParameter("userId");
 		String pw = req.getParameter("userPw");
 		String loginId = req.getParameter("userId");
-		AdminDAO dao= new AdminDAO();
+		
 		String pageParam = req.getParameter("page");
 		if(loginId != null||pageParam!=null) {
+			AdminDAO dao= new AdminDAO();
 			System.out.println("admin 로그인 요청");
 			boolean success = dao.admin_login(id,pw);
 			System.out.println("admin 로그인 결과 : " + success);
@@ -81,7 +82,7 @@ public class AdminService {
 		System.out.println("해당글 글번호:"+board_idx+"입니다.");
 		AdminDAO dao= new AdminDAO();
 		AdminDTO report_detail= dao.report_detail(board_idx);
-		dao = new AdminDAO();
+//		dao = new AdminDAO();
 		if(report_detail != null) {
 			req.setAttribute("report_detail", report_detail);
 			page="report_detail.jsp";
