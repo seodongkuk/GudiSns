@@ -286,7 +286,7 @@
 	    $(this).toggleClass("done");
     });
     
-    var msg = "${msg}";
+    var msg = "${delmsg}";
 
     if(msg != ""){
     	alert(msg);

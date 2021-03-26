@@ -110,7 +110,7 @@
                 <button style="background-color: white;font-weight:bold; float: left; margin-top: 40px;font-size: 20px;"
                     onclick="location.href='otherProfile?id=${flist.user_id}'">
                     ${flist.user_id}</button>
-                <table>
+                <table id="tabl">
                     <tr>
                         <c:if test="${flist.newFileName ne null }">
                         <td>
@@ -144,12 +144,20 @@
                 </table>
                     <br>
             </c:forEach>
+            <div id="nolist"><a href="todayTag">친구가없습니다 친구추가를원하시면 눌러주세요</a></div>
         </div>
     </div>
     <iframe src="navi.jsp" width="850px" height="80px" scrolling="no" frameborder="0"></iframe>
 </body>
 
 <script>
+
+	var nolist = "${flist}";
+	
+
+	if(nolist != ""){
+		$("#nolist").css("display","none");
+	}
 	var msg = "${msg}";
 	
 	if(msg != ""){
@@ -167,6 +175,10 @@
     		location.href='./array?select='+selectVal;
     	}
 	}
+	
 
+	
+
+	
 </script>
 </html>

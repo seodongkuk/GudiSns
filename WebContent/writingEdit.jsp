@@ -116,7 +116,7 @@
             
             <br>
             <select name="release_state" id="selectBox">
-                <option value="001" <c:if test="${dto.release_state == 1}"> selected="selected"</c:if>>전체공개</option>
+                <%-- <option value="001" <c:if test="${dto.release_state == 1}"> selected="selected"</c:if>>전체공개</option> --%>
                 <option value="002" <c:if test="${dto.release_state == 2}"> selected="selected"</c:if>>친구공개</option>
                 <option value="003" <c:if test="${dto.release_state == 3}"> selected="selected"</c:if>>나만보기</option>
             </select>
