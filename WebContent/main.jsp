@@ -168,11 +168,14 @@
 		var selectVal = $('#arr').val();
     	console.log(selectVal);
     	
+    	//수정해야할 것!
+    	//옵션값 Select Box에 저장하기
     	if(selectVal=="최신순"){
     		location.href='./array?select='+selectVal;
     	}
     	else if(selectVal=="추천순"){
     		location.href='./array?select='+selectVal;
+    		
     	}
 	}
 	

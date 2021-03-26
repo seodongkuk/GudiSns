@@ -197,9 +197,12 @@ $("body").on("click", "[id^=redit]", function(event) {
           success: function (data) {
         	console.log(data);
        	   	console.log(data.edit);
-       	 	$changeMsg.html(data.edit);
-       	 	alert("댓글을 수정하였습니다.");
-       	 	
+       	 	if(data.edit==null){
+       	 		alert("수정할 댓글을 입력해주세요.");
+       	 	}else{
+	       	 	$changeMsg.html(data.edit);
+	       	 	alert("댓글을 수정하였습니다.");       	 		
+       	 	}
        	  }
 	});
 	$(".complete").hide();
