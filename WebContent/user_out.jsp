@@ -46,7 +46,8 @@
         </h3>
         <h4>탈퇴를 위해 고객님의 비밀번호를 입력해주세요.</h4>
         <p>PW <input type="password" id="userPW" placeholder="비밀번호를 입력하세요."/><br/></p>
-          <button type="submit">회원탈퇴</button>
+        	<input type="button" class="member" value="회원 탈퇴" onclick="location.href='delid'">
+	              
         </form>
     </body>
    

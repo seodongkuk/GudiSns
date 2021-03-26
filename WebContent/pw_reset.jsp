@@ -47,7 +47,7 @@
         </tr>
         <tr>
         <td>
-            PW <input type="password" name="newPw" maxlength="10" placeholder="비밀번호를 입력해주세요."/>
+            PW <input type="password" id="newPw" name="newPw" maxlength="10" placeholder="비밀번호를 입력해주세요."/>
         </td>  
     </tr>
         <tr>
@@ -55,14 +55,15 @@
                 PW 재확인 <input type="password" id="pwConfirm" name="newPw" maxlength="10" placeholder="비밀번호를 재입력 해주세요."/>
             </td>
         </tr>
-        <br/>
+                       <br/>
+                       <td>
                         <span id="passChk"></span>
-         </td>
+                    </td>
 
          <br/>
        
          <td> 
-        <input type="submit" value="비밀번호 재설정"/>
+        <input type="submit" id="btn" value="비밀번호 재설정"/>
         </td>       
      
 
@@ -73,15 +74,39 @@
     </body>
     
     <script>
-    var msg = "${msg}";
-
-    if(msg != ""){
-    	alert(msg);
-    }
-    
-    
-    
-    
+	var msg="${msg}";
+	if(msg!=""){
+		alert(msg);
+	}
+	
+	
+	var $newPw = $("#newPw");
+	var $pwConfirm = $("#pwConfirm");
+	var pwChk = false;
+	
+	//pw에 한글 입력안되게(영어 숫자 특수문자만)
+	$(document).ready(function(){
+		  $("input[name=newPw]").keyup(function(event){ 
+		   if (!(event.keyCode >=37 && event.keyCode<=40)) {
+		    var inputVal = $(this).val();
+		    $(this).val(inputVal.replace(/[^a-z0-9~!@#$%^&*()_.,+<>?:{}]/gi,''));
+		   }
+		  });
+		});
+	
+ 	//pw가 5자 이상인가?
+    $('#newPw').focusout(function(){
+        if($(this).val()!==$('#pwConfirm').val()){
+            $('#passChk').html('비밀번호가 일치하지 않습니다.');
+            $('#passChk').css('color','red');
+            pwChk = false;
+        }else{
+            $('#passChk').html('비밀번호가 일치합니다.');
+            $('#passChk').css('color','green');
+            pwChk = true;
+        }
+    }); 
+    //pw와 pw확인이 값이 일치하는가?
     $('#pwConfirm').keyup(function(){
         if($(this).val()!==$('#newPw').val()){
             $('#passChk').html('비밀번호가 일치하지 않습니다.');
@@ -110,5 +135,6 @@
     		$('form').submit();
     	}
     });
+    
     </script>
 </html>
