@@ -108,7 +108,7 @@
     
 	<div class="board">
 	     <c:forEach items="${list}" var="list">
-	         <img src="타인프로필.gif" width="75" height="75" style="float: left;">
+	         <img src="기본프사.png" width="75" height="75" style="float: left;">
 	         <button id="other" onclick="location.href='otherProfile?id=${list.user_id}'">
 	         		${list.user_id}
 	         </button>
