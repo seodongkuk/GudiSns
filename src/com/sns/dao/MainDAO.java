@@ -54,11 +54,11 @@ public class MainDAO {
 		ArrayList<MainDTO> flist = new ArrayList<MainDTO>();
 		
 		String sql = "SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate,cnt.cnt, r.rcnt FROM board2 b, photo2 p, hashtag2 h, (SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt, (SELECT board_idx, COUNT(*) rcnt FROM reply2 GROUP BY board_idx) r\r\n" + 
-				"				WHERE b.board_idx = p.board_idx(+) AND  b.board_idx = r.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id\r\n" + 
+				"				WHERE b.board_idx = p.board_idx(+) AND  b.board_idx = r.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND (release_state != 003 AND release_state != 004) AND b.user_id\r\n" + 
 				"                IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.bud_id FROM member2 m ,buddylist2 b\r\n" + 
 				"                WHERE (m.user_id = b.user_id AND b.user_id = ? ) AND b.state = '002'))\r\n" + 
 				"				UNION SELECT b.board_idx, b.content, b.user_id, b.release_state, p.oriFileName, p.newFileName, h.hashTag, b.writedate,cnt.cnt, r.rcnt FROM board2 b, photo2 p, hashtag2 h, (SELECT board_idx, COUNT(*) cnt FROM like2 GROUP BY board_idx) cnt, (SELECT board_idx, COUNT(*) rcnt FROM reply2 GROUP BY board_idx) r\r\n" + 
-				"				WHERE b.board_idx = p.board_idx(+) AND  b.board_idx = r.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND release_state !=3 AND b.user_id \r\n" + 
+				"				WHERE b.board_idx = p.board_idx(+) AND  b.board_idx = r.board_idx(+) AND  b.board_idx = cnt.board_idx(+) AND b.board_idx = h.board_idx(+) AND (release_state != 003 AND release_state != 004) AND b.user_id \r\n" + 
 				"				IN (SELECT b.user_id FROM board2 b WHERE b.user_id IN(SELECT b.user_id FROM member2 m ,buddylist2 b \r\n" + 
 				"				WHERE (m.user_id = b.bud_id AND b.bud_id = ? ) AND b.state = '002'))";
 		
@@ -171,10 +171,13 @@ public class MainDAO {
 	}
 
 	public int edit(MainDTO dto) {
-		String sql = "UPDATE board2 SET content=? ,release_state=? WHERE board_idx=?";
+		
+		String sql = "";
+		
 		int success = 0;
 
 		try {
+			sql = "UPDATE board2 SET content=? ,release_state=? WHERE board_idx=?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getContent());
 			ps.setString(2, dto.getRelease_state());
@@ -251,6 +254,17 @@ public class MainDAO {
 		String Sql = "";
 		
 		try {
+			Sql = "SELECT release_state FROM board2 WHERE board_idx = ?";
+			ps = conn.prepareStatement(Sql);
+			ps.setString(1, idx);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				if(rs.getString("release_state").equals("004")) {
+					resClose();
+					return success;
+				}
+			}
+			
 			if (newFileName != null) {
 				Sql = "DELETE FROM photo2 WHERE board_idx= ?";
 				ps = conn.prepareStatement(Sql);
@@ -497,14 +511,17 @@ public class MainDAO {
 	public int singoCk(MainDTO dto) {
 		int success = 0;
 		String sql ="SELECT * FROM REPORT2 WHERE USER_ID =? AND BOARD_IDX = ?";
-		
+		String t = "";
 		try {
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, dto.getUser_id());
 			ps.setInt(2, dto.getBoard_idx());
 			rs = ps.executeQuery();	
 			if (rs.next()== true) {
+				t = rs.getString("report_state");
+				if(t.equals("FALSE")) {
 				success = 1;
+				}
 			}else if(rs.next() == false) {
 				success = 0;
 			}

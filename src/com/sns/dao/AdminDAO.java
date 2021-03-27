@@ -23,6 +23,7 @@ public class AdminDAO {
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
 			conn = ds.getConnection();
+			System.out.println("자원 OPEN");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,6 +40,7 @@ public class AdminDAO {
 			if (conn != null) {
 				conn.close();
 			}
+			System.out.println("자원 CLOSE");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -115,9 +117,7 @@ public class AdminDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
-		}
+		} 
 		return max;
 	}
 
@@ -209,7 +209,8 @@ public class AdminDAO {
 		int end = page * pagePerCnt;
 		int start = end - (pagePerCnt - 1);
 
-		String sql = "SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY report_idx DESC) AS rnum,report_idx,blind_date,admin_id,blind_state	 FROM blindlist2 WHERE blind_STATE='TRUE')WHERE rnum BETWEEN ? AND ?";
+		String sql = "SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY b.report_idx DESC) AS rnum,b.report_idx,b.blind_date,b.admin_id,b.blind_state,r.content,r.board_idx\r\n" + 
+				"    FROM blindlist2 b, report2 r WHERE b.report_idx = r.report_idx AND b.blind_STATE='TRUE') WHERE rnum BETWEEN ? AND ?";
 
 		ArrayList<AdminDTO> blindlist = new ArrayList<AdminDTO>();
 		try {
@@ -223,6 +224,8 @@ public class AdminDAO {
 				dto.setBlind_date(rs.getDate("blind_date"));
 				dto.setAdmin_id(rs.getString("admin_id"));
 				dto.setBlind_state(rs.getString("blind_state"));
+				dto.setBoard_idx(rs.getInt("board_idx"));
+				dto.setContent(rs.getString("content"));
 				blindlist.add(dto);
 			}
 			System.out.println("blindlist size : " + blindlist.size());
@@ -253,5 +256,169 @@ public class AdminDAO {
 			resClose();
 		}
 		return max;
+	}
+
+	public void reportProcess(String blind, String reportIdx, String admin) {
+		
+		//report_id가 처리대상자
+		String sql = "";
+		String report_id = "";
+		String bIdx = "";
+		
+		try {
+			if(blind.equals("blind")) {
+				System.out.println("블라인드만 처리합니다.");
+				sql = "UPDATE report2 SET report_state = 'TRUE' WHERE report_idx = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, reportIdx);
+				
+				if(ps.executeUpdate() > 0) {
+						sql = "SELECT board_idx FROM report2 WHERE report_idx = ?";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, reportIdx);
+						rs = ps.executeQuery();
+						if(rs.next()) {
+							bIdx = rs.getString("board_idx");
+							sql = "UPDATE board2 SET release_state = '004' WHERE board_idx = ?";
+							ps = conn.prepareStatement(sql);
+							ps.setString(1, bIdx);
+							
+							if(ps.executeUpdate() > 0) {
+								sql = "INSERT INTO blindlist2(report_idx,blind_state,admin_id) VALUES(?,'TRUE',?)";
+								ps = conn.prepareStatement(sql);
+								ps.setString(1, reportIdx);
+								ps.setString(2, admin);
+								if(ps.executeUpdate() > 0) {
+									System.out.println("블라인드 처리 성공");
+								}else {
+									System.out.println("블라인드 처리 실패...");
+								}
+							}
+							
+							
+							
+
+						}
+					
+
+				}
+			}
+			
+			if(blind.equals("black")) {
+				System.out.println("블랙(블라인드 포함) 처리합니다.");
+				sql = "UPDATE report2 SET report_state = 'TRUE' WHERE report_idx = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, reportIdx);
+				
+				if(ps.executeUpdate() > 0) {
+						sql = "SELECT report_id FROM report2 WHERE report_idx = ?";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, reportIdx);
+						rs = ps.executeQuery();
+						if(rs.next()) {
+							report_id = rs.getString("report_id");
+							sql = "UPDATE board2 SET release_state = '004' WHERE user_id = ?";
+							ps = conn.prepareStatement(sql);
+							ps.setString(1, report_id);
+							if(ps.executeUpdate() > 0) {
+								sql = "INSERT INTO blacklist2(user_id,blk_idx,report_idx,blk_state,admin_id) VALUES(?,blacklist2_seq.NEXTVAL,?,'TRUE',?)";
+								ps = conn.prepareStatement(sql);
+								ps.setString(1, report_id);
+								ps.setString(2, reportIdx);
+								ps.setString(3, admin);
+								if(ps.executeUpdate() > 0) {
+									System.out.println("블랙리스트 IN 블라인드 처리 성공");
+								}else {
+									System.out.println("블랙리스트 IN 블라인드 처리 실패...");
+								}
+							}
+							
+
+						}
+					
+
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+	}
+
+	public void blindCancel(String reportIdx) {
+		
+		String sql = "";
+		int bIdx = 0;
+		
+		
+		try {
+			sql = "UPDATE blindlist2 SET blind_state = 'FALSE' WHERE report_idx = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, reportIdx);
+			if(ps.executeUpdate() > 0) {
+				sql = "UPDATE report2 SET report_state = 'DONE' WHERE report_idx = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, reportIdx);
+				if(ps.executeUpdate() > 0) {
+				sql = "SELECT board_idx FROM report2 WHERE report_idx = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, reportIdx);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					bIdx = rs.getInt("board_idx");
+					System.out.println(bIdx);
+					sql = "UPDATE board2 SET release_state = '001' WHERE board_idx = ?";
+					ps = conn.prepareStatement(sql);
+					ps.setInt(1, bIdx);
+					if(ps.executeUpdate() > 0) {
+						System.out.println("블라인드 취소 하였습니다.");
+					}else {
+						System.out.println("블라인드 취소 실패...");
+					}
+				}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+	}
+
+	public void blackCancel(String reportIdx) {
+		String sql = "";
+		String id = "";
+		
+		
+		try {
+			sql = "UPDATE blacklist2,report2 SET blk_state = 'FALSE',report_state = 'DONE' WHERE report_idx = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, reportIdx);
+			if(ps.executeUpdate() > 0) {
+				sql = "SELECT report_id FROM report2 WHERE report_idx = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, reportIdx);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					id = rs.getString("report_id");
+					System.out.println(id);
+					sql = "UPDATE board2 SET release_state = '001' WHERE user_id = ?";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, id);
+					if(ps.executeUpdate() > 0) {
+						System.out.println("블랙 취소 하였습니다.");
+					}else {
+						System.out.println("블랙 취소 실패...");
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
 	}
 }

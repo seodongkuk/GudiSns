@@ -172,5 +172,50 @@ public class AdminService {
 			resp.sendRedirect("./index.jsp");
 		}
 	}
+
+	public void report_chk()  throws ServletException, IOException{
+		
+		String reportIdx = req.getParameter("idx");
+		String blind = req.getParameter("chk");
+		String admin = (String) req.getSession().getAttribute("admin_loginId");
+		
+		System.out.println("신고 처리 대상 idx : "+reportIdx+" , "+blind);
+		
+		if(blind != null) {
+			AdminDAO dao = new AdminDAO();
+			dao.reportProcess(blind,reportIdx,admin);
+		}
+		
+		//AdminDAO dao = new AdminDAO();
+		
+	}
+
+	public void blind_cancel()  throws ServletException, IOException{
+
+		String reportIdx = req.getParameter("report_idx");
+		
+		System.out.println("블라인드 취소 대상 : "+reportIdx);
+		
+		if(reportIdx != null) {
+			AdminDAO dao = new AdminDAO();
+			dao.blindCancel(reportIdx);
+			
+		}
+		resp.sendRedirect("blind_list");
+	}
+
+	public void black_cancel() throws ServletException, IOException{
+		String reportIdx = req.getParameter("idx");
+		
+		System.out.println("블랙 취소 대상 : "+reportIdx);
+		
+		if(reportIdx != null) {
+			AdminDAO dao = new AdminDAO();
+			dao.blackCancel(reportIdx);
+			
+		}
+		resp.sendRedirect("black_list");
+		
+	}
 	
 }

@@ -288,11 +288,11 @@ likeCnt();
 		});
 	};
 	
+	var editmsg = "${editmsg}";
 	
-var msg = "${msg}";
-	
-	if(msg != ""){
-		alert(msg);
+	if(editmsg != ""){
+		alert(editmsg);
 	}
+
 </script>
 </html>

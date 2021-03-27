@@ -55,6 +55,7 @@
             <tr>
                 <th>신고번호</th>
                 <th>등록일</th>
+                <th>블라인드 글</th>
                 <th>관리자</th>
                 <th>해제</th>
             </tr>
@@ -62,8 +63,9 @@
             <tr>
                 <td>${blindList.report_idx}</td>
                 <td>${blindList.blind_date}</td>
+                <td><a href="./report_detail?board_idx=${blindList.board_idx}">${blindList.content}</a></td>
                 <td>${blindList.admin_id}</td>
-                <td><a href="#">처리하기</a></td>
+                <td><a href="./blindCancel?report_idx=${blindList.report_idx}">처리하기</a></td>
             </tr>
             </c:forEach>
         </table>        

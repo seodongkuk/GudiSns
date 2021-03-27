@@ -62,7 +62,7 @@
             <tr>
                 <td>ID:${blackList.user_id}</td>
                 <td>${blackList.proc_date}</td>
-                <td><a href="#">해제</a></td>
+                <td><a href="./blackCancel?idx=${blackList.report_idx}">해제</a></td>
             </tr>
             </c:forEach>
         </table>    

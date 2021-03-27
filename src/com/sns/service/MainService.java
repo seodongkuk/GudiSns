@@ -58,16 +58,22 @@ public class MainService {
 		System.out.println("글번호: " +idx + "파일명 :"+filename);
 		MainDAO dao = new MainDAO();
 		MainDTO dto = dao.detail(idx);
-	
 		
-		String page = "/MyProfile";
-		if (dto != null) {
-			page = "writingEdit.jsp";
-			req.setAttribute("dto", dto);
+		if(dto.getRelease_state().equals("004")) {
+			String msg = "블라인드 게시글 이므로 수정할 수 없습니다.";
+			req.setAttribute("editmsg", msg);
+			dis = req.getRequestDispatcher("/detail");
+			dis.forward(req, resp);
+		}else {
+			String page = "/MyProfile";
+			if (dto != null) {
+				page = "writingEdit.jsp";
+				req.setAttribute("dto", dto);
 		}
 
 		dis = req.getRequestDispatcher(page);
 		dis.forward(req, resp);
+		}
 	}
 
 	public void edit() throws IOException, ServletException {
@@ -78,7 +84,11 @@ public class MainService {
 			
 			MainDTO dto = upload.regist();
 			MainDAO dao = new MainDAO();
+			
+			
 			dao.edit(dto);
+
+		
 			
 			if (dto.getOriFileName() != null) {
 				int idx = dto.getBoard_idx();
@@ -112,7 +122,7 @@ public class MainService {
 			String newFileName = dao.getFileName(idx);
 			int success = dao.del(idx, newFileName);
 			System.out.println("파일삭제여부"+newFileName+success);
-			String delmsg= "글삭제가되지않았읍니다";
+			String delmsg= "블라인드 게시글이므로 삭제가 불가능합니다.";
 			
 			if(success>0) {
 				delmsg="글삭제되었습니다.";
