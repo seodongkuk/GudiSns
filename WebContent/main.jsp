@@ -168,8 +168,11 @@
 	function arrayEvt(){
 		var selectVal = $('#arr').val();
     	console.log(selectVal);
-		location.href='./array?select='+selectVal;
-		
+    	if(nolist != ""){
+			location.href='./array?select='+selectVal;
+    	}else{
+    		return;
+    	}
 	}	
 
 	
