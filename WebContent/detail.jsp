@@ -264,7 +264,7 @@ likeCnt();
            	 		$("#likebtn").attr("src","./img/like.png");
            	 	likeCnt();
            	 	}else if(data.result==1){
-           	 		$("#likebtn").attr("src","./img/dislike.png");
+           	 		$("#likebtn").attr("src","./img/dislike1.png");
            	 	likeCnt();
            	 	}
               }
