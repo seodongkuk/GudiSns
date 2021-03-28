@@ -1,4 +1,4 @@
-package deveric.webchat;
+package com.sns.chat;
 
 import java.io.IOException;
 import java.util.Collections;
