@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sns.service.ProfileService;
 
-@WebServlet({"/upload","/otherProfile","/MyProfile"})
+@WebServlet({"/otherProfile","/MyProfile"})
 public class ProfileController extends HttpServlet {
 
 	@Override
@@ -37,10 +37,6 @@ public class ProfileController extends HttpServlet {
 		if(sessionId != null) {
 			req.setCharacterEncoding("UTF-8");
 			switch(sub) {
-			case "/upload":
-				System.out.println("프로필사진등록");
-				service.upload();
-				break;
 			
 			case "/otherProfile":
 				System.out.println("타인 프로필 요청");

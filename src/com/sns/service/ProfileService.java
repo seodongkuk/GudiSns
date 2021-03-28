@@ -31,10 +31,6 @@ public class ProfileService {
 		this.resp = resp;
 	}
 
-	public void upload() {
-		
-	}
-
 	//타인 게시글의 아이디를 눌렀을 때 해당 아이디의 프로필로 넘어가는 서비스
 	public void otherProfile() throws ServletException, IOException{
 		String loginId = (String) req.getSession().getAttribute("loginId");
@@ -48,7 +44,7 @@ public class ProfileService {
 			ProfileDAO dao = new ProfileDAO();
 			ArrayList<MainDTO> list = dao.otherlist(id);
 			System.out.println(list.size());
-			if (list != null && list.size() > 0) {
+			if (list != null) {
 				req.setAttribute("list", list);
 				req.setAttribute("id", id);
 				dis = req.getRequestDispatcher("othersProfile.jsp");
