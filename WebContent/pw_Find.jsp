@@ -11,7 +11,7 @@
                padding: 30;
                font-size: 70;
            }
-           input[type='button'],input[type='submit']{
+           input[type='button']{
             width: 20%;
               height: 20%;
               background-color: rgb(240, 207, 207);
@@ -24,7 +24,7 @@ table,td,th{
             } 
             
             td{
-                padding: 10px;
+                padding: 20px;
             }
          
             input[type='button']{
@@ -60,7 +60,7 @@ table,td,th{
             <tr>
              <br/>
             <td>
-             <input type="text" id="userPhone" name="userPhone" maxlength="13" placeholder="핸드폰번호."/>
+             <input type="text" id="userPhone" name="userPhone" maxlength="13" placeholder="전화번호."/>
             </td>  
             <tr>
             
@@ -70,8 +70,7 @@ table,td,th{
         </tr>
        </td>       
        <tr>
-           <td style="color: red;">입력하신 정보와 일치하는 아이디가 없습니다.
-            이름 또는 전화번호를 다시 확인해주세요</td>
+       
         </tr> 
     </form>
 

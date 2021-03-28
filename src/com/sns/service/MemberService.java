@@ -204,7 +204,7 @@ public void pwfind() throws ServletException, IOException{
 	System.out.println("여기냐"+id+"/"+name+"/"+phone);
 	
 	dao = new MemberDAO();
-    msg = "아이디, 이름, 핸드폰번호를 다시 확인 후 입력해주세요.";
+    msg = "아이디, 이름, 전화번호를 다시 확인 후 입력해주세요.";
 	
 	page = "pw_Find.jsp";
 	
