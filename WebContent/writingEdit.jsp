@@ -10,7 +10,7 @@
     <link rel="icon" href="imgfile\icon.jpg">
     <title>new_Writing</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <style>
+    <style>   
         body{
             margin-left: 31%;
         }
@@ -78,7 +78,7 @@
         #selectBox{
             position: relative;
             top: 60px;
-            left:-115px;
+            left:-60px;
         }
         button{
             position: relative;
@@ -91,8 +91,9 @@
         #sbbutton{
             position: relative;
             top: 200px;
-            left: -160px;
+            left: -110px;
         }
+        
     </style>
 </head>
 

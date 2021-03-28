@@ -54,9 +54,9 @@
 
         <table>
             <tr>
-                <th>블랙리스트</th>
+                <th>블랙리스트 아이디</th>
                 <th>등록날짜</th>
-                <th>상태</th>
+                <th>해제</th>
             </tr>
             <c:forEach items="${blackList}" var="blackList">
             <tr>
