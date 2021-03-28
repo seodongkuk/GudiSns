@@ -141,31 +141,35 @@ public class MainService {
 	}
 
 	public void detail() throws ServletException, IOException {
-		String board_idx = req.getParameter("board_idx");
-		
 		String loginId = (String) req.getSession().getAttribute("loginId");
-		System.out.println(loginId);
-		System.out.println("글번호 : "+board_idx);
-
-		
-		String page = "/main.jsp";
-		MainDAO dao = new MainDAO();
-		MainDTO dto = dao.detail(board_idx);
-		ReplyDAO rao = new ReplyDAO();
-		ArrayList<ReplyDTO> list= rao.list(board_idx);
-		rao = new ReplyDAO();
-		int rcnt = rao.rcnt(board_idx);
-		
-		if (dto != null) {
-			page = "/detail.jsp";
-			req.setAttribute("dto", dto);
-			req.setAttribute("list", list);	
-			req.setAttribute("rcnt", rcnt);
-		
+		if(loginId !=null) {
+			String board_idx = req.getParameter("board_idx");
+			
+			System.out.println("글번호 : "+board_idx);
+	
+			
+			String page = "/main.jsp";
+			MainDAO dao = new MainDAO();
+			MainDTO dto = dao.detail(board_idx);
+			ReplyDAO rao = new ReplyDAO();
+			ArrayList<ReplyDTO> list= rao.list(board_idx);
+			rao = new ReplyDAO();
+			int rcnt = rao.rcnt(board_idx);
+			
+			if (dto != null) {
+				page = "/detail.jsp";
+				req.setAttribute("dto", dto);
+				req.setAttribute("list", list);	
+				req.setAttribute("rcnt", rcnt);
+			
+			}
+	
+			dis = req.getRequestDispatcher(page);
+			dis.forward(req, resp);
 		}
-
-		dis = req.getRequestDispatcher(page);
-		dis.forward(req, resp);
+		else {
+			resp.sendRedirect("index.jsp");
+		}
 	}
 
 	public void flist() throws ServletException, IOException {
@@ -212,6 +216,7 @@ public class MainService {
 		}
 
 	public void like() throws ServletException, IOException {
+		String loginId = (String) req.getSession().getAttribute("loginId");
 		
 		String user_id = req.getParameter("id");
 		String board_idx = req.getParameter("idx");
@@ -243,7 +248,6 @@ public class MainService {
 		}
 		
 	}
-
 	public void array() throws ServletException, IOException {
 		String loginId = (String) req.getSession().getAttribute("loginId");
 		MainDAO dao =null;
@@ -260,6 +264,7 @@ public class MainService {
 			if (array != null && array.size() > 0) {
 				System.out.println(array);
 				req.setAttribute("flist", array);
+				req.setAttribute("select", select);
 				dis = req.getRequestDispatcher("main.jsp");
 				dis.forward(req, resp);
 			}
@@ -270,6 +275,7 @@ public class MainService {
 			if (array != null && array.size() > 0) {
 				System.out.println(array);
 				req.setAttribute("flist", array);
+				req.setAttribute("select", select);
 				dis = req.getRequestDispatcher("main.jsp");
 				dis.forward(req, resp);
 				}

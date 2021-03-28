@@ -91,10 +91,11 @@
         <hr>
 	        <button id="WriteBtn" onclick="location.href='newWriting.jsp'">
 	        	새 글쓰기</button>
+	        
 	        <select id="arr" onchange="arrayEvt()" name="select">
 	        	<option value="" selected disabled>게시글 정렬</option>      
-	            <option class="recommend" value="추천순">추천순</option>
-	            <option class="latest" value="최신순">최신순</option>
+	            <option value="추천순"<c:if test="${select eq '추천순'}">selected</c:if>>추천순</option>
+	            <option value="최신순"<c:if test="${select eq '최신순'}">selected</c:if>>최신순</option>
 	        </select>
        
         	<div class="board">
@@ -167,20 +168,9 @@
 	function arrayEvt(){
 		var selectVal = $('#arr').val();
     	console.log(selectVal);
-    	
-    	//수정해야할 것!
-    	//옵션값 Select Box에 저장하기
-    	if(selectVal=="최신순"){
-    		location.href='./array?select='+selectVal;
-    	}
-    	else if(selectVal=="추천순"){
-    		location.href='./array?select='+selectVal;
-    		
-    	}
-	}
-	
-
-	
+		location.href='./array?select='+selectVal;
+		
+	}	
 
 	
 </script>
