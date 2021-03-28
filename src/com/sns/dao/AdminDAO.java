@@ -327,6 +327,10 @@ public class AdminDAO {
 								ps.setString(2, reportIdx);
 								ps.setString(3, admin);
 								if(ps.executeUpdate() > 0) {
+									sql = "UPDATE member2 SET blk_state = 'TRUE' WHERE user_id = ?";
+									ps = conn.prepareStatement(sql);
+									ps.setString(1, report_id);
+									ps.executeUpdate();
 									System.out.println("블랙리스트 IN 블라인드 처리 성공");
 								}else {
 									System.out.println("블랙리스트 IN 블라인드 처리 실패...");
@@ -393,10 +397,14 @@ public class AdminDAO {
 		
 		
 		try {
-			sql = "UPDATE blacklist2,report2 SET blk_state = 'FALSE',report_state = 'DONE' WHERE report_idx = ?";
+			sql = "UPDATE blacklist2 SET blk_state = 'FALSE' WHERE report_idx = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, reportIdx);
 			if(ps.executeUpdate() > 0) {
+				sql = "UPDATE report2 SET report_state = 'DONE' WHERE report_idx = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, reportIdx);
+				if(ps.executeUpdate() > 0) {
 				sql = "SELECT report_id FROM report2 WHERE report_idx = ?";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, reportIdx);
@@ -408,10 +416,15 @@ public class AdminDAO {
 					ps = conn.prepareStatement(sql);
 					ps.setString(1, id);
 					if(ps.executeUpdate() > 0) {
+						sql = "UPDATE member2 SET blk_state = 'FALSE' WHERE user_id = ?";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, id);
+						ps.executeUpdate();
 						System.out.println("블랙 취소 하였습니다.");
 					}else {
 						System.out.println("블랙 취소 실패...");
 					}
+				}
 				}
 			}
 		} catch (SQLException e) {

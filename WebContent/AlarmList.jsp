@@ -212,13 +212,14 @@
 				,dataType:'JSON'
 				,success:function(data){
 					console.log('삭제완료');
+					
 				},error:function(e){
 					console.log(e);
 				}
 			});
-			
+			location.reload();
 		}
-		location.reload();
+		
 	}
 	
 	//자신에게 온 DM 알림 삭제
@@ -232,13 +233,13 @@
 				,dataType:'JSON'
 				,success:function(data){
 					console.log('삭제완료');
+					
 				},error:function(e){
 					console.log(e);
 				}
 			});
-			
+			location.reload();
 		}
-		location.reload();
 	}
 	
 	//자신의 게시물 댓글 알림 삭제
@@ -252,12 +253,13 @@
 				,dataType:'JSON'
 				,success:function(data){
 					console.log('삭제완료');
+					
 				},error:function(e){
 					console.log(e);
 				}
 			});
-			
+			location.reload();
 		}
-		location.reload();
+		
 	}
 </script>
