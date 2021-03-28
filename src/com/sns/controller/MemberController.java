@@ -123,7 +123,7 @@ public class MemberController extends HttpServlet {
 			msg="상세정보 불러오기에 실패 했습니다.";
 			page="main";				
 			if(dto != null) {
-				msg="개인정보";
+				msg="회원정보를 수정하세요.";
 				page="updateProfile.jsp";
 				req.setAttribute("info", dto);
 			}

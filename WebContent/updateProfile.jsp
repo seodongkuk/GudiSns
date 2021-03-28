@@ -46,14 +46,16 @@
             /* text-align: center; */
         }
 
-        button {
+        input[type='button']{
             position: absolute;
             width: 100px;
-            height: 50px;
-            top: 650px;
-            left: 300px;
-            /* 아마 버튼 타입을쓰지않을까>?*/
+            height: 40px;
+            top: 380px;
+            left: 110px;
+            
         }
+        
+        
 
         .filebox input[type="file"] {
             position: absolute;
