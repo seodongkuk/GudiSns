@@ -320,7 +320,7 @@ public void infopw() throws ServletException, IOException {
 		
 		boolean delid= dao.delid(dto);
 
-		page="main.jsp";
+		page="MyProfile.jsp";
 
 		if(delid){
 			System.out.println("성공");
