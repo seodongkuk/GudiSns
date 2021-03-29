@@ -121,7 +121,7 @@ public class MemberController extends HttpServlet {
 			System.out.println(dto);
 			
 			msg="상세정보 불러오기에 실패 했습니다.";
-			page="main";				
+			page="flist";				
 			if(dto != null) {
 				msg="회원정보를 수정하세요.";
 				page="updateProfile.jsp";
@@ -141,7 +141,7 @@ public class MemberController extends HttpServlet {
 			
 			if(service.userinfoupdate()!=0) {
 				msg="수정에 성공 하였습니다.";
-				page="/main.jsp";
+				page="flist";
 			}
 			System.out.println("page : "+page);
 			req.setAttribute("msg", msg);
