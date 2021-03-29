@@ -54,7 +54,7 @@
 			<c:forEach items="${list}" var="dm">
             <div id='dmRoom'>
                 <span>
-                    <img src="C:\Users\HSK\Pictures\ì¤ë¼í´íí´ë.png"/>
+                    <img src="기본프사.png"/>
                 </span>
                 <div id="userId">
                     <c:if test="${dm.send_id != sessionScope.loginId}">${dm.send_id}</c:if>

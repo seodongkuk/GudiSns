@@ -510,7 +510,7 @@ public class MainDAO {
 
 	public int singoCk(MainDTO dto) {
 		int success = 0;
-		String sql ="SELECT * FROM REPORT2 WHERE USER_ID =? AND BOARD_IDX = ?";
+		String sql ="SELECT * FROM REPORT2 WHERE USER_ID =? AND BOARD_IDX = ? AND report_state = 'FALSE'";
 		String t = "";
 		try {
 			ps=conn.prepareStatement(sql);

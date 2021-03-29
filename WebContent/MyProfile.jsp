@@ -133,7 +133,7 @@
         <div id="dmBox">
         	<div class="mypf">
 	            <div class="userId" name="myId">
-	                ${msg}
+	                ${sessionScope.loginId}
 	            </div>
 	            <div>
 	                <img style="width: 150px; height: 150px;" src="기본프사.png"/>
@@ -219,6 +219,7 @@
           </table>
           
         	</c:forEach>
+        	<p id="noBoard" style="text-align: center;">현재 게시글이 없습니다...</p>
         </div>
         <iframe src="navi.jsp" width="850px" height="55px" scrolling="no" frameborder="0"></iframe>
 
@@ -273,6 +274,12 @@
     }
     
 
+	var nolist = "${list}";
+	
+
+	if(nolist != ""){
+		$("#noBoard").css("display","none");
+	}
     
     
     

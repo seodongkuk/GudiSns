@@ -110,7 +110,7 @@
             	<c:if test="${msg.send_id != sessionScope.loginId}">
             	<div id='otherMsgBox'>
                     <span>
-                        <img src="C:\Users\HSK\Pictures\오라클홈폴더.png"/>
+                        <img src="기본프사.png"/>
                     </span>
                     <div id="userId">
                         <c:if test="${msg.send_id != sessionScope.loginId}">${msg.send_id}</c:if>
@@ -201,7 +201,7 @@
 
     		//채팅내용을 가져와서 $chat에 담는다.(박스에다가...)
     		//상대방한테 보여질 내용
-    		var $chat = $("<div id='otherMsgBox'><span><img src='C:\Users\HSK\Pictures\오라클홈폴더.png'/></span>"
+    		var $chat = $("<div id='otherMsgBox'><span><img src='기본프사.png'/></span>"
                 +"<div id='userId'>"+chatId[0] +"</div>"
                 +"<p style='position: absolute; margin-left: 70%; top: auto; bottom: 5%;'>"
                    +moment(today).format('YY/MM/DD HH:mm')
